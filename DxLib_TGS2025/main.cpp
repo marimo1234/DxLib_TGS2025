@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         for (int y = 0; y < 480; y += 20) {
             red = GetRand(255);
             blue = GetRand(255);
-            green = GetRand(255);
+            green = GetRand(0);
             DrawBoxAA(x, y, x + 18, y + 18, GetColor(red, green, blue), TRUE);
 
         }
