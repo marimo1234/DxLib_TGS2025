@@ -150,6 +150,12 @@
     <ClCompile Include="System.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="HelpScene.h" />
+    <ClInclude Include="InGameScene.h" />
+    <ClInclude Include="InputManager.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
