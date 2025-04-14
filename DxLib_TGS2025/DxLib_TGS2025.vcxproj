@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="AppMain.cpp" />
+    <ClCompile Include="HelpScene.cpp" />
+    <ClCompile Include="InGameScene.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
