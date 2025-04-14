@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AppMain.cpp" />
+    <ClCompile Include="Src\AppMain.cpp" />
     <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
     <ClCompile Include="Src\Utility\InputManager.cpp" />
