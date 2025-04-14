@@ -140,21 +140,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AppMain.cpp" />
-    <ClCompile Include="HelpScene.cpp" />
-    <ClCompile Include="InGameScene.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ResultScene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="System.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
+    <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
+    <ClCompile Include="Src\Utility\InputManager.cpp" />
+    <ClCompile Include="Src\Object\Obstacle.cpp" />
+    <ClCompile Include="Src\Object\Player.cpp" />
+    <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
+    <ClCompile Include="Src\Scene\SceneManager.cpp" />
+    <ClCompile Include="Src\System\System.cpp" />
+    <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geometry.h" />
-    <ClInclude Include="HelpScene.h" />
-    <ClInclude Include="InGameScene.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Src\Utility\Geometry.h" />
+    <ClInclude Include="Src\Scene\Help\HelpScene.h" />
+    <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
+    <ClInclude Include="Src\Utility\InputManager.h" />
+    <ClInclude Include="Src\Object\Obstacle.h" />
+    <ClInclude Include="Src\Object\Player.h" />
+    <ClInclude Include="Src\System\ProjectConfig.h" />
+    <ClInclude Include="Src\Scene\Result\ResultScene.h" />
+    <ClInclude Include="Src\Scene\SceneManager.h" />
+    <ClInclude Include="Src\Scene\SceneType.h" />
+    <ClInclude Include="Src\System\System.h" />
+    <ClInclude Include="Src\Scene\Title\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
