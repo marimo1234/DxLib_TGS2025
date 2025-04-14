@@ -2,19 +2,19 @@
 
 #include "../Utility/Geometry.h"
 
-#define		D_OBSTACLE_MAX	(10)
-#define		D_OBS_ANIM_MAX	(7)
-
-
-struct Obstacle
+struct Player
 {
-	int is_active;			//有効フラグ
-	int image;				//画像
-	Position2D position;	//位置情報
+	Position2D position;
 	Size2D box_size;		//矩形の大きさ
+	Vector2D velocity;
+	int image;
+	int is_jump;
+	int situation;
 };
 
-void ObstacleManagerInit(void);
-void ObstacleManagerUpdate(void);
-void ObstacleManagerDraw(void);
-const Obstacle* GetObstacle(int num);
+void PlayerInit(void);
+void PlayerUpdate(void);
+void PlayerDraw(void);
+void HitAction_Player(int* index);
+const Player* GetPlayer(void);
+
