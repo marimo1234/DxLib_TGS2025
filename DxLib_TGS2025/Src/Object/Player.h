@@ -14,5 +14,4 @@ struct Player
 void PlayerInit(void);
 void PlayerUpdate(void);
 void PlayerDraw(void);
-
-
+const Player* GetPlayer(void);

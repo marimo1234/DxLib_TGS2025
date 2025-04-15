@@ -5,7 +5,6 @@
 
 #define		D_RUN_ANIM_MAX		(8)			//‰æ‘œ‚Ì•ªŠ„”
 #define		D_GROUND_POS		(550.0f)	//’n–Ê
-#define		D_JUMP_POWER		(-20.0f)	//ƒWƒƒƒ“ƒv‚Ì—Í‚Ì‘å‚«‚³
 #define     D_DEFAULT_SPEED		(5.0f)		//‘¬‚³
 
 Player player;
