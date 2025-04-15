@@ -14,7 +14,6 @@ void ResultSceneInit(void)
 //リザルトシーンの更新
 eSceneType ResultSceneUpdate(void)
 {
-	Output_Score();
 	//スペースキーが押されると
 	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
 	{
