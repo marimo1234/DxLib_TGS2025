@@ -32,4 +32,5 @@ eSceneType TitleSceneUpdate(void)
 void TitleSceneDraw(void)
 {
 	//DrawGraph(0, 0, title_image, TRUE);								//背景
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "スペースでインゲーム画面へ");
 }

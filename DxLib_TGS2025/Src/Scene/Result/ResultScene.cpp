@@ -14,7 +14,7 @@ void ResultSceneInit(void)
 //リザルトシーンの更新
 eSceneType ResultSceneUpdate(void)
 {
-	//スペースキーが押されると
+	//zキーが押されると
 	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
 	{
 		//タイトル画面へ
@@ -26,6 +26,6 @@ eSceneType ResultSceneUpdate(void)
 //リザルトシーンの描画
 void ResultSceneDraw(void)
 {
-	
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");
 }
 
