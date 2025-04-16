@@ -152,6 +152,7 @@
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\car.h" />
     <ClInclude Include="Src\Utility\Geometry.h" />
     <ClInclude Include="Src\Scene\Help\HelpScene.h" />
     <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
