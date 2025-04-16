@@ -13,8 +13,6 @@
 void HitCheck(const Player* player, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
-
-float scrool_x;			//横スクロール
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
 
@@ -27,7 +25,6 @@ void InGameSceneInit(void)
 	//障害物の初期化
 	ObstacleManagerInit();
 
-	scrool_x = 0.0f;
 }
 
 eSceneType InGameSceneUpdate()
@@ -36,13 +33,6 @@ eSceneType InGameSceneUpdate()
 	PlayerUpdate();
 	//障害物の更新
 	ObstacleManagerUpdate();
-
-	//プレイヤーが移動した分だけ背景をずらす
-	scrool_x -= GetPlayer()->velocity.x;
-	if (scrool_x <= -1280.0f)
-	{
-		scrool_x += 1280.0f;
-	}
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
