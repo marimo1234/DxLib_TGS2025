@@ -28,7 +28,7 @@ void ObstacleManagerUpdate(void)
 //áŠQ•¨‚Ì•`‰æ
 void ObstacleManagerDraw(void)
 {
-
+	
 }
 
 //\‘¢‘ÌObstacle

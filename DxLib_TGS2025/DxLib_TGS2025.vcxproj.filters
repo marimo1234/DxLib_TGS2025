@@ -45,6 +45,13 @@
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Src\Utility\PadInputManager.cpp">
+=======
+    <ClCompile Include="Src\Object\car.cpp">
+>>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Utility\Geometry.h">
@@ -81,6 +88,13 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Src\Scene\Title\TitleScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Src\Utility\PadInputManager.h">
+=======
+    <ClInclude Include="Src\Object\car.h">
+>>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

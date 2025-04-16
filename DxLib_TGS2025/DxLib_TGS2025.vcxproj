@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\AppMain.cpp" />
+    <ClCompile Include="Src\Object\car.cpp" />
     <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
     <ClCompile Include="Src\Utility\InputManager.cpp" />
@@ -149,8 +150,10 @@
     <ClCompile Include="Src\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\System\System.cpp" />
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
+    <ClCompile Include="Src\Utility\PadInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Object\car.h" />
     <ClInclude Include="Src\Utility\Geometry.h" />
     <ClInclude Include="Src\Scene\Help\HelpScene.h" />
     <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="Src\Scene\SceneType.h" />
     <ClInclude Include="Src\System\System.h" />
     <ClInclude Include="Src\Scene\Title\TitleScene.h" />
+    <ClInclude Include="Src\Utility\PadInputManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
