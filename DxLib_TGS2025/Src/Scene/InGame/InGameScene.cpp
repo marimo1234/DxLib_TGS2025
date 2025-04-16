@@ -63,7 +63,9 @@ void InGameSceneDraw(void)
 	//背景画像の描画
 	/*DrawGraphF(scrool_x, 0, , TRUE);
 	DrawGraphF(1280.0f + scrool_x, 0, , TRUE);*/
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "スペースでリザルト画面へ");
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでリザルト画面へ");
+	
+
 
 	//障害物の描画
 	ObstacleManagerDraw();

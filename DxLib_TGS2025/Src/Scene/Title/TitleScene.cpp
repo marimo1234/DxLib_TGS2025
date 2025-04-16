@@ -25,6 +25,14 @@ eSceneType TitleSceneUpdate(void)
 	{
 		return eInGame;	//インゲーム画面へ
 	}
+	if (GetKeyInputState(KEY_INPUT_X) == ePress)
+	{
+		return eHelp;	//インゲーム画面へ
+	}
+	if (GetKeyInputState(KEY_INPUT_C) == ePress)
+	{
+		return eEnd;	//インゲーム画面へ
+	}
 	return eTitle;
 }
 
@@ -32,5 +40,7 @@ eSceneType TitleSceneUpdate(void)
 void TitleSceneDraw(void)
 {
 	//DrawGraph(0, 0, title_image, TRUE);								//背景
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "スペースでインゲーム画面へ");
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでインゲーム画面へ");
+	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xでヘルプ画面へ");
+	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");
 }
