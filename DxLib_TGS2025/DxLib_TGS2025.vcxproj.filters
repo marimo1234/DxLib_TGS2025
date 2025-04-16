@@ -46,7 +46,11 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClCompile Include="Src\Utility\PadInputManager.cpp">
+=======
+    <ClCompile Include="Src\Object\car.cpp">
+>>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
 =======
     <ClCompile Include="Src\Object\car.cpp">
 >>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
@@ -91,7 +95,11 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Src\Utility\PadInputManager.h">
+=======
+    <ClInclude Include="Src\Object\car.h">
+>>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
 =======
     <ClInclude Include="Src\Object\car.h">
 >>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
