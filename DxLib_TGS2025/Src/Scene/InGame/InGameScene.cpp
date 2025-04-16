@@ -3,6 +3,7 @@
 #include "../../Object/Player.h"
 #include "../../Object/Obstacle.h"
 #include "../Result/ResultScene.h"
+#include"../../Utility/PadInputManager.h"
 #include "DxLib.h"
 
 #include <math.h>
