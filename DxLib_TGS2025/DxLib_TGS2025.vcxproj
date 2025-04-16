@@ -142,6 +142,7 @@
     <ClCompile Include="Src\AppMain.cpp" />
     <ClCompile Include="Src\Object\car.cpp" />
     <ClCompile Include="Src\Object\map.cpp" />
+    <ClCompile Include="Src\Object\Tool.cpp" />
     <ClCompile Include="Src\Object\WoodRock.cpp" />
     <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Object\car.h" />
     <ClInclude Include="Src\Object\map.h" />
+    <ClInclude Include="Src\Object\Tool.h" />
     <ClInclude Include="Src\Object\WoodRock.h" />
     <ClInclude Include="Src\Utility\Geometry.h" />
     <ClInclude Include="Src\Scene\Help\HelpScene.h" />

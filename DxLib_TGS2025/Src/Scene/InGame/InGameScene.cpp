@@ -3,7 +3,11 @@
 #include "../../Object/Player.h"
 #include "../../Object/Obstacle.h"
 #include "../Result/ResultScene.h"
-#include"../../Utility/PadInputManager.h"
+#include "../../Utility/PadInputManager.h"
+#include "../../Object/car.h"
+#include "../../Object/WoodRock.h"
+#include "../../Object/map.h"
+#include "../../Object/Tool.h"
 #include "DxLib.h"
 
 #include <math.h>
@@ -25,7 +29,14 @@ void InGameSceneInit(void)
 	PlayerInit();
 	//障害物の初期化
 	ObstacleManagerInit();
-
+	//車の初期化
+	CarInit();
+	//マップの初期化
+	MapInit();
+	//木岩の初期化
+	WoodRockInit();
+	//ツールの初期化
+	ToolInit();
 }
 
 eSceneType InGameSceneUpdate()
@@ -34,6 +45,15 @@ eSceneType InGameSceneUpdate()
 	PlayerUpdate();
 	//障害物の更新
 	ObstacleManagerUpdate();
+	//車の更新
+	CarManagerUpdate();
+	//マップの更新
+	MapUpdate();
+	//木岩の更新
+	WoodRockUpdate();
+	//ツールの更新
+	ToolManagerUpdate();
+	
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
@@ -63,6 +83,18 @@ void InGameSceneDraw(void)
 
 	//プレイヤーの描画
 	PlayerDraw();
+
+	//車の描画
+	CarDraw();
+	
+	//マップの描画
+	MapDraw();
+
+	//ツールの描画
+	ToolDraw();
+
+	//木岩の描画
+	WoodRockDraw();
 }
 
 
