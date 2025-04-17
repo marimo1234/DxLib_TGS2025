@@ -1,109 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Src\AppMain.cpp" />
+    <ClCompile Include="Src\Object\car.cpp" />
+    <ClCompile Include="Src\Object\WoodRock.cpp" />
+    <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
+    <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
+    <ClCompile Include="Src\Utility\InputManager.cpp" />
+    <ClCompile Include="Src\Object\Obstacle.cpp" />
+    <ClCompile Include="Src\Object\Player.cpp" />
+    <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
+    <ClCompile Include="Src\Scene\SceneManager.cpp" />
+    <ClCompile Include="Src\System\System.cpp" />
+    <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
+    <ClCompile Include="Src\Utility\PadInputManager.cpp" />
+    <ClCompile Include="Src\Object\map.cpp" />
+    <ClCompile Include="Src\Object\Tool.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\AppMain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Scene\Help\HelpScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Scene\InGame\InGameScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Utility\InputManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Object\Obstacle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Object\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Scene\Result\ResultScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Scene\SceneManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\System\System.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Scene\Title\TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClCompile Include="Src\Utility\PadInputManager.cpp">
-=======
-    <ClCompile Include="Src\Object\car.cpp">
->>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
-=======
-    <ClCompile Include="Src\Object\car.cpp">
->>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Src\Utility\Geometry.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\Help\HelpScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\InGame\InGameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Utility\InputManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Object\Obstacle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Object\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\System\ProjectConfig.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\Result\ResultScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\SceneManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\SceneType.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\System\System.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Scene\Title\TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClInclude Include="Src\Utility\PadInputManager.h">
-=======
-    <ClInclude Include="Src\Object\car.h">
->>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
-=======
-    <ClInclude Include="Src\Object\car.h">
->>>>>>> fbcf6e0e88ba031aecfeb2b80c4b0409c35e554c
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="Src\Object\car.h" />
+    <ClInclude Include="Src\Object\WoodRock.h" />
+    <ClInclude Include="Src\Utility\Geometry.h" />
+    <ClInclude Include="Src\Scene\Help\HelpScene.h" />
+    <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
+    <ClInclude Include="Src\Utility\InputManager.h" />
+    <ClInclude Include="Src\Object\Obstacle.h" />
+    <ClInclude Include="Src\Object\Player.h" />
+    <ClInclude Include="Src\System\ProjectConfig.h" />
+    <ClInclude Include="Src\Scene\Result\ResultScene.h" />
+    <ClInclude Include="Src\Scene\SceneManager.h" />
+    <ClInclude Include="Src\Scene\SceneType.h" />
+    <ClInclude Include="Src\System\System.h" />
+    <ClInclude Include="Src\Scene\Title\TitleScene.h" />
+    <ClInclude Include="Src\Utility\PadInputManager.h" />
+    <ClInclude Include="Src\Object\map.h" />
+    <ClInclude Include="Src\Object\Tool.h" />
   </ItemGroup>
 </Project>
