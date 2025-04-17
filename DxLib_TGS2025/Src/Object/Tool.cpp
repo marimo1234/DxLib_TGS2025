@@ -9,7 +9,7 @@ int pickaxe_img;
 void ToolInit(void)
 {
 	//ƒsƒbƒPƒ‹‰æ‘œ“Ç‚İ‚İ
-	LoadGraph("Resource/pickacxe.png",pickaxe_img);
+	LoadGraph("Resource/images/pickacxe.png",pickaxe_img);
 }
 void ToolManagerUpdate(void)
 {
@@ -17,5 +17,5 @@ void ToolManagerUpdate(void)
 }
 void ToolDraw(void) 
 {
-	
+	DrawRotaGraph(PICKAXE_X, PICKAXE_Y, 1.0, 0.0, pickaxe_img, TRUE);
 }
