@@ -85,4 +85,3 @@ void PlayerAnimationControl(void)
 	player.image = run_animation[animation_num];
 }
 
-if()

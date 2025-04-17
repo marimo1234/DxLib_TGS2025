@@ -33,4 +33,6 @@ private:
 
 public:
 	~PadInputManager() = default;
+public:
+	// 
 };
