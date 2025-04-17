@@ -7,7 +7,7 @@ void MapInit(void)
 {
 	ground = LoadGraph("Resource/GroundReef.png");
 }
-void MapUpdate(int stage)
+void MapUpdate(void)
 {
 
 }
