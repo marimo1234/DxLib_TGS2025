@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Src\AppMain.cpp" />
     <ClCompile Include="Src\Object\car.cpp" />
-    <ClCompile Include="Src\Object\Goalcpp.cpp" />
+    <ClCompile Include="Src\Object\Goal.cpp" />
     <ClCompile Include="Src\Object\map.cpp" />
     <ClCompile Include="Src\Object\Tool.cpp" />
     <ClCompile Include="Src\Object\WoodRock.cpp" />
@@ -179,6 +179,7 @@
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\ChatGPT Image 2025年4月16日 17_43_33.png" />
     <Image Include="Resource\GroundReef.png" />
+    <Image Include="Resource\images\GroundReef.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

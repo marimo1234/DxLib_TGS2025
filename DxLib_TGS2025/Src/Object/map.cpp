@@ -5,13 +5,14 @@ int ground;
 
 void MapInit(void)
 {
-	ground = LoadGraph("Resource/GroundReef.png");
+	ground = LoadGraph("Resource/images/GroundReef.png");
 }
 void MapUpdate(void)
 {
 
 }
-void MapDraw(void)
+void MapDraw(int stage)
 {
-	DrawGraphF(320,240, ground, TRUE);
+	
+	DrawRotaGraphF(640,380,0.5+stage,0.0, ground, TRUE);
 }

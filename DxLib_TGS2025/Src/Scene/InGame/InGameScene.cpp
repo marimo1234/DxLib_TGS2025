@@ -20,6 +20,7 @@ void PlayBgm(void);
 
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
+int stage;
 
 void InGameSceneInit(void)
 {
@@ -88,7 +89,7 @@ void InGameSceneDraw(void)
 	CarDraw();
 	
 	//マップの描画
-	MapDraw();
+	MapDraw(stage);
 
 	//ツールの描画
 	ToolDraw();

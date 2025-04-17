@@ -16,7 +16,7 @@
     <ClCompile Include="Src\Utility\PadInputManager.cpp" />
     <ClCompile Include="Src\Object\map.cpp" />
     <ClCompile Include="Src\Object\Tool.cpp" />
-    <ClCompile Include="Src\Object\Goalcpp.cpp" />
+    <ClCompile Include="Src\Object\Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\car.h" />
@@ -41,5 +41,6 @@
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\ChatGPT Image 2025年4月16日 17_43_33.png" />
     <Image Include="Resource\GroundReef.png" />
+    <Image Include="Resource\images\GroundReef.png" />
   </ItemGroup>
 </Project>
