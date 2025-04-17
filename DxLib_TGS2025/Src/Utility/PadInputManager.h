@@ -10,3 +10,27 @@ enum class ePadInputState : unsigned char
 	eRelease,     // ボタンを押した瞬間
 	eHold,        // ボタンを押し続けている
 };
+
+class PadInputManager
+{
+private:
+	static PadInputManager* instance;
+
+	unsigned char now_button[PAD_BUTTON_MAX] = {};     // 現在のボタンの入力
+	unsigned char old_button[PAD_BUTTON_MAX] = {};     // 前回のボタンの入力
+
+	int left_trigger = 0;                              // 左トリガー
+	int right_trigger = 0;                             // 右トリガー
+
+private:
+	// 他のところからオブジェクト化できないようにコンストラクタはprivate
+	PadInputManager() = default;
+	// コピーガード
+	// コピーコンストラクタの削除
+	PadInputManager(const PadInputManager&) = delete;
+	// コピー代入演算子の削除
+	PadInputManager& operator = (const PadInputManager&) = delete;
+
+public:
+	~PadInputManager() = default;
+};
