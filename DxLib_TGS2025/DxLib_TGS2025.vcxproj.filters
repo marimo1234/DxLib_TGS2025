@@ -45,5 +45,7 @@
     <Image Include="..\..\..\..\..\Downloads\Pixelart0\Pixelart0\01_1536x768\art_097.png" />
     <Image Include="Resource\images\art_119.png" />
     <Image Include="Resource\images\Ground.png" />
+    <Image Include="Resource\images\1trout.png" />
+    <Image Include="Resource\images\item_frame.png" />
   </ItemGroup>
 </Project>
