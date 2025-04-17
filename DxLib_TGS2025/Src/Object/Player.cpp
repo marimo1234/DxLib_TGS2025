@@ -84,3 +84,4 @@ void PlayerAnimationControl(void)
 	//•`‰æ‰æ‘œ‚ðŽw’è‚·‚é
 	player.image = run_animation[animation_num];
 }
+
