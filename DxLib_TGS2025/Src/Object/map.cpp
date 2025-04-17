@@ -13,5 +13,5 @@ void MapUpdate(void)
 }
 void MapDraw(void)
 {
-	DrawGraphF(0,0, ground, TRUE);
+	DrawGraphF(320,240, ground, TRUE);
 }
