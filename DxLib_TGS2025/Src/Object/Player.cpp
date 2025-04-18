@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Utility/InputManager.h"
+#include"../Utility/PadInputManager.h"
 #include "../System/System.h"
 #include "DxLib.h"
 
@@ -28,8 +29,8 @@ void PlayerInit(void)
 	player.velocity.x = D_DEFAULT_SPEED;	//プレイヤーの横移動	
 	player.velocity.y = 0.0f;				//プレイヤーの縦移動
 
-	//走っているがぞうの読み込み
-	LoadDivGraph("Resource/Images/spr_ninja_run.png", D_RUN_ANIM_MAX, D_RUN_ANIM_MAX, 1, 128, 128, run_animation);
+	// カーソルがぞうの読み込み
+	LoadDivGraph("Resource/Images/cursol.png", D_RUN_ANIM_MAX, D_RUN_ANIM_MAX, 1, 128, 128, run_animation);
 
 	//アニメーションの設定
 	animation_count = 0;
@@ -85,3 +86,20 @@ void PlayerAnimationControl(void)
 	player.image = run_animation[animation_num];
 }
 
+void CursolButtonMovement()
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
+	{
+		// 十字ボタンの左を押したとき
+		if (move_lane_num > 0)
+		{
+			// レーンを1つ左にする
+			move_lane_num--;
+
+
+
+		}
+	}
+}

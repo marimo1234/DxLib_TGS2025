@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Utility/Geometry.h"
+#include"../Utility/PadInputManager.h"
 
 struct Player
 {
@@ -15,3 +16,5 @@ void PlayerInit(void);
 void PlayerUpdate(void);
 void PlayerDraw(void);
 const Player* GetPlayer(void);
+void CursolButtonMovement();         // \šƒL[‚ÌˆÚ“®
+static int move_lane_num;            // ‘Ò‚¿ŠÔ
