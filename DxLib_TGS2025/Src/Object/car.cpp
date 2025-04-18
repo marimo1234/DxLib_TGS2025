@@ -44,7 +44,7 @@ void CarManagerUpdate(void)
 	{
 		car_x = 80;
 		car_y = 80;
-		i = 0;
+		i = 1;
 	}
 	
 }
