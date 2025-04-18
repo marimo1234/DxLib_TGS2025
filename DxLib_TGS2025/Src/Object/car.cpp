@@ -8,11 +8,13 @@ int car_y = 0;
 int car_animation;
 int car_image[2] = {};
 int car_direction = 0;
+int i;
 
 void CarInit(void)
 {
-	car_x = 540;
-	car_y = 390;
+	i = 1;
+	car_x = 80;
+	car_y = 80;
 	car_direction = 0;
 
 	car_image[0] = LoadGraph("Resource/images/left_car.png");
@@ -21,47 +23,29 @@ void CarInit(void)
 
 void CarManagerUpdate(void)
 {
-	//Œü‚«‚ðí‚É0‚É‚·‚é
-	car_direction = 0;
+	
 
-	//‰E
-	if (GetKeyInputState(KEY_INPUT_D) == eHold)
+	if (car_x != 80 * i)
 	{
-		car_direction = 1;
-	}
-
-	//ã
-	if (GetKeyInputState(KEY_INPUT_W) == eHold)
-	{
-		car_direction = 2;
-	}
-
-	//‰º
-	if (GetKeyInputState(KEY_INPUT_S) == eHold)
-	{
-		car_direction = 3;
-	}
-
-	//ŽÔ‚ÌŒü‚«‚Æ‰æ‘œ‚Ì•ªŠò
-	switch (car_direction)
-	{
-	case 1:
 		car_x++;
-		car_animation = car_image[0];
-		break;
-	case 2:
-		car_y--;
-		car_animation = car_image[1];
-		break;
-	case 3:
+		car_animation= car_image[0];
+	}
+	if (car_x == 80 * i && car_y != 80 * i)
+	{
 		car_y++;
 		car_animation = car_image[1];
-		break;
-	default:
-		car_animation = car_image[0];
-		break;
+	}
+	if (car_x == 80 * i && car_y == 80 * i)
+	{
+		i++;
 	}
 
+	if (car_y > 720)
+	{
+		car_x = 80;
+		car_y = 80;
+		i = 0;
+	}
 	
 }
 
