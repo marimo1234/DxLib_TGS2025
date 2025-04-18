@@ -184,12 +184,9 @@
     <Image Include="Resource\GroundReef.png" />
     <Image Include="Resource\images\1trout.png" />
     <Image Include="Resource\images\art_119.png" />
-<<<<<<< HEAD
     <Image Include="Resource\images\ChatGPT mori.png" />
     <Image Include="Resource\images\ChatGPT kigi.png" />
-=======
     <Image Include="Resource\images\front_car.png" />
->>>>>>> 6bfeac1bcd71d111b59d5a854e19c7978c338b88
     <Image Include="Resource\images\Ground.png" />
     <Image Include="Resource\images\GroundReef.png" />
     <Image Include="Resource\images\item_frame.png" />
