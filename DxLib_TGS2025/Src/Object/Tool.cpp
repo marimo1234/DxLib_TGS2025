@@ -2,8 +2,8 @@
 #include "Tool.h"
 #include "../Utility/InputManager.h"
 
-#define PICKAXE_X		(1160)		//つるはしx座標
-#define PICKAXE_Y		(670)		//つるはしy座標
+#define PICKAXE_X		(1175)		//つるはしx座標
+#define PICKAXE_Y		(675)		//つるはしy座標
 #define FRAME_X			(1400)		//枠x座標
 #define FRAME_Y			(1150)		//枠y座標
 #define STONETILE_X		(950)		//石の地面x座標
@@ -67,7 +67,7 @@ void ToolDraw(void)
 	//アイテム枠の描画
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, itemframe_img, TRUE);
 	//ピッケルの描画（アイテム枠）
-	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.15,0.0,pickaxe_img, TRUE);
+	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
 	//石の地面の描画（アイテム枠）
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,stonetile_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
