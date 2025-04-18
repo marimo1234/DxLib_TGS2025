@@ -47,5 +47,7 @@
     <Image Include="Resource\images\Ground.png" />
     <Image Include="Resource\images\1trout.png" />
     <Image Include="Resource\images\item_frame.png" />
+    <Image Include="Resource\images\ChatGPT kigi.png" />
+    <Image Include="Resource\images\ChatGPT mori.png" />
   </ItemGroup>
 </Project>
