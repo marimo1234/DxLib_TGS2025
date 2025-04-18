@@ -26,35 +26,39 @@ void InGameSceneInit(void)
 {
 	PlayBgm();
 
-	//プレイヤーの初期化
-	PlayerInit();
-	//障害物の初期化
-	ObstacleManagerInit();
-	//車の初期化
-	CarInit();
 	//マップの初期化
 	MapInit();
+	//障害物の初期化
+	ObstacleManagerInit();
 	//木岩の初期化
 	WoodRockInit();
 	//ツールの初期化
 	ToolInit();
+	//車の初期化
+	CarInit();
+	//プレイヤーの初期化
+	PlayerInit();
+
 }
 
 eSceneType InGameSceneUpdate()
 {
-	//プレイヤーの更新
-	PlayerUpdate();
-	//障害物の更新
-	ObstacleManagerUpdate();
-	//車の更新
-	CarManagerUpdate();
 	//マップの更新
 	MapUpdate();
+	//障害物の更新
+	ObstacleManagerUpdate();
 	//木岩の更新
 	WoodRockUpdate();
 	//ツールの更新
 	ToolManagerUpdate();
-	
+	//車の更新
+	CarManagerUpdate();
+	//プレイヤーの更新
+	PlayerUpdate();
+
+
+
+
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
@@ -76,26 +80,24 @@ void InGameSceneDraw(void)
 	/*DrawGraphF(scrool_x, 0, , TRUE);
 	DrawGraphF(1280.0f + scrool_x, 0, , TRUE);*/
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでリザルト画面へ");
-	
 
+	//マップの描画
+	MapDraw(stage);
 
 	//障害物の描画
 	ObstacleManagerDraw();
 
-	//プレイヤーの描画
-	PlayerDraw();
-
-	//車の描画
-	CarDraw();
-	
-	//マップの描画
-	MapDraw(stage);
+	//木岩の描画
+	WoodRockDraw();
 
 	//ツールの描画
 	ToolDraw();
 
-	//木岩の描画
-	WoodRockDraw();
+	//車の描画
+	CarDraw();
+
+	//プレイヤーの描画
+	PlayerDraw();
 }
 
 

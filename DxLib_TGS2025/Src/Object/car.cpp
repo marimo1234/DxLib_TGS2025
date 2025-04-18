@@ -16,6 +16,6 @@ void CarManagerUpdate(void)
 
 void CarDraw(void)
 {
-	DrawRotaGraph(300, 300, 1.0, 0.0, car_image[0], TRUE);
-	DrawRotaGraph(380, 300, 1.0, 0.0, car_image[1], TRUE);
+	DrawRotaGraph(100, 50, 1.0, 0.0, car_image[0], TRUE);
+	DrawRotaGraph(180, 50, 1.0, 0.0, car_image[1], TRUE);
 }
