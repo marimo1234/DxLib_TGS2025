@@ -34,5 +34,24 @@ private:
 public:
 	~PadInputManager() = default;
 public:
-	// 
+	// インスタンスを取得
+	static PadInputManager* GetInstance();
+	// インスタンスの削除
+	static void DeleteInstance();
+
+public:
+	void Update();
+public:
+	// ボタンの入力状態を取得
+	ePadInputState GetButtonInputState(int button);
+
+	// 左トリガーの値を取得
+	int GetLeftTrigger()const;
+	// 右トリガーの値を取得
+	int GetRightTrigger()const;
+
+private:
+	// 入力が有効な範囲かチェック
+	bool CheckButtonRange(int button);
+
 };

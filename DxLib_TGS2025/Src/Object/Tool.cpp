@@ -1,16 +1,16 @@
 #include "DxLib.h"
 #include "Tool.h"
 
-#define PICKAXE_X		(1230)
-#define PICKAXE_Y		(670)
-#define FRAME_X			(1100)
-#define FRAME_Y			(700)
-#define STONETILE_X		(955)
-#define STONETILE_Y		(655)
-#define LOGTILE_X		(1035)
-#define LOGTILE_Y		(675)
-#define AX_X			(1160)
-#define AX_Y			(670)
+#define PICKAXE_X		(1230)		//つるはしx座標
+#define PICKAXE_Y		(670)		//つるはしy座標
+#define FRAME_X			(1100)		//枠x座標
+#define FRAME_Y			(700)		//枠y座標
+#define STONETILE_X		(955)		//石の地面x座標
+#define STONETILE_Y		(655)		//石の地面y座標
+#define LOGTILE_X		(1035)		//丸太の地面x座標
+#define LOGTILE_Y		(675)		//丸太の地面y座標
+#define AX_X			(1160)		//斧x座標
+#define AX_Y			(670)		//斧y座標
 
 int pickaxe_img;
 int itemframe_img;
