@@ -13,3 +13,4 @@ void WoodRockUpdate(void);
 void WoodRockDraw(void);
 
 void WoodAnimation(void);//木のアニメーション
+void RockAnimation(void);//岩のアニメーション
