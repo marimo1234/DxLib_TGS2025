@@ -98,8 +98,33 @@ void CursolButtonMovement()
 			// レーンを1つ左にする
 			move_lane_num--;
 
+			// 左移動
+			player.velocity.x = -100.0f;
 
-
+			// 移動のSE（もし使うならここに入れてね）
+			
 		}
 	}
+	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
+	{
+		// 十字ボタンの右を押したとき
+		if (move_lane_num < 3)
+		{
+			// レーンを１つ右にする
+			move_lane_num++;
+
+			// 右移動
+			player.velocity.x = 100.0f;
+
+			// 移動のSE（左とおんなじ音入れてね）
+		}
+	}
+	else
+	{
+		// 移動速度を0に戻す
+		player.velocity.x = 0.0f;
+	}
+
+	// プレイヤー移動
+	
 }
