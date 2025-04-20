@@ -1,6 +1,6 @@
 #pragma once
 
-enum eWoodRockState
+enum eWoodRockState // Hit数の列挙
 {
 	eHit0,
 	eHit1,
@@ -12,4 +12,4 @@ void WoodRockInit(void);
 void WoodRockUpdate(void);
 void WoodRockDraw(void);
 
-void WoodAnimation(void);
+void WoodAnimation(void);//木のアニメーション

@@ -10,8 +10,8 @@ int wood_hitcount;
 //‰Šú‰»
 void WoodRockInit(void)
 {
-	wood_hitcount = eHit0;
-	wood_animation = wood_image[0];
+	wood_hitcount = eHit0;//Hit”‚Ì‰Šú‰»
+	wood_animation = wood_image[0];//‰æ‘œ‚Ìˆê–‡–Ú‚Ì‰Šú‰»
 
 	wood_image[0]= LoadGraph("Resource/images/Wood0.png");
 	wood_image[1]= LoadGraph("Resource/images/Wood1.png");
@@ -43,7 +43,7 @@ void WoodAnimation(void)
 {
 		switch (wood_hitcount)
 		{
-		case eHit0:
+		case eHit0:// Hit”0
 			wood_animation = wood_image[0];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -51,7 +51,7 @@ void WoodAnimation(void)
 			}
 			break;
 
-		case eHit1:
+		case eHit1:// Hit”1
 			wood_animation = wood_image[1];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -60,7 +60,7 @@ void WoodAnimation(void)
 			
 			break;
 
-		case eHit2:
+		case eHit2:// Hit”2
 			wood_animation = wood_image[2];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -68,7 +68,7 @@ void WoodAnimation(void)
 			}
 			break;
 
-		case eHit3:
+		case eHit3:// Hit”3
 			wood_animation = wood_image[3];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
