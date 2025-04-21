@@ -21,6 +21,7 @@ private:
 
 	int left_trigger = 0;                              // 左トリガー
 	int right_trigger = 0;                             // 右トリガー
+	
 
 private:
 	// 他のところからオブジェクト化できないようにコンストラクタはprivate

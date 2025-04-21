@@ -5,10 +5,12 @@
 #include "DxLib.h"
 
 
+
 Player player;
 int cursol;
 static int move_lane_num = 1;
 static int move_wait_time = 0;
+int aif = 0;
 
 void PlayerAnimationControl(void);
 
@@ -46,6 +48,7 @@ void PlayerUpdate(void)
 void PlayerDraw(void)
 {
 	DrawGraph(player.position.x, player.position.y, cursol, TRUE);
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", aif);
 }
 
 //\‘¢‘ÌPlayer
@@ -66,6 +69,7 @@ void CursolButtonMovement()
 			// ƒŒ[ƒ“‚ğ1‚Â¶‚É‚·‚é
 			move_lane_num--;
 
+			aif++;
 			// ¶ˆÚ“®
 			player.velocity.x = -75.0f;
 
