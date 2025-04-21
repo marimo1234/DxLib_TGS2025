@@ -10,7 +10,7 @@ float delta_second;
 int WakeUp(void)
 {
 	//Log.txtの生成をしない
-	SetOutApplicationLogValidFlag(FALSE);
+	SetOutApplicationLogValidFlag(TRUE);
 	//ウィンドウモードで起動
 	ChangeWindowMode(TRUE);
 	//ウィンドウサイズを決める
