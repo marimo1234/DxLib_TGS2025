@@ -19,18 +19,23 @@ int stonetile_img;		//石の地面の画像ハンドル
 int logtile_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
-int frameselect_x;	//選択枠のｘ座標
-int frameselect_y;	//選択枠のｙ座標
-int frame_number;
-float pickaxe_angle;		//つるはしの角度
+int frameselect_x;		//選択枠のｘ座標
+int frameselect_y;		//選択枠のｙ座標
+int item_number;		//アイテムナンバー
+float pickaxe_angle;	//つるはしの角度
+int stone_x;
+int stone_y;
+int road_flag;
 
 void ToolInit(void)
 {
 	//初期化
 	frameselect_x = 952;
 	frameselect_y = 670;
-	frame_number = 3;
-
+	item_number = 3;
+	stone_x = 500;
+	stone_y = 500;
+	road_flag = FALSE;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -48,35 +53,16 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
-	//右矢印を押したらアイテムを右に
-	if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
-	{
-		frame_number++;
-		if (frame_number>3)
-		{
-			frame_number = 0;
-		}
-	}
-	//左矢印を押したらアイテムを左に
-	if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
-	{
-		frame_number--;
-		if (frame_number<0)
-		{
-			frame_number = 3;
-		}
-	}
-	//x座標変更
-	frameselect_x = 952+(frame_number*73);
+	Move_Frame();
 }
 
 void ToolDraw(void) 
 {
 	//アイテム枠の描画
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, itemframe_img, TRUE);
-	//ピッケルの描画（アイテム枠）
+	//つるはしの描画（アイテム枠）
 	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
-	//石の地面の描画（アイテム枠）
+	//道路の描画（アイテム枠）
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,stonetile_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
 	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.4, 0.0, logtile_img , TRUE);
@@ -84,4 +70,54 @@ void ToolDraw(void)
 	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//枠選択の描画（アイテム枠）
 	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
+	//道路描画
+	Draw_Road();
+}
+
+void Move_Frame(void)
+{
+	//道路設置
+	Put_Road();
+
+	//右矢印を押したらアイテムを右に
+	if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
+	{
+		item_number++;
+		if (item_number > 3)
+		{
+			item_number = 0;
+		}
+	}
+	//左矢印を押したらアイテムを左に
+	if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
+	{
+		item_number--;
+		if (item_number < 0)
+		{
+			item_number = 3;
+		}
+	}
+	//x座標変更
+	frameselect_x = 952 + (item_number * 73);
+}
+
+//道路を置く
+void Put_Road(void)
+{
+	if (GetKeyInputState(KEY_INPUT_P) == ePress)
+	{
+		if (item_number == 0)
+		{ 
+			road_flag = TRUE;
+		}
+	}
+}
+
+//置いた道路描画
+void Draw_Road(void)
+{
+	if (road_flag == TRUE)
+	{
+		DrawRotaGraph(stone_x, stone_y, 0.3, 0.0, stonetile_img, TRUE);
+	}
 }
