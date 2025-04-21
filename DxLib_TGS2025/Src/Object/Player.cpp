@@ -13,6 +13,7 @@ int run_animation[D_RUN_ANIM_MAX];		//走る画像のハンドル
 int animation_count;					//フレームカウント
 int animation_num;						//フレームカウントの要素
 int situation_count = 0;				//プレイヤーの状態
+int cursol;
 
 void PlayerRun(void);
 void PlayerAnimationControl(void);
@@ -22,37 +23,38 @@ void PlayerInit(void)
 {
 	//初期設定
 	player = {};
-	player.position.x = 120.0f;				//初期位置（Ｘ）
-	player.position.y = 490.0f;				//初期位置（Ｙ）
+	player.position.x = 575.0f;				//初期位置（Ｘ）
+	player.position.y = 340.0f;				//初期位置（Ｙ）
 	player.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
 	player.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	player.velocity.x = D_DEFAULT_SPEED;	//プレイヤーの横移動	
 	player.velocity.y = 0.0f;				//プレイヤーの縦移動
 
 	// カーソルがぞうの読み込み
-	LoadDivGraph("Resource/Images/cursol.png", D_RUN_ANIM_MAX, D_RUN_ANIM_MAX, 1, 128, 128, run_animation);
+	cursol = LoadGraph("Resource/Images/cursol.png");
 
 	//アニメーションの設定
-	animation_count = 0;
-	animation_num = 0;
+	//animation_count = 0;
+	//animation_num = 0;
 
 	//初期画像の設定
-	player.image = run_animation[animation_num];
+	//player.image = run_animation[animation_num];
 }
 
 //プレイヤーの更新
 void PlayerUpdate(void)
 {
 	//走る処理
-	PlayerRun();
+	//PlayerRun();
 	//アニメーション制御
-	PlayerAnimationControl();
+	//PlayerAnimationControl();
+
 }
 
 //プレイヤーの描画
 void PlayerDraw(void)
 {
-	
+	DrawGraph(player.position.x, player.position.y, cursol, TRUE);
 }
 
 //構造体Player
@@ -99,7 +101,7 @@ void CursolButtonMovement()
 			move_lane_num--;
 
 			// 左移動
-			player.velocity.x = -100.0f;
+			player.position.x = -75.0f;
 
 			// 移動のSE（もし使うならここに入れてね）
 			
@@ -114,7 +116,7 @@ void CursolButtonMovement()
 			move_lane_num++;
 
 			// 右移動
-			player.velocity.x = 100.0f;
+			player.position.x = 75.0f;
 
 			// 移動のSE（左とおんなじ音入れてね）
 		}
@@ -128,3 +130,7 @@ void CursolButtonMovement()
 	// プレイヤー移動
 	
 }
+
+// プレイヤーがいるレーンを取得する
+
+
