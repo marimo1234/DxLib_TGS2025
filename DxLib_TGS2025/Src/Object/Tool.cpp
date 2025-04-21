@@ -19,15 +19,17 @@ int stonetile_img;		//石の地面の画像ハンドル
 int logtile_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
-int frameselect_x;		//選択枠のｘ座標
-int frameselect_y;		//選択枠のｙ座標
+int frameselect_x;	//選択枠のｘ座標
+int frameselect_y;	//選択枠のｙ座標
+int frame_number;
+float pickaxe_angle;		//つるはしの角度
 
 void ToolInit(void)
 {
 	//初期化
-	frameselect_x = 1175;
-	frameselect_y = 668;
-
+	frameselect_x = 952;
+	frameselect_y = 670;
+	frame_number = 3;
 
 
 	//アイテム枠画像読み込み
@@ -46,20 +48,26 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
+	//右矢印を押したらアイテムを右に
 	if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
 	{
-		if (frameselect_x < 1175)
+		frame_number++;
+		if (frame_number>3)
 		{
-			frameselect_x += 74;
+			frame_number = 0;
 		}
 	}
+	//左矢印を押したらアイテムを左に
 	if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
 	{
-		if (frameselect_x > 980)
+		frame_number--;
+		if (frame_number<0)
 		{
-			frameselect_x -= 74;
+			frame_number = 3;
 		}
 	}
+	//x座標変更
+	frameselect_x = 952+(frame_number*73);
 }
 
 void ToolDraw(void) 
