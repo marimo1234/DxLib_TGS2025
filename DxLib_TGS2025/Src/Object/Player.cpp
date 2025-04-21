@@ -63,13 +63,14 @@ void CursolButtonMovement()
 
   	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
 	{
+		aif++;
 		// 十字ボタンの左を押したとき
 		if (move_lane_num > 0)
 		{
 			// レーンを1つ左にする
 			move_lane_num--;
 
-			aif++;
+			
 			// 左移動
 			player.velocity.x = -75.0f;
 

@@ -13,7 +13,7 @@ PadInputManager* PadInputManager::GetInstance()
 		instance = new PadInputManager();
 	}
 
-	// ŽÀ‘Ô‚ð•Ô‚·
+	// ŽÀ‘Ì‚ð•Ô‚·
 	return instance;
 }
 
