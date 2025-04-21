@@ -55,7 +55,7 @@ void PadInputManager::Update()
 ePadInputState PadInputManager::GetButtonInputState(int button)
 {
 	// ボタン入力が有効な範囲だったら処理を行う
-	if (CheckButtonRange(button))
+	if (CheckButtonRange(button)==TRUE)
 	{
 		if (old_button[button] == TRUE)
 		{

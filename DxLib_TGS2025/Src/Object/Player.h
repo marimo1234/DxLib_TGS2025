@@ -17,5 +17,3 @@ void PlayerUpdate(void);
 void PlayerDraw(void);
 const Player* GetPlayer(void);
 void CursolButtonMovement();         // 十字キーの移動
-static int move_lane_num;            // 移動レーン
-static int move_wait_time;           // 移動するときの待ち時間
