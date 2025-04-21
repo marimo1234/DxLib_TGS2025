@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 
-#define PAD_BUTTON_MAX (16)            // ƒQ[ƒ€ƒpƒbƒh‚Ìƒ{ƒ^ƒ“‚ÌÅ‘å”
-#define PAD_STICK_MAX  (32767.0f)      // ƒXƒeƒBƒbƒN‚ğŒX‚¯‚½‚Æ‚«‚ÌÅ‘å”
+#define PAD_BUTTON_MAX (16)            // ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒœã‚¿ãƒ³ã®æœ€å¤§æ•°
+#define PAD_STICK_MAX  (32767.0f)      // ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’å‚¾ã‘ãŸã¨ãã®æœ€å¤§æ•°
 
 enum class ePadInputState : unsigned char
 {
-	eNone,        // –¢“ü—Í
-	ePress,       // ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ
-	eRelease,     // ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ
-	eHold,        // ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‘±‚¯‚Ä‚¢‚é
+	eNone,        // æœªå…¥åŠ›
+	ePress,       // ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸç¬é–“
+	eRelease,     // ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸç¬é–“
+	eHold,        // ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ç¶šã‘ã¦ã„ã‚‹
 };
 
 class PadInputManager
@@ -16,43 +16,43 @@ class PadInputManager
 private:
 	static PadInputManager* instance;
 
-	unsigned char now_button[PAD_BUTTON_MAX] = {};     // Œ»İ‚Ìƒ{ƒ^ƒ“‚Ì“ü—Í
-	unsigned char old_button[PAD_BUTTON_MAX] = {};     // ‘O‰ñ‚Ìƒ{ƒ^ƒ“‚Ì“ü—Í
+	unsigned char now_button[PAD_BUTTON_MAX] = {};     // ç¾åœ¨ã®ãƒœã‚¿ãƒ³ã®å…¥åŠ›
+	unsigned char old_button[PAD_BUTTON_MAX] = {};     // å‰å›ã®ãƒœã‚¿ãƒ³ã®å…¥åŠ›
 
-	int left_trigger = 0;                              // ¶ƒgƒŠƒK[
-	int right_trigger = 0;                             // ‰EƒgƒŠƒK[
+	int left_trigger = 0;                              // å·¦ãƒˆãƒªã‚¬ãƒ¼
+	int right_trigger = 0;                             // å³ãƒˆãƒªã‚¬ãƒ¼
 	
 
 private:
-	// ‘¼‚Ì‚Æ‚±‚ë‚©‚çƒIƒuƒWƒFƒNƒg‰»‚Å‚«‚È‚¢‚æ‚¤‚ÉƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Íprivate
+	// ä»–ã®ã¨ã“ã‚ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒ–ã§ããªã„ã‚ˆã†ã«ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã¯private
 	PadInputManager() = default;
-	// ƒRƒs[ƒK[ƒh
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Ìíœ
+	// ã‚³ãƒ”ãƒ¼ã‚¬ãƒ¼ãƒ‰
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å‰Šé™¤
 	PadInputManager(const PadInputManager&) = delete;
-	// ƒRƒs[‘ã“ü‰‰Zq‚Ìíœ
+	// ã‚³ãƒ”ãƒ¼ä»£å…¥æ¼”ç®—å­ã®å‰Šé™¤
 	PadInputManager& operator = (const PadInputManager&) = delete;
 
 public:
 	~PadInputManager() = default;
 public:
-	// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	static PadInputManager* GetInstance();
-	// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
 	static void DeleteInstance();
 
 public:
 	void Update();
 public:
-	// ƒ{ƒ^ƒ“‚Ì“ü—Íó‘Ô‚ğæ“¾
+	// ãƒœã‚¿ãƒ³ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—
 	ePadInputState GetButtonInputState(int button);
 
-	// ¶ƒgƒŠƒK[‚Ì’l‚ğæ“¾
+	// å·¦ãƒˆãƒªã‚¬ãƒ¼ã®å€¤ã‚’å–å¾—
 	int GetLeftTrigger()const;
-	// ‰EƒgƒŠƒK[‚Ì’l‚ğæ“¾
+	// å³ãƒˆãƒªã‚¬ãƒ¼ã®å€¤ã‚’å–å¾—
 	int GetRightTrigger()const;
 
 private:
-	// “ü—Í‚ª—LŒø‚È”ÍˆÍ‚©ƒ`ƒFƒbƒN
+	// å…¥åŠ›ãŒæœ‰åŠ¹ãªç¯„å›²ã‹ãƒã‚§ãƒƒã‚¯
 	bool CheckButtonRange(int button);
 
 };

@@ -1,59 +1,68 @@
-#include "DxLib.h"
+ï»¿#include "DxLib.h"
 #include "System/System.h"
 #include "Utility/InputManager.h"
+#include "Utility/PadInputManager.h"
 #include "Scene/SceneManager.h"
 
-//ƒƒCƒ“ŠÖ”
+//ãƒ¡ã‚¤ãƒ³é–¢æ•°
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
-	//‹N“®ˆ—
+	//èµ·å‹•å‡¦ç†
 	if (WakeUp() != TRUE)
 	{
-		//OutputDebugString¨Log.txto—Í‚·‚éŠÖ”
-		OutputDebugString("ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚Ì‰Šú‰»‚É¸”s‚µ‚Ü‚µ‚½\n");
+		//OutputDebugStringâ†’Log.txtå‡ºåŠ›ã™ã‚‹é–¢æ•°
+		OutputDebugString("ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸ\n");
 		return -1;
 	}
 
-	//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‚Ì‰Šú‰»
+	//ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®åˆæœŸåŒ–
 	SceneManagerInitialize();
 
-	//ƒ[ƒJƒ‹•Ï”’è‹`
-	float fixed_time = 0.0f;	//ƒtƒŒ[ƒ€Œo‰ßŠÔ(s)
+	// ãƒ‘ãƒƒãƒ‰å…¥åŠ›åˆ¶å¾¡ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//ƒƒCƒ“ƒ‹[ƒv
-	//ƒEƒBƒ“ƒhƒE‚ª•Â‚¶‚ç‚ê‚½orƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‘¤‚ÅI—¹ó‘Ô‚Åƒ‹[ƒv‚ªI‚í‚é
+	//ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+	float fixed_time = 0.0f;	//ãƒ•ãƒ¬ãƒ¼ãƒ çµŒéæ™‚é–“(s)
+
+	//ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‰ã˜ã‚‰ã‚ŒãŸorã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼å´ã§çµ‚äº†çŠ¶æ…‹ã§ãƒ«ãƒ¼ãƒ—ãŒçµ‚ã‚ã‚‹
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
-		//‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ‚ğŒvZ
+		//ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“ã‚’è¨ˆç®—
 		CalcFrameTime();
-		//‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ‚ğ‰ÁZ‚·‚é
+		//ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“ã‚’åŠ ç®—ã™ã‚‹
 		fixed_time += GetDeltaSecond();
 
-		//‚U‚Ofps‚ğ‹^—ÄŒ»
+		//ï¼–ï¼fpsã‚’ç–‘ä¼¼å†ç¾
 		if (fixed_time >= (1.0f / 60.0f))
 		{
-			fixed_time = 0.0f;	//ƒNƒŠƒA
+			fixed_time = 0.0f;	//ã‚¯ãƒªã‚¢
 
-			//“ü—Í‚ÌXV
+			//å…¥åŠ›ã®æ›´æ–°
 			InputManagerUpdate();
+			pad_input->Update();
 
-			//‰æ–Ê‚Ì‰Šú‰»
+			//ç”»é¢ã®åˆæœŸåŒ–
 			ClearDrawScreen();
 
-			//ƒV[ƒ“‚ÌXV
+			//ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 			SceneManagerUpdate();
 
-			//— ‰æ–Ê‚Ì“à—e‚ğ•\‰æ–Ê‚É”½‰f
+			//è£ç”»é¢ã®å†…å®¹ã‚’è¡¨ç”»é¢ã«åæ˜ 
 			ScreenFlip();
 
-			//ƒGƒXƒP[ƒvƒL[‚ª‰Ÿ‚³‚ê‚é‚Æƒ‹[ƒvI—¹
+			//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã‚‹ã¨ãƒ«ãƒ¼ãƒ—çµ‚äº†
 			if (GetKeyInputState(KEY_INPUT_ESCAPE) == eRelease)
 			{
 				break;
 			}
 		}
 	}
-	//DxLibI—¹
+
+	// ãƒ‘ãƒƒãƒ‰å…¥åŠ›åˆ¶å¾¡ã®çµ‚äº†å‡¦ç†
+	PadInputManager::DeleteInstance();
+
+	//DxLibçµ‚äº†
 	ShutDown();
 
 	return 0;
