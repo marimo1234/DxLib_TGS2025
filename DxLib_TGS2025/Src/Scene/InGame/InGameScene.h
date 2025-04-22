@@ -17,6 +17,9 @@ struct Start
 	int GameStart;
 	int StageNumber;
 };
+
+void StarButton();
+const Start* StartGet(void);
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);

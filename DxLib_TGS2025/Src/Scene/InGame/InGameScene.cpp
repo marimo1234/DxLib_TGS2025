@@ -18,12 +18,16 @@
 void HitCheck(const Player* player, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
+Start start;
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
 int stage;
 
+
 void InGameSceneInit(void)
 {
+	start.GameStart = FALSE;
+	start.StageNumber = 1;
 	PlayBgm();
 
 	//マップの初期化
@@ -56,7 +60,7 @@ eSceneType InGameSceneUpdate()
 	//プレイヤーの更新
 	PlayerUpdate();
 
-
+	StarButton();
 
 
 
@@ -99,7 +103,19 @@ void InGameSceneDraw(void)
 	//プレイヤーの描画
 	PlayerDraw();
 }
+const Start* StartGet(void)
+{
+	return &start;
+}
+void StarButton()
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		start.GameStart = TRUE;
+	}
+}
 
 //矩形同士の当たり判定の計算部分
 void HitCheck(const Player* player, const Obstacle* obstacle, int index)
