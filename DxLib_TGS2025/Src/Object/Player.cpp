@@ -8,11 +8,12 @@
 
 Player player;
 int cursol;
-static int move_lane_num = 1;
+static int numx = 0;
+static int numy = 0;
 static int move_wait_time = 0;
 int aif = 0;
 
-void PlayerAnimationControl(void);
+
 
 //プレイヤーの初期化
 void PlayerInit(void)
@@ -65,10 +66,10 @@ void CursolButtonMovement()
 	{
 		aif++;
 		// 十字ボタンの左を押したとき
-		if (move_lane_num > 0)
+		if (numx > -1)
 		{
 			// レーンを1つ左にする
-			move_lane_num--;
+			numx--;
 
 			
 			// 左移動
@@ -81,10 +82,10 @@ void CursolButtonMovement()
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
 		// 十字ボタンの右を押したとき
-		if (move_lane_num < 3)
+		if (numx < 1)
 		{
 			// レーンを１つ右にする
-			move_lane_num++;
+			numx++;
 
 			// 右移動
 			player.velocity.x = 75.0f;
@@ -92,14 +93,32 @@ void CursolButtonMovement()
 			// 移動のSE（左とおんなじ音入れてね）
 		}
 	}
+	else if(pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP)==ePadInputState::ePress)
+	{
+		if (numy < 1)
+		{
+			numy++;
+			player.velocity.y = -75.0f;
+		}
+	}
+	else if(pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+	{
+		if (numy > -1)
+		{
+			numy--;
+			player.velocity.y = +75.0f;
+		}
+	}
 	else
 	{
 		// 移動速度を0に戻す
 		player.velocity.x = 0.0f;
+		player.velocity.y = 0.0f;
 	}
 
 	// プレイヤー移動
 	player.position.x += player.velocity.x;
+	player.position.y += player.velocity.y;
 }
 
 // プレイヤーがいるレーンを取得する
