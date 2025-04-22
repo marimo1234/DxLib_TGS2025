@@ -1,4 +1,4 @@
-#include "InGameScene.h"
+ï»¿#include "InGameScene.h"
 #include "../../Utility/InputManager.h"
 #include "../../Object/Player.h"
 #include "../../Object/Obstacle.h"
@@ -18,49 +18,49 @@
 void HitCheck(const Player* player, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
-int Before_Hit[10];		//‘O‚Ì“–‚½‚è”»’è
-int Now_Hit[10];		//¡‚Ì“–‚½‚è”»’è
+int Before_Hit[10];		//å‰ã®å½“ãŸã‚Šåˆ¤å®š
+int Now_Hit[10];		//ä»Šã®å½“ãŸã‚Šåˆ¤å®š
 int stage;
 
 void InGameSceneInit(void)
 {
 	PlayBgm();
 
-	//ƒ}ƒbƒv‚Ì‰Šú‰»
+	//ãƒãƒƒãƒ—ã®åˆæœŸåŒ–
 	MapInit();
-	//áŠQ•¨‚Ì‰Šú‰»
+	//éšœå®³ç‰©ã®åˆæœŸåŒ–
 	ObstacleManagerInit();
-	//–ØŠâ‚Ì‰Šú‰»
+	//æœ¨å²©ã®åˆæœŸåŒ–
 	WoodRockInit();
-	//ƒc[ƒ‹‚Ì‰Šú‰»
+	//ãƒ„ãƒ¼ãƒ«ã®åˆæœŸåŒ–
 	ToolInit();
-	//Ô‚Ì‰Šú‰»
+	//è»Šã®åˆæœŸåŒ–
 	CarInit();
-	//ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸåŒ–
 	PlayerInit();
 
 }
 
 eSceneType InGameSceneUpdate()
 {
-	//ƒ}ƒbƒv‚ÌXV
+	//ãƒãƒƒãƒ—ã®æ›´æ–°
 	MapUpdate();
-	//áŠQ•¨‚ÌXV
+	//éšœå®³ç‰©ã®æ›´æ–°
 	ObstacleManagerUpdate();
-	//–ØŠâ‚ÌXV
+	//æœ¨å²©ã®æ›´æ–°
 	WoodRockUpdate();
-	//ƒc[ƒ‹‚ÌXV
+	//ãƒ„ãƒ¼ãƒ«ã®æ›´æ–°
 	ToolManagerUpdate();
-	//Ô‚ÌXV
+	//è»Šã®æ›´æ–°
 	CarManagerUpdate();
-	//ƒvƒŒƒCƒ„[‚ÌXV
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ›´æ–°
 	PlayerUpdate();
 
 
 
 
 
-	/*“–‚½‚è”»’è‚ÌŒvZiƒvƒŒƒCƒ„[‚ÆáŠQ•¨j*/
+	/*å½“ãŸã‚Šåˆ¤å®šã®è¨ˆç®—ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨éšœå®³ç‰©ï¼‰*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
 	{
 		HitCheck(GetPlayer(), GetObstacle(i), i);
@@ -68,7 +68,7 @@ eSceneType InGameSceneUpdate()
 
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
 	{
-		return eResult;	//ƒCƒ“ƒQ[ƒ€‰æ–Ê‚Ö
+		return eResult;	//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ç”»é¢ã¸
 	}
 
 	return eInGame;
@@ -76,32 +76,32 @@ eSceneType InGameSceneUpdate()
 
 void InGameSceneDraw(void)
 {
-	//”wŒi‰æ‘œ‚Ì•`‰æ
+	//èƒŒæ™¯ç”»åƒã®æç”»
 	/*DrawGraphF(scrool_x, 0, , TRUE);
 	DrawGraphF(1280.0f + scrool_x, 0, , TRUE);*/
-	DrawFormatString(50, 10, GetColor(255, 255, 255), "ƒXƒy[ƒX‚ÅƒŠƒUƒ‹ƒg‰æ–Ê‚Ö");
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "ã‚¹ãƒšãƒ¼ã‚¹ã§ãƒªã‚¶ãƒ«ãƒˆç”»é¢ã¸");
 
-	//ƒ}ƒbƒv‚Ì•`‰æ
+	//ãƒãƒƒãƒ—ã®æç”»
 	MapDraw(stage);
 
-	//áŠQ•¨‚Ì•`‰æ
+	//éšœå®³ç‰©ã®æç”»
 	ObstacleManagerDraw();
 
-	//–ØŠâ‚Ì•`‰æ
+	//æœ¨å²©ã®æç”»
 	WoodRockDraw();
 
-	//ƒc[ƒ‹‚Ì•`‰æ
+	//ãƒ„ãƒ¼ãƒ«ã®æç”»
 	ToolDraw();
 
-	//Ô‚Ì•`‰æ
+	//è»Šã®æç”»
 	CarDraw();
 
-	//ƒvƒŒƒCƒ„[‚Ì•`‰æ
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»
 	PlayerDraw();
 }
 
 
-//‹éŒ`“¯m‚Ì“–‚½‚è”»’è‚ÌŒvZ•”•ª
+//çŸ©å½¢åŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã®è¨ˆç®—éƒ¨åˆ†
 void HitCheck(const Player* player, const Obstacle* obstacle, int index)
 {
 	if (obstacle->is_active == TRUE)
@@ -123,7 +123,7 @@ void HitCheck(const Player* player, const Obstacle* obstacle, int index)
 	}
 }
 
-//ƒCƒ“ƒQ[ƒ€BGMÄ¶
+//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ BGMå†ç”Ÿ
 void PlayBgm(void)
 {
 	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/

@@ -1,23 +1,23 @@
-#include "HelpScene.h"
+ï»¿#include "HelpScene.h"
 #include "../../Utility/InputManager.h"
 #include "DxLib.h"
 
-//ƒwƒ‹ƒvƒV[ƒ“‰Šú‰»
+//ãƒ˜ãƒ«ãƒ—ã‚·ãƒ¼ãƒ³åˆæœŸåŒ–
 void HelpSceneInit(void)
 {
 
 }
 
-//ƒwƒ‹ƒvƒV[ƒ“XV
+//ãƒ˜ãƒ«ãƒ—ã‚·ãƒ¼ãƒ³æ›´æ–°
 eSceneType HelpSceneUpdate(void)
 {
 	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
 	{
-		return eInGame;								//ƒCƒ“ƒQ[ƒ€‚Ö
+		return eInGame;								//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ã¸
 	}
 	if (GetKeyInputState(KEY_INPUT_X) == ePress)
 	{
-		return eTitle;								//ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
+		return eTitle;								//ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
 	}
 	return eHelp;
 }
@@ -26,6 +26,6 @@ eSceneType HelpSceneUpdate(void)
 void HelpSceneDraw(void)
 {
 	SetFontSize(40);
-	DrawString(1000, 550, "Z:ƒQ[ƒ€ŠJn\nX:ƒ^ƒCƒgƒ‹\n", GetColor(255, 255, 255));			//ƒQ[ƒ€ŠJn‚Æƒ^ƒCƒgƒ‹‚Ö‚Ì•\¦
+	DrawString(1000, 550, "Z:ã‚²ãƒ¼ãƒ é–‹å§‹\nX:ã‚¿ã‚¤ãƒˆãƒ«\n", GetColor(255, 255, 255));			//ã‚²ãƒ¼ãƒ é–‹å§‹ã¨ã‚¿ã‚¤ãƒˆãƒ«ã¸ã®è¡¨ç¤º
 	SetFontSize(16);
 }

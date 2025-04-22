@@ -1,31 +1,31 @@
-#include "ResultScene.h"
+ï»¿#include "ResultScene.h"
 #include "../../Utility/InputManager.h"
 #include "DxLib.h"
 #include <stdlib.h>
 
-int result_score;		//•\¦‚·‚éƒXƒRƒA‚Ì’l
+int result_score;		//è¡¨ç¤ºã™ã‚‹ã‚¹ã‚³ã‚¢ã®å€¤
 
-//ƒŠƒUƒ‹ƒg‰æ–Ê‰Šú‰»
+//ãƒªã‚¶ãƒ«ãƒˆç”»é¢åˆæœŸåŒ–
 void ResultSceneInit(void)
 {
 
 }
 
-//ƒŠƒUƒ‹ƒgƒV[ƒ“‚ÌXV
+//ãƒªã‚¶ãƒ«ãƒˆã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 eSceneType ResultSceneUpdate(void)
 {
-	//zƒL[‚ª‰Ÿ‚³‚ê‚é‚Æ
+	//zã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã‚‹ã¨
 	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
 	{
-		//ƒ^ƒCƒgƒ‹‰æ–Ê‚Ö
+		//ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸
 		return eTitle;
 	}
 	return eResult;
 }
 
-//ƒŠƒUƒ‹ƒgƒV[ƒ“‚Ì•`‰æ
+//ãƒªã‚¶ãƒ«ãƒˆã‚·ãƒ¼ãƒ³ã®æç”»
 void ResultSceneDraw(void)
 {
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "z‚Åƒ^ƒCƒgƒ‹‰æ–Ê‚Ö");
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "zã§ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã¸");
 }
 

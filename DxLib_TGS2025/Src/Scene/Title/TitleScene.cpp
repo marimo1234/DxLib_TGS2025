@@ -1,46 +1,46 @@
-#include "TitleScene.h"
+ï»¿#include "TitleScene.h"
 #include "../../Utility/InputManager.h"
 #include "DxLib.h"
 #include <math.h>
 
-int title_image;		//ƒ^ƒCƒgƒ‹‰æ‘œ‚Ìƒnƒ“ƒhƒ‹
+int title_image;		//ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒã®ãƒãƒ³ãƒ‰ãƒ«
 
-//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚Ì‰Šú‰»
+//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 void TitleSceneInit(void)
 {
-	//‰æ‘œ‚Ì“Ç‚İ‚İ
-	//title_image = LoadGraph("Resource/Images/Title.png");	//ƒ^ƒCƒgƒ‹‰æ‘œ
+	//ç”»åƒã®èª­ã¿è¾¼ã¿
+	//title_image = LoadGraph("Resource/Images/Title.png");	//ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒ
 
-	//se‚Ì“Ç‚İ‚İ
-	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//ƒZƒŒƒNƒgƒTƒEƒ“ƒh
-	//decision_SE = LoadSoundMem("Resource/SE/decision.mp3");	//Œˆ’èƒTƒEƒ“ƒh
+	//seã®èª­ã¿è¾¼ã¿
+	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//ã‚»ãƒ¬ã‚¯ãƒˆã‚µã‚¦ãƒ³ãƒ‰
+	//decision_SE = LoadSoundMem("Resource/SE/decision.mp3");	//æ±ºå®šã‚µã‚¦ãƒ³ãƒ‰
 }
 
 
-//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÌXV
+//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 eSceneType TitleSceneUpdate(void)
 {
-	//ƒXƒy[ƒXƒL[‚ª‰Ÿ‚³‚ê‚½uŠÔ‚ÉAŠe‰æ–Ê‚É‘JˆÚ‚·‚é
+	//ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸç¬é–“ã«ã€å„ç”»é¢ã«é·ç§»ã™ã‚‹
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
 	{
-		return eInGame;	//ƒCƒ“ƒQ[ƒ€‰æ–Ê‚Ö
+		return eInGame;	//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ç”»é¢ã¸
 	}
 	if (GetKeyInputState(KEY_INPUT_X) == ePress)
 	{
-		return eHelp;	//ƒCƒ“ƒQ[ƒ€‰æ–Ê‚Ö
+		return eHelp;	//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ç”»é¢ã¸
 	}
 	if (GetKeyInputState(KEY_INPUT_C) == ePress)
 	{
-		return eEnd;	//ƒCƒ“ƒQ[ƒ€‰æ–Ê‚Ö
+		return eEnd;	//ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ç”»é¢ã¸
 	}
 	return eTitle;
 }
 
-//ƒ^ƒCƒgƒ‹ƒV[ƒ“•`‰æ
+//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³æç”»
 void TitleSceneDraw(void)
 {
-	//DrawGraph(0, 0, title_image, TRUE);								//”wŒi
-	DrawFormatString(50, 10, GetColor(255, 255, 255), "ƒXƒy[ƒX‚ÅƒCƒ“ƒQ[ƒ€‰æ–Ê‚Ö");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "X‚Åƒwƒ‹ƒv‰æ–Ê‚Ö");
-	DrawFormatString(50, 110, GetColor(255, 255, 255), "C‚ÅƒGƒ“ƒh ‰æ–Ê‚È‚µ");
+	//DrawGraph(0, 0, title_image, TRUE);								//èƒŒæ™¯
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "ã‚¹ãƒšãƒ¼ã‚¹ã§ã‚¤ãƒ³ã‚²ãƒ¼ãƒ ç”»é¢ã¸");
+	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xã§ãƒ˜ãƒ«ãƒ—ç”»é¢ã¸");
+	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cã§ã‚¨ãƒ³ãƒ‰ ç”»é¢ãªã—");
 }
