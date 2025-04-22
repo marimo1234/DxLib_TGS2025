@@ -2,7 +2,8 @@
 #include "Tool.h"
 #include "../Utility/InputManager.h"
 #include "../Utility/PadInputManager.h"
-#include"../Scene/InGame/InGameScene.h"
+#include "../Scene/InGame/InGameScene.h"
+#include "../Object/WoodRock.h"
 
 #define PICKAXE_X		(1175)		//つるはしx座標
 #define PICKAXE_Y		(675)		//つるはしy座標
@@ -81,6 +82,8 @@ void ToolDraw(void)
 	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
 	//道路描画
 	Draw_Road();
+
+	ItemNumCheck(GetWoodRock());
 }
 
 void Move_Frame(void)
@@ -160,8 +163,12 @@ void Tool_Start(const Start* start)
 	}
 }
 
-//
 const Tool* Get_Tool(void)
 {
 	return &tool;
+}
+
+void ItemNumCheck(const WoodRock*woodrock)
+{
+	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->item_number);
 }
