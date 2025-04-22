@@ -23,3 +23,4 @@ const Start* GetStart(void);
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
+void StageChenge(void);

@@ -8,6 +8,7 @@
 #include "../../Object/WoodRock.h"
 #include "../../Object/map.h"
 #include "../../Object/Tool.h"
+#include "../../Object/Goal.h"
 #include "DxLib.h"
 
 #include <math.h>
@@ -21,15 +22,102 @@ void PlayBgm(void);
 Start start;
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
-int stage;
+eStage stage;
 
 
 void InGameSceneInit(void)
 {
 	start.GameStart = FALSE;
-	start.StageNumber = 1;
+	stage = eOne;
+	switch (stage)
+	{
+	case eOne:
+		//BGMの初期化
+		PlayBgm();
+		//マップの初期化
+		MapInit();
+		//障害物の初期化
+		ObstacleManagerInit();
+		//木岩の初期化
+		WoodRockInit();
+		//ツールの初期化
+		ToolInit();
+		//車の初期化
+		CarInit();
+		//プレイヤーの初期化
+		PlayerInit();
+		//ゴールの読み込み
+		GoalInit();
+		break;
+	case eTwo:
+		//BGMの初期化
+		PlayBgm();
+		//マップの初期化
+		MapInit();
+		//障害物の初期化
+		ObstacleManagerInit();
+		//木岩の初期化
+		WoodRockInit();
+		//ツールの初期化
+		ToolInit();
+		//車の初期化
+		CarInit();
+		//プレイヤーの初期化
+		PlayerInit();
+		break;
+	case eThree:
+		//BGMの初期化
+		PlayBgm();
+		//マップの初期化
+		MapInit();
+		//障害物の初期化
+		ObstacleManagerInit();
+		//木岩の初期化
+		WoodRockInit();
+		//ツールの初期化
+		ToolInit();
+		//車の初期化
+		CarInit();
+		//プレイヤーの初期化
+		PlayerInit();
+		break;
+	case eFour:
+		//BGMの初期化
+		PlayBgm();
+		//マップの初期化
+		MapInit();
+		//障害物の初期化
+		ObstacleManagerInit();
+		//木岩の初期化
+		WoodRockInit();
+		//ツールの初期化
+		ToolInit();
+		//車の初期化
+		CarInit();
+		//プレイヤーの初期化
+		PlayerInit();
+		break;
+	case eFive:
+		//BGMの初期化
+		PlayBgm();
+		//マップの初期化
+		MapInit();
+		//障害物の初期化
+		ObstacleManagerInit();
+		//木岩の初期化
+		WoodRockInit();
+		//ツールの初期化
+		ToolInit();
+		//車の初期化
+		CarInit();
+		//プレイヤーの初期化
+		PlayerInit();
+		break;
+	default:
+		break;
+	}
+	//BGMの初期化
 	PlayBgm();
-
 	//マップの初期化
 	MapInit();
 	//障害物の初期化
@@ -59,8 +147,10 @@ eSceneType InGameSceneUpdate()
 	CarManagerUpdate();
 	//プレイヤーの更新
 	PlayerUpdate();
-
+	//スタートボタン
 	StarButton();
+	//ゴールの更新
+	GoalUpdate();
 
 
 
@@ -102,6 +192,9 @@ void InGameSceneDraw(void)
 
 	//プレイヤーの描画
 	PlayerDraw();
+
+	//ごーるの描画
+	GoalDraw();
 }
 const Start* GetStart(void)
 {
@@ -143,5 +236,24 @@ void HitCheck(const Player* player, const Obstacle* obstacle, int index)
 void PlayBgm(void)
 {
 	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/
+}
+
+void StageChenge(void)
+{
+	switch (start.StageNumber)
+	{
+	case 1:
+		stage = eOne;
+	case 2:
+		stage = eTwo;
+	case 3:
+		stage = eThree;
+	case 4:
+		stage = eFour;
+	case 5:
+		stage = eFive;
+	default:
+		break;
+	}
 }
 
