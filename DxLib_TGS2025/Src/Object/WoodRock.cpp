@@ -1,4 +1,4 @@
-#include "DxLib.h"
+ï»¿#include "DxLib.h"
 #include "WoodRock.h"
 #include "../Utility/InputManager.h"
 
@@ -9,14 +9,14 @@ int rock_animation;
 int wood_hitcount;
 int rock_hitcount;
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void WoodRockInit(void)
 {
-	//Hit”‚Ì‰Šú‰»
+	//Hitæ•°ã®åˆæœŸåŒ–
 	wood_hitcount = eHit0;
 	rock_hitcount = eHit0;
 
-	//‰æ‘œ‚Ìˆê–‡–Ú‚Ì‰Šú‰»
+	//ç”»åƒã®ä¸€æšç›®ã®åˆæœŸåŒ–
 	wood_animation = wood_image[0];
 	wood_animation = wood_image[0];
 
@@ -31,15 +31,15 @@ void WoodRockInit(void)
 	rock_image[3] = LoadGraph("Resource/images/Rock3.png");
 }
 
-//XV
+//æ›´æ–°
 void WoodRockUpdate(void)
 {
-	//–Ø‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+	//æœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	WoodAnimation();
 	RockAnimation();
 }
 
-//•`‰æˆ—
+//æç”»å‡¦ç†
 void WoodRockDraw(void)
 {
 
@@ -56,13 +56,13 @@ void WoodRockDraw(void)
 	DrawRotaGraph(280, 440, 1.0, 0.0, rock_image[3], TRUE);
 }
 
-//AƒL[‚ğ‰Ÿ‚µ‚½‚ç–Ø‚Ì•`‰æ‚·‚é‰æ‘œ‚ğ•Ï‚¦‚é
-//ŒãXHit‚µ‚½‰ñ”‚Å–Ø‚Ì•`‰æ‚·‚é‰æ‘œ‚ğ•Ï‚¦‚é‚æ‚¤‚É‚·‚é
+//Aã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰æœ¨ã®æç”»ã™ã‚‹ç”»åƒã‚’å¤‰ãˆã‚‹
+//å¾Œã€…Hitã—ãŸå›æ•°ã§æœ¨ã®æç”»ã™ã‚‹ç”»åƒã‚’å¤‰ãˆã‚‹ã‚ˆã†ã«ã™ã‚‹
 void WoodAnimation(void)
 {
 		switch (wood_hitcount)
 		{
-		case eHit0:// Hit”0
+		case eHit0:// Hitæ•°0
 			wood_animation = wood_image[0];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -70,7 +70,7 @@ void WoodAnimation(void)
 			}
 			break;
 
-		case eHit1:// Hit”1
+		case eHit1:// Hitæ•°1
 			wood_animation = wood_image[1];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -79,7 +79,7 @@ void WoodAnimation(void)
 			
 			break;
 
-		case eHit2:// Hit”2
+		case eHit2:// Hitæ•°2
 			wood_animation = wood_image[2];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
@@ -87,11 +87,11 @@ void WoodAnimation(void)
 			}
 			break;
 
-		case eHit3:// Hit”3
+		case eHit3:// Hitæ•°3
 			wood_animation = wood_image[3];
 			if (GetKeyInputState(KEY_INPUT_A) == ePress)
 			{
-				wood_hitcount = eHit0;     //¡‚¾‚¯ƒ‹[ƒv‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é
+				wood_hitcount = eHit0;     //ä»Šã ã‘ãƒ«ãƒ¼ãƒ—ã™ã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹
 			}
 			break;
 		}
@@ -102,7 +102,7 @@ void RockAnimation(void)
 {
 	switch (rock_hitcount)
 	{
-	case eHit0:// Hit”0
+	case eHit0:// Hitæ•°0
 		rock_animation = rock_image[0];
 		if (GetKeyInputState(KEY_INPUT_A) == ePress)
 		{
@@ -110,7 +110,7 @@ void RockAnimation(void)
 		}
 		break;
 
-	case eHit1:// Hit”1
+	case eHit1:// Hitæ•°1
 		rock_animation = rock_image[1];
 		if (GetKeyInputState(KEY_INPUT_A) == ePress)
 		{
@@ -119,7 +119,7 @@ void RockAnimation(void)
 
 		break;
 
-	case eHit2:// Hit”2
+	case eHit2:// Hitæ•°2
 		rock_animation = rock_image[2];
 		if (GetKeyInputState(KEY_INPUT_A) == ePress)
 		{
@@ -127,11 +127,11 @@ void RockAnimation(void)
 		}
 		break;
 
-	case eHit3:// Hit”3
+	case eHit3:// Hitæ•°3
 		rock_animation = rock_image[3];
 		if (GetKeyInputState(KEY_INPUT_A) == ePress)
 		{
-			rock_hitcount = eHit0;     //¡‚¾‚¯ƒ‹[ƒv‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚é
+			rock_hitcount = eHit0;     //ä»Šã ã‘ãƒ«ãƒ¼ãƒ—ã™ã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹
 		}
 		break;
 	}

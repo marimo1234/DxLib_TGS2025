@@ -1,9 +1,9 @@
-#include "Obstacle.h"
+ï»¿#include "Obstacle.h"
 #include "Player.h"
 #include "DxLib.h"
 #include <math.h>
 
-#define ITEM_NUM	(9)		//ƒAƒCƒeƒ€‚Ì—v‘f
+#define ITEM_NUM	(9)		//ã‚¢ã‚¤ãƒ†ãƒ ã®è¦ç´ 
 
 void ObstacleAnimationControl(const Player* player);
 
@@ -11,27 +11,27 @@ Obstacle obstacle[D_OBSTACLE_MAX];
 int obstacle_images[7];
 int item_images[1];
 
-//áŠQ•¨‚Ì‰Šú‰»
+//éšœå®³ç‰©ã®åˆæœŸåŒ–
 void ObstacleManagerInit(void)
 {
-	//ƒXƒ‰ƒCƒ€‚Ì‰æ‘œ“Ç‚İ‚İ
+	//ã‚¹ãƒ©ã‚¤ãƒ ã®ç”»åƒèª­ã¿è¾¼ã¿
 	/*LoadDivGraph("Resource/Images/slime.png", D_OBS_ANIM_MAX, D_OBS_ANIM_MAX, 1, 64, 64, obstacle_images);
 	LoadDivGraph("Resource/Images/item.png", 1, 1, 1, 1152, 648, item_images);*/
 }
 
-//áŠQ•¨‚ÌXV
+//éšœå®³ç‰©ã®æ›´æ–°
 void ObstacleManagerUpdate(void)
 {
 	
 }
 
-//áŠQ•¨‚Ì•`‰æ
+//éšœå®³ç‰©ã®æç”»
 void ObstacleManagerDraw(void)
 {
 	
 }
 
-//\‘¢‘ÌObstacle
+//æ§‹é€ ä½“Obstacle
 const Obstacle* GetObstacle(int num)
 {
 	if (0 <= num && num < D_OBSTACLE_MAX)
@@ -42,7 +42,7 @@ const Obstacle* GetObstacle(int num)
 	return obstacle;
 }
 
-//áŠQ•¨‚ÌƒXƒ|[ƒ“‚ª—LŒø‚©
+//éšœå®³ç‰©ã®ã‚¹ãƒãƒ¼ãƒ³ãŒæœ‰åŠ¹ã‹
 void ObstacleAnimationControl(const Player* player)
 {
 	

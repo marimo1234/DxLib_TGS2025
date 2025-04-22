@@ -1,4 +1,4 @@
- #pragma once
+﻿ #pragma once
 
 void MapInit(void);
 void MapUpdate(void);

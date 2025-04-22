@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "../Utility/InputManager.h"
 #include"../Utility/PadInputManager.h"
 #include "../System/System.h"
@@ -14,44 +14,44 @@ int aif = 0;
 
 void PlayerAnimationControl(void);
 
-//ƒvƒŒƒCƒ„[‚Ì‰Šú‰»
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸåŒ–
 void PlayerInit(void)
 {
-	//‰Šúİ’è
+	//åˆæœŸè¨­å®š
 	player = {};
-	player.position.x = 575.0f;				//‰ŠúˆÊ’ui‚wj
-	player.position.y = 340.0f;				//‰ŠúˆÊ’ui‚xj
-	player.box_size.x = 64.0f;				//‹éŒ`‚Ì‘å‚«‚³i‚wj
-	player.box_size.y = 128.0f;				//‹éŒ`‚Ì‘å‚«‚³i‚xj
-	player.velocity.x = 0.0f;	            //ƒvƒŒƒCƒ„[‚Ì‰¡ˆÚ“®	
-	player.velocity.y = 0.0f;				//ƒvƒŒƒCƒ„[‚ÌcˆÚ“®
+	player.position.x = 575.0f;				//åˆæœŸä½ç½®ï¼ˆï¼¸ï¼‰
+	player.position.y = 340.0f;				//åˆæœŸä½ç½®ï¼ˆï¼¹ï¼‰
+	player.box_size.x = 64.0f;				//çŸ©å½¢ã®å¤§ãã•ï¼ˆï¼¸ï¼‰
+	player.box_size.y = 128.0f;				//çŸ©å½¢ã®å¤§ãã•ï¼ˆï¼¹ï¼‰
+	player.velocity.x = 0.0f;	            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ¨ªç§»å‹•	
+	player.velocity.y = 0.0f;				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç¸¦ç§»å‹•
 
-	// ƒJ[ƒ\ƒ‹‚ª‚¼‚¤‚Ì“Ç‚İ‚İ
+	// ã‚«ãƒ¼ã‚½ãƒ«ãŒãã†ã®èª­ã¿è¾¼ã¿
 	cursol = LoadGraph("Resource/Images/cursol.png");
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®è¨­å®š
 	//animation_count = 0;
 	//animation_num = 0;
 
-	//‰Šú‰æ‘œ‚Ìİ’è
+	//åˆæœŸç”»åƒã®è¨­å®š
 	//player.image = run_animation[animation_num];
 }
 
-//ƒvƒŒƒCƒ„[‚ÌXV
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ›´æ–°
 void PlayerUpdate(void)
 {
 	CursolButtonMovement();
 
 }
 
-//ƒvƒŒƒCƒ„[‚Ì•`‰æ
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æç”»
 void PlayerDraw(void)
 {
 	DrawGraph(player.position.x, player.position.y, cursol, TRUE);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", aif);
 }
 
-//\‘¢‘ÌPlayer
+//æ§‹é€ ä½“Player
 const Player* GetPlayer(void)
 {
 	return &player;
@@ -64,44 +64,44 @@ void CursolButtonMovement()
   	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
 	{
 		aif++;
-		// \šƒ{ƒ^ƒ“‚Ì¶‚ğ‰Ÿ‚µ‚½‚Æ‚«
+		// åå­—ãƒœã‚¿ãƒ³ã®å·¦ã‚’æŠ¼ã—ãŸã¨ã
 		if (move_lane_num > 0)
 		{
-			// ƒŒ[ƒ“‚ğ1‚Â¶‚É‚·‚é
+			// ãƒ¬ãƒ¼ãƒ³ã‚’1ã¤å·¦ã«ã™ã‚‹
 			move_lane_num--;
 
 			
-			// ¶ˆÚ“®
+			// å·¦ç§»å‹•
 			player.velocity.x = -75.0f;
 
-			// ˆÚ“®‚ÌSEi‚à‚µg‚¤‚È‚ç‚±‚±‚É“ü‚ê‚Ä‚Ëj
+			// ç§»å‹•ã®SEï¼ˆã‚‚ã—ä½¿ã†ãªã‚‰ã“ã“ã«å…¥ã‚Œã¦ã­ï¼‰
 			
 		}
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
-		// \šƒ{ƒ^ƒ“‚Ì‰E‚ğ‰Ÿ‚µ‚½‚Æ‚«
+		// åå­—ãƒœã‚¿ãƒ³ã®å³ã‚’æŠ¼ã—ãŸã¨ã
 		if (move_lane_num < 3)
 		{
-			// ƒŒ[ƒ“‚ğ‚P‚Â‰E‚É‚·‚é
+			// ãƒ¬ãƒ¼ãƒ³ã‚’ï¼‘ã¤å³ã«ã™ã‚‹
 			move_lane_num++;
 
-			// ‰EˆÚ“®
+			// å³ç§»å‹•
 			player.velocity.x = 75.0f;
 
-			// ˆÚ“®‚ÌSEi¶‚Æ‚¨‚ñ‚È‚¶‰¹“ü‚ê‚Ä‚Ëj
+			// ç§»å‹•ã®SEï¼ˆå·¦ã¨ãŠã‚“ãªã˜éŸ³å…¥ã‚Œã¦ã­ï¼‰
 		}
 	}
 	else
 	{
-		// ˆÚ“®‘¬“x‚ğ0‚É–ß‚·
+		// ç§»å‹•é€Ÿåº¦ã‚’0ã«æˆ»ã™
 		player.velocity.x = 0.0f;
 	}
 
-	// ƒvƒŒƒCƒ„[ˆÚ“®
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç§»å‹•
 	player.position.x += player.velocity.x;
 }
 
-// ƒvƒŒƒCƒ„[‚ª‚¢‚éƒŒ[ƒ“‚ğæ“¾‚·‚é
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ã‚‹ãƒ¬ãƒ¼ãƒ³ã‚’å–å¾—ã™ã‚‹
 
 
