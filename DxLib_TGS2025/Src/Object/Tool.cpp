@@ -156,3 +156,9 @@ void Tool_Start(const Start* start)
 		tool_start = TRUE;
 	}
 }
+
+//
+const Tool* Get_Tool(void)
+{
+	return &tool;
+}

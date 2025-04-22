@@ -27,4 +27,4 @@ void Move_Frame(void);
 void Put_Road(void);
 void Draw_Road(void);
 void Tool_Start(const Start* start);
-void 
+const Tool* Get_Tool(void);
