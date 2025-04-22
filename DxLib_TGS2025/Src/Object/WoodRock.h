@@ -8,9 +8,16 @@ enum eWoodRockState // Hit数の列挙
 	eHit3,
 };
 
+
+struct WoodRock
+{
+	int item_num;
+};
 void WoodRockInit(void);
 void WoodRockUpdate(void);
 void WoodRockDraw(void);
 
 void WoodAnimation(void);//木のアニメーション
 void RockAnimation(void);//岩のアニメーション
+
+const WoodRock* GetWoodRock(void);
