@@ -41,6 +41,7 @@ void WoodRockInit(void)
 void WoodRockUpdate(void)
 {
      WoodRockStart(GetStart());
+	/* ItemSlotCheck(Get_Tool());*/
 
 	if (woodrock_start == TRUE)
 	{
@@ -56,6 +57,7 @@ void WoodRockDraw(void)
 {
 	DrawRotaGraph(660, 280, 1.0, 0.0, wood_animation, TRUE);
 	DrawRotaGraph(580, 280, 1.0, 0.0, rock_animation, TRUE);
+	ItemSlotCheck(Get_Tool());
 }
 
 //Aキーを押したら木の描画する画像を変える
@@ -155,4 +157,9 @@ void WoodRockStart(const Start* start)
 		woodrock_start = TRUE;
 	}
 
+}
+
+void ItemSlotCheck(const Tool*tool)
+{
+	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d", tool->item_number);
 }
