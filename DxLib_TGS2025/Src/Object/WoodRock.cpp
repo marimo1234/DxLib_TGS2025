@@ -16,7 +16,7 @@ WoodRock woodrock;
 //初期化
 void WoodRockInit(void)
 {
-	woodrock.item_num = 0;
+	woodrock.item_number = 0;
 
 	//Hit数の初期化
 	wood_hitcount = eHit0;
