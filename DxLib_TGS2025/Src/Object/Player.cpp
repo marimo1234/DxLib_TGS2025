@@ -49,7 +49,7 @@ void PlayerUpdate(void)
 void PlayerDraw(void)
 {
 	DrawGraph(player.position.x, player.position.y, cursol, TRUE);
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", aif);
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 }
 
 //構造体Player
