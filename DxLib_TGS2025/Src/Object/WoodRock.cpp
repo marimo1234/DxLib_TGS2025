@@ -97,6 +97,7 @@ void WoodAnimation(void)
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				wood_hitcount = eHit0;     //今だけループするようにしている
+				
 			}
 			break;
 		}
@@ -139,6 +140,7 @@ void RockAnimation(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit0;     //今だけループするようにしている
+			woodrock.item_number++;    //HIT数が3になった時、アイテム化した物の数を+1する
 		}
 		break;
 	}
