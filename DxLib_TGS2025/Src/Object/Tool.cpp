@@ -99,7 +99,24 @@ void Move_Frame(void)
 	//	}
 	//}
 	
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
+	{
+		item_number++;
+			if (item_number > 3)
+			{
+				item_number = 0;
+			}
+	}
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::ePress)
+	{
+		item_number--;
+			if (item_number < 0)
+			{
+				item_number = 3;
+			}
+	}
 	
 	//x座標変更
 	frameselect_x = 952 + (item_number * 73);
