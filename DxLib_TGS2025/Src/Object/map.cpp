@@ -1,4 +1,4 @@
-#include"DxLib.h"
+Ôªø#include"DxLib.h"
 #include"map.h"
 #define x 256
 #define y 256
@@ -10,7 +10,7 @@ int trout[x][y];
 int math;
 void MapInit(void)
 {
-	groundreef = LoadGraph("Resource/images/MapOriginal - ÉRÉsÅ[.png");
+	groundreef = LoadGraph("Resource/images/MapOriginal - „Ç≥„Éî„Éº.png");
 	ground = LoadGraph("Resource/images/Map2.png");
 	sea = LoadGraph("Resource/images/art_119.png");
 	math= LoadGraph("Resource/images/1trout.png");

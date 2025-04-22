@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-enum eWoodRockState // Hit”‚Ì—ñ‹“
+enum eWoodRockState // Hitæ•°ã®åˆ—æŒ™
 {
 	eHit0,
 	eHit1,
@@ -12,5 +12,5 @@ void WoodRockInit(void);
 void WoodRockUpdate(void);
 void WoodRockDraw(void);
 
-void WoodAnimation(void);//–Ø‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
-void RockAnimation(void);//Šâ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+void WoodAnimation(void);//æœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+void RockAnimation(void);//å²©ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³

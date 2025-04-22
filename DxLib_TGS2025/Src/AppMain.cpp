@@ -28,34 +28,23 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	//ウィンドウが閉じられたorシーンマネージャー側で終了状態でループが終わる
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
-		//１フレーム当たりの時間を計算
-		CalcFrameTime();
-		//１フレーム当たりの時間を加算する
-		fixed_time += GetDeltaSecond();
+		//入力の更新
+		InputManagerUpdate();
+		pad_input->Update();
 
-		//６０fpsを疑似再現
-		if (fixed_time >= (1.0f / 60.0f))
+		//画面の初期化
+		ClearDrawScreen();
+
+		//シーンの更新
+		SceneManagerUpdate();
+
+		//裏画面の内容を表画面に反映
+		ScreenFlip();
+
+		//エスケープキーが押されるとループ終了
+		if (GetKeyInputState(KEY_INPUT_ESCAPE) == eRelease)
 		{
-			fixed_time = 0.0f;	//クリア
-
-			//入力の更新
-			InputManagerUpdate();
-			pad_input->Update();
-
-			//画面の初期化
-			ClearDrawScreen();
-
-			//シーンの更新
-			SceneManagerUpdate();
-
-			//裏画面の内容を表画面に反映
-			ScreenFlip();
-
-			//エスケープキーが押されるとループ終了
-			if (GetKeyInputState(KEY_INPUT_ESCAPE) == eRelease)
-			{
-				break;
-			}
+			break;
 		}
 	}
 

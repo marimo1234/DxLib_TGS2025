@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../Utility/Geometry.h"
 #include"../Utility/PadInputManager.h"
@@ -6,7 +6,7 @@
 struct Player
 {
 	Position2D position;
-	Size2D box_size;		//‹éŒ`‚Ì‘å‚«‚³
+	Size2D box_size;		//çŸ©å½¢ã®å¤§ãã•
 	Vector2D velocity;
 	int image;
 	int is_jump;
@@ -16,4 +16,4 @@ void PlayerInit(void);
 void PlayerUpdate(void);
 void PlayerDraw(void);
 const Player* GetPlayer(void);
-void CursolButtonMovement();         // \šƒL[‚ÌˆÚ“®
+void CursolButtonMovement();         // åå­—ã‚­ãƒ¼ã®ç§»å‹•

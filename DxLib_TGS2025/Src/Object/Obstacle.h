@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "../Utility/Geometry.h"
 
@@ -8,10 +8,10 @@
 
 struct Obstacle
 {
-	int is_active;			//—LŒøƒtƒ‰ƒO
-	int image;				//‰æ‘œ
-	Position2D position;	//ˆÊ’uî•ñ
-	Size2D box_size;		//‹éŒ`‚Ì‘å‚«‚³
+	int is_active;			//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
+	int image;				//ç”»åƒ
+	Position2D position;	//ä½ç½®æƒ…å ±
+	Size2D box_size;		//çŸ©å½¢ã®å¤§ãã•
 };
 
 void ObstacleManagerInit(void);

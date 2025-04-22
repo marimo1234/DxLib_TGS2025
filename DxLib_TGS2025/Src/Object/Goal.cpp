@@ -1,4 +1,4 @@
-#include"DxLib.h"
+﻿#include"DxLib.h"
 #include"Goal.h"
 
 void GoalInit(void)
