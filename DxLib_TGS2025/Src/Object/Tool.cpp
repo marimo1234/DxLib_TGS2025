@@ -17,15 +17,15 @@
 
 int pickaxe_img;		//つるはしの画像ハンドル
 int itemframe_img;		//枠の画像ハンドル
-int stonetile_img;		//石の地面の画像ハンドル
+int road_img;		//石の地面の画像ハンドル
 int logtile_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
 int frameselect_x;		//選択枠のｘ座標
 int frameselect_y;		//選択枠のｙ座標
 float pickaxe_angle;	//つるはしの角度
-int stone_x;			
-int stone_y;
+int road_x;			
+int road_y;
 int road_flag;
 int tool_start;
 
@@ -37,8 +37,8 @@ void ToolInit(void)
 	frameselect_x = 952;
 	frameselect_y = 670;
 	tool.item_number = ePickaxe;
-	stone_x = 500;
-	stone_y = 500;
+	road_x = 500;
+	road_y = 500;
 	road_flag = FALSE;
 	tool_start = FALSE;
 
@@ -47,7 +47,7 @@ void ToolInit(void)
 	//ピッケル画像読み込み
 	pickaxe_img=LoadGraph("Resource/images/pickaxe.png");
 	//石の地面画像の読み込み
-	stonetile_img=LoadGraph("Resource/images/stone_tiles.png");
+	road_img=LoadGraph("Resource/images/stone_tiles.png");
 	//丸太の地面画像の読み込み
 	logtile_img = LoadGraph("Resource/images/Log.png");
 	//斧の画像読み込み
@@ -69,7 +69,7 @@ void ToolDraw(void)
 	//つるはしの描画（アイテム枠）
 	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
 	//道路の描画（アイテム枠）
-	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,stonetile_img, TRUE);
+	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,road_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
 	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.4, 0.0, logtile_img , TRUE);
 	//斧の描画（アイテム枠）
@@ -144,7 +144,7 @@ void Draw_Road(void)
 {
 	if (road_flag == TRUE)
 	{
-		DrawRotaGraph(stone_x, stone_y, 0.3, 0.0, stonetile_img, TRUE);
+		DrawRotaGraph(road_x, road_y, 0.3, 0.0, road_img, TRUE);
 	}
 }
 
