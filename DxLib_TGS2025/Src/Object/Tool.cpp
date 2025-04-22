@@ -59,7 +59,7 @@ void ToolInit(void)
 void ToolManagerUpdate(void)
 {
 	Move_Frame();
-	Tool_Start(StartGet());
+	Tool_Start(GetStart());
 }
 
 void ToolDraw(void) 
