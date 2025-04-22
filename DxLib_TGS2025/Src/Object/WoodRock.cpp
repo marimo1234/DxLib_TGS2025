@@ -1,6 +1,7 @@
 ﻿#include "DxLib.h"
 #include "WoodRock.h"
 #include "../Utility/InputManager.h"
+#include"../Utility/PadInputManager.h"
 
 int wood_image[4] = {};
 int rock_image[4] = {};
@@ -42,29 +43,20 @@ void WoodRockUpdate(void)
 //描画処理
 void WoodRockDraw(void)
 {
-
 	DrawRotaGraph(660, 280, 1.0, 0.0, wood_animation, TRUE);
-	DrawRotaGraph(200, 200, 1.0, 0.0, wood_image[0], TRUE);
-	DrawRotaGraph(200, 280, 1.0, 0.0, wood_image[1], TRUE);
-	DrawRotaGraph(200, 360, 1.0, 0.0, wood_image[2], TRUE);
-	DrawRotaGraph(200, 440, 1.0, 0.0, wood_image[3], TRUE);
-
 	DrawRotaGraph(580, 280, 1.0, 0.0, rock_animation, TRUE);
-	DrawRotaGraph(280, 200, 1.0, 0.0, rock_image[0], TRUE);
-	DrawRotaGraph(280, 280, 1.0, 0.0, rock_image[1], TRUE);
-	DrawRotaGraph(280, 360, 1.0, 0.0, rock_image[2], TRUE);
-	DrawRotaGraph(280, 440, 1.0, 0.0, rock_image[3], TRUE);
 }
 
 //Aキーを押したら木の描画する画像を変える
 //後々Hitした回数で木の描画する画像を変えるようにする
 void WoodAnimation(void)
 {
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 		switch (wood_hitcount)
 		{
 		case eHit0:// Hit数0
 			wood_animation = wood_image[0];
-			if (GetKeyInputState(KEY_INPUT_A) == ePress)
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				wood_hitcount = eHit1;
 			}
@@ -72,7 +64,7 @@ void WoodAnimation(void)
 
 		case eHit1:// Hit数1
 			wood_animation = wood_image[1];
-			if (GetKeyInputState(KEY_INPUT_A) == ePress)
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				wood_hitcount = eHit2;
 			}
@@ -81,7 +73,7 @@ void WoodAnimation(void)
 
 		case eHit2:// Hit数2
 			wood_animation = wood_image[2];
-			if (GetKeyInputState(KEY_INPUT_A) == ePress)
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				wood_hitcount = eHit3;
 			}
@@ -89,7 +81,7 @@ void WoodAnimation(void)
 
 		case eHit3:// Hit数3
 			wood_animation = wood_image[3];
-			if (GetKeyInputState(KEY_INPUT_A) == ePress)
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				wood_hitcount = eHit0;     //今だけループするようにしている
 			}
@@ -100,11 +92,13 @@ void WoodAnimation(void)
 
 void RockAnimation(void)
 {
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
 	switch (rock_hitcount)
 	{
 	case eHit0:// Hit数0
 		rock_animation = rock_image[0];
-		if (GetKeyInputState(KEY_INPUT_A) == ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit1;
 		}
@@ -112,7 +106,7 @@ void RockAnimation(void)
 
 	case eHit1:// Hit数1
 		rock_animation = rock_image[1];
-		if (GetKeyInputState(KEY_INPUT_A) == ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit2;
 		}
@@ -121,7 +115,7 @@ void RockAnimation(void)
 
 	case eHit2:// Hit数2
 		rock_animation = rock_image[2];
-		if (GetKeyInputState(KEY_INPUT_A) == ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit3;
 		}
@@ -129,7 +123,7 @@ void RockAnimation(void)
 
 	case eHit3:// Hit数3
 		rock_animation = rock_image[3];
-		if (GetKeyInputState(KEY_INPUT_A) == ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit0;     //今だけループするようにしている
 		}
