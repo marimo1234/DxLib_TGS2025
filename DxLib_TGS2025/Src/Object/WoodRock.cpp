@@ -9,6 +9,7 @@ int wood_animation;
 int rock_animation;
 int wood_hitcount;
 int rock_hitcount;
+int woodrock_start;
 
 WoodRock woodrock;
 
@@ -39,9 +40,15 @@ void WoodRockInit(void)
 //更新
 void WoodRockUpdate(void)
 {
-	//木のアニメーション
-	WoodAnimation();
-	RockAnimation();
+     WoodRockStart(GetStart());
+
+	if (woodrock_start == TRUE)
+	{
+		//木,岩のアニメーション
+		WoodAnimation();
+		RockAnimation();
+	}
+
 }
 
 //描画処理
@@ -139,4 +146,13 @@ void RockAnimation(void)
 const WoodRock* GetWoodRock(void)
 {
 	return &woodrock;
+}
+
+void WoodRockStart(const Start* start)
+{
+	if (start->GameStart == TRUE)
+	{
+		woodrock_start = TRUE;
+	}
+
 }
