@@ -17,16 +17,16 @@
 
 int pickaxe_img;		//つるはしの画像ハンドル
 int itemframe_img;		//枠の画像ハンドル
-int road_img;		//石の地面の画像ハンドル
+int road_img;			//石の地面の画像ハンドル
 int logtile_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
 int frameselect_x;		//選択枠のｘ座標
 int frameselect_y;		//選択枠のｙ座標
 float pickaxe_angle;	//つるはしの角度
-int road_x;			
-int road_y;
-int road_flag;
+int road_x;				//道のｘ座標
+int road_y;				//道のｙ座標
+int road_flag;			//道のフラグ
 int tool_start;
 
 Tool tool;
@@ -58,7 +58,10 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
-	Move_Frame();
+	if (tool_start == TRUE)
+	{
+		Move_Frame();
+	}
 	Tool_Start(GetStart());
 }
 
