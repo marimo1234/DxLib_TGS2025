@@ -14,7 +14,7 @@ enum eWoodRockState // Hit数の列挙
 
 struct WoodRock
 {
-	int item_num;
+	int item_number;
 };
 void WoodRockInit(void);
 void WoodRockUpdate(void);
