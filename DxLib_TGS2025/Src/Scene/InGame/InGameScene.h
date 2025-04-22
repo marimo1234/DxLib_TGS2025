@@ -19,7 +19,7 @@ struct Start
 };
 
 void StarButton();
-const Start* StartGet(void);
+const Start* GetStart(void);
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);

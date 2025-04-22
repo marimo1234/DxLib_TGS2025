@@ -103,7 +103,7 @@ void InGameSceneDraw(void)
 	//プレイヤーの描画
 	PlayerDraw();
 }
-const Start* StartGet(void)
+const Start* GetStart(void)
 {
 	return &start;
 }

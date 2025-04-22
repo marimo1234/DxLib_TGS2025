@@ -25,7 +25,7 @@ void CarInit(void)
 
 void CarManagerUpdate(void)
 {
-	CarStart(StartGet());
+	CarStart(GetStart());
 
 	if (carstart == TRUE)
 	{
