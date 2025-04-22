@@ -10,9 +10,13 @@ int rock_animation;
 int wood_hitcount;
 int rock_hitcount;
 
+WoodRock woodrock;
+
 //初期化
 void WoodRockInit(void)
 {
+	woodrock.item_num = 0;
+
 	//Hit数の初期化
 	wood_hitcount = eHit0;
 	rock_hitcount = eHit0;
@@ -130,4 +134,9 @@ void RockAnimation(void)
 		break;
 	}
 
+}
+
+const WoodRock* GetWoodRock(void)
+{
+	return &woodrock;
 }
