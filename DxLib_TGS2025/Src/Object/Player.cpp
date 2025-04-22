@@ -106,7 +106,7 @@ void CursolButtonMovement()
 		if (numy > -1)
 		{
 			numy--;
-			player.velocity.y = +75.0f;
+			player.velocity.y = 75.0f;
 		}
 	}
 	else
