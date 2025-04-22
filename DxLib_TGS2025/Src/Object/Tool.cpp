@@ -1,35 +1,36 @@
-#include "DxLib.h"
+ï»¿#include "DxLib.h"
 #include "Tool.h"
 #include "../Utility/InputManager.h"
+#include "../Utility/PadInputManager.h"
 
-#define PICKAXE_X		(1175)		//‚Â‚é‚Í‚µxÀ•W
-#define PICKAXE_Y		(675)		//‚Â‚é‚Í‚µyÀ•W
-#define FRAME_X			(1400)		//˜gxÀ•W
-#define FRAME_Y			(1150)		//˜gyÀ•W
-#define STONETILE_X		(950)		//Î‚Ì’n–ÊxÀ•W
-#define STONETILE_Y		(655)		//Î‚Ì’n–ÊyÀ•W
-#define LOGTILE_X		(1030)		//ŠÛ‘¾‚Ì’n–ÊxÀ•W
-#define LOGTILE_Y		(675)		//ŠÛ‘¾‚Ì’n–ÊyÀ•W
-#define AX_X			(1085)		//•€xÀ•W
-#define AX_Y			(670)		//•€yÀ•W
+#define PICKAXE_X		(1175)		//ã¤ã‚‹ã¯ã—xåº§æ¨™
+#define PICKAXE_Y		(675)		//ã¤ã‚‹ã¯ã—yåº§æ¨™
+#define FRAME_X			(1400)		//æ xåº§æ¨™
+#define FRAME_Y			(1150)		//æ yåº§æ¨™
+#define STONETILE_X		(950)		//çŸ³ã®åœ°é¢xåº§æ¨™
+#define STONETILE_Y		(655)		//çŸ³ã®åœ°é¢yåº§æ¨™
+#define LOGTILE_X		(1030)		//ä¸¸å¤ªã®åœ°é¢xåº§æ¨™
+#define LOGTILE_Y		(675)		//ä¸¸å¤ªã®åœ°é¢yåº§æ¨™
+#define AX_X			(1085)		//æ–§xåº§æ¨™
+#define AX_Y			(670)		//æ–§yåº§æ¨™
 
-int pickaxe_img;		//‚Â‚é‚Í‚µ‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int itemframe_img;		//˜g‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int stonetile_img;		//Î‚Ì’n–Ê‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int logtile_img;		//ŠÛ‘¾‚Ì’n–Ê‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int ax_img;				//•€‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int frameselect_img;	//‘I‘ğ˜giƒAƒCƒeƒ€j‚Ì‰æ‘œƒnƒ“ƒhƒ‹
-int frameselect_x;		//‘I‘ğ˜g‚Ì‚˜À•W
-int frameselect_y;		//‘I‘ğ˜g‚Ì‚™À•W
-int item_number;		//ƒAƒCƒeƒ€ƒiƒ“ƒo[
-float pickaxe_angle;	//‚Â‚é‚Í‚µ‚ÌŠp“x
+int pickaxe_img;		//ã¤ã‚‹ã¯ã—ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int itemframe_img;		//æ ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int stonetile_img;		//çŸ³ã®åœ°é¢ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int logtile_img;		//ä¸¸å¤ªã®åœ°é¢ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int ax_img;				//æ–§ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int frameselect_img;	//é¸æŠæ ï¼ˆã‚¢ã‚¤ãƒ†ãƒ ï¼‰ã®ç”»åƒãƒãƒ³ãƒ‰ãƒ«
+int frameselect_x;		//é¸æŠæ ã®ï½˜åº§æ¨™
+int frameselect_y;		//é¸æŠæ ã®ï½™åº§æ¨™
+int item_number;		//ã‚¢ã‚¤ãƒ†ãƒ ãƒŠãƒ³ãƒãƒ¼
+float pickaxe_angle;	//ã¤ã‚‹ã¯ã—ã®è§’åº¦
 int stone_x;
 int stone_y;
 int road_flag;
 
 void ToolInit(void)
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	frameselect_x = 952;
 	frameselect_y = 670;
 	item_number = 3;
@@ -37,17 +38,17 @@ void ToolInit(void)
 	stone_y = 500;
 	road_flag = FALSE;
 
-	//ƒAƒCƒeƒ€˜g‰æ‘œ“Ç‚İ‚İ
+	//ã‚¢ã‚¤ãƒ†ãƒ æ ç”»åƒèª­ã¿è¾¼ã¿
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
-	//ƒsƒbƒPƒ‹‰æ‘œ“Ç‚İ‚İ
+	//ãƒ”ãƒƒã‚±ãƒ«ç”»åƒèª­ã¿è¾¼ã¿
 	pickaxe_img=LoadGraph("Resource/images/pickaxe.png");
-	//Î‚Ì’n–Ê‰æ‘œ‚Ì“Ç‚İ‚İ
+	//çŸ³ã®åœ°é¢ç”»åƒã®èª­ã¿è¾¼ã¿
 	stonetile_img=LoadGraph("Resource/images/stone_tiles.png");
-	//ŠÛ‘¾‚Ì’n–Ê‰æ‘œ‚Ì“Ç‚İ‚İ
+	//ä¸¸å¤ªã®åœ°é¢ç”»åƒã®èª­ã¿è¾¼ã¿
 	logtile_img = LoadGraph("Resource/images/Log.png");
-	//•€‚Ì‰æ‘œ“Ç‚İ‚İ
+	//æ–§ã®ç”»åƒèª­ã¿è¾¼ã¿
 	ax_img = LoadGraph("Resource/images/ax.png");
-	//‘I‘ğ˜g(ƒAƒCƒeƒ€)‚Ì‰æ‘œ“Ç‚İ‚İ
+	//é¸æŠæ (ã‚¢ã‚¤ãƒ†ãƒ )ã®ç”»åƒèª­ã¿è¾¼ã¿
 	frameselect_img = LoadGraph("Resource/images/frameselect.png");
 }
 
@@ -58,50 +59,53 @@ void ToolManagerUpdate(void)
 
 void ToolDraw(void) 
 {
-	//ƒAƒCƒeƒ€˜g‚Ì•`‰æ
+	//ã‚¢ã‚¤ãƒ†ãƒ æ ã®æç”»
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, itemframe_img, TRUE);
-	//‚Â‚é‚Í‚µ‚Ì•`‰æiƒAƒCƒeƒ€˜gj
+	//ã¤ã‚‹ã¯ã—ã®æç”»ï¼ˆã‚¢ã‚¤ãƒ†ãƒ æ ï¼‰
 	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
-	//“¹˜H‚Ì•`‰æiƒAƒCƒeƒ€˜gj
+	//é“è·¯ã®æç”»ï¼ˆã‚¢ã‚¤ãƒ†ãƒ æ ï¼‰
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,stonetile_img, TRUE);
-	//ŠÛ‘¾‚Ì’n–Ê‚Ì•`‰æiƒAƒCƒeƒ€˜gj
+	//ä¸¸å¤ªã®åœ°é¢ã®æç”»ï¼ˆã‚¢ã‚¤ãƒ†ãƒ æ ï¼‰
 	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.4, 0.0, logtile_img , TRUE);
-	//•€‚Ì•`‰æiƒAƒCƒeƒ€˜gj
+	//æ–§ã®æç”»ï¼ˆã‚¢ã‚¤ãƒ†ãƒ æ ï¼‰
 	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
-	//˜g‘I‘ğ‚Ì•`‰æiƒAƒCƒeƒ€˜gj
+	//æ é¸æŠã®æç”»ï¼ˆã‚¢ã‚¤ãƒ†ãƒ æ ï¼‰
 	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
-	//“¹˜H•`‰æ
+	//é“è·¯æç”»
 	Draw_Road();
 }
 
 void Move_Frame(void)
 {
-	//“¹˜Hİ’u
+	//é“è·¯è¨­ç½®
 	Put_Road();
 
-	//‰E–îˆó‚ğ‰Ÿ‚µ‚½‚çƒAƒCƒeƒ€‚ğ‰E‚É
-	if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
-	{
-		item_number++;
-		if (item_number > 3)
-		{
-			item_number = 0;
-		}
-	}
-	//¶–îˆó‚ğ‰Ÿ‚µ‚½‚çƒAƒCƒeƒ€‚ğ¶‚É
-	if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
-	{
-		item_number--;
-		if (item_number < 0)
-		{
-			item_number = 3;
-		}
-	}
-	//xÀ•W•ÏX
+	////å³çŸ¢å°ã‚’æŠ¼ã—ãŸã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å³ã«
+	//if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
+	//{
+	//	item_number++;
+	//	if (item_number > 3)
+	//	{
+	//		item_number = 0;
+	//	}
+	//}
+	////å·¦çŸ¢å°ã‚’æŠ¼ã—ãŸã‚‰ã‚¢ã‚¤ãƒ†ãƒ ã‚’å·¦ã«
+	//if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
+	//{
+	//	item_number--;
+	//	if (item_number < 0)
+	//	{
+	//		item_number = 3;
+	//	}
+	//}
+	
+
+	
+	//xåº§æ¨™å¤‰æ›´
 	frameselect_x = 952 + (item_number * 73);
 }
 
-//“¹˜H‚ğ’u‚­
+//é“è·¯ã‚’ç½®ã
 void Put_Road(void)
 {
 	if (GetKeyInputState(KEY_INPUT_P) == ePress)
@@ -113,7 +117,7 @@ void Put_Road(void)
 	}
 }
 
-//’u‚¢‚½“¹˜H•`‰æ
+//ç½®ã„ãŸé“è·¯æç”»
 void Draw_Road(void)
 {
 	if (road_flag == TRUE)

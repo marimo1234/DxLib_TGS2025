@@ -42,22 +42,3 @@ void ShutDown(void)
 	//Dxライブラリ使用を終了
 	DxLib_End();
 }
-
-void CalcFrameTime(void)
-{
-	//現在の起動時間を記録(μ秒)
-	now_time = GetNowHiPerformanceCount();
-
-	//（現在-前回）→１フレーム当たりの時間
-	//μ秒から秒に変換
-	delta_second = (float)(now_time - old_time) * 1.0e-6f;
-
-	//前回時間の更新
-	old_time = now_time;
-}
-
-//１フレーム当たりの時間
-const float GetDeltaSecond(void)
-{
-	return delta_second;
-}
