@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define		D_WINDOW_SIZE_X (1280)
 #define		D_WINDOW_SIZE_Y	(720)

@@ -1,4 +1,4 @@
-#include "System.h"
+ï»¿#include "System.h"
 #include "ProjectConfig.h"
 #include "DxLib.h"
 
@@ -9,54 +9,54 @@ float delta_second;
 
 int WakeUp(void)
 {
-	//Log.txt‚Ì¶¬‚ð‚µ‚È‚¢
+	//Log.txtã®ç”Ÿæˆã‚’ã—ãªã„
 	SetOutApplicationLogValidFlag(TRUE);
-	//ƒEƒBƒ“ƒhƒEƒ‚[ƒh‚Å‹N“®
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¢ãƒ¼ãƒ‰ã§èµ·å‹•
 	ChangeWindowMode(TRUE);
-	//ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ðŒˆ‚ß‚é
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’æ±ºã‚ã‚‹
 	SetGraphMode(D_WINDOW_SIZE_X, D_WINDOW_SIZE_Y, D_COLOR_BIT);
-	//ƒEƒBƒ“ƒhƒE‚ªƒAƒNƒeƒBƒu‚Å‚È‚­‚Ä‚à“®‚­
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã§ãªãã¦ã‚‚å‹•ã
 	SetAlwaysRunFlag(TRUE);
-	//Dxƒ‰ƒCƒuƒ‰ƒŠ‰Šú‰»
+	//Dxãƒ©ã‚¤ãƒ–ãƒ©ãƒªåˆæœŸåŒ–
 	if (DxLib_Init() == -1)
 	{
-		//ˆÈã‚ð’Ê’m
+		//ä»¥ä¸Šã‚’é€šçŸ¥
 		return FALSE;
 	}
-	//— ‰æ–Ê‚©‚ç•`‰æ‚ðŽn‚ß‚é
+	//è£ç”»é¢ã‹ã‚‰æç”»ã‚’å§‹ã‚ã‚‹
 	SetDrawScreen(DX_SCREEN_BACK);
 
 
-	//ƒOƒ[ƒoƒ‹•Ï”‚Ì‰Šú‰»
+	//ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã®åˆæœŸåŒ–
 	old_time = 0LL;
 	now_time = 0LL;
 	delta_second = 0.0f;
 
-	//³í‚É‹N“®‚Å‚«‚½‚±‚Æ‚ð’Ê’m‚·‚é
+	//æ­£å¸¸ã«èµ·å‹•ã§ããŸã“ã¨ã‚’é€šçŸ¥ã™ã‚‹
 	return TRUE;
 }
 
 
 void ShutDown(void)
 {
-	//Dxƒ‰ƒCƒuƒ‰ƒŠŽg—p‚ðI—¹
+	//Dxãƒ©ã‚¤ãƒ–ãƒ©ãƒªä½¿ç”¨ã‚’çµ‚äº†
 	DxLib_End();
 }
 
 void CalcFrameTime(void)
 {
-	//Œ»Ý‚Ì‹N“®ŽžŠÔ‚ð‹L˜^(ƒÊ•b)
+	//ç¾åœ¨ã®èµ·å‹•æ™‚é–“ã‚’è¨˜éŒ²(Î¼ç§’)
 	now_time = GetNowHiPerformanceCount();
 
-	//iŒ»Ý-‘O‰ñj¨‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŽžŠÔ
-	//ƒÊ•b‚©‚ç•b‚É•ÏŠ·
+	//ï¼ˆç¾åœ¨-å‰å›žï¼‰â†’ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“
+	//Î¼ç§’ã‹ã‚‰ç§’ã«å¤‰æ›
 	delta_second = (float)(now_time - old_time) * 1.0e-6f;
 
-	//‘O‰ñŽžŠÔ‚ÌXV
+	//å‰å›žæ™‚é–“ã®æ›´æ–°
 	old_time = now_time;
 }
 
-//‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŽžŠÔ
+//ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“
 const float GetDeltaSecond(void)
 {
 	return delta_second;

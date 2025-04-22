@@ -1,4 +1,4 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "SceneType.h"
 
 #include "../System/System.h"
@@ -15,22 +15,22 @@ void SceneManagerDraw(void);
 void ChangeScene(eSceneType new_scene_type);
 void SceneInit(eSceneType new_scene_type);
 
-//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‚Ì‰Šú‰»
+//ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã®åˆæœŸåŒ–
 void SceneManagerInitialize(void)
 {
-	//Œp‘±ó‘Ô‚É‚·‚é
+	//ç¶™ç¶šçŠ¶æ…‹ã«ã™ã‚‹
 	is_end_flag = 0;
 
-	//Å‰‚ÌƒV[ƒ“‚Ìİ’è
+	//æœ€åˆã®ã‚·ãƒ¼ãƒ³ã®è¨­å®š
 	ChangeScene(eTitle);
 }
 
 void SceneManagerUpdate(void)
 {
-	//Ÿ‚ÌƒV[ƒ“î•ñ‚ğŠi”[‚·‚é•Ï”
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³æƒ…å ±ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°
 	eSceneType next_scene_type = eEnd;
 
-	//ƒV[ƒ“‚ÌXV
+	//ã‚·ãƒ¼ãƒ³ã®æ›´æ–°
 	switch (current_scene_type)
 	{
 	case eTitle:
@@ -50,13 +50,13 @@ void SceneManagerUpdate(void)
 		break;
 	}
 
-	//ƒV[ƒ“‚Ì•`‰æ
+	//ã‚·ãƒ¼ãƒ³ã®æç”»
 	SceneManagerDraw();
 
-	//Œ»İ‚ÌƒV[ƒ“‚Ìƒ^ƒCƒv‚ÆŸ‚ÌƒV[ƒ“‚Ìƒ^ƒCƒv‚ğ”ä‚×‚é
+	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã®ã‚¿ã‚¤ãƒ—ã¨æ¬¡ã®ã‚·ãƒ¼ãƒ³ã®ã‚¿ã‚¤ãƒ—ã‚’æ¯”ã¹ã‚‹
 	if (current_scene_type != next_scene_type)
 	{
-		//ˆá‚Á‚Ä‚¢‚½‚çAƒV[ƒ“Ø‚è‘Ö‚¦‚ğs‚¤
+		//é•ã£ã¦ã„ãŸã‚‰ã€ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚’è¡Œã†
 		ChangeScene(next_scene_type);
 	}
 }
@@ -91,7 +91,7 @@ void SceneManagerDraw(void)
 
 void ChangeScene(eSceneType new_scene_type)
 {
-	//‚P“x‚¾‚¯Às‚µ‚Ä‚Ù‚µ‚¢“à—e
+	//ï¼‘åº¦ã ã‘å®Ÿè¡Œã—ã¦ã»ã—ã„å†…å®¹
 	static int is_once = 1;
 	if (is_once == 1)
 	{
@@ -99,26 +99,26 @@ void ChangeScene(eSceneType new_scene_type)
 		SceneInit(new_scene_type);
 		return;
 	}
-	//`‚P“x‚¾‚¯Às‚µ‚Ä‚Ù‚µ‚¢“à—e
+	//ï½ï¼‘åº¦ã ã‘å®Ÿè¡Œã—ã¦ã»ã—ã„å†…å®¹
 
 
-	//‚Q‰ñ–ÚˆÈ~‚ÌŒÄ‚Ño‚µ«
+	//ï¼’å›ç›®ä»¥é™ã®å‘¼ã³å‡ºã—æ™‚â†“
 
-	//ƒGƒ“ƒh‰æ–Ê‚ªŒÄ‚Ño‚³‚ê‚½‚çƒ‹[ƒvI—¹
+	//ã‚¨ãƒ³ãƒ‰ç”»é¢ãŒå‘¼ã³å‡ºã•ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—çµ‚äº†
 	if (new_scene_type == eEnd)
 	{
 		is_end_flag = 1;
 		return;
 	}
 
-	//ŠeƒV[ƒ“‚Ì‰Šú‰»
+	//å„ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 	SceneInit(new_scene_type);
 
-	//Œ»İ‚ÌƒV[ƒ“ƒ^ƒCƒv‚Ì•ÏX
+	//ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚¿ã‚¤ãƒ—ã®å¤‰æ›´
 	current_scene_type = new_scene_type;
 }
 
-//ŠeƒV[ƒ“‚Ì‰Šú‰»ˆ—
+//å„ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–å‡¦ç†
 void SceneInit(eSceneType new_scene_type)
 {
 	switch (new_scene_type)

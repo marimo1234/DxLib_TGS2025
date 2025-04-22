@@ -1,28 +1,28 @@
-#include"DxLib.h"
+ï»¿#include"DxLib.h"
 #include"PadInputManager.h"
 
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
+// é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®åˆæœŸåŒ–
 PadInputManager* PadInputManager::instance = nullptr;
 
-// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 PadInputManager* PadInputManager::GetInstance()
 {
 	if (instance == nullptr)
 	{
-		// Å‰‚Ì1‰ñ‚¾‚¯ƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
+		// æœ€åˆã®1å›ã ã‘ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 		instance = new PadInputManager();
 	}
 
-	// À‘Ì‚ğ•Ô‚·
+	// å®Ÿä½“ã‚’è¿”ã™
 	return instance;
 }
 
-// ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìíœ
+// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å‰Šé™¤
 void PadInputManager::DeleteInstance()
 {
 	if (instance != nullptr)
 	{
-		// ƒƒ‚ƒŠ‚ÌŠJ•ú
+		// ãƒ¡ãƒ¢ãƒªã®é–‹æ”¾
 		delete instance;
 		instance = nullptr;
 	}
@@ -30,43 +30,43 @@ void PadInputManager::DeleteInstance()
 
 void PadInputManager::Update()
 {
-	// ƒQ[ƒ€ƒpƒbƒh‚Ìî•ñ
+	// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®æƒ…å ±
 	XINPUT_STATE input;
 
-	// ƒQ[ƒ€ƒpƒbƒh‚Ìó‘Ô‚ğæ“¾
+	// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®çŠ¶æ…‹ã‚’å–å¾—
 	GetJoypadXInputState(DX_INPUT_PAD1, &input);
 
-	// ƒƒ‚ƒŠ—Ìˆæ‚ğƒRƒs[
+	// ãƒ¡ãƒ¢ãƒªé ˜åŸŸã‚’ã‚³ãƒ”ãƒ¼
 	memcpy(old_button, now_button, (sizeof(char) * PAD_BUTTON_MAX));
 	for (int i = 0; i < PAD_BUTTON_MAX; i++)
 	{
-		// Œ»İ‰Ÿ‚µ‚Ä‚¢‚éƒ{ƒ^ƒ“‚ÌXV
+		// ç¾åœ¨æŠ¼ã—ã¦ã„ã‚‹ãƒœã‚¿ãƒ³ã®æ›´æ–°
 		now_button[i] = input.Buttons[i];
 	}
 
-	// ¶ƒgƒŠƒK[‚ÌXV
+	// å·¦ãƒˆãƒªã‚¬ãƒ¼ã®æ›´æ–°
 	left_trigger = (int)input.LeftTrigger;
 
-	// ‰EƒgƒŠƒK[‚ÌXV
+	// å³ãƒˆãƒªã‚¬ãƒ¼ã®æ›´æ–°
 	right_trigger = (int)input.RightTrigger;
 }
 
-// ƒ{ƒ^ƒ“‚Ì“ü—Íó‘Ô‚ğæ“¾
+// ãƒœã‚¿ãƒ³ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—
 ePadInputState PadInputManager::GetButtonInputState(int button)
 {
-	// ƒ{ƒ^ƒ““ü—Í‚ª—LŒø‚È”ÍˆÍ‚¾‚Á‚½‚çˆ—‚ğs‚¤
+	// ãƒœã‚¿ãƒ³å…¥åŠ›ãŒæœ‰åŠ¹ãªç¯„å›²ã ã£ãŸã‚‰å‡¦ç†ã‚’è¡Œã†
 	if (CheckButtonRange(button)==TRUE)
 	{
 		if (old_button[button] == TRUE)
 		{
 			if (now_button[button] == TRUE)
 			{
-				// ‰Ÿ‚µ‘±‚¯‚Ä‚¢‚é
+				// æŠ¼ã—ç¶šã‘ã¦ã„ã‚‹
 				return ePadInputState::eHold;
 			}
 			else
 			{
-				// —£‚µ‚½uŠÔ
+				// é›¢ã—ãŸç¬é–“
 				return ePadInputState::eRelease;
 			}
 		}
@@ -74,35 +74,35 @@ ePadInputState PadInputManager::GetButtonInputState(int button)
 		{
 			if (now_button[button] == TRUE)
 			{
-				// ‰Ÿ‚µ‚½uŠÔ
+				// æŠ¼ã—ãŸç¬é–“
 				return ePadInputState::ePress;
 			}
 			else
 			{
-				// –¢“ü—Í
+				// æœªå…¥åŠ›
 				return ePadInputState::eNone;
 			}
 		}
 	}
-	// –¢“ü—Í
+	// æœªå…¥åŠ›
 	return ePadInputState::eNone;
 }
 
-// ¶ƒgƒŠƒK[‚Ì’l‚ğæ“¾
+// å·¦ãƒˆãƒªã‚¬ãƒ¼ã®å€¤ã‚’å–å¾—
 int PadInputManager::GetLeftTrigger()const
 {
 	return left_trigger;
 }
 
-// ‰EƒgƒŠƒK[‚Ì’l‚ğæ“¾
+// å³ãƒˆãƒªã‚¬ãƒ¼ã®å€¤ã‚’å–å¾—
 int PadInputManager::GetRightTrigger()const
 {
 	return right_trigger;
 }
 
-// “ü—Í‚ª—LŒø‚È”ÍˆÍ‰»ƒ`ƒFƒbƒN
+// å…¥åŠ›ãŒæœ‰åŠ¹ãªç¯„å›²åŒ–ãƒã‚§ãƒƒã‚¯
 bool PadInputManager::CheckButtonRange(int button)
 {
-	// Œ»İ‚Ì“ü—Í’l‚ªtrue‚©false‚©•Ô‚·
+	// ç¾åœ¨ã®å…¥åŠ›å€¤ãŒtrueã‹falseã‹è¿”ã™
 	return (0 <= button && button < PAD_BUTTON_MAX);
 }
