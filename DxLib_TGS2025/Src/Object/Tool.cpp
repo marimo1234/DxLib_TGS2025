@@ -79,28 +79,10 @@ void Move_Frame(void)
 {
 	//道路設置
 	Put_Road();
-
-	////右矢印を押したらアイテムを右に
-	//if (GetKeyInputState(KEY_INPUT_RIGHT) == ePress)
-	//{
-	//	item_number++;
-	//	if (item_number > 3)
-	//	{
-	//		item_number = 0;
-	//	}
-	//}
-	////左矢印を押したらアイテムを左に
-	//if (GetKeyInputState(KEY_INPUT_LEFT) == ePress)
-	//{
-	//	item_number--;
-	//	if (item_number < 0)
-	//	{
-	//		item_number = 3;
-	//	}
-	//}
 	
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	//RBを押したら右に移動
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
 	{
 		item_number++;
@@ -109,6 +91,7 @@ void Move_Frame(void)
 				item_number = 0;
 			}
 	}
+	//LBを押したら左に移動
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::ePress)
 	{
 		item_number--;
