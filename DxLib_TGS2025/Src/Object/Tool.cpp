@@ -2,6 +2,7 @@
 #include "Tool.h"
 #include "../Utility/InputManager.h"
 #include "../Utility/PadInputManager.h"
+#include"../Scene/InGame/InGameScene.h"
 
 #define PICKAXE_X		(1175)		//つるはしx座標
 #define PICKAXE_Y		(675)		//つるはしy座標
@@ -22,21 +23,24 @@ int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
 int frameselect_x;		//選択枠のｘ座標
 int frameselect_y;		//選択枠のｙ座標
-int item_number;		//アイテムナンバー
 float pickaxe_angle;	//つるはしの角度
-int stone_x;
+int stone_x;			
 int stone_y;
 int road_flag;
+int tool_start;
+
+Tool tool;
 
 void ToolInit(void)
 {
 	//初期化
 	frameselect_x = 952;
 	frameselect_y = 670;
-	item_number = 3;
+	tool.item_number = ePickaxe;
 	stone_x = 500;
 	stone_y = 500;
 	road_flag = FALSE;
+	tool_start = FALSE;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -55,6 +59,7 @@ void ToolInit(void)
 void ToolManagerUpdate(void)
 {
 	Move_Frame();
+	Tool_Start(StartGet());
 }
 
 void ToolDraw(void) 
@@ -79,30 +84,47 @@ void Move_Frame(void)
 {
 	//道路設置
 	Put_Road();
-	
+
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//RBを押したら右に移動
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
 	{
-		item_number++;
-			if (item_number > 3)
-			{
-				item_number = 0;
-			}
+		switch (tool.item_number)
+		{
+		case eRoad:
+			tool.item_number = eLog;
+			break;
+		case eLog:
+			tool.item_number = eAx;
+			break;
+		case eAx:
+			tool.item_number = ePickaxe;
+			break;
+		case ePickaxe:
+			tool.item_number = eRoad;
+			break;
+		}
 	}
-	//LBを押したら左に移動
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::ePress)
 	{
-		item_number--;
-			if (item_number < 0)
-			{
-				item_number = 3;
-			}
+		switch (tool.item_number)
+		{
+		case eRoad:
+			tool.item_number = ePickaxe;
+			break;
+		case eLog:
+			tool.item_number = eRoad;
+			break;
+		case eAx:
+			tool.item_number = eLog;
+			break;
+		case ePickaxe:
+			tool.item_number = eAx;
+			break;
+		}
 	}
-	
 	//x座標変更
-	frameselect_x = 952 + (item_number * 73);
+	frameselect_x = 952 + (tool.item_number * 73);
 }
 
 //道路を置く
@@ -110,7 +132,7 @@ void Put_Road(void)
 {
 	if (GetKeyInputState(KEY_INPUT_P) == ePress)
 	{
-		if (item_number == 0)
+		if (tool.item_number == 0)
 		{ 
 			road_flag = TRUE;
 		}
@@ -123,5 +145,14 @@ void Draw_Road(void)
 	if (road_flag == TRUE)
 	{
 		DrawRotaGraph(stone_x, stone_y, 0.3, 0.0, stonetile_img, TRUE);
+	}
+}
+
+//ゲームスタート受け取り
+void Tool_Start(const Start* start)
+{
+	if (start->GameStart == TRUE)
+	{
+		tool_start = TRUE;
 	}
 }
