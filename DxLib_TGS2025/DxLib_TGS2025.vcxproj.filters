@@ -11,7 +11,7 @@
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
     <ClCompile Include="Src\Utility\InputManager.cpp" />
     <ClCompile Include="Src\Object\Obstacle.cpp" />
-    <ClCompile Include="Src\Object\Cursorcpp" />
+    <ClCompile Include="Src\Object\Cursor.cpp" />
     <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
     <ClCompile Include="Src\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\System\System.cpp" />

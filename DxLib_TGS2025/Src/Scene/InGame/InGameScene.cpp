@@ -44,7 +44,7 @@ void InGameSceneInit(void)
 		ToolInit();
 		//車の初期化
 		CarInit();
-		//プレイヤーの初期化
+		//カーソルの初期化
 		CursorInit();
 		//ゴールの読み込み
 		GoalInit();
@@ -62,7 +62,7 @@ void InGameSceneInit(void)
 		ToolInit();
 		//車の初期化
 		CarInit();
-		//プレイヤーの初期化
+		//カーソルの初期化
 		CursorInit();
 		break;
 	case eThree:
@@ -78,7 +78,7 @@ void InGameSceneInit(void)
 		ToolInit();
 		//車の初期化
 		CarInit();
-		//プレイヤーの初期化
+		//カーソルの初期化
 		CursorInit();
 		break;
 	case eFour:
@@ -94,7 +94,7 @@ void InGameSceneInit(void)
 		ToolInit();
 		//車の初期化
 		CarInit();
-		//プレイヤーの初期化
+		//カーソルの初期化
 		CursorInit();
 		break;
 	case eFive:
@@ -110,7 +110,7 @@ void InGameSceneInit(void)
 		ToolInit();
 		//車の初期化
 		CarInit();
-		//プレイヤーの初期化
+		//カーソルの初期化
 		CursorInit();
 		break;
 	default:
@@ -128,7 +128,7 @@ void InGameSceneInit(void)
 	ToolInit();
 	//車の初期化
 	CarInit();
-	//プレイヤーの初期化
+	//カーソルの初期化
 	CursorInit();
 
 }
@@ -145,7 +145,7 @@ eSceneType InGameSceneUpdate()
 	ToolManagerUpdate();
 	//車の更新
 	CarManagerUpdate();
-	//プレイヤーの更新
+	//カーソルの更新
 	CursorUpdate();
 	//スタートボタン
 	StarButton();
@@ -190,10 +190,10 @@ void InGameSceneDraw(void)
 	//車の描画
 	CarDraw();
 
-	//プレイヤーの描画
+	//カーソルの描画
 	CursorDraw();
 
-	//ごーるの描画
+	//ゴールの描画
 	GoalDraw();
 }
 const Start* GetStart(void)
@@ -231,6 +231,12 @@ void HitCheck(const Cursor* player, const Obstacle* obstacle, int index)
 		}
 	}
 }
+           //今のところどこで使うかわかんない↑↑↑↑↑
+
+
+
+
+
 
 //インゲームBGM再生
 void PlayBgm(void)

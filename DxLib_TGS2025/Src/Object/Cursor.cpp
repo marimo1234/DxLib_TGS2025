@@ -17,7 +17,7 @@ int aif = 0;
 
 
 
-//プレイヤーの初期化
+//カーソルの初期化
 void CursorInit(void)
 {
 	//初期設定
@@ -40,21 +40,21 @@ void CursorInit(void)
 	//player.image = run_animation[animation_num];
 }
 
-//プレイヤーの更新
+//カーソルの更新
 void CursorUpdate(void)
 {
 	CursolButtonMovement();
 
 }
 
-//プレイヤーの描画
+//カーソルの描画
 void CursorDraw(void)
 {
 	DrawGraph(cursor.position.x, cursor.position.y, cursor_image, TRUE);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 }
 
-//構造体Player
+//構造体Cursor
 const Cursor* GetCursor1(void)
 {
 	return &cursor;
@@ -118,11 +118,11 @@ void CursolButtonMovement()
 		cursor.velocity.y = 0.0f;
 	}
 
-	// プレイヤー移動
+	// カーソル移動
 	cursor.position.x += cursor.velocity.x;
 	cursor.position.y += cursor.velocity.y;
 }
 
-// プレイヤーがいるレーンを取得する
+// カーソルがいるレーンを取得する
 
 
