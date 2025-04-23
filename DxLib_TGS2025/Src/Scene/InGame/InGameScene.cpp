@@ -16,7 +16,7 @@
 
 #define D_SCROOL_SPEED		(200.0f)
 
-void HitCheck(const Cursor* player, const Obstacle* obstacle, int index);
+void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
 Start start;

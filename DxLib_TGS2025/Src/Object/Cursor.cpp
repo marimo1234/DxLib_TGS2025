@@ -5,7 +5,18 @@
 #include "DxLib.h"
 
 //////////////////////////////////////
-/*PlayerからCursorに名前全部変えたよ*/
+//颯馬が変えた内容
+/*
+　PlayerからCursorに名前全部変えた
+
+　DrawGraphからDrawRotaGraphFに変えた
+　DrawGraphは左上が（0，0)だけどDrawRotaGraphFは中心が（0.0）だから初期位置も変えた
+ 　　　　　　　　　　　　　　　　　　　　　 ↑座標の変数がFloat型だからF入ってる 
+  
+  GetCursorって名前の関数は開発者？が定義してるっぽいから
+  GetCursor1って名前にしてる
+
+*/
 //////////////////////////////////////
 
 Cursor cursor;
@@ -22,8 +33,8 @@ void CursorInit(void)
 {
 	//初期設定
 	cursor_image = {};
-	cursor.position.x = 575.0f;				//初期位置（Ｘ）
-	cursor.position.y = 340.0f;				//初期位置（Ｙ）
+	cursor.position.x = 615.0f;				//初期位置（Ｘ）
+	cursor.position.y = 380.0f;				//初期位置（Ｙ）
 	cursor.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
@@ -50,7 +61,7 @@ void CursorUpdate(void)
 //カーソルの描画
 void CursorDraw(void)
 {
-	DrawGraph(cursor.position.x, cursor.position.y, cursor_image, TRUE);
+	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 }
 

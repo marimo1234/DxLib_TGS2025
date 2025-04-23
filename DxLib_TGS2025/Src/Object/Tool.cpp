@@ -33,7 +33,9 @@ int tool_start;
 
 Tool tool;
 
-void ItemNumCheck(const WoodRock* woodrock);
+
+
+void ItemNumCheck(const Wood* wood, const Rock* rock);
 
 void ToolInit(void)
 {
@@ -86,7 +88,7 @@ void ToolDraw(void)
 	//道路描画
 	Draw_Road();
 
-	ItemNumCheck(GetWoodRock());
+	ItemNumCheck(GetWood(), GetRock());
 }
 
 void Move_Frame(void)
@@ -171,8 +173,9 @@ const Tool* Get_Tool(void)
 	return &tool;
 }
 
-void ItemNumCheck(const WoodRock*woodrock)
+void ItemNumCheck(const Wood*wood,const Rock*rock)
 {
 	/*DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->rock_item_num);*/
-	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->rock_item_num);
+	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);
+	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);
 }
