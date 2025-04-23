@@ -1,6 +1,6 @@
 ﻿#include "InGameScene.h"
 #include "../../Utility/InputManager.h"
-#include "../../Object/Player.h"
+#include "../../Object/Cursor.h"
 #include "../../Object/Obstacle.h"
 #include "../Result/ResultScene.h"
 #include "../../Utility/PadInputManager.h"
@@ -16,7 +16,7 @@
 
 #define D_SCROOL_SPEED		(200.0f)
 
-void HitCheck(const Player* player, const Obstacle* obstacle, int index);
+void HitCheck(const Cursor* player, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
 Start start;
@@ -45,7 +45,7 @@ void InGameSceneInit(void)
 		//車の初期化
 		CarInit();
 		//プレイヤーの初期化
-		PlayerInit();
+		CursorInit();
 		//ゴールの読み込み
 		GoalInit();
 		break;
@@ -63,7 +63,7 @@ void InGameSceneInit(void)
 		//車の初期化
 		CarInit();
 		//プレイヤーの初期化
-		PlayerInit();
+		CursorInit();
 		break;
 	case eThree:
 		//BGMの初期化
@@ -79,7 +79,7 @@ void InGameSceneInit(void)
 		//車の初期化
 		CarInit();
 		//プレイヤーの初期化
-		PlayerInit();
+		CursorInit();
 		break;
 	case eFour:
 		//BGMの初期化
@@ -95,7 +95,7 @@ void InGameSceneInit(void)
 		//車の初期化
 		CarInit();
 		//プレイヤーの初期化
-		PlayerInit();
+		CursorInit();
 		break;
 	case eFive:
 		//BGMの初期化
@@ -111,7 +111,7 @@ void InGameSceneInit(void)
 		//車の初期化
 		CarInit();
 		//プレイヤーの初期化
-		PlayerInit();
+		CursorInit();
 		break;
 	default:
 		break;
@@ -129,7 +129,7 @@ void InGameSceneInit(void)
 	//車の初期化
 	CarInit();
 	//プレイヤーの初期化
-	PlayerInit();
+	CursorInit();
 
 }
 
@@ -146,7 +146,7 @@ eSceneType InGameSceneUpdate()
 	//車の更新
 	CarManagerUpdate();
 	//プレイヤーの更新
-	PlayerUpdate();
+	CursorUpdate();
 	//スタートボタン
 	StarButton();
 	//ゴールの更新
@@ -157,7 +157,7 @@ eSceneType InGameSceneUpdate()
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
 	{
-		HitCheck(GetPlayer(), GetObstacle(i), i);
+		HitCheck(GetCursor1(), GetObstacle(i), i);
 	}
 
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
@@ -191,7 +191,7 @@ void InGameSceneDraw(void)
 	CarDraw();
 
 	//プレイヤーの描画
-	PlayerDraw();
+	CursorDraw();
 
 	//ごーるの描画
 	GoalDraw();
@@ -211,7 +211,7 @@ void StarButton()
 }
 
 //矩形同士の当たり判定の計算部分
-void HitCheck(const Player* player, const Obstacle* obstacle, int index)
+void HitCheck(const Cursor* player, const Obstacle* obstacle, int index)
 {
 	if (obstacle->is_active == TRUE)
 	{

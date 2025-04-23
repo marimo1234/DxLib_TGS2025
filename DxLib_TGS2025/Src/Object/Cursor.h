@@ -3,7 +3,7 @@
 #include "../Utility/Geometry.h"
 #include"../Utility/PadInputManager.h"
 
-struct Player
+struct Cursor
 {
 	Position2D position;
 	Size2D box_size;		//矩形の大きさ
@@ -12,8 +12,8 @@ struct Player
 	int is_jump;
 };
 
-void PlayerInit(void);
-void PlayerUpdate(void);
-void PlayerDraw(void);
-const Player* GetPlayer(void);
+void CursorInit(void);
+void CursorUpdate(void);
+void CursorDraw(void);
+const Cursor* GetCursor1(void);
 void CursolButtonMovement();         // 十字キーの移動

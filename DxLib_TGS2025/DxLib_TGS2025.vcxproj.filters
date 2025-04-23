@@ -3,30 +3,33 @@
   <ItemGroup>
     <ClCompile Include="Src\AppMain.cpp" />
     <ClCompile Include="Src\Object\car.cpp" />
+    <ClCompile Include="Src\Object\Goal.cpp" />
+    <ClCompile Include="Src\Object\map.cpp" />
+    <ClCompile Include="Src\Object\Tool.cpp" />
     <ClCompile Include="Src\Object\WoodRock.cpp" />
     <ClCompile Include="Src\Scene\Help\HelpScene.cpp" />
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
     <ClCompile Include="Src\Utility\InputManager.cpp" />
     <ClCompile Include="Src\Object\Obstacle.cpp" />
-    <ClCompile Include="Src\Object\Player.cpp" />
+    <ClCompile Include="Src\Object\Cursorcpp" />
     <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
     <ClCompile Include="Src\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\System\System.cpp" />
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\PadInputManager.cpp" />
-    <ClCompile Include="Src\Object\map.cpp" />
-    <ClCompile Include="Src\Object\Tool.cpp" />
-    <ClCompile Include="Src\Object\Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\car.h" />
+    <ClInclude Include="Src\Object\Goal.h" />
+    <ClInclude Include="Src\Object\map.h" />
+    <ClInclude Include="Src\Object\Tool.h" />
     <ClInclude Include="Src\Object\WoodRock.h" />
     <ClInclude Include="Src\Utility\Geometry.h" />
     <ClInclude Include="Src\Scene\Help\HelpScene.h" />
     <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
     <ClInclude Include="Src\Utility\InputManager.h" />
     <ClInclude Include="Src\Object\Obstacle.h" />
-    <ClInclude Include="Src\Object\Player.h" />
+    <ClInclude Include="Src\Object\Cursor.h" />
     <ClInclude Include="Src\System\ProjectConfig.h" />
     <ClInclude Include="Src\Scene\Result\ResultScene.h" />
     <ClInclude Include="Src\Scene\SceneManager.h" />
@@ -34,25 +37,21 @@
     <ClInclude Include="Src\System\System.h" />
     <ClInclude Include="Src\Scene\Title\TitleScene.h" />
     <ClInclude Include="Src\Utility\PadInputManager.h" />
-    <ClInclude Include="Src\Object\map.h" />
-    <ClInclude Include="Src\Object\Tool.h" />
-    <ClInclude Include="Src\Object\Goal.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\ChatGPT Image 2025年4月16日 17_43_33.png" />
-    <Image Include="Resource\GroundReef.png" />
-    <Image Include="Resource\images\GroundReef.png" />
     <Image Include="..\..\..\..\..\Downloads\Pixelart0\Pixelart0\01_1536x768\art_097.png" />
-    <Image Include="Resource\images\art_119.png" />
-    <Image Include="Resource\images\Ground.png" />
+    <Image Include="..\..\..\..\..\Pictures\Saved Pictures\ChatGPT Image 2025年4月18日 11_54_40.png" />
+    <Image Include="..\..\..\..\..\Pictures\Saved Pictures\ChatGPT sougen.png" />
+    <Image Include="Resource\GroundReef.png" />
     <Image Include="Resource\images\1trout.png" />
-    <Image Include="Resource\images\item_frame.png" />
-<<<<<<< HEAD
-    <Image Include="Resource\images\ChatGPT kigi.png" />
+    <Image Include="Resource\images\art_119.png" />
     <Image Include="Resource\images\ChatGPT mori.png" />
-=======
-    <Image Include="Resource\images\left_car.png" />
+    <Image Include="Resource\images\ChatGPT kigi.png" />
     <Image Include="Resource\images\front_car.png" />
->>>>>>> 6bfeac1bcd71d111b59d5a854e19c7978c338b88
+    <Image Include="Resource\images\Ground.png" />
+    <Image Include="Resource\images\GroundReef.png" />
+    <Image Include="Resource\images\item_frame.png" />
+    <Image Include="Resource\images\left_car.png" />
   </ItemGroup>
 </Project>

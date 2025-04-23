@@ -1,13 +1,15 @@
-﻿#include "Player.h"
+﻿#include "Cursor.h"
 #include "../Utility/InputManager.h"
 #include"../Utility/PadInputManager.h"
 #include "../System/System.h"
 #include "DxLib.h"
 
+//////////////////////////////////////
+/*PlayerからCursorに名前全部変えたよ*/
+//////////////////////////////////////
 
-
-Player player;
-int cursol;
+Cursor cursor;
+int cursor_image;
 static int numx = 0;
 static int numy = 0;
 static int move_wait_time = 0;
@@ -16,19 +18,19 @@ int aif = 0;
 
 
 //プレイヤーの初期化
-void PlayerInit(void)
+void CursorInit(void)
 {
 	//初期設定
-	player = {};
-	player.position.x = 575.0f;				//初期位置（Ｘ）
-	player.position.y = 340.0f;				//初期位置（Ｙ）
-	player.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
-	player.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
-	player.velocity.x = 0.0f;	            //プレイヤーの横移動	
-	player.velocity.y = 0.0f;				//プレイヤーの縦移動
+	cursor_image = {};
+	cursor.position.x = 575.0f;				//初期位置（Ｘ）
+	cursor.position.y = 340.0f;				//初期位置（Ｙ）
+	cursor.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
+	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
+	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
+	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 
 	// カーソルがぞうの読み込み
-	cursol = LoadGraph("Resource/Images/cursol.png");
+	cursor_image = LoadGraph("Resource/Images/cursol.png");
 
 	//アニメーションの設定
 	//animation_count = 0;
@@ -39,23 +41,23 @@ void PlayerInit(void)
 }
 
 //プレイヤーの更新
-void PlayerUpdate(void)
+void CursorUpdate(void)
 {
 	CursolButtonMovement();
 
 }
 
 //プレイヤーの描画
-void PlayerDraw(void)
+void CursorDraw(void)
 {
-	DrawGraph(player.position.x, player.position.y, cursol, TRUE);
+	DrawGraph(cursor.position.x, cursor.position.y, cursor_image, TRUE);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 }
 
 //構造体Player
-const Player* GetPlayer(void)
+const Cursor* GetCursor1(void)
 {
-	return &player;
+	return &cursor;
 }
 
 void CursolButtonMovement()
@@ -73,7 +75,7 @@ void CursolButtonMovement()
 
 			
 			// 左移動
-			player.velocity.x = -75.0f;
+			cursor.velocity.x = -75.0f;
 
 			// 移動のSE（もし使うならここに入れてね）
 			
@@ -88,7 +90,7 @@ void CursolButtonMovement()
 			numx++;
 
 			// 右移動
-			player.velocity.x = 75.0f;
+			cursor.velocity.x = 75.0f;
 
 			// 移動のSE（左とおんなじ音入れてね）
 		}
@@ -98,7 +100,7 @@ void CursolButtonMovement()
 		if (numy < 1)
 		{
 			numy++;
-			player.velocity.y = -75.0f;
+			cursor.velocity.y = -75.0f;
 		}
 	}
 	else if(pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
@@ -106,19 +108,19 @@ void CursolButtonMovement()
 		if (numy > -1)
 		{
 			numy--;
-			player.velocity.y = 75.0f;
+			cursor.velocity.y = 75.0f;
 		}
 	}
 	else
 	{
 		// 移動速度を0に戻す
-		player.velocity.x = 0.0f;
-		player.velocity.y = 0.0f;
+		cursor.velocity.x = 0.0f;
+		cursor.velocity.y = 0.0f;
 	}
 
 	// プレイヤー移動
-	player.position.x += player.velocity.x;
-	player.position.y += player.velocity.y;
+	cursor.position.x += cursor.velocity.x;
+	cursor.position.y += cursor.velocity.y;
 }
 
 // プレイヤーがいるレーンを取得する

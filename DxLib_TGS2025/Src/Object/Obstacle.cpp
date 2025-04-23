@@ -1,11 +1,11 @@
 ﻿#include "Obstacle.h"
-#include "Player.h"
+#include "Cursor.h"
 #include "DxLib.h"
 #include <math.h>
 
 #define ITEM_NUM	(9)		//アイテムの要素
 
-void ObstacleAnimationControl(const Player* player);
+void ObstacleAnimationControl(const Cursor* cursor);
 
 Obstacle obstacle[D_OBSTACLE_MAX];
 int obstacle_images[7];
@@ -43,7 +43,7 @@ const Obstacle* GetObstacle(int num)
 }
 
 //障害物のスポーンが有効か
-void ObstacleAnimationControl(const Player* player)
+void ObstacleAnimationControl(const Cursor* cursor)
 {
 	
 }
