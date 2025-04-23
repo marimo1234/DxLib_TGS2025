@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../Scene/InGame/InGameScene.h"
-#include "../Object/WoodRock.h"
+
+
 
 enum eToolMotionState
 {
@@ -29,4 +30,3 @@ void Put_Road(void);
 void Draw_Road(void);
 void Tool_Start(const Start* start);
 const Tool* Get_Tool(void);
-void ItemNumCheck(const WoodRock* woodrock);

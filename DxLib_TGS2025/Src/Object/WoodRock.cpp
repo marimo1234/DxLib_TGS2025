@@ -2,6 +2,7 @@
 #include "WoodRock.h"
 #include "../Utility/InputManager.h"
 #include"../Utility/PadInputManager.h"
+#include "../Object/Tool.h"
 
 int wood_image[4] = {};
 int rock_image[4] = {};
@@ -13,11 +14,15 @@ int woodrock_start;
 
 WoodRock woodrock;
 
+
+void ItemSlotCheck(const Tool* tool);
+
+
 //初期化
 void WoodRockInit(void)
 {
 	//採ったアイテムの数の初期化
-	woodrock.item_number = 0;
+	woodrock.rock_item_num = 0;
 
 	//Hit数の初期化
 	wood_hitcount = eHit0;
@@ -25,7 +30,7 @@ void WoodRockInit(void)
 
 	//画像の一枚目の初期化
 	wood_animation = wood_image[0];
-	wood_animation = wood_image[0];
+	rock_animation = rock_image[0];
 
 	//画像の読み込み
 	wood_image[0] = LoadGraph("Resource/images/Wood0.png");
@@ -147,7 +152,7 @@ void RockAnimation(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			rock_hitcount = eHit0;     //今だけループするようにしている
-			woodrock.item_number++;    //HIT数が3になった時、アイテム化した物の数を+1する
+			woodrock.rock_item_num++;    //HIT数が3になった時、アイテム化した物の数を+1する
 		}
 		break;
 	}

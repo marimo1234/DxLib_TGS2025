@@ -5,6 +5,7 @@
 #include "../Scene/InGame/InGameScene.h"
 #include "../Object/WoodRock.h"
 
+
 #define PICKAXE_X		(1175)		//つるはしx座標
 #define PICKAXE_Y		(675)		//つるはしy座標
 #define FRAME_X			(1400)		//枠x座標
@@ -31,6 +32,8 @@ int road_flag;			//道のフラグ
 int tool_start;
 
 Tool tool;
+
+void ItemNumCheck(const WoodRock* woodrock);
 
 void ToolInit(void)
 {
@@ -170,5 +173,6 @@ const Tool* Get_Tool(void)
 
 void ItemNumCheck(const WoodRock*woodrock)
 {
-	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->item_number);
+	/*DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->rock_item_num);*/
+	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->rock_item_num);
 }
