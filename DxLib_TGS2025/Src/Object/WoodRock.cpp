@@ -16,6 +16,7 @@ WoodRock woodrock;
 //初期化
 void WoodRockInit(void)
 {
+	//採ったアイテムの数の初期化
 	woodrock.item_number = 0;
 
 	//Hit数の初期化
@@ -26,6 +27,7 @@ void WoodRockInit(void)
 	wood_animation = wood_image[0];
 	wood_animation = wood_image[0];
 
+	//画像の読み込み
 	wood_image[0] = LoadGraph("Resource/images/Wood0.png");
 	wood_image[1] = LoadGraph("Resource/images/Wood1.png");
 	wood_image[2] = LoadGraph("Resource/images/Wood2.png");
@@ -40,9 +42,11 @@ void WoodRockInit(void)
 //更新
 void WoodRockUpdate(void)
 {
+	//ゲームのスタートを受け取る
      WoodRockStart(GetStart());
 	/* ItemSlotCheck(Get_Tool());*/
 
+	 //スタートされたなら
 	if (woodrock_start == TRUE)
 	{
 		//木,岩のアニメーション
@@ -55,8 +59,11 @@ void WoodRockUpdate(void)
 //描画処理
 void WoodRockDraw(void)
 {
+	//画像の描画
 	DrawRotaGraph(660, 280, 1.0, 0.0, wood_animation, TRUE);
 	DrawRotaGraph(580, 280, 1.0, 0.0, rock_animation, TRUE);
+
+	//どのツールを持っているかを受け取る
 	ItemSlotCheck(Get_Tool());
 }
 
