@@ -30,3 +30,4 @@ void Put_Road(void);
 void Draw_Road(void);
 void Tool_Start(const Start* start);
 const Tool* Get_Tool(void);
+
