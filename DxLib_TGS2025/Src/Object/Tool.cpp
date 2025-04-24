@@ -4,6 +4,7 @@
 #include "../Utility/PadInputManager.h"
 #include "../Scene/InGame/InGameScene.h"
 #include "../Object/WoodRock.h"
+#include "../Object/Cursor.h"
 
 
 #define PICKAXE_X		(1175)		//つるはしx座標
@@ -36,6 +37,7 @@ Tool tool;
 
 
 void ItemNumCheck(const Wood* wood, const Rock* rock);
+void const CursorToolCheck(const Cursor* cursor);
 
 void ToolInit(void)
 {
@@ -67,6 +69,8 @@ void ToolManagerUpdate(void)
 	if (tool_start == TRUE)
 	{
 		Move_Frame();
+		//道路設置
+		Put_Road();
 	}
 	Tool_Start(GetStart());
 }
@@ -93,9 +97,6 @@ void ToolDraw(void)
 
 void Move_Frame(void)
 {
-	//道路設置
-	Put_Road();
-
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
@@ -141,7 +142,8 @@ void Move_Frame(void)
 //道路を置く
 void Put_Road(void)
 {
-	if (GetKeyInputState(KEY_INPUT_P) == ePress)
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		if (tool.item_number == 0)
 		{ 
@@ -155,7 +157,7 @@ void Draw_Road(void)
 {
 	if (road_flag == TRUE)
 	{
-		DrawRotaGraph(road_x, road_y, 0.3, 0.0, road_img, TRUE);
+		CursorToolCheck(GetCursor1());
 	}
 }
 
@@ -175,7 +177,11 @@ const Tool* Get_Tool(void)
 
 void ItemNumCheck(const Wood*wood,const Rock*rock)
 {
-	/*DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", woodrock->rock_item_num);*/
 	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);
 	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);
+}
+
+void const CursorToolCheck(const Cursor* cursor)
+{
+	DrawRotaGraph(cursor->position.x, cursor->position.y, 0.3, 0.0, road_img, TRUE);
 }
