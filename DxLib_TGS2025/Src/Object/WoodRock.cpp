@@ -12,8 +12,8 @@ int rock_animation;
 int wood_hitcount;
 int rock_hitcount;
 int woodrock_start;
-bool wood_hit_flg; 
-bool rock_hit_flg; 
+bool wood_hit_flg;
+bool rock_hit_flg;
 
 Wood wood;
 Rock rock;
@@ -77,7 +77,7 @@ void WoodRockUpdate(void)
 		WoodAnimation();
 		RockAnimation();
 	}
-	
+
 }
 
 //描画処理
@@ -98,48 +98,48 @@ void WoodRockDraw(void)
 //後々Hitした回数で木の描画する画像を変えるようにする
 void WoodAnimation(void)
 {
-		switch (wood_hitcount)
+	switch (wood_hitcount)
+	{
+	case eHit0:// Hit数0
+		wood_animation = wood_image[0];
+		if (wood_hit_flg == true)
 		{
-		case eHit0:// Hit数0
-			wood_animation = wood_image[0];
-			if (wood_hit_flg == true)
-			{
-				wood_hitcount = eHit1;
-				wood_hit_flg = false;//hitフラグをfalseにする
-				
-			}
-			break;
+			wood_hitcount = eHit1;
+			wood_hit_flg = false;//hitフラグをfalseにする
 
-		case eHit1:// Hit数1
-			wood_animation = wood_image[1];
-			if (wood_hit_flg == true)
-			{
-				wood_hitcount = eHit2;
-				wood_hit_flg = false;//hitフラグをfalseにする
-			}
-			
-			break;
-
-		case eHit2:// Hit数2
-			wood_animation = wood_image[2];
-			if (wood_hit_flg == true)
-			{
-				wood_hitcount = eHit3;
-				wood_hit_flg = false;//hitフラグをfalseにする
-			}
-			break;
-
-		case eHit3:// Hit数3
-			wood_animation = wood_image[3];
-			if (wood_hit_flg == true)
-		{
-				wood_hitcount = eHit0;     //今だけループするようにしている
-				wood_hit_flg = false;//hitフラグをfalseにする
-				wood.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-			}
-			break;
 		}
-	
+		break;
+
+	case eHit1:// Hit数1
+		wood_animation = wood_image[1];
+		if (wood_hit_flg == true)
+		{
+			wood_hitcount = eHit2;
+			wood_hit_flg = false;//hitフラグをfalseにする
+		}
+
+		break;
+
+	case eHit2:// Hit数2
+		wood_animation = wood_image[2];
+		if (wood_hit_flg == true)
+		{
+			wood_hitcount = eHit3;
+			wood_hit_flg = false;//hitフラグをfalseにする
+		}
+		break;
+
+	case eHit3:// Hit数3
+		wood_animation = wood_image[3];
+		if (wood_hit_flg == true)
+		{
+			wood_hitcount = eHit0;     //今だけループするようにしている
+			wood_hit_flg = false;//hitフラグをfalseにする
+			wood.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
+		}
+		break;
+	}
+
 }
 
 void RockAnimation(void)
@@ -154,7 +154,7 @@ void RockAnimation(void)
 			rock_hitcount = eHit1;
 			rock_hit_flg = false;//hitフラグをfalseにする
 		}
-			break;
+		break;
 
 	case eHit1:// Hit数1
 		rock_animation = rock_image[1];
@@ -208,7 +208,7 @@ void WoodRockStart(const Start* start)
 
 }
 
-void ItemSlotCheck(const Tool*tool)
+void ItemSlotCheck(const Tool* tool)
 {
 	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d", tool->item_number);
 }
@@ -241,7 +241,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor)
 void RockHitCheck(const Tool* tool, const Cursor* cursor)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	
+
 	//岩とカ―ソルのX座標とY座標が一致していたら
 	if (rock.position.x == cursor->position.x && rock.position.y == cursor->position.y)
 	{
