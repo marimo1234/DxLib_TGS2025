@@ -1,5 +1,6 @@
 ﻿#include "Cursor.h"
 #include "../Utility/InputManager.h"
+#include"../Scene/InGame/InGameScene.h"
 #include"../Utility/PadInputManager.h"
 #include "../System/System.h"
 #include "DxLib.h"
@@ -25,6 +26,7 @@ static int numx = 0;
 static int numy = 0;
 static int move_wait_time = 0;
 int aif = 0;
+int cursorstart;
 
 
 
@@ -39,6 +41,7 @@ void CursorInit(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
+	cursorstart = FALSE;
 
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
@@ -55,7 +58,7 @@ void CursorInit(void)
 void CursorUpdate(void)
 {
 	CursolButtonMovement();
-
+	CursorStart(GetStart());
 }
 
 //カーソルの描画
@@ -63,6 +66,14 @@ void CursorDraw(void)
 {
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
+}
+
+void CursorStart(const Start* start)
+{
+	if (start->GameStart == TRUE)
+	{
+		cursorstart = TRUE;
+	}
 }
 
 //構造体Cursor
@@ -73,65 +84,68 @@ const Cursor* GetCursor1(void)
 
 void CursolButtonMovement()
 {
-	PadInputManager* pad_input = PadInputManager::GetInstance();
-
-  	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
+	if (cursorstart == TRUE)
 	{
-		aif++;
-		// 十字ボタンの左を押したとき
-		if (numx > -1)
+		PadInputManager* pad_input = PadInputManager::GetInstance();
+
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
 		{
-			// レーンを1つ左にする
-			numx--;
+			aif++;
+			// 十字ボタンの左を押したとき
+			if (numx > -1)
+			{
+				// レーンを1つ左にする
+				numx--;
 
-			
-			// 左移動
-			cursor.velocity.x = -75.0f;
 
-			// 移動のSE（もし使うならここに入れてね）
-			
+				// 左移動
+				cursor.velocity.x = -75.0f;
+
+				// 移動のSE（もし使うならここに入れてね）
+
+			}
 		}
-	}
-	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
-	{
-		// 十字ボタンの右を押したとき
-		if (numx < 1)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 		{
-			// レーンを１つ右にする
-			numx++;
+			// 十字ボタンの右を押したとき
+			if (numx < 1)
+			{
+				// レーンを１つ右にする
+				numx++;
 
-			// 右移動
-			cursor.velocity.x = 75.0f;
+				// 右移動
+				cursor.velocity.x = 75.0f;
 
-			// 移動のSE（左とおんなじ音入れてね）
+				// 移動のSE（左とおんなじ音入れてね）
+			}
 		}
-	}
-	else if(pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP)==ePadInputState::ePress)
-	{
-		if (numy < 1)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
-			numy++;
-			cursor.velocity.y = -75.0f;
+			if (numy < 1)
+			{
+				numy++;
+				cursor.velocity.y = -75.0f;
+			}
 		}
-	}
-	else if(pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
-	{
-		if (numy > -1)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
-			numy--;
-			cursor.velocity.y = 75.0f;
+			if (numy > -1)
+			{
+				numy--;
+				cursor.velocity.y = 75.0f;
+			}
 		}
-	}
-	else
-	{
-		// 移動速度を0に戻す
-		cursor.velocity.x = 0.0f;
-		cursor.velocity.y = 0.0f;
-	}
+		else
+		{
+			// 移動速度を0に戻す
+			cursor.velocity.x = 0.0f;
+			cursor.velocity.y = 0.0f;
+		}
 
-	// カーソル移動
-	cursor.position.x += cursor.velocity.x;
-	cursor.position.y += cursor.velocity.y;
+		// カーソル移動
+		cursor.position.x += cursor.velocity.x;
+		cursor.position.y += cursor.velocity.y;
+	}
 }
 
 // カーソルがいるレーンを取得する

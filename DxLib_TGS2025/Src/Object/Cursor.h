@@ -2,6 +2,7 @@
 
 #include "../Utility/Geometry.h"
 #include"../Utility/PadInputManager.h"
+#include"../Scene/InGame/InGameScene.h"
 
 struct Cursor
 {
@@ -17,3 +18,4 @@ void CursorUpdate(void);
 void CursorDraw(void);
 const Cursor* GetCursor1(void);
 void CursolButtonMovement();         // 十字キーの移動
+void CursorStart(const Start* start);
