@@ -11,10 +11,10 @@
 #define PICKAXE_Y		(675)		//つるはしy座標
 #define FRAME_X			(1400)		//枠x座標
 #define FRAME_Y			(1150)		//枠y座標
-#define STONETILE_X		(950)		//石の地面x座標
-#define STONETILE_Y		(655)		//石の地面y座標
-#define LOGTILE_X		(1030)		//丸太の地面x座標
-#define LOGTILE_Y		(675)		//丸太の地面y座標
+#define STONETILE_X		(937)		//石の地面x座標
+#define STONETILE_Y		(670)		//石の地面y座標
+#define LOGTILE_X		(1010)		//丸太の地面x座標
+#define LOGTILE_Y		(670)		//丸太の地面y座標
 #define AX_X			(1085)		//斧x座標
 #define AX_Y			(670)		//斧y座標
 
@@ -82,9 +82,9 @@ void ToolDraw(void)
 	//つるはしの描画（アイテム枠）
 	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
 	//道路の描画（アイテム枠）
-	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.3,0.0,road_img, TRUE);
+	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.65,0.0,road_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.4, 0.0, logtile_img , TRUE);
+	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, logtile_img , TRUE);
 	//斧の描画（アイテム枠）
 	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//枠選択の描画（アイテム枠）
@@ -170,18 +170,20 @@ void Tool_Start(const Start* start)
 	}
 }
 
+//Toolの値渡し
 const Tool* Get_Tool(void)
 {
 	return &tool;
 }
 
+//
 void ItemNumCheck(const Wood*wood,const Rock*rock)
 {
-	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);
-	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);
+	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);		//木の所持数
+	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);		//石の所持数
 }
 
 void const CursorToolCheck(const Cursor* cursor)
 {
-	DrawRotaGraph(cursor->position.x, cursor->position.y, 0.3, 0.0, road_img, TRUE);
+	DrawRotaGraph(cursor->position.x, cursor->position.y, 1.0, 0.0, road_img, TRUE);
 }
