@@ -15,13 +15,22 @@ struct Wood
 {
 	Vector2D position;
 	int item_num;
+	int image[4];
+	int animation;
+	int hit_count;
+	bool hit_flg;
 };
 
 struct Rock
 {
 	Vector2D position;
 	int item_num;
+	int image[4];
+	int animation;
+	int hit_count;
+	bool hit_flg;
 };
+
 
 void WoodRockInit(void);
 void WoodRockUpdate(void);
@@ -34,3 +43,5 @@ const Wood* GetWood(void);
 const Rock* GetRock(void);
 
 void WoodRockStart(const Start* start);
+
+void WoodRockItemCount(void);
