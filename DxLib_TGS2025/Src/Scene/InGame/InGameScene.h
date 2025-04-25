@@ -17,6 +17,10 @@ struct Start
 	int GameStart;
 	int StageNumber;
 };
+struct NextStage
+{
+	int nextstage;
+};
 
 void StarButton();
 const Start* GetStart(void);
@@ -24,3 +28,4 @@ void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
 void StageChenge(void);
+const NextStage* Stageselect(void);

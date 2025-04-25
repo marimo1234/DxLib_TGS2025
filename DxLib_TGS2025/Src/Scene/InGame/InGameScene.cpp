@@ -23,16 +23,13 @@ Start start;
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
 eStage stage;
+NextStage nextstage;
+
 
 
 void InGameSceneInit(void)
 {
-	start.GameStart = FALSE;
-	stage = eOne;
-	switch (stage)
-	{
-	case eOne:
-		//BGMの初期化
+	//BGMの初期化
 		PlayBgm();
 		//マップの初期化
 		MapInit();
@@ -48,74 +45,9 @@ void InGameSceneInit(void)
 		CursorInit();
 		//ゴールの読み込み
 		GoalInit();
-		break;
-	case eTwo:
-		//BGMの初期化
-		PlayBgm();
-		//マップの初期化
-		MapInit();
-		//障害物の初期化
-		ObstacleManagerInit();
-		//木岩の初期化
-		WoodRockInit();
-		//ツールの初期化
-		ToolInit();
-		//車の初期化
-		CarInit();
-		//カーソルの初期化
-		CursorInit();
-		break;
-	case eThree:
-		//BGMの初期化
-		PlayBgm();
-		//マップの初期化
-		MapInit();
-		//障害物の初期化
-		ObstacleManagerInit();
-		//木岩の初期化
-		WoodRockInit();
-		//ツールの初期化
-		ToolInit();
-		//車の初期化
-		CarInit();
-		//カーソルの初期化
-		CursorInit();
-		break;
-	case eFour:
-		//BGMの初期化
-		PlayBgm();
-		//マップの初期化
-		MapInit();
-		//障害物の初期化
-		ObstacleManagerInit();
-		//木岩の初期化
-		WoodRockInit();
-		//ツールの初期化
-		ToolInit();
-		//車の初期化
-		CarInit();
-		//カーソルの初期化
-		CursorInit();
-		break;
-	case eFive:
-		//BGMの初期化
-		PlayBgm();
-		//マップの初期化
-		MapInit();
-		//障害物の初期化
-		ObstacleManagerInit();
-		//木岩の初期化
-		WoodRockInit();
-		//ツールの初期化
-		ToolInit();
-		//車の初期化
-		CarInit();
-		//カーソルの初期化
-		CursorInit();
-		break;
-	default:
-		break;
-	}
+	start.GameStart = FALSE;
+	stage = eOne;
+	
 	//BGMの初期化
 	PlayBgm();
 	//マップの初期化
@@ -233,7 +165,29 @@ void HitCheck(const Cursor* player, const Obstacle* obstacle, int index)
 }
            //今のところどこで使うかわかんない↑↑↑↑↑
 
-
+const NextStage* Stageselect(void)
+{
+	switch (stage)
+	{
+	case eOne:
+		nextstage.nextstage =true;
+		break;
+	case eTwo:
+		nextstage.nextstage = true;
+		break;
+	case eThree:
+		nextstage.nextstage = true;
+		break;
+	case eFour:
+		nextstage.nextstage = true;
+		break;
+	case eFive:
+		nextstage.nextstage = true;
+		break;
+	default:
+		break;
+	}
+}
 
 
 
