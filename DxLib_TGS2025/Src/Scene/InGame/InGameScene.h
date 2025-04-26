@@ -19,7 +19,7 @@ struct Start
 };
 struct NextStage
 {
-	int nextstage;
+	int stage=false;
 };
 
 void StarButton();
@@ -28,4 +28,3 @@ void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
 void StageChenge(void);
-const NextStage* Stageselect(void);

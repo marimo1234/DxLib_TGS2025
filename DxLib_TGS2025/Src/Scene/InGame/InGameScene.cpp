@@ -22,8 +22,8 @@ void PlayBgm(void);
 Start start;
 int Before_Hit[10];		//前の当たり判定
 int Now_Hit[10];		//今の当たり判定
-eStage stage;
-NextStage nextstage;
+eStage stagenum;
+NextStage next;
 
 
 
@@ -46,7 +46,9 @@ void InGameSceneInit(void)
 		//ゴールの読み込み
 		GoalInit();
 	start.GameStart = FALSE;
-	stage = eOne;
+	stagenum = eOne;
+	next.stage = false;
+	start.StageNumber = eOne;
 }
 
 eSceneType InGameSceneUpdate()
@@ -92,7 +94,7 @@ void InGameSceneDraw(void)
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでリザルト画面へ");
 
 	//マップの描画
-	MapDraw(stage);
+	MapDraw(stagenum);
 
 	//障害物の描画
 	ObstacleManagerDraw();
@@ -149,33 +151,6 @@ void HitCheck(const Cursor* player, const Obstacle* obstacle, int index)
 }
            //今のところどこで使うかわかんない↑↑↑↑↑
 
-const NextStage* Stageselect(void)
-{
-	switch (stage)
-	{
-	case eOne:
-		nextstage.nextstage =true;
-		break;
-	case eTwo:
-		nextstage.nextstage = true;
-		break;
-	case eThree:
-		nextstage.nextstage = true;
-		break;
-	case eFour:
-		nextstage.nextstage = true;
-		break;
-	case eFive:
-		nextstage.nextstage = true;
-		break;
-	default:
-		break;
-	}
-}
-
-
-
-
 //インゲームBGM再生
 void PlayBgm(void)
 {
@@ -187,15 +162,20 @@ void StageChenge(void)
 	switch (start.StageNumber)
 	{
 	case 1:
-		stage = eOne;
+		stagenum = eOne;
+		next.stage = true;
 	case 2:
-		stage = eTwo;
+		stagenum = eTwo;
+		next.stage = true;
 	case 3:
-		stage = eThree;
+		stagenum = eThree;
+		next.stage = true;
 	case 4:
-		stage = eFour;
+		stagenum = eFour;
+		next.stage = true;
 	case 5:
-		stage = eFive;
+		stagenum = eFive;
+		next.stage = true;
 	default:
 		break;
 	}
