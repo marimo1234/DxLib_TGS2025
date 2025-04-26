@@ -14,6 +14,7 @@ int carstart;
 void CarStart(const InGame* ingame);
 
 
+
 void CarInit(void)
 {
 	i = 1;

@@ -28,7 +28,7 @@ static int move_wait_time = 0;
 int aif = 0;
 int cursorstart;
 
-
+void CursorStart(const InGame* ingame);
 
 //カーソルの初期化
 void CursorInit(void)

@@ -1,10 +1,15 @@
 ﻿#include"DxLib.h"
 #include"Goal.h"
 
-int goalflag;
+Goal goal;
+
 void GoalInit(void)
 {
-	goalflag = LoadGraph("Resource/images/GOAL_FLAG2.png");
+	//ゴールしたかどうか
+	goal.flg = false;
+
+	//画像の読み込み
+	goal.image = LoadGraph("Resource/images/GOAL_FLAG2.png");
 }
 void GoalUpdate(void)
 {
@@ -12,5 +17,6 @@ void GoalUpdate(void)
 }
 void GoalDraw(void)
 {
-	DrawRotaGraphF(720, 340, 0.1, 0.0, goalflag, TRUE);
+	//画像の描画
+	DrawRotaGraphF(720, 340, 0.1, 0.0, goal.image, TRUE);
 }

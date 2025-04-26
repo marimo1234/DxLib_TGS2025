@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "../Utility/Geometry.h"
-#include"../Scene/InGame/InGameScene.h"
+
 
 enum eWoodRockState // Hit数の列挙
 {
@@ -41,7 +41,5 @@ void RockAnimation(void);//岩のアニメーション
 
 const Wood* GetWood(void);
 const Rock* GetRock(void);
-
-void WoodRockStart(const InGame* ingame);
 
 void WoodRockItemCount(void);

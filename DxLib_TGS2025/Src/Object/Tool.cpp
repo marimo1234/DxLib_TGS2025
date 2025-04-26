@@ -38,6 +38,8 @@ Tool tool;
 
 void ItemNumCheck(const Wood* wood, const Rock* rock);
 void const CursorToolCheck(const Cursor* cursor);
+void Tool_Start(const InGame* ingame);
+
 
 void ToolInit(void)
 {

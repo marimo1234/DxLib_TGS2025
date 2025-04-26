@@ -4,6 +4,7 @@
 #include"../Utility/PadInputManager.h"
 #include "../Object/Tool.h"
 #include "../Object/Cursor.h"
+#include"../Scene/InGame/InGameScene.h"
 
 
 int woodrock_start;
@@ -16,6 +17,9 @@ void CursorWoodRockCheck(const Cursor* cursor);
 
 void WoodHitCheck(const Tool* tool, const Cursor* cursor);
 void RockHitCheck(const Tool* tool, const Cursor* cursor);
+
+void WoodRockStart(const InGame* ingame);
+
 
 
 //初期化
@@ -73,7 +77,7 @@ void WoodRockUpdate(void)
 
 
 	//スタートがtrueになったなら
-	if (woodrock_start == TRUE)
+	if (woodrock_start == true)
 	{
 		//木,岩のアニメーション
 		WoodAnimation();
