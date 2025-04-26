@@ -44,5 +44,4 @@ const Rock* GetRock(void);
 
 void WoodRockItemCount(void);
 
-void StageChenge(void);
 

@@ -180,6 +180,7 @@ void PlayBgm(void)
 }
 
 
+//ステージチェンジを可能にするフラグ
 void NextStageFlag(const Goal* goal)
 {
 	ingame.next_stage_flag = false;
@@ -193,6 +194,7 @@ void NextStageFlag(const Goal* goal)
 	
 }
 
+//ステージチェンジ処理
 void StageChange(void)
 {
 	switch (ingame.stage_num)

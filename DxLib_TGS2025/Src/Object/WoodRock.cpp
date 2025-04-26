@@ -43,7 +43,9 @@ void WoodRockInit(void)
 	}
 	
 	//採ったアイテムの数の初期化
+	wood.item_num = 0;
 	rock.item_num = 0;
+
 
 	//Hit数の初期化
 	wood.hit_count = eHit0;
@@ -253,7 +255,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor)
 	//岩とカ―ソルのX座標とY座標が一致していたら
 	if (rock.position.x == cursor->position.x && rock.position.y == cursor->position.y)
 	{
-		//ツールがぴっけるになっていたら
+		//ツールがつるはしになっていたら
 		if (tool->item_number == ePickaxe)
 		{
 			//Aボタンが押されたなら

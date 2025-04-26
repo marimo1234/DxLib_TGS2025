@@ -27,7 +27,7 @@ void GoalInit(void)
 //更新
 void GoalUpdate(void)
 {
-	//ゴール処理をスタートする
+	//ゴール処理をスタート
 	GoalStart(GetInGame());
 	//ゴールしたかどうか
 	GoalFlag(GetInGame());
@@ -40,6 +40,7 @@ void GoalDraw(void)
 	DrawRotaGraphF(720, 340, 0.1, 0.0, goal.image, TRUE);
 }
 
+//ゴール処理スタート
 void GoalStart(const InGame* ingame)
 {
 	if(ingame->start == true)
