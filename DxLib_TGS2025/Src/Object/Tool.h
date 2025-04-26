@@ -19,6 +19,8 @@ enum eToolState
 struct Tool
 {
 	int item_number;
+	int road_num;
+	int sub_flag;
 };
 
 void ToolInit(void);

@@ -31,6 +31,8 @@ int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
 int tool_start;
+int old_rock_sub_flag;
+int new_rock_sub_flag;
 
 Tool tool;
 
@@ -39,6 +41,7 @@ Tool tool;
 void ItemNumCheck(const Wood* wood, const Rock* rock);
 void const CursorToolCheck(const Cursor* cursor);
 void Tool_Start(const InGame* ingame);
+void const Road_Add_Num(const Rock* rock);
 
 
 void ToolInit(void)
@@ -47,6 +50,7 @@ void ToolInit(void)
 	frameselect_x = 952;
 	frameselect_y = 670;
 	tool.item_number = ePickaxe;
+	tool.road_num = 0;
 	road_x = 500;
 	road_y = 500;
 	road_flag = false;
@@ -68,6 +72,11 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
+	old_rock_sub_flag = new_rock_sub_flag;
+	if (new_rock_sub_flag)
+	{
+
+	}
 	if (tool_start == true)
 	{
 		Move_Frame();
@@ -188,4 +197,20 @@ void ItemNumCheck(const Wood*wood,const Rock*rock)
 void const CursorToolCheck(const Cursor* cursor)
 {
 	DrawRotaGraph(cursor->position.x, cursor->position.y, 1.0, 0.0, road_img, TRUE);
+}
+
+void const Road_Add_Num(const Rock* rock)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (tool.item_number == 0)
+	{
+		if (rock->item_num >= 1)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			{
+				tool.road_num++;
+				tool.sub_flag = true;
+			}
+		}
+	}
 }
