@@ -16,7 +16,9 @@
 
 #define D_SCROOL_SPEED		(200.0f)
 
-int atr = 0;
+//確認用変数　後に消します
+int atr ;
+int btr ;
 
 //この辺まだ使っていない
 void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
@@ -24,10 +26,23 @@ void PlayBgm(void);
 
 InGame ingame;
 
-//void NextStageFlag(const Goal* goal);
+void NextStageFlag(const Goal* goal);
 
+//初期化
 void InGameSceneInit(void)
 {
+	//インゲームスタートのフラグ変数
+	ingame.start = false;
+	//ステージを1ステージ目に設定
+	ingame.stage_num = eOne;
+	//ステージ次のステージに変更するフラグ
+	ingame.next_stage_flag = false;
+
+
+	//確認用変数　後々消します
+	atr = 0;
+	btr = 1;
+
 	//BGMの初期化
 		PlayBgm();
 		//マップの初期化
@@ -44,9 +59,9 @@ void InGameSceneInit(void)
 		CursorInit();
 		//ゴールの読み込み
 		GoalInit();
-	ingame.start = false;
-	ingame.stage_num = eOne;
-	ingame.next_stage_flag = false;
+
+
+	
 }
 
 eSceneType InGameSceneUpdate()
@@ -68,10 +83,12 @@ eSceneType InGameSceneUpdate()
 	//ゴールの更新
 	GoalUpdate();
 
-	/*NextStageFlag(GetGoal());*/
+	//ゴールを受け取ったらステージを変えることを可能にする
+	NextStageFlag(GetGoal());
 
-	////ゴールしたなら次のステージへ
-	//StageChange();
+	//ゴールしたなら次のステージへ
+	StageChange();
+	
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
@@ -114,6 +131,10 @@ void InGameSceneDraw(void)
 
 	//ゴールの描画
 	GoalDraw();
+
+	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
+	//後々消します
+	DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);
 }
 const InGame* GetInGame(void)
 {
@@ -158,56 +179,61 @@ void PlayBgm(void)
 	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/
 }
 
-//void StageChange(void)
-//{
-//
-//	
-//
-//	switch (ingame.stage_num)
-//	{
-//	case eOne:
-//		if (ingame.next_stage_flag == true)
-//		{
-//			atr++;
-//			ingame.stage_num = eTwo;
-//		}
-//		break;
-//	case eTwo:
-//		if (ingame.next_stage_flag == true)
-//		{
-//			atr++;
-//			ingame.stage_num = eThree;
-//		}
-//		break;
-//	case eThree:
-//		if (ingame.next_stage_flag == true)
-//		{
-//			atr++;
-//			ingame.stage_num = eFour;
-//		}
-//		break;
-//	case eFour:
-//		if (ingame.next_stage_flag == true)
-//		{
-//			atr++;
-//			ingame.stage_num = eFive;
-//		}
-//		break;
-//	case eFive:
-//		atr++;
-//		break;
-//	default:
-//		break;
-//	}
-//}
 
-//void NextStageFlag(const Goal* goal)
-//{
-//	ingame.next_stage_flag = false;
-//
-//	if (goal->flag == true)
-//	{
-//		ingame.next_stage_flag = true;
-//	}
-//}
+void NextStageFlag(const Goal* goal)
+{
+	ingame.next_stage_flag = false;
+
+	if (goal->flag == true)
+	{
+		ingame.next_stage_flag = true;
+		atr++;
+	}
+
+	
+}
+
+void StageChange(void)
+{
+	switch (ingame.stage_num)
+	{
+	case eOne:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eTwo;
+			btr++;
+		}
+		break;
+	case eTwo:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eThree;
+			btr++;
+		}
+		break;
+	case eThree:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eFour;
+			btr++;
+		}
+		break;
+	case eFour:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eFive;
+			btr++;
+		}
+		break;
+	case eFive:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eOne;
+			btr = 1;
+		}
+		break;
+	default:
+		break;
+	}
+}
 

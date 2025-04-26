@@ -28,4 +28,5 @@ void InGameSceneDraw(void);
 const InGame* GetInGame(void);
 
 void GameStart();
+void StageChange(void);
 //void StageChange(const Goal* goal);

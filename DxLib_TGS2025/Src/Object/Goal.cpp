@@ -9,7 +9,7 @@ Goal goal;
 
 //スタートしたか？
 void GoalStart(const InGame* ingame);
-//void GoalFlag(const InGame* ingame);
+void GoalFlag(const InGame* ingame);
 
 //初期化
 void GoalInit(void)
@@ -27,9 +27,10 @@ void GoalInit(void)
 //更新
 void GoalUpdate(void)
 {
+	//ゴール処理をスタートする
 	GoalStart(GetInGame());
-
-	/*GoalFlag(GetInGame());*/
+	//ゴールしたかどうか
+	GoalFlag(GetInGame());
 }
 
 //描画
@@ -47,24 +48,28 @@ void GoalStart(const InGame* ingame)
 	}
 }
 
-//ゴールした時にフラグをtrueにする
-//今だけYボタンを押したらゴール判定になるようにしている
-//void GoalFlag(const InGame* ingame)
-//{
-//	PadInputManager* pad_input = PadInputManager::GetInstance();
-//
-//	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
-//	{
-//		goal.flag = true;
-//	}
-//
-//	if (ingame->next_stage_flag == true)
-//	{
-//		goal.flag == false;
-//	}
-//}
+
 
 const Goal* GetGoal(void)
 {
 	return &goal;
+}
+
+//ゴールした時にフラグをtrueにする
+//今だけYボタンを押したらゴール判定になるようにしている
+void GoalFlag(const InGame* ingame)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+	{
+		goal.flag = true;
+	}
+
+	if (ingame->next_stage_flag == true)
+	{
+		goal.flag = false;
+	}
+
+
 }
