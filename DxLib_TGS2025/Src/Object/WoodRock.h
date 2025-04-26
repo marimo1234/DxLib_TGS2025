@@ -18,7 +18,7 @@ struct Wood
 	int image[4];
 	int animation;
 	int hit_count;
-	bool hit_flg;
+	bool hit_flag;
 };
 
 struct Rock
@@ -28,7 +28,7 @@ struct Rock
 	int image[4];
 	int animation;
 	int hit_count;
-	bool hit_flg;
+	bool hit_flag;
 };
 
 
@@ -43,3 +43,6 @@ const Wood* GetWood(void);
 const Rock* GetRock(void);
 
 void WoodRockItemCount(void);
+
+void StageChenge(void);
+

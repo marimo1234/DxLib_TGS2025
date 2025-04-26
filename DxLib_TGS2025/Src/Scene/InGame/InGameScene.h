@@ -17,7 +17,7 @@ struct InGame
 {
 	bool start;
 	int stage_num;
-	bool next_stage_flg;
+	bool next_stage_flag;
 };
 
 
@@ -28,4 +28,4 @@ void InGameSceneDraw(void);
 const InGame* GetInGame(void);
 
 void GameStart();
-void StageChenge(void);
+//void StageChange(const Goal* goal);

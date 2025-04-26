@@ -26,8 +26,8 @@ void WoodRockStart(const InGame* ingame);
 void WoodRockInit(void)
 {
 	//hitフラグの初期化
-	wood.hit_flg = false;
-	rock.hit_flg = false;
+	wood.hit_flag = false;
+	rock.hit_flag = false;
 
 	//初期位置の設定
 	wood.position.x = 615.0f;
@@ -109,39 +109,39 @@ void WoodAnimation(void)
 	{
 	case eHit0:// Hit数0
 		wood.animation = wood.image[0];
-		if (wood.hit_flg == true)
+		if (wood.hit_flag == true)
 		{
 			wood.hit_count = eHit1;
-			wood.hit_flg = false;//hitフラグをfalseにする
+			wood.hit_flag = false;//hitフラグをfalseにする
 
 		}
 		break;
 
 	case eHit1:// Hit数1
 		wood.animation = wood.image[1];
-		if (wood.hit_flg == true)
+		if (wood.hit_flag == true)
 		{
 			wood.hit_count = eHit2;
-			wood.hit_flg = false;//hitフラグをfalseにする
+			wood.hit_flag = false;//hitフラグをfalseにする
 		}
 
 		break;
 
 	case eHit2:// Hit数2
 		wood.animation = wood.image[2];
-		if (wood.hit_flg == true)
+		if (wood.hit_flag == true)
 		{
 			wood.hit_count = eHit3;
-			wood.hit_flg = false;   //hitフラグをfalseにする
+			wood.hit_flag = false;   //hitフラグをfalseにする
 		}
 		break;
 
 	case eHit3:// Hit数3
 		wood.animation = wood.image[3];
-		if (wood.hit_flg == true)
+		if (wood.hit_flag == true)
 		{
 			wood.hit_count = eHit0;     // 今だけループするようにしている
-			wood.hit_flg = false;   // hitフラグをfalseにする
+			wood.hit_flag = false;   // hitフラグをfalseにする
 			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
 		}
 		break;
@@ -156,38 +156,38 @@ void RockAnimation(void)
 	{
 	case eHit0:// Hit数0
 		rock.animation = rock.image[0];
-		if (rock.hit_flg == true)
+		if (rock.hit_flag == true)
 		{
 			rock.hit_count = eHit1;
-			rock.hit_flg = false;//hitフラグをfalseにする
+			rock.hit_flag = false;//hitフラグをfalseにする
 		}
 		break;
 
 	case eHit1:// Hit数1
 		rock.animation = rock.image[1];
-		if (rock.hit_flg == true)
+		if (rock.hit_flag == true)
 		{
 			rock.hit_count = eHit2;
-			rock.hit_flg = false;//hitフラグをfalseにする
+			rock.hit_flag = false;//hitフラグをfalseにする
 		}
 
 		break;
 
 	case eHit2:// Hit数2
 		rock.animation = rock.image[2];
-		if (rock.hit_flg == true)
+		if (rock.hit_flag == true)
 		{
 			rock.hit_count = eHit3;
-			rock.hit_flg = false;//hitフラグをfalseにする
+			rock.hit_flag = false;//hitフラグをfalseにする
 		}
 		break;
 
 	case eHit3:// Hit数3
 		rock.animation = rock.image[3];
-		if (rock.hit_flg == true)
+		if (rock.hit_flag == true)
 		{
 			rock.hit_count = eHit0;//今だけループするようにしている
-			rock.hit_flg = false;//hitフラグをfalseにする
+			rock.hit_flag = false;//hitフラグをfalseにする
 			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
 		}
 		break;
@@ -240,7 +240,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor)
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				//Hitフラグをtrueにする
-				wood.hit_flg = true;
+				wood.hit_flag = true;
 			}
 		}
 	}
@@ -260,7 +260,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor)
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				//Hitフラグをtrueにする
-				rock.hit_flg = true;
+				rock.hit_flag = true;
 			}
 		}
 	}

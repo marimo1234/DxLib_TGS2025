@@ -16,14 +16,15 @@
 
 #define D_SCROOL_SPEED		(200.0f)
 
+int atr = 0;
+
+//この辺まだ使っていない
 void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
 InGame ingame;
-//int Before_Hit[10];		//前の当たり判定
-//int Now_Hit[10];		//今の当たり判定
 
-
+//void NextStageFlag(const Goal* goal);
 
 void InGameSceneInit(void)
 {
@@ -45,6 +46,7 @@ void InGameSceneInit(void)
 		GoalInit();
 	ingame.start = false;
 	ingame.stage_num = eOne;
+	ingame.next_stage_flag = false;
 }
 
 eSceneType InGameSceneUpdate()
@@ -61,12 +63,15 @@ eSceneType InGameSceneUpdate()
 	CarManagerUpdate();
 	//カーソルの更新
 	CursorUpdate();
-	//スタートボタン
+	//ゲームスタート
 	GameStart();
 	//ゴールの更新
 	GoalUpdate();
 
+	/*NextStageFlag(GetGoal());*/
 
+	////ゴールしたなら次のステージへ
+	//StageChange();
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
@@ -153,22 +158,56 @@ void PlayBgm(void)
 	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/
 }
 
-void StageChenge(void)
-{
-	switch (ingame.stage_num)
-	{
-	case eOne:
-		ingame.next_stage_flg = true;
-	case eTwo:
-		ingame.next_stage_flg = true;
-	case eThree:
-		ingame.next_stage_flg = true;
-	case eFour:
-		ingame.next_stage_flg = true;
-	case eFive:
-		ingame.next_stage_flg = true;
-	default:
-		break;
-	}
-}
+//void StageChange(void)
+//{
+//
+//	
+//
+//	switch (ingame.stage_num)
+//	{
+//	case eOne:
+//		if (ingame.next_stage_flag == true)
+//		{
+//			atr++;
+//			ingame.stage_num = eTwo;
+//		}
+//		break;
+//	case eTwo:
+//		if (ingame.next_stage_flag == true)
+//		{
+//			atr++;
+//			ingame.stage_num = eThree;
+//		}
+//		break;
+//	case eThree:
+//		if (ingame.next_stage_flag == true)
+//		{
+//			atr++;
+//			ingame.stage_num = eFour;
+//		}
+//		break;
+//	case eFour:
+//		if (ingame.next_stage_flag == true)
+//		{
+//			atr++;
+//			ingame.stage_num = eFive;
+//		}
+//		break;
+//	case eFive:
+//		atr++;
+//		break;
+//	default:
+//		break;
+//	}
+//}
+
+//void NextStageFlag(const Goal* goal)
+//{
+//	ingame.next_stage_flag = false;
+//
+//	if (goal->flag == true)
+//	{
+//		ingame.next_stage_flag = true;
+//	}
+//}
 
