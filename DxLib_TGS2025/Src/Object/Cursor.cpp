@@ -41,7 +41,7 @@ void CursorInit(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
-	cursorstart = FALSE;
+	cursorstart = false;
 
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
@@ -58,7 +58,7 @@ void CursorInit(void)
 void CursorUpdate(void)
 {
 	CursolButtonMovement();
-	CursorStart(GetStart());
+	CursorStart(GetInGame());
 }
 
 //カーソルの描画
@@ -68,11 +68,11 @@ void CursorDraw(void)
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 }
 
-void CursorStart(const Start* start)
+void CursorStart(const InGame* ingame)
 {
-	if (start->GameStart == TRUE)
+	if (ingame->start == true)
 	{
-		cursorstart = TRUE;
+		cursorstart = true;
 	}
 }
 

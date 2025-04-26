@@ -19,11 +19,9 @@
 void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
-Start start;
-int Before_Hit[10];		//前の当たり判定
-int Now_Hit[10];		//今の当たり判定
-eStage stagenum;
-NextStage next;
+InGame ingame;
+//int Before_Hit[10];		//前の当たり判定
+//int Now_Hit[10];		//今の当たり判定
 
 
 
@@ -45,10 +43,8 @@ void InGameSceneInit(void)
 		CursorInit();
 		//ゴールの読み込み
 		GoalInit();
-	start.GameStart = FALSE;
-	stagenum = eOne;
-	next.stage = false;
-	start.StageNumber = eOne;
+	ingame.start = false;
+	ingame.stage_num = eOne;
 }
 
 eSceneType InGameSceneUpdate()
@@ -66,7 +62,7 @@ eSceneType InGameSceneUpdate()
 	//カーソルの更新
 	CursorUpdate();
 	//スタートボタン
-	StarButton();
+	GameStart();
 	//ゴールの更新
 	GoalUpdate();
 
@@ -94,7 +90,7 @@ void InGameSceneDraw(void)
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでリザルト画面へ");
 
 	//マップの描画
-	MapDraw(stagenum);
+	MapDraw();
 
 	//障害物の描画
 	ObstacleManagerDraw();
@@ -114,17 +110,17 @@ void InGameSceneDraw(void)
 	//ゴールの描画
 	GoalDraw();
 }
-const Start* GetStart(void)
+const InGame* GetInGame(void)
 {
-	return &start;
+	return &ingame;
 }
-void StarButton()
+void GameStart(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		start.GameStart = TRUE;
+		ingame.start = true;
 	}
 }
 
@@ -159,23 +155,18 @@ void PlayBgm(void)
 
 void StageChenge(void)
 {
-	switch (start.StageNumber)
+	switch (ingame.stage_num)
 	{
-	case 1:
-		stagenum = eOne;
-		next.stage = true;
-	case 2:
-		stagenum = eTwo;
-		next.stage = true;
-	case 3:
-		stagenum = eThree;
-		next.stage = true;
-	case 4:
-		stagenum = eFour;
-		next.stage = true;
-	case 5:
-		stagenum = eFive;
-		next.stage = true;
+	case eOne:
+		ingame.next_stage_flg = true;
+	case eTwo:
+		ingame.next_stage_flg = true;
+	case eThree:
+		ingame.next_stage_flg = true;
+	case eFour:
+		ingame.next_stage_flg = true;
+	case eFive:
+		ingame.next_stage_flg = true;
 	default:
 		break;
 	}

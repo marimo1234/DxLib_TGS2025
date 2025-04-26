@@ -10,6 +10,10 @@ int car_image[2] = {};
 int car_direction = 0;
 int i;
 int carstart;
+
+void CarStart(const InGame* ingame);
+
+
 void CarInit(void)
 {
 	i = 1;
@@ -20,14 +24,14 @@ void CarInit(void)
 	car_image[0] = LoadGraph("Resource/images/left_car.png");
 	car_image[1] = LoadGraph("Resource/images/front_car.png");
 
-	carstart = FALSE;
+	carstart = false;
 }
 
 void CarManagerUpdate(void)
 {
-	CarStart(GetStart());
+	CarStart(GetInGame());
 
-	if (carstart == TRUE)
+	if (carstart == true)
 	{
 
 
@@ -61,11 +65,11 @@ void CarDraw(void)
 		DrawRotaGraph(car_x, car_y, 1.0, 0.0, car_animation, TRUE);
 	
 }
-void CarStart(const Start* start)
+void CarStart(const InGame* ingame)
 {
-	if (start->GameStart == TRUE)
+	if (ingame->start == true)
 	{
-		carstart = TRUE;
+		carstart = true;
 	}
 	
 }

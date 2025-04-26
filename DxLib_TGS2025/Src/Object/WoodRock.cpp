@@ -65,7 +65,7 @@ void WoodRockInit(void)
 void WoodRockUpdate(void)
 {
 	//ゲームのスタートを受け取る
-	WoodRockStart(GetStart());
+	WoodRockStart(GetInGame());
 
 	//ツールとカーソルとのHitチェック
 	WoodHitCheck(Get_Tool(), GetCursor1());
@@ -202,11 +202,11 @@ const Rock* GetRock(void)
 }
 
 
-void WoodRockStart(const Start* start)
+void WoodRockStart(const InGame* ingame)
 {
-	if (start->GameStart == TRUE)
+	if (ingame->start == true)
 	{
-		woodrock_start = TRUE;
+		woodrock_start = true;
 	}
 
 }

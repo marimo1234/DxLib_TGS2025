@@ -47,8 +47,8 @@ void ToolInit(void)
 	tool.item_number = ePickaxe;
 	road_x = 500;
 	road_y = 500;
-	road_flag = FALSE;
-	tool_start = FALSE;
+	road_flag = false;
+	tool_start = false;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -66,13 +66,13 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
-	if (tool_start == TRUE)
+	if (tool_start == true)
 	{
 		Move_Frame();
 		//道路設置
 		Put_Road();
 	}
-	Tool_Start(GetStart());
+	Tool_Start(GetInGame());
 }
 
 void ToolDraw(void) 
@@ -147,7 +147,7 @@ void Put_Road(void)
 	{
 		if (tool.item_number == 0)
 		{ 
-			road_flag = TRUE;
+			road_flag = true;
 		}
 	}
 }
@@ -155,18 +155,18 @@ void Put_Road(void)
 //置いた道路描画
 void Draw_Road(void)
 {
-	if (road_flag == TRUE)
+	if (road_flag == true)
 	{
 		CursorToolCheck(GetCursor1());
 	}
 }
 
 //ゲームスタート受け取り
-void Tool_Start(const Start* start)
+void Tool_Start(const InGame* ingame)
 {
-	if (start->GameStart == TRUE)
+	if (ingame->start == true)
 	{
-		tool_start = TRUE;
+		tool_start = true;
 	}
 }
 

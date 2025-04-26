@@ -20,24 +20,11 @@ void MapUpdate(void)
 {
 
 }
-void MapDraw(int stage)
+void MapDraw(void)
 {
-	stage = 1;
-	switch (stage)
-	{
-	case 1:
-		
-		
-		DrawRotaGraphF(600, 374, 0.7, 0.0, ground, TRUE);
-		DrawRotaGraphF(620, 380, 0.4, 0.0, groundreef, TRUE);
-		trout[0][0]= DrawRotaGraphF(540, 380, 1.0, 0.0, math, TRUE);
-		trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
-		trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);
-		break;
-	case 2:
-		
-	default:
-		break;
-	}
-	
+	DrawRotaGraphF(600, 374, 0.7, 0.0, ground, TRUE);
+	DrawRotaGraphF(620, 380, 0.4, 0.0, groundreef, TRUE);
+	trout[0][0] = DrawRotaGraphF(540, 380, 1.0, 0.0, math, TRUE);
+	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
+	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);
 }

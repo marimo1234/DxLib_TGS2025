@@ -11,20 +11,21 @@ enum eStage
 	eFour,
 	eFive
 };
+
 //ゲームのスタートとステージナンバーの構造体
-struct Start
+struct InGame
 {
-	int GameStart;
-	int StageNumber;
-};
-struct NextStage
-{
-	int stage=false;
+	bool start;
+	int stage_num;
+	bool next_stage_flg;
 };
 
-void StarButton();
-const Start* GetStart(void);
+
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
+
+const InGame* GetInGame(void);
+
+void GameStart();
 void StageChenge(void);

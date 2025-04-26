@@ -42,6 +42,6 @@ void RockAnimation(void);//岩のアニメーション
 const Wood* GetWood(void);
 const Rock* GetRock(void);
 
-void WoodRockStart(const Start* start);
+void WoodRockStart(const InGame* ingame);
 
 void WoodRockItemCount(void);

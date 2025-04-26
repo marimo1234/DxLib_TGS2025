@@ -18,4 +18,4 @@ void CursorUpdate(void);
 void CursorDraw(void);
 const Cursor* GetCursor1(void);
 void CursolButtonMovement();         // 十字キーの移動
-void CursorStart(const Start* start);
+void CursorStart(const InGame* ingame);

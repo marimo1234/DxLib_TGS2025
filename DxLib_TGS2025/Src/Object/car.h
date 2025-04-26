@@ -4,4 +4,4 @@
 void CarInit(void);
 void CarManagerUpdate(void);
 void CarDraw(void);
-void CarStart(const Start* start);
+void CarStart(const InGame* ingame);
