@@ -47,22 +47,6 @@ void InGameSceneInit(void)
 		GoalInit();
 	start.GameStart = FALSE;
 	stage = eOne;
-	
-	//BGMの初期化
-	PlayBgm();
-	//マップの初期化
-	MapInit();
-	//障害物の初期化
-	ObstacleManagerInit();
-	//木岩の初期化
-	WoodRockInit();
-	//ツールの初期化
-	ToolInit();
-	//車の初期化
-	CarInit();
-	//カーソルの初期化
-	CursorInit();
-
 }
 
 eSceneType InGameSceneUpdate()
