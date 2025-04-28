@@ -18,9 +18,11 @@ enum eToolState
 
 struct Tool
 {
-	int item_number;
-	int road_num;
-	int sub_flag;
+	int item_number;	//選択しているアイテムの種類
+	int road_num;		//道の所持数
+	int sub_flag;		//岩の数を引くフラグ
+	float draw_x[100];	//描画座標ｘ
+	float draw_y[100];	//描画座標ｙ
 };
 
 void ToolInit(void);

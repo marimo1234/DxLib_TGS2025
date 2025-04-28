@@ -30,13 +30,9 @@ float pickaxe_angle;	//つるはしの角度
 int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
-int tool_start;
-int old_rock_sub_flag;
-int new_rock_sub_flag;
+int tool_start;			//操作可能かの変数
 
 Tool tool;
-
-
 
 void ItemNumCheck(const Wood* wood, const Rock* rock);
 void const CursorToolCheck(const Cursor* cursor);
@@ -55,6 +51,7 @@ void ToolInit(void)
 	road_y = 500;
 	road_flag = false;
 	tool_start = false;
+	tool.sub_flag = false;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -72,18 +69,21 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
-	old_rock_sub_flag = new_rock_sub_flag;
-	if (new_rock_sub_flag)
+	//岩の所持数をマイナス1するフラグを元に戻す
+	if (tool.sub_flag==true)
 	{
-
+		tool.sub_flag = false;
 	}
+
 	if (tool_start == true)
 	{
 		Move_Frame();
 		//道路設置
 		Put_Road();
 	}
+
 	Tool_Start(GetInGame());
+	Road_Add_Num(GetRock());
 }
 
 void ToolDraw(void) 
@@ -102,6 +102,8 @@ void ToolDraw(void)
 	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
 	//道路描画
 	Draw_Road();
+	//道路の所持数
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", tool.road_num);
 
 	ItemNumCheck(GetWood(), GetRock());
 }
@@ -187,16 +189,19 @@ const Tool* Get_Tool(void)
 	return &tool;
 }
 
-//
+//アイテムの確認
 void ItemNumCheck(const Wood*wood,const Rock*rock)
 {
 	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);		//木の所持数
-	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);		//石の所持数
+	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);		//岩の所持数
 }
+
 
 void const CursorToolCheck(const Cursor* cursor)
 {
-	DrawRotaGraph(cursor->position.x, cursor->position.y, 1.0, 0.0, road_img, TRUE);
+	tool.draw_x[1] = cursor->position.x;
+	tool.draw_y[1] = cursor->position.y;
+	DrawRotaGraph(tool.draw_x[1], tool.draw_y[1], 1.0, 0.0, road_img, TRUE);
 }
 
 void const Road_Add_Num(const Rock* rock)
@@ -206,7 +211,7 @@ void const Road_Add_Num(const Rock* rock)
 	{
 		if (rock->item_num >= 1)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 			{
 				tool.road_num++;
 				tool.sub_flag = true;
