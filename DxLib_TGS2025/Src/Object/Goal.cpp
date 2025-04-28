@@ -2,6 +2,8 @@
 #include"Goal.h"
 #include"../Scene/InGame/InGameScene.h"
 #include"../Utility/PadInputManager.h"
+#include "../Object/Car.h"
+
 
 
 
@@ -9,11 +11,16 @@ Goal goal;
 
 //スタートしたか？
 void GoalStart(const InGame* ingame);
-void GoalFlag(const InGame* ingame);
+void GoalFlag(const InGame* ingame, const Car* car);
+
+
+
 
 //初期化
 void GoalInit(void)
 {
+	goal.position.x = 690.0f;
+	goal.position.y = 380.0f;
 	//ゴールしたかの判定フラグ
 	goal.flag = false;
 
@@ -30,14 +37,14 @@ void GoalUpdate(void)
 	//ゴール処理をスタート
 	GoalStart(GetInGame());
 	//ゴールしたかどうか
-	GoalFlag(GetInGame());
+	GoalFlag(GetInGame(),GetCar());
 }
 
 //描画
 void GoalDraw(void)
 {
 	//画像の描画
-	DrawRotaGraphF(720, 340, 0.1, 0.0, goal.image, TRUE);
+	DrawRotaGraphF(goal.position.x, goal.position.y, 0.1, 0.0, goal.image, TRUE);
 }
 
 //ゴール処理スタート
@@ -56,13 +63,11 @@ const Goal* GetGoal(void)
 	return &goal;
 }
 
-//ゴールした時にフラグをtrueにする
-//今だけYボタンを押したらゴール判定になるようにしている
-void GoalFlag(const InGame* ingame)
-{
-	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+void GoalFlag(const InGame* ingame, const Car* car)
+{
+
+	if (goal.position.x < car->position.x && goal.position.y == car->position.y)
 	{
 		goal.flag = true;
 	}
