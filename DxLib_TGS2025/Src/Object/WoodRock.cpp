@@ -236,6 +236,10 @@ void WoodRockSub (const Tool*tool)
 	{
 		rock.item_num--;
 	}
+	if (tool->wood_sub_flag == true)
+	{
+		wood.item_num--;
+	}
 }
 
 void ItemSlotCheck(const Tool* tool)
