@@ -8,6 +8,7 @@ struct Goal
 	bool flag;
 	bool start;
 	int image;
+	int flag_image;
 };
 
 void GoalInit(void);
