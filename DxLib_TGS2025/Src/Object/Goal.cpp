@@ -5,9 +5,10 @@
 #include "../Object/Car.h"
 
 
-
-
+//仮名
+bool goalprint=false;
 Goal goal;
+int i=255;
 
 //スタートしたか？
 void GoalStart(const InGame* ingame);
@@ -28,7 +29,8 @@ void GoalInit(void)
 	goal.start = false;
 
 	//画像の読み込み
-	goal.image = LoadGraph("Resource/images/GOAL_FLAG2.png");
+	goal.flag_image = LoadGraph("Resource/images/GOAL_FLAG2.png");
+	goal.image = LoadGraph("Resource/images/GOAL.png");
 }
 
 //更新
@@ -44,8 +46,16 @@ void GoalUpdate(void)
 void GoalDraw(void)
 {
 	//画像の描画
-	DrawRotaGraphF(goal.position.x, goal.position.y, 0.1, 0.0, goal.image, TRUE);
+	DrawRotaGraphF(goal.position.x, goal.position.y, 0.1, 0.0, goal.flag_image, TRUE);
+	SetDrawBright(i, i, i);
+	//ゴールしたら
+	if (goalprint==true)
+	{
+			//ゴールの文字を出す
+			DrawRotaGraphF(615,380, 1.0, 0.0, goal.image, TRUE);
+	}
 }
+	
 
 //ゴール処理スタート
 void GoalStart(const InGame* ingame)
@@ -70,11 +80,14 @@ void GoalFlag(const InGame* ingame, const Car* car)
 	if (goal.position.x < car->position.x && goal.position.y == car->position.y)
 	{
 		goal.flag = true;
+		goalprint = true;
+		
 	}
 
 	if (ingame->next_stage_flag == true)
 	{
 		goal.flag = false;
+		goalprint = false;
 	}
 
 
