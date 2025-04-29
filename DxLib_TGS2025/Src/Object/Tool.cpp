@@ -31,6 +31,8 @@ int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
 int tool_start;			//操作可能かの変数
+//仮変数
+int num;
 
 Tool tool;
 
@@ -54,6 +56,9 @@ void ToolInit(void)
 	road_flag = false;
 	tool_start = false;
 	tool.rock_sub_flag = false;
+	tool.wood_sub_flag = false;
+	//仮変数
+	num = 0;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -71,11 +76,7 @@ void ToolInit(void)
 
 void ToolManagerUpdate(void)
 {
-	//岩の所持数をマイナス1するフラグを元に戻す
-	if (tool.rock_sub_flag==true)
-	{
-		tool.rock_sub_flag = false;
-	}
+	Sub_Num();
 
 	if (tool_start == true)
 	{
@@ -86,6 +87,7 @@ void ToolManagerUpdate(void)
 
 	Tool_Start(GetInGame());
 	Road_Add_Num(GetRock());
+	WoodRoad_Add_Num(GetWood());
 }
 
 void ToolDraw(void) 
@@ -203,11 +205,13 @@ void ItemNumCheck(const Wood*wood,const Rock*rock)
 
 void const CursorToolCheck(const Cursor* cursor)
 {
-	tool.draw_x[1] = cursor->position.x;
-	tool.draw_y[1] = cursor->position.y;
-	DrawRotaGraph(tool.draw_x[1], tool.draw_y[1], 1.0, 0.0, road_img, TRUE);
+	tool.draw_x[num] = cursor->position.x;
+	tool.draw_y[num] = cursor->position.y;
+	DrawRotaGraph(tool.draw_x[num], tool.draw_y[num], 1.0, 0.0, road_img, TRUE);
+	num++;
 }
 
+//岩の道を増やす
 void const Road_Add_Num(const Rock* rock)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -224,6 +228,7 @@ void const Road_Add_Num(const Rock* rock)
 	}
 }
 
+//木の道を増やす
 void const WoodRoad_Add_Num(const Wood* wood)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -234,8 +239,23 @@ void const WoodRoad_Add_Num(const Wood* wood)
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 			{
 				tool.wood_road_num++;
-				tool.rock_sub_flag = true;
+				tool.wood_sub_flag = true;
 			}
 		}
+	}
+}
+
+//数を増やした後にフラグを戻す
+void Sub_Num(void)
+{
+	//岩の所持数をマイナス1するフラグを元に戻す
+	if (tool.rock_sub_flag == true)
+	{
+		tool.rock_sub_flag = false;
+	}
+	//木の所持数をマイナス1するフラグを元に戻す
+	if (tool.wood_sub_flag == true)
+	{
+		tool.wood_sub_flag = false;
 	}
 }
