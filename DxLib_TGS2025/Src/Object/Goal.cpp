@@ -40,6 +40,16 @@ void GoalUpdate(void)
 	GoalStart(GetInGame());
 	//ゴールしたかどうか
 	GoalFlag(GetInGame(),GetCar());
+
+	
+		PadInputManager* pad_input = PadInputManager::GetInstance();
+
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
+		{
+			goalprint = false;
+		}
+	
+	
 }
 
 //描画
@@ -64,6 +74,10 @@ void GoalStart(const InGame* ingame)
 	{
 		goal.start = true;
 	}
+	else
+	{
+		goal.start == false;
+	}
 }
 
 
@@ -87,8 +101,6 @@ void GoalFlag(const InGame* ingame, const Car* car)
 	if (ingame->next_stage_flag == true)
 	{
 		goal.flag = false;
-		goalprint = false;
 	}
-
 
 }

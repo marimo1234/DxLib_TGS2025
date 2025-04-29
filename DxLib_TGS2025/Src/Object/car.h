@@ -18,3 +18,5 @@ void CarDraw(void);
 
 const Car* GetCar(void);
 
+void CarReset(void);
+
