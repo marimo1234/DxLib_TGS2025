@@ -51,7 +51,6 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 		DrawRotaGraph(car.position.x, car.position.y, 1.0, 0.0, car.animation, TRUE);
-	
 }
 
 //車の処理をスタートするフラグ

@@ -316,3 +316,8 @@ void WoodRockReset(void)
 	wood.animation = wood.image[0];
 	rock.animation = rock.image[0];
 }
+
+void ItemMove(void)
+{
+	
+}
