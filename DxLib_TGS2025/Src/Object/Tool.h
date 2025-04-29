@@ -34,5 +34,7 @@ void Move_Frame(void);
 void Put_Road(void);
 void Draw_Road(void);
 void Sub_Num(void);
+void Tool_Reset(void);
+
 
 const Tool* Get_Tool(void);

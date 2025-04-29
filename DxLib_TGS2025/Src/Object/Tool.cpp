@@ -86,6 +86,10 @@ void ToolManagerUpdate(void)
 		//道路設置
 		Put_Road();
 	}
+	else
+	{
+		Tool_Reset();
+	}
 
 	Tool_Start(GetInGame());
 	Road_Add_Num(GetRock());
@@ -204,6 +208,10 @@ void Tool_Start(const InGame* ingame)
 	{
 		tool_start = true;
 	}
+	else
+	{
+		tool_start = false;
+	}
 }
 
 //Toolの値渡し
@@ -273,4 +281,13 @@ void Sub_Num(void)
 	{
 		tool.wood_sub_flag = false;
 	}
+}
+
+//ステージ切り替え時の値リセット
+void Tool_Reset(void)
+{
+	tool.road_num = 0;
+	tool.wood_road_num = 0;
+	put_num = 0;
+	road_flag = false;
 }
