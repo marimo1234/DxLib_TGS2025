@@ -106,10 +106,7 @@ eSceneType InGameSceneUpdate()
 
 void InGameSceneDraw(void)
 {
-	DrawFormatString(50, 10, GetColor(255, 255, 255), "Xボタンでゲームスタート");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "Aで伐る、壊す、作った道を置く");
-	DrawFormatString(50, 110, GetColor(255, 255, 255), "Bで材料があれば道、橋を作れる");
-	DrawFormatString(50, 160, GetColor(255, 255, 255), "");
+	
 	//背景画像の描画
 	/*DrawGraphF(scrool_x, 0, , TRUE);
 	DrawGraphF(1280.0f + scrool_x, 0, , TRUE);*/
@@ -139,6 +136,10 @@ void InGameSceneDraw(void)
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
+	DrawFormatString(50, 60, GetColor(255, 255, 255), "Aで伐る、壊す、作った道を置く");
+	DrawFormatString(50, 120, GetColor(255, 255, 255), "Bで材料があれば道、橋を作れる");
+	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB,LBでアイテムスロットを操作できる");
 }
 const InGame* GetInGame(void)
 {
