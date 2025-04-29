@@ -21,18 +21,19 @@
 int pickaxe_img;		//つるはしの画像ハンドル
 int itemframe_img;		//枠の画像ハンドル
 int road_img;			//石の地面の画像ハンドル
-int logtile_img;		//丸太の地面の画像ハンドル
+int wood_road_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
 int frameselect_x;		//選択枠のｘ座標
 int frameselect_y;		//選択枠のｙ座標
 float pickaxe_angle;	//つるはしの角度
+int put_num;			//置いた数
 int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
 int tool_start;			//操作可能かの変数
 //仮変数
-int num;
+
 
 Tool tool;
 
@@ -57,8 +58,9 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	//仮変数
-	num = 0;
+	put_num = 0;
+	//仮
+	
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -67,7 +69,7 @@ void ToolInit(void)
 	//石の地面画像の読み込み
 	road_img=LoadGraph("Resource/images/stone_tiles.png");
 	//丸太の地面画像の読み込み
-	logtile_img = LoadGraph("Resource/images/Log.png");
+	wood_road_img = LoadGraph("Resource/images/Log.png");
 	//斧の画像読み込み
 	ax_img = LoadGraph("Resource/images/ax.png");
 	//選択枠(アイテム)の画像読み込み
@@ -99,7 +101,7 @@ void ToolDraw(void)
 	//道路の描画（アイテム枠）
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.65,0.0,road_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, logtile_img , TRUE);
+	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, wood_road_img , TRUE);
 	//斧の描画（アイテム枠）
 	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//枠選択の描画（アイテム枠）
@@ -107,11 +109,14 @@ void ToolDraw(void)
 	//道路描画
 	Draw_Road();
 	//道路の所持数
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", tool.road_num);
-	//
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", tool.road_num);
+	DrawExtendFormatString(930, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.road_num);
+	//木の道の所持数
+	DrawExtendFormatString(1010, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.wood_road_num);
 
 	ItemNumCheck(GetWood(), GetRock());
+
+	//仮
+	DrawFormatString(300, 210, GetColor(255, 255, 255), "座標ｘ%f", tool.draw_x[0]);
 }
 
 void Move_Frame(void)
@@ -165,18 +170,30 @@ void Put_Road(void)
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		if (tool.item_number == 0)
-		{ 
-			road_flag = true;
+		{
+			if (tool.road_num > 0)
+			{
+				if (put_num < 10)
+				{
+					road_flag = true;
+					CursorToolCheck(GetCursor1());
+					put_num++;
+					tool.road_num--;
+				}
+			}
 		}
 	}
 }
 
 //置いた道路描画
 void Draw_Road(void)
-{
+{	
 	if (road_flag == true)
 	{
-		CursorToolCheck(GetCursor1());
+		for (int i = 0; i < put_num; i++)
+		{
+			DrawRotaGraph(tool.draw_x[i], tool.draw_y[i], 1.0, 0.0, road_img, TRUE);
+		}
 	}
 }
 
@@ -205,9 +222,8 @@ void ItemNumCheck(const Wood*wood,const Rock*rock)
 
 void const CursorToolCheck(const Cursor* cursor)
 {
-	tool.draw_x[num] = cursor->position.x;
-	tool.draw_y[num] = cursor->position.y;
-	DrawRotaGraph(tool.draw_x[num], tool.draw_y[num], 1.0, 0.0, road_img, TRUE);
+	tool.draw_x[put_num] = cursor->position.x;
+	tool.draw_y[put_num] = cursor->position.y;
 }
 
 //岩の道を増やす

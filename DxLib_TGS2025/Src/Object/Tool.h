@@ -23,8 +23,8 @@ struct Tool
 	int wood_road_num;	//丸太の道の所持数
 	int rock_sub_flag;	//岩の数を引くフラグ
 	int wood_sub_flag;	//木の数を引くフラグ
-	float draw_x[100];	//描画座標ｘ
-	float draw_y[100];	//描画座標ｙ
+	float draw_x[10];	//描画座標ｘ
+	float draw_y[10];	//描画座標ｙ
 };
 
 void ToolInit(void);
