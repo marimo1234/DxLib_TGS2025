@@ -21,13 +21,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	// パッド入力制御のインスタンスを取得
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//ローカル変数定義
-	float fixed_time = 0.0f;	//フレーム経過時間(s)
-
 	//メインループ
 	//ウィンドウが閉じられたorシーンマネージャー側で終了状態でループが終わる
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
+		startTime = GetNowCount();
+
+		frameCount++;
+		if (startTime - fpsTimer >= 1000)
+		{
+			currentFPS = frameCount;
+			frameCount = 0;
+			fpsTimer = startTime;
+		}
 		//入力の更新
 		InputManagerUpdate();
 		pad_input->Update();
