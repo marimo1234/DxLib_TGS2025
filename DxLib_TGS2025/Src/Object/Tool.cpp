@@ -24,20 +24,24 @@ int road_img;			//石の地面の画像ハンドル
 int wood_road_img;		//丸太の地面の画像ハンドル
 int ax_img;				//斧の画像ハンドル
 int frameselect_img;	//選択枠（アイテム）の画像ハンドル
+
 int frameselect_x;		//選択枠のｘ座標
 int frameselect_y;		//選択枠のｙ座標
+
 float pickaxe_angle;	//つるはしの角度
+
 int put_num;			//置いた数
 int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
+
 int tool_start;			//操作可能かの変数
+
 //仮変数
 
 
 Tool tool;
 
-void ItemNumCheck(const Wood* wood, const Rock* rock);
 void const CursorToolCheck(const Cursor* cursor);
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
@@ -117,16 +121,14 @@ void ToolDraw(void)
 	//木の道の所持数
 	DrawExtendFormatString(1010, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.wood_road_num);
 
-	ItemNumCheck(GetWood(), GetRock());
-
 	//仮
-	DrawFormatString(300, 210, GetColor(255, 255, 255), "座標ｘ%f", tool.draw_x[0]);
 }
 
 void Move_Frame(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	//ＲＢが押されたら
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
 	{
 		switch (tool.item_number)
@@ -145,6 +147,8 @@ void Move_Frame(void)
 			break;
 		}
 	}
+
+	//ＬＢが押されたら
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::ePress)
 	{
 		switch (tool.item_number)
@@ -171,19 +175,22 @@ void Move_Frame(void)
 void Put_Road(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
+	
+	//Aボタンが押されたら
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+
+		//アイテムが道路なら
 		if (tool.item_number == 0)
 		{
-			if (tool.road_num > 0)
+
+			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
+			if (tool.road_num > 0&& put_num < 10)
 			{
-				if (put_num < 10)
-				{
 					road_flag = true;
 					CursorToolCheck(GetCursor1());
 					put_num++;
 					tool.road_num--;
-				}
 			}
 		}
 	}
@@ -192,8 +199,10 @@ void Put_Road(void)
 //置いた道路描画
 void Draw_Road(void)
 {	
+	//道路が置かれている状態なら
 	if (road_flag == true)
 	{
+		//置かれている数だけ描画する
 		for (int i = 0; i < put_num; i++)
 		{
 			DrawRotaGraph(tool.draw_x[i], tool.draw_y[i], 1.0, 0.0, road_img, TRUE);
@@ -204,10 +213,13 @@ void Draw_Road(void)
 //ゲームスタート受け取り
 void Tool_Start(const InGame* ingame)
 {
+	//TRUEならtoolもTRUEに
 	if (ingame->start == true)
 	{
 		tool_start = true;
 	}
+
+	//そうでなければFALSEに
 	else
 	{
 		tool_start = false;
@@ -220,14 +232,6 @@ const Tool* Get_Tool(void)
 	return &tool;
 }
 
-//アイテムの確認
-void ItemNumCheck(const Wood*wood,const Rock*rock)
-{
-	DrawFormatString(200, 120, GetColor(255, 255, 255), "%d", wood->item_num);		//木の所持数
-	DrawFormatString(250, 120, GetColor(255, 255, 255), "%d", rock->item_num);		//岩の所持数
-}
-
-
 void const CursorToolCheck(const Cursor* cursor)
 {
 	tool.draw_x[put_num] = cursor->position.x;
@@ -238,10 +242,16 @@ void const CursorToolCheck(const Cursor* cursor)
 void const Road_Add_Num(const Rock* rock)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	//アイテムが道路なら
 	if (tool.item_number == 0)
 	{
+		
+		//岩の所持数が1以上なら
 		if (rock->item_num >= 1)
 		{
+
+			//Ｂボタンが押されたら
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 			{
 				tool.road_num++;
@@ -255,10 +265,16 @@ void const Road_Add_Num(const Rock* rock)
 void const WoodRoad_Add_Num(const Wood* wood)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	//アイテムが木の道路なら
 	if (tool.item_number == 1)
 	{
+
+		//木の所持数が1以上なら
 		if (wood->item_num >= 1)
 		{
+
+			//Ｂボタンが押されたら
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 			{
 				tool.wood_road_num++;
