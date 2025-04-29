@@ -44,4 +44,6 @@ const Rock* GetRock(void);
 
 void WoodRockItemCount(void);
 
+void WoodRockReset(void);
+
 

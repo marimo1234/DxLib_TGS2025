@@ -88,7 +88,7 @@ eSceneType InGameSceneUpdate()
 
 	//ゴールしたなら次のステージへ
 	StageChange();
-	
+
 
 	/*当たり判定の計算（プレイヤーと障害物）*/
 	for (int i = 0; i < D_OBSTACLE_MAX; i++)
@@ -140,13 +140,18 @@ const InGame* GetInGame(void)
 {
 	return &ingame;
 }
+
+//Gameスタート
 void GameStart(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
+	if (ingame.start == false)
 	{
-		ingame.start = true;
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
+		{
+			ingame.start = true;
+		}
 	}
 }
 
@@ -189,6 +194,7 @@ void NextStageFlag(const Goal* goal)
 	{
 		ingame.next_stage_flag = true;
 		atr ++;
+		ingame.start = false;
 	}
 
 	

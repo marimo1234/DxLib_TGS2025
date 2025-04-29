@@ -87,6 +87,12 @@ void WoodRockUpdate(void)
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
 	}
+	else
+	{
+		//初期化
+		WoodRockReset();
+	}
+
 
 }
 
@@ -103,6 +109,7 @@ void WoodRockDraw(void)
 	CursorWoodRockCheck(GetCursor1());
 	//アイテム化した木と岩の数の描画
 	WoodRockItemCount();
+	
 
 }
 
@@ -216,6 +223,10 @@ void WoodRockStart(const InGame* ingame)
 	{
 		woodrock_start = true;
 	}
+	else
+	{
+		woodrock_start = false;
+	}
 
 }
 
@@ -284,4 +295,24 @@ void WoodRockItemCount(void)
 	DrawExtendFormatString(1000, 75, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
 	DrawRotaGraphF(1060, 70, 1.0, 0.0, rock.image[3], TRUE);
 	DrawExtendFormatString(1110, 75, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
+}
+
+void WoodRockReset(void)
+{
+	//座標の初期化
+	wood.position.x = 615.0f;
+	wood.position.y = 305.0f;
+	rock.position.x = 615.0f;
+	rock.position.y = 380.0f;
+
+	///アイテム数の初期化
+	wood.item_num = 0;
+	rock.item_num = 0;
+
+	wood.hit_count = eHit0;
+	rock.hit_count = eHit0;
+
+	//画像の一枚目の初期化
+	wood.animation = wood.image[0];
+	rock.animation = rock.image[0];
 }

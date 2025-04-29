@@ -32,7 +32,7 @@ void CarManagerUpdate(void)
 	if (car.start == true)
 	{
 		car.animation = car.image[0];
-		car.position.x += 0.1;
+		car.position.x += 0.05;
 
 		if (car.position.x > 690.2f)
 		{
@@ -41,7 +41,11 @@ void CarManagerUpdate(void)
 
 		
 	}
-	
+	else
+	{
+		CarReset();
+	}
+
 }
 
 void CarDraw(void)
@@ -57,10 +61,20 @@ void CarStart(const InGame* ingame)
 	{
 		car.start = true;
 	}
+	else
+	{
+		car.start = false;
+	}
 	
 }
 
 const Car* GetCar(void)
 {
 	return &car;
+}
+
+void CarReset(void)
+{
+	car.position.x = 540.0f;
+	car.position.y = 380.0f;
 }
