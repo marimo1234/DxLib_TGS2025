@@ -106,6 +106,10 @@ eSceneType InGameSceneUpdate()
 
 void InGameSceneDraw(void)
 {
+	DrawFormatString(50, 10, GetColor(255, 255, 255), "Xボタンでゲームスタート");
+	DrawFormatString(50, 60, GetColor(255, 255, 255), "Aで伐る、壊す、作った道を置く");
+	DrawFormatString(50, 110, GetColor(255, 255, 255), "Bで材料があれば道、橋を作れる");
+	DrawFormatString(50, 160, GetColor(255, 255, 255), "");
 	//背景画像の描画
 	/*DrawGraphF(scrool_x, 0, , TRUE);
 	DrawGraphF(1280.0f + scrool_x, 0, , TRUE);*/
