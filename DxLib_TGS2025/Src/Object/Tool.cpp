@@ -208,7 +208,6 @@ void const CursorToolCheck(const Cursor* cursor)
 	tool.draw_x[num] = cursor->position.x;
 	tool.draw_y[num] = cursor->position.y;
 	DrawRotaGraph(tool.draw_x[num], tool.draw_y[num], 1.0, 0.0, road_img, TRUE);
-	num++;
 }
 
 //岩の道を増やす
