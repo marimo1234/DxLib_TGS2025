@@ -25,15 +25,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	//ウィンドウが閉じられたorシーンマネージャー側で終了状態でループが終わる
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
-		startTime = GetNowCount();
 
-		frameCount++;
-		if (startTime - fpsTimer >= 1000)
-		{
-			currentFPS = frameCount;
-			frameCount = 0;
-			fpsTimer = startTime;
-		}
 		//入力の更新
 		InputManagerUpdate();
 		pad_input->Update();
