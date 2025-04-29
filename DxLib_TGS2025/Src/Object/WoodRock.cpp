@@ -19,7 +19,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor);
 void RockHitCheck(const Tool* tool, const Cursor* cursor);
 
 void WoodRockStart(const InGame* ingame);
-
+void WoodRockSub(const Tool* tool);
 
 
 //初期化
@@ -73,9 +73,6 @@ void WoodRockUpdate(void)
 	//ゲームのスタートを受け取る
 	WoodRockStart(GetInGame());
 
-	
-
-
 	//スタートがtrueになったなら
 	if (woodrock_start == true)
 	{  
@@ -86,6 +83,9 @@ void WoodRockUpdate(void)
 		//ツールとカーソルとのHitチェック
 		WoodHitCheck(Get_Tool(), GetCursor1());
 		RockHitCheck(Get_Tool(), GetCursor1());
+
+		//道路を作ったらアイテム化した数が減る
+		WoodRockSub(Get_Tool());
 	}
 
 }
@@ -217,6 +217,14 @@ void WoodRockStart(const InGame* ingame)
 		woodrock_start = true;
 	}
 
+}
+
+void WoodRockSub (const Tool*tool)
+{
+	if (tool->sub_flag == true)
+	{
+		rock.item_num--;
+	}
 }
 
 void ItemSlotCheck(const Tool* tool)
