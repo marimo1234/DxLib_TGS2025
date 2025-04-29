@@ -322,7 +322,7 @@ void WoodMove(void)
 	float dy = fabsf(wood.position.y - 70.0f); // Y座標の差
 	float da = dy / dx;//傾き
 
-	if (wood.position.x <= 1060.0f)
+	if (wood.position.x <= 950.0f)
 	{
 		wood.position.x += 2.0f;
 	}
