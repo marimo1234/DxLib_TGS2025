@@ -32,8 +32,8 @@ void WoodRockInit(void)
 	//初期位置の設定
 	wood.position.x = 615.0f;
 	wood.position.y = 305.0f;
-	rock.position.x = 540.0f;
-	rock.position.y = 305.0f;
+	rock.position.x = 615.0f;
+	rock.position.y = 380.0f;
 
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
@@ -73,17 +73,19 @@ void WoodRockUpdate(void)
 	//ゲームのスタートを受け取る
 	WoodRockStart(GetInGame());
 
-	//ツールとカーソルとのHitチェック
-	WoodHitCheck(Get_Tool(), GetCursor1());
-	RockHitCheck(Get_Tool(), GetCursor1());
+	
 
 
 	//スタートがtrueになったなら
 	if (woodrock_start == true)
-	{
+	{  
 		//木,岩のアニメーション
 		WoodAnimation();
 		RockAnimation();
+
+		//ツールとカーソルとのHitチェック
+		WoodHitCheck(Get_Tool(), GetCursor1());
+		RockHitCheck(Get_Tool(), GetCursor1());
 	}
 
 }

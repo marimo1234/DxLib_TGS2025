@@ -32,7 +32,7 @@ void CarManagerUpdate(void)
 	if (car.start == true)
 	{
 		car.animation = car.image[0];
-		car.position.x += 0.2;
+		car.position.x += 0.1;
 
 		if (car.position.x > 690.2f)
 		{

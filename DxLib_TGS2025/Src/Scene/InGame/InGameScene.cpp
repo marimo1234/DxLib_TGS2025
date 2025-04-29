@@ -144,7 +144,7 @@ void GameStart(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 	{
 		ingame.start = true;
 	}
@@ -188,7 +188,7 @@ void NextStageFlag(const Goal* goal)
 	if (goal->flag == true)
 	{
 		ingame.next_stage_flag = true;
-		atr++;
+		atr ++;
 	}
 
 	
@@ -203,28 +203,28 @@ void StageChange(void)
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eTwo;
-			btr++;
+			btr ++;
 		}
 		break;
 	case eTwo:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eThree;
-			btr++;
+			btr ++;
 		}
 		break;
 	case eThree:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eFour;
-			btr++;
+			btr ++;
 		}
 		break;
 	case eFour:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eFive;
-			btr++;
+			btr ++;
 		}
 		break;
 	case eFive:
