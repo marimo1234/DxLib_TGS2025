@@ -6,6 +6,9 @@
 #include "../Object/Cursor.h"
 #include"../Scene/InGame/InGameScene.h"
 
+#include <math.h>
+
+
 
 int woodrock_start;
 
@@ -142,6 +145,7 @@ void WoodAnimation(void)
 		wood.animation = wood.image[2];
 		if (wood.hit_flag == true)
 		{
+			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
 			wood.hit_count = eHit3;
 			wood.hit_flag = false;   //hitフラグをfalseにする
 		}
@@ -149,12 +153,7 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation = wood.image[3];
-		if (wood.hit_flag == true)
-		{
-			wood.hit_count = eHit0;     // 今だけループするようにしている
-			wood.hit_flag = false;   // hitフラグをfalseにする
-			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
-		}
+		WoodMove();
 		break;
 	}
 
@@ -188,6 +187,7 @@ void RockAnimation(void)
 		rock.animation = rock.image[2];
 		if (rock.hit_flag == true)
 		{
+			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
 			rock.hit_count = eHit3;
 			rock.hit_flag = false;//hitフラグをfalseにする
 		}
@@ -195,12 +195,7 @@ void RockAnimation(void)
 
 	case eHit3:// Hit数3
 		rock.animation = rock.image[3];
-		if (rock.hit_flag == true)
-		{
-			rock.hit_count = eHit0;//今だけループするようにしている
-			rock.hit_flag = false;//hitフラグをfalseにする
-			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-		}
+		RockMove();
 		break;
 	}
 
@@ -321,7 +316,36 @@ void WoodRockReset(void)
 	rock.animation = rock.image[0];
 }
 
-void ItemMove(void)
+void WoodMove(void)
 {
-	
+	float dx = fabsf(wood.position.x - 950.0f); // X座標の差
+	float dy = fabsf(wood.position.y - 70.0f); // Y座標の差
+	float da = dy / dx;//傾き
+
+	if (wood.position.x <= 1060.0f)
+	{
+		wood.position.x += 2.0f;
+	}
+	if (wood.position.y >= 70.0f)
+	{
+		wood.position.y += -2.0f*da; //上向きがマイナス方向だから－つけてます
+	}
+
+}
+
+void RockMove(void)
+{
+	float dx = fabsf(rock.position.x - 1060.0f); // X座標の差
+	float dy = fabsf(rock.position.y - 70.0f); // Y座標の差
+	float da = dy / dx;//傾き
+
+	if (rock.position.x <= 1060.0f)
+	{
+		rock.position.x += 2.0f;
+	}
+	if (rock.position.y >= 70.0f)
+	{
+		rock.position.y += -2.0f * da; //上向きがマイナス方向だから－つけてます
+	}
+
 }

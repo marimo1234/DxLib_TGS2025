@@ -45,7 +45,8 @@ const Rock* GetRock(void);
 void WoodRockItemCount(void);
 
 void WoodRockReset(void);
-void ItemMove(void);
+void WoodMove(void);
+void RockMove(void);
 
 
 
