@@ -108,6 +108,7 @@ void ToolDraw(void)
 	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
 	//道路の描画（アイテム枠）
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.65,0.0,road_img, TRUE);
+	DrawRotaGraph(540, 380, 1.0, 0.0, road_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
 	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, wood_road_img , TRUE);
 	//斧の描画（アイテム枠）
