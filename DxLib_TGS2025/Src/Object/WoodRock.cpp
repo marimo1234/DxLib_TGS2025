@@ -221,7 +221,7 @@ void WoodRockStart(const InGame* ingame)
 
 void WoodRockSub (const Tool*tool)
 {
-	if (tool->sub_flag == true)
+	if (tool->rock_sub_flag == true)
 	{
 		rock.item_num--;
 	}

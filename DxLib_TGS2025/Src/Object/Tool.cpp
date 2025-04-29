@@ -38,6 +38,7 @@ void ItemNumCheck(const Wood* wood, const Rock* rock);
 void const CursorToolCheck(const Cursor* cursor);
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
+void const WoodRoad_Add_Num(const Wood* wood);
 
 
 void ToolInit(void)
@@ -47,11 +48,12 @@ void ToolInit(void)
 	frameselect_y = 670;
 	tool.item_number = ePickaxe;
 	tool.road_num = 0;
+	tool.wood_road_num = 0;
 	road_x = 500;
 	road_y = 500;
 	road_flag = false;
 	tool_start = false;
-	tool.sub_flag = false;
+	tool.rock_sub_flag = false;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -70,9 +72,9 @@ void ToolInit(void)
 void ToolManagerUpdate(void)
 {
 	//岩の所持数をマイナス1するフラグを元に戻す
-	if (tool.sub_flag==true)
+	if (tool.rock_sub_flag==true)
 	{
-		tool.sub_flag = false;
+		tool.rock_sub_flag = false;
 	}
 
 	if (tool_start == true)
@@ -103,6 +105,8 @@ void ToolDraw(void)
 	//道路描画
 	Draw_Road();
 	//道路の所持数
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", tool.road_num);
+	//
 	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", tool.road_num);
 
 	ItemNumCheck(GetWood(), GetRock());
@@ -214,7 +218,23 @@ void const Road_Add_Num(const Rock* rock)
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 			{
 				tool.road_num++;
-				tool.sub_flag = true;
+				tool.rock_sub_flag = true;
+			}
+		}
+	}
+}
+
+void const WoodRoad_Add_Num(const Wood* wood)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (tool.item_number == 1)
+	{
+		if (wood->item_num >= 1)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+			{
+				tool.wood_road_num++;
+				tool.rock_sub_flag = true;
 			}
 		}
 	}
