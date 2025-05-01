@@ -4,6 +4,7 @@
 #include "Utility/PadInputManager.h"
 #include "Scene/SceneManager.h"
 
+
 //メイン関数
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 {
@@ -21,10 +22,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	// パッド入力制御のインスタンスを取得
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	int frameCount = 0;
+	int fpsTimer = GetNowCount();
+	int currentFPS = 0;
+	const int FRAME_TIME = 1000 / 60;
+	int startTime, deltaTime;
+
 	//メインループ
 	//ウィンドウが閉じられたorシーンマネージャー側で終了状態でループが終わる
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
+		// フレーム開始時刻を記録
+		startTime = GetNowCount();
 
 		//入力の更新
 		InputManagerUpdate();
@@ -36,6 +45,15 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		//シーンの更新
 		SceneManagerUpdate();
 
+		frameCount++;
+		int now = GetNowCount();
+		if (now - fpsTimer >= 1000)
+		{
+			currentFPS = frameCount;
+			frameCount = 0;
+			fpsTimer = now;
+		}
+
 		//裏画面の内容を表画面に反映
 		ScreenFlip();
 
@@ -43,6 +61,12 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		if (GetKeyInputState(KEY_INPUT_ESCAPE) == eRelease)
 		{
 			break;
+		}
+
+		deltaTime = GetNowCount() - startTime;
+		if (deltaTime < FRAME_TIME)
+		{
+			WaitTimer(FRAME_TIME - deltaTime);
 		}
 	}
 
