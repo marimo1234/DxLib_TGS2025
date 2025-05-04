@@ -25,6 +25,7 @@ void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
 InGame ingame;
+CreateStage stage;
 
 void NextStageFlag(const Goal* goal);
 
@@ -38,13 +39,15 @@ void InGameSceneInit(void)
 	//ステージ次のステージに変更するフラグ
 	ingame.next_stage_flag = false;
 
-
 	//確認用変数　後々消します
 	atr = 0;
 	btr = 1;
 
 	//BGMの初期化
 		PlayBgm();
+		//ステージ生成の初期化
+		
+		
 		//マップの初期化
 		MapInit();
 		//障害物の初期化
@@ -132,6 +135,10 @@ void InGameSceneDraw(void)
 
 	//ゴールの描画
 	GoalDraw();
+	
+	//ステージ読み込み、描画
+	StageRoad();
+	StageCreate();
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
@@ -250,3 +257,66 @@ void StageChange(void)
 	}
 }
 
+//ステージ生成
+void StageRoad(void)
+{
+	//構造体CreateStageの初期化
+	stage.stage_beside = 0;
+	stage.stage_vertical = 0;
+	stage.stage_kinds = 0;
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			stage.stage[i][j] = 0;
+		}
+	}
+	stage.stage_x = 100;
+	stage.stage_y = 400;
+
+	FILE* fp;
+	errno_t err;
+	err = fopen_s(&fp, "Resource/stage/stage.csv", "r");
+
+	while(err==0)
+	{
+		stage.stage_kinds = fgetc(fp);
+		if (stage.stage_kinds==EOF)
+		{
+			break;
+		}
+		else if (stage.stage_kinds == '\n')
+		{
+			stage.stage_vertical++;
+			stage.stage_beside = 0;
+			continue;
+		}
+		else if (stage.stage_kinds == ',')
+		{
+			continue;
+		}
+		else
+		{
+			stage.stage[stage.stage_beside][stage.stage_vertical] = stage.stage_kinds - '0';
+			stage.stage_beside++;
+		}
+	}
+	if (fp != NULL)
+	{
+		fclose(fp);
+	}
+}
+
+void StageCreate(void)
+{
+	for (stage.stage_vertical = 0; stage.stage_vertical < 7; stage.stage_vertical++)
+	{
+		for (stage.stage_beside = 0; stage.stage_beside < 12; stage.stage_beside++)
+		{
+			DrawFormatString(stage.stage_x, stage.stage_y, GetColor(255, 255, 255),"%d",stage.stage[stage.stage_beside][stage.stage_vertical]);
+			stage.stage_x += 20;
+		}
+		stage.stage_x = 100;
+		stage.stage_y += 20;
+	}
+}
