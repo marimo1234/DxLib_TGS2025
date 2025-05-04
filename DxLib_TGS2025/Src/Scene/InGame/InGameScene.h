@@ -30,6 +30,7 @@ struct CreateStage
 	int stage_kinds;		//ステージの種類
 	int stage_x;
 	int stage_y;
+	
 };
 
 void InGameSceneInit(void);

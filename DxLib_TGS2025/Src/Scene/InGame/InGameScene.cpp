@@ -13,6 +13,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include<stdio.h>
 
 #define D_SCROOL_SPEED		(200.0f)
 
