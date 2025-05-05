@@ -3,11 +3,14 @@
 #define x 256
 #define y 256
 
+CreateStage stage;
+
 int ground;
 int groundreef;
 int sea;
 int trout[x][y];
 int math;
+
 void MapInit(void)
 {
 	groundreef = LoadGraph("Resource/images/MapOriginal - コピー.png");
@@ -27,4 +30,68 @@ void MapDraw(void)
 	trout[0][0] = DrawRotaGraphF(540, 380, 1.0, 0.0, math, TRUE);
 	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
 	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);
+}
+
+//ステージ生成
+void StageRoad(void)
+{
+	//構造体CreateStageの初期化
+	stage.beside = 0;
+	stage.vertical = 0;
+	stage.kinds = 0;
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			stage.array[i][j] = 0;
+		}
+	}
+	stage.stage_x = 100;
+	stage.stage_y = 400;
+
+	FILE* fp;
+	errno_t err;
+	err = fopen_s(&fp, "Resource/stage/stage.csv", "r");
+
+	while (err == 0)
+	{
+		stage.kinds = fgetc(fp);
+		if (stage.kinds == EOF)
+		{
+			break;
+		}
+		else if (stage.kinds == '\n')
+		{
+			stage.vertical++;
+			stage.beside = 0;
+			continue;
+		}
+		else if (stage.kinds == ',')
+		{
+			continue;
+		}
+		else
+		{
+			stage.array[stage.beside][stage.vertical] = stage.kinds - '0';
+			stage.beside++;
+		}
+	}
+	if (fp != NULL)
+	{
+		fclose(fp);
+	}
+}
+
+void StageCreate(void)
+{
+	for (stage.vertical = 0; stage.vertical < 7; stage.vertical++)
+	{
+		for (stage.beside = 0; stage.beside < 12; stage.beside++)
+		{
+			DrawFormatString(stage.stage_x, stage.stage_y, GetColor(255, 255, 255), "%d", stage.array[stage.beside][stage.vertical]);
+			stage.stage_x += 20;
+		}
+		stage.stage_x = 100;
+		stage.stage_y += 20;
+	}
 }
