@@ -2,21 +2,29 @@
 #include "car.h"
 #include "../Utility/InputManager.h"
 #include"../Scene/InGame/InGameScene.h"
+#include"../Object/map.h"
 
 
 //int car_direction = 0;
 
 
 void CarStart(const InGame* ingame);
-
+void CarStartPotion(const CreateStage* create);
 
 Car car;
+
+void CarStartPotion(const CreateStage* create)
+{
+	car.position.x = create->beside * 106;
+	car.position.y = create->vertical * 102;
+
+}
 
 void CarInit(void)
 {
 	
-	car.position.x = 540.0f;
-	car.position.y = 380.0f;
+	car.position.x;
+	car.position.y;
 	/*car_direction = 0;*/
 
 	car.image[0] = LoadGraph("Resource/images/left_car.png");
