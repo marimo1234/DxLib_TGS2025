@@ -1,15 +1,17 @@
 ﻿#include"DxLib.h"
 #include"map.h"
-#define x 256
-#define y 256
+#include "../Object/WoodRock.h"
+
 
 CreateStage stage;
 
 int ground;
 int groundreef;
 int sea;
-int trout[x][y];
+int trout[256][256];
 int math;
+
+void WoodDraw(const Wood* wood);
 
 void MapInit(void)
 {
@@ -30,6 +32,8 @@ void MapDraw(void)
 	trout[0][0] = DrawRotaGraphF(540, 380, 1.0, 0.0, math, TRUE);
 	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
 	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);
+
+	WoodDraw(GetWood());
 }
 
 //ステージ生成
@@ -94,4 +98,19 @@ void StageCreate(void)
 		stage.stage_x = 100;
 		stage.stage_y += 20;
 	}
+}
+
+void WoodDraw(const Wood* wood)
+{
+	for (int y = 0; y < 7; y++)
+	{
+		for (int x = 0; x < 12; x++)
+		{
+			if (stage.array[x][y] == 1)
+			{
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation, TRUE);
+			}
+		}
+	}
+
 }

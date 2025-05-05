@@ -103,7 +103,7 @@ void WoodRockUpdate(void)
 void WoodRockDraw(void)
 {
 	//画像の描画
-	DrawRotaGraphF(wood.position.x, wood.position.y, 1.0, 0.0, wood.animation, TRUE);
+	/*DrawRotaGraphF(wood.position.x, wood.position.y, 1.0, 0.0, wood.animation, TRUE);*/
 	DrawRotaGraphF(rock.position.x, rock.position.y, 1.0, 0.0, rock.animation, TRUE);
 
 	//どのツールを持っているかを受け取る

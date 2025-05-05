@@ -1,5 +1,7 @@
 ﻿ #pragma once
 
+#define ONE_SIDE_LENGTH (80)
+
 //ステージ生成の構造体
 struct CreateStage
 {
