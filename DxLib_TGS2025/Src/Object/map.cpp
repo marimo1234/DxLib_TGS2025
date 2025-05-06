@@ -106,6 +106,8 @@ void StageCreate(void)
 
 void MapCreate(const Wood* wood,const Rock* rock)
 {
+	int i = 0;
+	int j = 0;
 	for (int y = 0; y < 7; y++)
 	{
 		for (int x = 0; x < 12; x++)
@@ -113,11 +115,15 @@ void MapCreate(const Wood* wood,const Rock* rock)
 			switch (stage.array[x][y])
 			{
 			case 1:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation, TRUE);
+				stage.wood_x[i] = x;
+				stage.wood_y[i] = y;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[i], TRUE);
+				i++;
 				break;
 
 			case 2:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation, TRUE);
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[j], TRUE);
+				j++;
 				break;
 				
 			}

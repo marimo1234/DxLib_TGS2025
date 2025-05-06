@@ -11,6 +11,8 @@ struct CreateStage
 	int kinds;		//ステージの種類
 	int stage_x;
 	int stage_y;
+	int wood_x[20];
+	int wood_y[20];
 };
 
 void MapInit(void);

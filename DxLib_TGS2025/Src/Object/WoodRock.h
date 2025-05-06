@@ -16,9 +16,10 @@ struct Wood
 	Vector2D position;
 	int item_num;
 	int image[4];
-	int animation;
+	int animation[20];
 	int hit_count;
 	bool hit_flag;
+	int count;
 };
 
 struct Rock
@@ -26,7 +27,7 @@ struct Rock
 	Vector2D position;
 	int item_num;
 	int image[4];
-	int animation;
+	int animation[20];
 	int hit_count;
 	bool hit_flag;
 };
