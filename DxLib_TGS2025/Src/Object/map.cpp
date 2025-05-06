@@ -1,6 +1,7 @@
 ﻿#include"DxLib.h"
 #include"map.h"
 #include "../Object/WoodRock.h"
+#include "../Object/Obstacle.h"
 
 
 CreateStage stage;
@@ -11,7 +12,7 @@ int sea;
 int trout[256][256];
 int math;
 
-void MapCreate(const Wood* wood, const Rock*rock);
+void MapCreate(const Wood* wood, const Rock*rock, const Hole* hole);
 
 void MapInit(void)
 {
@@ -33,7 +34,7 @@ void MapDraw(void)
 	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
 	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);
 
-	MapCreate(GetWood(),GetRock());
+	MapCreate(GetWood(),GetRock(),GetHole());
 }
 
 const CreateStage* GetStage(void)
@@ -104,10 +105,11 @@ void StageCreate(void)
 	}
 }
 
-void MapCreate(const Wood* wood,const Rock* rock)
+void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole)
 {
 	int i = 0;
 	int j = 0;
+	int f = 0;
 	for (int y = 0; y < 7; y++)
 	{
 		for (int x = 0; x < 12; x++)
@@ -127,7 +129,13 @@ void MapCreate(const Wood* wood,const Rock* rock)
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[j], TRUE);
 				j++;
 				break;
-				
+
+			case 3:
+				stage.hole_x[f] = x;
+				stage.hole_y[f] = y;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);
+				f++;
+				break;
 			}
 
 		}

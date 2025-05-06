@@ -94,11 +94,6 @@ eSceneType InGameSceneUpdate()
 	StageChange();
 
 
-	/*当たり判定の計算（プレイヤーと障害物）*/
-	for (int i = 0; i < D_OBSTACLE_MAX; i++)
-	{
-		HitCheck(GetCursor1(), GetObstacle(i), i);
-	}
 
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
 	{
@@ -168,28 +163,7 @@ void GameStart(void)
 	}
 }
 
-//矩形同士の当たり判定の計算部分
-void HitCheck(const Cursor* player, const Obstacle* obstacle, int index)
-{
-	if (obstacle->is_active == TRUE)
-	{
-		float dx = fabsf(player->position.x - obstacle->position.x);
-		float dy = fabsf(player->position.y - obstacle->position.y);
 
-		float bx = (player->box_size.x + obstacle->box_size.x) * 0.5f;
-		float by = (player->box_size.y + obstacle->box_size.y) * 0.5f;
-
-		if ((dx < bx) && (dy < by))
-		{
-			
-		}
-		else
-		{
-			
-		}
-	}
-}
-           //今のところどこで使うかわかんない↑↑↑↑↑
 
 //インゲームBGM再生
 void PlayBgm(void)

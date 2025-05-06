@@ -14,7 +14,13 @@ struct Obstacle
 	Size2D box_size;		//矩形の大きさ
 };
 
+struct Hole
+{
+	int image;
+};
+
 void ObstacleManagerInit(void);
 void ObstacleManagerUpdate(void);
 void ObstacleManagerDraw(void);
-const Obstacle * GetObstacle(int num);
+const Obstacle * GetObstacle(void);
+const Hole* GetHole(void);

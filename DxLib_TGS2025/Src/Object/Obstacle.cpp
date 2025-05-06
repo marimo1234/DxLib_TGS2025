@@ -8,15 +8,14 @@
 void ObstacleAnimationControl(const Cursor* cursor);
 
 Obstacle obstacle[D_OBSTACLE_MAX];
+Hole hole;
 int obstacle_images[7];
 int item_images[1];
 
 //障害物の初期化
 void ObstacleManagerInit(void)
 {
-	//スライムの画像読み込み
-	/*LoadDivGraph("Resource/Images/slime.png", D_OBS_ANIM_MAX, D_OBS_ANIM_MAX, 1, 64, 64, obstacle_images);
-	LoadDivGraph("Resource/Images/item.png", 1, 1, 1, 1152, 648, item_images);*/
+	hole.image = LoadGraph("Resource/images/hole.png");
 }
 
 //障害物の更新
@@ -32,14 +31,14 @@ void ObstacleManagerDraw(void)
 }
 
 //構造体Obstacle
-const Obstacle* GetObstacle(int num)
+const Obstacle* GetObstacle(void)
 {
-	if (0 <= num && num < D_OBSTACLE_MAX)
-	{
-		return &obstacle[num];
-	}
-
 	return obstacle;
+}
+
+const Hole* GetHole(void)
+{
+	return &hole;
 }
 
 //障害物のスポーンが有効か
