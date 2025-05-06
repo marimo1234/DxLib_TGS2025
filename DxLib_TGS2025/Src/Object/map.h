@@ -16,3 +16,5 @@ struct CreateStage
 void MapInit(void);
 void MapUpdate(void);
 void MapDraw(void);
+
+const CreateStage* GetStage(void);

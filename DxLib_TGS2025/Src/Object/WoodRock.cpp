@@ -4,6 +4,7 @@
 #include"../Utility/PadInputManager.h"
 #include "../Object/Tool.h"
 #include "../Object/Cursor.h"
+#include "../Object/Map.h"
 #include"../Scene/InGame/InGameScene.h"
 
 #include <math.h>
@@ -18,8 +19,8 @@ Rock rock;
 void ItemSlotCheck(const Tool* tool);
 void CursorWoodRockCheck(const Cursor* cursor);
 
-void WoodHitCheck(const Tool* tool, const Cursor* cursor);
-void RockHitCheck(const Tool* tool, const Cursor* cursor);
+void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
+void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 
 void WoodRockStart(const InGame* ingame);
 void WoodRockSub(const Tool* tool);
@@ -32,11 +33,7 @@ void WoodRockInit(void)
 	wood.hit_flag = false;
 	rock.hit_flag = false;
 
-	//初期位置の設定
-	wood.position.x = 615.0f;
-	wood.position.y = 305.0f;
-	rock.position.x = 615.0f;
-	rock.position.y = 380.0f;
+	
 
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
@@ -84,8 +81,8 @@ void WoodRockUpdate(void)
 		RockAnimation();
 
 		//ツールとカーソルとのHitチェック
-		WoodHitCheck(Get_Tool(), GetCursor1());
-		RockHitCheck(Get_Tool(), GetCursor1());
+		WoodHitCheck(Get_Tool(), GetCursor1(),GetStage());
+		RockHitCheck(Get_Tool(), GetCursor1(),GetStage());
 
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
@@ -104,7 +101,7 @@ void WoodRockDraw(void)
 {
 	//画像の描画
 	/*DrawRotaGraphF(wood.position.x, wood.position.y, 1.0, 0.0, wood.animation, TRUE);*/
-	DrawRotaGraphF(rock.position.x, rock.position.y, 1.0, 0.0, rock.animation, TRUE);
+	/*DrawRotaGraphF(rock.position.x, rock.position.y, 1.0, 0.0, rock.animation, TRUE);*/
 
 	//どのツールを持っているかを受け取る
 	ItemSlotCheck(Get_Tool());
@@ -248,12 +245,12 @@ void CursorWoodRockCheck(const Cursor* cursor)
 }
 
 
-void WoodHitCheck(const Tool* tool, const Cursor* cursor)
+void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//木とカ―ソルのX座標とY座標が一致していたら
-	if (wood.position.x == cursor->position.x && wood.position.y == cursor->position.y)
+	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
 		//ツールがオノになっていたら
 		if (tool->item_number == eAx)
@@ -268,12 +265,12 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor)
 	}
 }
 
-void RockHitCheck(const Tool* tool, const Cursor* cursor)
+void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//岩とカ―ソルのX座標とY座標が一致していたら
-	if (rock.position.x == cursor->position.x && rock.position.y == cursor->position.y)
+	if (stage->array[cursor->array_x][cursor->array_y] == 2)
 	{
 		//ツールがつるはしになっていたら
 		if (tool->item_number == ePickaxe)
@@ -298,11 +295,6 @@ void WoodRockItemCount(void)
 
 void WoodRockReset(void)
 {
-	//座標の初期化
-	wood.position.x = 615.0f;
-	wood.position.y = 305.0f;
-	rock.position.x = 615.0f;
-	rock.position.y = 380.0f;
 
 	///アイテム数の初期化
 	wood.item_num = 0;
