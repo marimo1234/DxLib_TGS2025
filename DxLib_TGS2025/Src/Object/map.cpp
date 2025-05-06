@@ -122,6 +122,8 @@ void MapCreate(const Wood* wood,const Rock* rock)
 				break;
 
 			case 2:
+				stage.rock_x[j] = x;
+				stage.rock_y[j] = y;
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[j], TRUE);
 				j++;
 				break;

@@ -30,10 +30,12 @@ void WoodRockSub(const Tool* tool);
 void WoodRockInit(void)
 {
 	//hitフラグの初期化
-	wood.hit_flag = false;
-	rock.hit_flag = false;
+
+	/*wood.hit_flag = false;*/
+	/*rock.hit_flag = false;*/
 
 	wood.count = 0;
+	rock.count = 0;
 
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
@@ -48,8 +50,8 @@ void WoodRockInit(void)
 
 
 	//Hit数の初期化
-	wood.hit_count = eHit0;
-	rock.hit_count = eHit0;
+	/*wood.hit_count[wood.count] = eHit0;
+	rock.hit_count = eHit0;*/
 
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
@@ -65,7 +67,12 @@ void WoodRockInit(void)
 	//画像の一枚目の初期化
 	for (int i = 0; i < 20; i++)
 	{
+		wood.hit_flag[i] = false;
+		wood.hit_count[i] = eHit0;
 		wood.animation[i] = wood.image[0];
+
+		rock.hit_flag[i] = false;
+		rock.hit_count[i]= eHit0;
 		rock.animation[i] = rock.image[0];
 	}
 }
@@ -119,35 +126,35 @@ void WoodRockDraw(void)
 //木のアニメーション
 void WoodAnimation(void)
 {
-	switch (wood.hit_count)
+	switch (wood.hit_count[wood.count])
 	{
 	case eHit0:// Hit数0
 		wood.animation[wood.count] = wood.image[0];
-		if (wood.hit_flag == true)
+		if (wood.hit_flag[wood.count] == true)
 		{
-			wood.hit_count = eHit1;
-			wood.hit_flag = false;//hitフラグをfalseにする
+			wood.hit_count[wood.count] = eHit1;
+			wood.hit_flag[wood.count] = false;//hitフラグをfalseにする
 
 		}
 		break;
 
 	case eHit1:// Hit数1
 		wood.animation[wood.count] = wood.image[1];
-		if (wood.hit_flag == true)
+		if (wood.hit_flag[wood.count] == true)
 		{
-			wood.hit_count = eHit2;
-			wood.hit_flag = false;//hitフラグをfalseにする
+			wood.hit_count[wood.count] = eHit2;
+			wood.hit_flag[wood.count] = false;//hitフラグをfalseにする
 		}
 
 		break;
 
 	case eHit2:// Hit数2
 		wood.animation[wood.count] = wood.image[2];
-		if (wood.hit_flag == true)
+		if (wood.hit_flag[wood.count] == true)
 		{
 			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
-			wood.hit_count = eHit3;
-			wood.hit_flag = false;   //hitフラグをfalseにする
+			wood.hit_count[wood.count] = eHit3;
+			wood.hit_flag[wood.count] = false;   //hitフラグをfalseにする
 		}
 		break;
 
@@ -162,39 +169,39 @@ void WoodAnimation(void)
 void RockAnimation(void)
 {
 
-	switch (rock.hit_count)
+	switch (rock.hit_count[rock.count])
 	{
 	case eHit0:// Hit数0
-		rock.animation[0] = rock.image[0];
-		if (rock.hit_flag == true)
+		rock.animation[rock.count] = rock.image[0];
+		if (rock.hit_flag[rock.count] == true)
 		{
-			rock.hit_count = eHit1;
-			rock.hit_flag = false;//hitフラグをfalseにする
+			rock.hit_count[rock.count] = eHit1;
+			rock.hit_flag[rock.count] = false;//hitフラグをfalseにする
 		}
 		break;
 
 	case eHit1:// Hit数1
-		rock.animation [0] = rock.image[1];
-		if (rock.hit_flag == true)
+		rock.animation[rock.count] = rock.image[1];
+		if (rock.hit_flag[rock.count] == true)
 		{
-			rock.hit_count = eHit2;
-			rock.hit_flag = false;//hitフラグをfalseにする
+			rock.hit_count[rock.count] = eHit2;
+			rock.hit_flag[rock.count] = false;//hitフラグをfalseにする
 		}
 
 		break;
 
 	case eHit2:// Hit数2
-		rock.animation [0] = rock.image[2];
-		if (rock.hit_flag == true)
+		rock.animation[rock.count] = rock.image[2];
+		if (rock.hit_flag[rock.count] == true)
 		{
 			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-			rock.hit_count = eHit3;
-			rock.hit_flag = false;//hitフラグをfalseにする
+			rock.hit_count[rock.count] = eHit3;
+			rock.hit_flag[rock.count] = false;//hitフラグをfalseにする
 		}
 		break;
 
 	case eHit3:// Hit数3
-		rock.animation[0] = rock.image[3];
+		rock.animation[rock.count] = rock.image[3];
 		RockMove();
 		break;
 	}
@@ -252,12 +259,13 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//木とカ―ソルのX座標とY座標が一致していたら
+	//カーソルの配列番号が木だったら
 	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
 
 		for (int i = 0; i < 20; i++)
 		{
+			//カーソルと木の配列番号が一致したら
 			if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
 			{
 				wood.count = i;
@@ -268,7 +276,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 					if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 					{
 						//Hitフラグをtrueにする
-						wood.hit_flag = true;
+						wood.hit_flag[wood.count] = true;
 					}
 				}
 			}
@@ -282,19 +290,30 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//岩とカ―ソルのX座標とY座標が一致していたら
-	if (stage->array[cursor->array_x][cursor->array_y] == 2)
+	//カーソルの配列番号が木だったら
+	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
-		//ツールがつるはしになっていたら
-		if (tool->item_number == ePickaxe)
+
+		for (int i = 0; i < 20; i++)
 		{
-			//Aボタンが押されたなら
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			//カーソルと岩の配列番号が一致したら
+			if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
 			{
-				//Hitフラグをtrueにする
-				rock.hit_flag = true;
+				rock.count = i;
+				//ツールがつるはしになっていたら
+				if (tool->item_number == ePickaxe)
+				{
+					//Aボタンが押されたなら
+					if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+					{
+						//Hitフラグをtrueにする
+						rock.hit_flag[rock.count] = true;
+					}
+				}
 			}
 		}
+
+
 	}
 }
 
@@ -313,12 +332,16 @@ void WoodRockReset(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
-	wood.hit_count = eHit0;
-	rock.hit_count = eHit0;
+	for (int i = 0; i < 20; i++)
+	{
+		wood.hit_flag[i] = false;
+		wood.hit_count[i] = eHit0;
+		wood.animation[i] = wood.image[0];
 
-	//画像の一枚目の初期化
-	wood.animation[0] = wood.image[0];
-	rock.animation [0] = rock.image[0];
+		rock.hit_flag[i] = false;
+		rock.hit_count[i] = eHit0;
+		rock.animation[i] = rock.image[0];
+	}
 }
 
 void WoodMove(void)

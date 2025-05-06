@@ -17,8 +17,8 @@ struct Wood
 	int item_num;
 	int image[4];
 	int animation[20];
-	int hit_count;
-	bool hit_flag;
+	int hit_count[20];
+	bool hit_flag[20];
 	int count;
 };
 
@@ -28,8 +28,9 @@ struct Rock
 	int item_num;
 	int image[4];
 	int animation[20];
-	int hit_count;
-	bool hit_flag;
+	int hit_count[20];
+	bool hit_flag[20];
+	int count;
 };
 
 
