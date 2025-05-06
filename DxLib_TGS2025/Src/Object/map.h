@@ -21,6 +21,10 @@ struct CreateStage
 	int road_y[20];
 	int wood_road_x[5];
 	int wood_road_y[5];
+	int lake_x[20];
+	int lake_y[20];
+	int goal_x[5];
+	int goal_y[5];
 };
 
 void MapInit(void);

@@ -19,8 +19,14 @@ struct Hole
 	int image;
 };
 
+struct Lake
+{
+	int image;
+};
+
 void ObstacleManagerInit(void);
 void ObstacleManagerUpdate(void);
 void ObstacleManagerDraw(void);
 const Obstacle * GetObstacle(void);
 const Hole* GetHole(void);
+const Lake* GetLake(void);

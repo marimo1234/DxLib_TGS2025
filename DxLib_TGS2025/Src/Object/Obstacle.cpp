@@ -9,6 +9,7 @@ void ObstacleAnimationControl(const Cursor* cursor);
 
 Obstacle obstacle[D_OBSTACLE_MAX];
 Hole hole;
+Lake lake;
 int obstacle_images[7];
 int item_images[1];
 
@@ -16,6 +17,8 @@ int item_images[1];
 void ObstacleManagerInit(void)
 {
 	hole.image = LoadGraph("Resource/images/hole.png");
+	lake.image = LoadGraph("Resource/images/lake.png");
+
 }
 
 //障害物の更新
@@ -39,6 +42,11 @@ const Obstacle* GetObstacle(void)
 const Hole* GetHole(void)
 {
 	return &hole;
+}
+
+const Lake* GetLake(void)
+{
+	return&lake;
 }
 
 //障害物のスポーンが有効か
