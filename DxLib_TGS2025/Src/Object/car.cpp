@@ -7,7 +7,8 @@
 
 //int car_direction = 0;
 
-
+int x=0;
+int y=0;
 void CarStart(const InGame* ingame);
 void CarStartPotion(const CreateStage* create);
 
@@ -17,7 +18,6 @@ void CarStartPotion(const CreateStage* create)
 {
 	car.position.x = create->beside * 106;
 	car.position.y = create->vertical * 102;
-
 }
 
 void CarInit(void)
