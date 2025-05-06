@@ -56,7 +56,7 @@ void GoalUpdate(void)
 void GoalDraw(void)
 {
 	//画像の描画
-	DrawRotaGraphF(goal.position.x, goal.position.y, 0.1, 0.0, goal.flag_image, TRUE);
+	DrawRotaGraphF(goal.position.x, goal.position.y, 1.0, 0.0, goal.flag_image, TRUE);
 	SetDrawBright(i, i, i);
 	//ゴールしたら
 	if (goalprint==true)
