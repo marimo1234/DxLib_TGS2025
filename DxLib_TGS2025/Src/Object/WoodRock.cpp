@@ -29,11 +29,19 @@ void WoodRockSub(const Tool* tool);
 //初期化
 void WoodRockInit(void)
 {
-	//hitフラグの初期化
+	//ヒットフラグ、ヒット数、アニメーションの初期化
+	for (int i = 0; i < WOODROCK_MAX; i++)
+	{
+		wood.hit_flag[i] = false;
+		wood.hit_count[i] = eHit0;
+		wood.animation[i] = wood.image[0];
 
-	/*wood.hit_flag = false;*/
-	/*rock.hit_flag = false;*/
+		rock.hit_flag[i] = false;
+		rock.hit_count[i] = eHit0;
+		rock.animation[i] = rock.image[0];
+	}
 
+	//木、岩の数変数
 	wood.count = 0;
 	rock.count = 0;
 
@@ -48,11 +56,6 @@ void WoodRockInit(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
-
-	//Hit数の初期化
-	/*wood.hit_count[wood.count] = eHit0;
-	rock.hit_count = eHit0;*/
-
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
 	wood.image[1] = LoadGraph("Resource/images/Wood1.png");
@@ -64,17 +67,7 @@ void WoodRockInit(void)
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
 
-	//画像の一枚目の初期化
-	for (int i = 0; i < 20; i++)
-	{
-		wood.hit_flag[i] = false;
-		wood.hit_count[i] = eHit0;
-		wood.animation[i] = wood.image[0];
-
-		rock.hit_flag[i] = false;
-		rock.hit_count[i]= eHit0;
-		rock.animation[i] = rock.image[0];
-	}
+	
 }
 
 //更新
@@ -263,7 +256,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < WOODROCK_MAX; i++)
 		{
 			//カーソルと木の配列番号が一致したら
 			if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
@@ -294,7 +287,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < WOODROCK_MAX; i++)
 		{
 			//カーソルと岩の配列番号が一致したら
 			if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
@@ -332,7 +325,7 @@ void WoodRockReset(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < WOODROCK_MAX; i++)
 	{
 		wood.hit_flag[i] = false;
 		wood.hit_count[i] = eHit0;

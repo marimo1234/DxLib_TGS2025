@@ -2,6 +2,8 @@
 
 #include "../Utility/Geometry.h"
 
+#define WOODROCK_MAX (20)
+
 
 enum eWoodRockState // Hit数の列挙
 {
@@ -16,9 +18,9 @@ struct Wood
 	Vector2D position;
 	int item_num;
 	int image[4];
-	int animation[20];
-	int hit_count[20];
-	bool hit_flag[20];
+	int animation[WOODROCK_MAX];
+	int hit_count[WOODROCK_MAX];
+	bool hit_flag[WOODROCK_MAX];
 	int count;
 };
 
@@ -27,9 +29,9 @@ struct Rock
 	Vector2D position;
 	int item_num;
 	int image[4];
-	int animation[20];
-	int hit_count[20];
-	bool hit_flag[20];
+	int animation[WOODROCK_MAX];
+	int hit_count[WOODROCK_MAX];
+	bool hit_flag[WOODROCK_MAX];
 	int count;
 };
 
