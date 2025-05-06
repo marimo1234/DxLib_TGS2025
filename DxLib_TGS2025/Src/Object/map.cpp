@@ -3,6 +3,7 @@
 #include "../Object/WoodRock.h"
 #include "../Object/Obstacle.h"
 #include "../Object/Tool.h"
+#include "../Object/Goal.h"
 
 
 CreateStage stage;
@@ -13,7 +14,8 @@ int sea;
 int trout[256][256];
 int math;
 
-void MapCreate(const Wood* wood, const Rock*rock, const Hole* hole,const Tool*tool);
+void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
+	const Lake* lake, const Goal* goal);
 
 void MapInit(void)
 {
@@ -32,7 +34,7 @@ void MapDraw(void)
 	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
 	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);*/
 
-	MapCreate(GetWood(),GetRock(),GetHole(),Get_Tool());
+	MapCreate(GetWood(),GetRock(),GetHole(),Get_Tool(),GetLake(),GetGoal());
 }
 
 const CreateStage* GetStage(void)
@@ -103,13 +105,16 @@ void StageCreate(void)
 	}
 }
 
-void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*tool)
+void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*tool,
+               const Lake*lake,const Goal*goal)
 {
 	int i = 0;		//木
 	int j = 0;		//岩
 	int f = 0;		//穴
 	int g = 0;		//道
 	int h = 0;		//丸太の道
+	int k = 0;      //湖の画像
+	int l = 0;      //ゴールの画像  
 	for (int y = 0; y < 7; y++)
 	{
 		for (int x = 0; x < 12; x++)
@@ -150,6 +155,20 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 				stage.wood_road_y[h] = y;
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
 				h++;
+				break;
+
+			case 6:
+				stage.lake_x[k] = x;
+				stage.lake_y[k] = y;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
+				k++;
+				break;
+
+			case 7:
+				stage.goal_x[l] = x;
+				stage.goal_y[l] = y;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
+				l++;
 				break;
 			}
 
