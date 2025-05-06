@@ -19,7 +19,9 @@ enum eToolState
 struct Tool
 {
 	int item_number;	//選択しているアイテムの種類
+	int road_img;		//道の画像ハンドル
 	int road_num;		//道の所持数
+	int wood_road_img;	//丸太の道の画像ハンドル
 	int wood_road_num;	//丸太の道の所持数
 	int rock_sub_flag;	//岩の数を引くフラグ
 	int wood_sub_flag;	//木の数を引くフラグ
