@@ -6,6 +6,12 @@
 #include "../Object/Map.h"
 #include "DxLib.h"
 
+#define CURSOR_ARRAY_X_MAX (11)
+#define CURSOR_ARRAY_X_MIN (0)
+#define CURSOR_ARRAY_Y_MAX (6)
+#define CURSOR_ARRAY_Y_MIN (0)
+
+
 
 //////////////////////////////////////
 //颯馬が変えた内容
@@ -93,6 +99,10 @@ const Cursor* GetCursor1(void)
 
 void CursolButtonMovement()
 {
+
+	
+
+
 	if (cursorstart == TRUE)
 	{
 		PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -114,11 +124,11 @@ void CursolButtonMovement()
 
 			//}
 
-			if (cursor.array_x > 0)
-			{
-				cursor.velocity.x = -80.0f;
-				cursor.array_x--;
-			}
+			if (cursor.array_x > CURSOR_ARRAY_X_MIN)
+				{
+			cursor.velocity.x = -80.0f;
+			cursor.array_x--;
+				}
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 		{
@@ -133,7 +143,7 @@ void CursolButtonMovement()
 
 			//	// 移動のSE（左とおんなじ音入れてね）
 			//}
-			if (cursor.array_x < 11)
+			if (cursor.array_x < CURSOR_ARRAY_X_MAX)
 			{
 				cursor.velocity.x = 80.0f;
 				cursor.array_x++;
@@ -146,7 +156,7 @@ void CursolButtonMovement()
 				numy++;
 				cursor.velocity.y = -80.0f;
 			}*/
-			if (cursor.array_y > 0)
+			if (cursor.array_y > CURSOR_ARRAY_Y_MIN)
 			{
 				cursor.velocity.y = -80.0f;
 				cursor.array_y--;
@@ -159,7 +169,7 @@ void CursolButtonMovement()
 				numy--;
 				cursor.velocity.y = 80.0f;
 			}*/
-			if (cursor.array_y < 6)
+			if (cursor.array_y < CURSOR_ARRAY_Y_MAX)
 			{
 				cursor.velocity.y = 80.0f;
 				cursor.array_y++;
@@ -171,11 +181,12 @@ void CursolButtonMovement()
 			cursor.velocity.x = 0.0f;
 			cursor.velocity.y = 0.0f;
 		}
-
-		// カーソル移動
-		cursor.position.x += cursor.velocity.x;
-		cursor.position.y += cursor.velocity.y;
 	}
+	// カーソル移動
+	cursor.position.x += cursor.velocity.x;
+	cursor.position.y += cursor.velocity.y;
+
+
 }
 
 // カーソルがいるレーンを取得する

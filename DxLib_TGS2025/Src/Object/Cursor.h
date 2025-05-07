@@ -13,11 +13,10 @@ struct Cursor
 	int array_y;
 	int image;
 	int is_jump;
-
 };
 
 void CursorInit(void);
 void CursorUpdate(void);
 void CursorDraw(void);
 const Cursor* GetCursor1(void);
-void CursolButtonMovement();         // 十字キーの移動
+void CursolButtonMovement();       // 十字キーの移動
