@@ -100,7 +100,7 @@ const Cursor* GetCursor1(void)
 void CursolButtonMovement()
 {
 
-	
+
 
 
 	if (cursorstart == TRUE)
@@ -125,10 +125,10 @@ void CursolButtonMovement()
 			//}
 
 			if (cursor.position.x > CURSOR_ARRAY_X_MIN)
-				{
-			cursor.position.x += -80.0f;
-			cursor.array_x--;
-				}
+			{
+				cursor.position.x += -80.0f;
+				cursor.array_x--;
+			}
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 		{
