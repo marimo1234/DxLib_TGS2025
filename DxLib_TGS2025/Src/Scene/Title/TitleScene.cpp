@@ -1,5 +1,6 @@
 ﻿#include "TitleScene.h"
 #include "../../Utility/InputManager.h"
+#include "../../Utility/PadInputManager.h"
 #include "DxLib.h"
 #include <math.h>
 
@@ -33,6 +34,14 @@ eSceneType TitleSceneUpdate(void)
 	{
 		return eEnd;	//インゲーム画面へ
 	}
+
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
+	{
+		return eInGame;	//インゲーム画面へ
+	}
+
 	return eTitle;
 }
 
@@ -43,4 +52,7 @@ void TitleSceneDraw(void)
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでインゲーム画面へ");
 	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xでヘルプ画面へ");
 	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");
+
+	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでインゲーム画面へ");
+
 }
