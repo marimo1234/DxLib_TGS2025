@@ -12,23 +12,6 @@
 #define CURSOR_Y_MIN (120.0f)
 #define MOVE_ONE_SPACE (80.0f)
 
-
-
-//////////////////////////////////////
-//颯馬が変えた内容
-/*
-　PlayerからCursorに名前全部変えた
-
-　DrawGraphからDrawRotaGraphFに変えた
-　DrawGraphは左上が（0，0)だけどDrawRotaGraphFは中心が（0.0）だから初期位置も変えた
- 　　　　　　　　　　　　　　　　　　　　　 ↑座標の変数がFloat型だからF入ってる 
-  
-  GetCursorって名前の関数は開発者？が定義してるっぽいから
-  GetCursor1って名前にしてる
-
-*/
-//////////////////////////////////////
-
 Cursor cursor;
 int cursor_image;
 static int numx = 0;
