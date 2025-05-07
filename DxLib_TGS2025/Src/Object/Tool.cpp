@@ -28,7 +28,6 @@ int frameselect_y;		//選択枠のｙ座標
 
 float pickaxe_angle;	//つるはしの角度
 
-int put_num;			//置いた数
 int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
 int road_flag;			//道のフラグ
@@ -40,7 +39,6 @@ int tool_start;			//操作可能かの変数
 
 Tool tool;
 
-void const CursorToolCheck(const Cursor* cursor);
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
@@ -60,7 +58,6 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	put_num = 0;
 	//仮
 	
 
@@ -113,8 +110,6 @@ void ToolDraw(void)
 	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//枠選択の描画（アイテム枠）
 	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
-	//道路描画
-	Draw_Road();
 	//道路の所持数
 	DrawExtendFormatString(930, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.road_num);
 	//木の道の所持数
@@ -184,27 +179,33 @@ void Put_Road(void)
 		{
 
 			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
-			if (tool.road_num > 0&& put_num < 10)
+			if (tool.road_num > 0)
 			{
-					road_flag = true;
-					CursorToolCheck(GetCursor1());
-					put_num++;
 					tool.road_num--;
+					tool.road_flag = true;
 			}
 		}
 	}
 }
 
-//置いた道路描画
-void Draw_Road(void)
-{	
-	//道路が置かれている状態なら
-	if (road_flag == true)
+//丸太の道路を置く
+void Put_Wood_Road(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	//Aボタンが押されたら
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		//置かれている数だけ描画する
-		for (int i = 0; i < put_num; i++)
+
+		//アイテムが道路なら
+		if (tool.item_number == 1)
 		{
-			DrawRotaGraph(tool.draw_x[i], tool.draw_y[i], 1.0, 0.0, tool.road_img, TRUE);
+
+			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
+			if (tool.wood_road_num > 0)
+			{
+				tool.wood_road_num--;
+				tool.wood_road_flag = true;
+			}
 		}
 	}
 }
@@ -229,12 +230,6 @@ void Tool_Start(const InGame* ingame)
 const Tool* Get_Tool(void)
 {
 	return &tool;
-}
-
-void const CursorToolCheck(const Cursor* cursor)
-{
-	tool.draw_x[put_num] = cursor->position.x;
-	tool.draw_y[put_num] = cursor->position.y;
 }
 
 //岩の道を増やす
@@ -303,6 +298,18 @@ void Tool_Reset(void)
 {
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
-	put_num = 0;
 	road_flag = false;
 }
+
+//道のフラグをFALSEに
+void Road_Flag_off(void)
+{
+	tool.road_flag = false;
+}
+
+//丸太の道のフラグをFALSEに
+void Wood_Road_Flag_off(void)
+{
+	tool.wood_road_flag = false;
+}
+
