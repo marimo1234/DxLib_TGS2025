@@ -31,7 +31,6 @@ float pickaxe_angle;	//つるはしの角度
 
 int road_x;				//道のｘ座標
 int road_y;				//道のｙ座標
-int road_flag;			//道のフラグ
 
 int tool_start;			//操作可能かの変数
 
@@ -43,7 +42,7 @@ Tool tool;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road(const Cursor*cursor, const CreateStage* stage);
+void Put_Road(const Cursor*cursor);
 
 
 void ToolInit(void)
@@ -56,7 +55,6 @@ void ToolInit(void)
 	tool.wood_road_num = 0;
 	road_x = 500;
 	road_y = 500;
-	road_flag = false;
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
@@ -85,7 +83,7 @@ void ToolManagerUpdate(void)
 	{
 		Move_Frame();
 		//道路設置
-		/*Put_Road();*/
+		Put_Road(GetCursor1());
 	}
 	else
 	{
@@ -168,7 +166,7 @@ void Move_Frame(void)
 }
 
 //道路を置く
-void Put_Road(const Cursor* cursor, const CreateStage* stage)
+void Put_Road(const Cursor* cursor)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -183,11 +181,8 @@ void Put_Road(const Cursor* cursor, const CreateStage* stage)
 			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
 			if (tool.road_num > 0)
 			{
-				if (cursor->array_x == stage->beside && cursor->array_y == stage->vertical)
-				{
 						tool.road_num--;
-						/*tool.road_flag[i] = true;*/
-				}
+						tool.road_flag[cursor->array_x][cursor->array_y] = true;
 			}
 		}
 	}
@@ -303,18 +298,11 @@ void Tool_Reset(void)
 {
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
-	road_flag = false;
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			tool.road_flag[i][j] = false;
+		}
+	}
 }
-
-//道のフラグをFALSEに
-void Road_Flag_off(void)
-{
-	/*tool.road_flag = false;*/
-}
-
-//丸太の道のフラグをFALSEに
-void Wood_Road_Flag_off(void)
-{
-	tool.wood_road_flag = false;
-}
-

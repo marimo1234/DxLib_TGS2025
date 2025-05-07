@@ -15,7 +15,7 @@ int sea;
 int trout[256][256];
 int math;
 
-//void Put_Road(const Tool* tool, const Cursor* cursor);
+void Put_Road(const Tool* tool);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 
@@ -27,7 +27,7 @@ void MapInit(void)
 }
 void MapUpdate(void)
 {
-	/*Put_Road(Get_Tool(), GetCursor1());*/
+	Put_Road(Get_Tool());
 }
 void MapDraw(void)
 {
@@ -179,11 +179,16 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 
 }
 
-//void Put_Road(const Tool*tool, const Cursor* cursor)
-//{
-//	if ()
-//	{
-//		stage.array[cursor->array_x][cursor->array_y] = 4;
-//		Road_Flag_off();
-//	}
-//}
+void Put_Road(const Tool*tool)
+{
+	for(int j=0;j<7;j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (tool->road_flag[i][j] == true)
+			{
+				stage.array[i][j]= 4;
+			}
+		}
+	}
+}
