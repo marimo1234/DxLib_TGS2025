@@ -6,10 +6,10 @@
 #include "../Object/Map.h"
 #include "DxLib.h"
 
-#define CURSOR_ARRAY_X_MAX (11)
-#define CURSOR_ARRAY_X_MIN (0)
-#define CURSOR_ARRAY_Y_MAX (6)
-#define CURSOR_ARRAY_Y_MIN (0)
+#define CURSOR_ARRAY_X_MAX (1120.0f)
+#define CURSOR_ARRAY_X_MIN (200.0f)
+#define CURSOR_ARRAY_Y_MAX (600.0f)
+#define CURSOR_ARRAY_Y_MIN (120.0f)
 
 
 
@@ -124,9 +124,9 @@ void CursolButtonMovement()
 
 			//}
 
-			if (cursor.array_x > CURSOR_ARRAY_X_MIN)
+			if (cursor.position.x > CURSOR_ARRAY_X_MIN)
 				{
-			cursor.velocity.x = -80.0f;
+			cursor.position.x += -80.0f;
 			cursor.array_x--;
 				}
 		}
@@ -143,9 +143,9 @@ void CursolButtonMovement()
 
 			//	// 移動のSE（左とおんなじ音入れてね）
 			//}
-			if (cursor.array_x < CURSOR_ARRAY_X_MAX)
+			if (cursor.position.x < CURSOR_ARRAY_X_MAX)
 			{
-				cursor.velocity.x = 80.0f;
+				cursor.position.x += 80.0f;
 				cursor.array_x++;
 			}
 		}
@@ -156,9 +156,9 @@ void CursolButtonMovement()
 				numy++;
 				cursor.velocity.y = -80.0f;
 			}*/
-			if (cursor.array_y > CURSOR_ARRAY_Y_MIN)
+			if (cursor.position.y > CURSOR_ARRAY_Y_MIN)
 			{
-				cursor.velocity.y = -80.0f;
+				cursor.position.y += -80.0f;
 				cursor.array_y--;
 			}
 		}
@@ -169,22 +169,22 @@ void CursolButtonMovement()
 				numy--;
 				cursor.velocity.y = 80.0f;
 			}*/
-			if (cursor.array_y < CURSOR_ARRAY_Y_MAX)
+			if (cursor.position.y < CURSOR_ARRAY_Y_MAX)
 			{
-				cursor.velocity.y = 80.0f;
+				cursor.position.y += 80.0f;
 				cursor.array_y++;
 			}
 		}
 		else
 		{
 			// 移動速度を0に戻す
-			cursor.velocity.x = 0.0f;
-			cursor.velocity.y = 0.0f;
+			/*cursor.velocity.x = 0.0f;
+			cursor.velocity.y = 0.0f;*/
 		}
 	}
 	// カーソル移動
-	cursor.position.x += cursor.velocity.x;
-	cursor.position.y += cursor.velocity.y;
+	/*cursor.position.x += cursor.velocity.x;
+	cursor.position.y += cursor.velocity.y;*/
 
 
 }
