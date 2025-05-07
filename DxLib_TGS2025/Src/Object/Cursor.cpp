@@ -10,6 +10,7 @@
 #define CURSOR_ARRAY_X_MIN (200.0f)
 #define CURSOR_ARRAY_Y_MAX (600.0f)
 #define CURSOR_ARRAY_Y_MIN (120.0f)
+#define MOVE_ONE_SPACE (80.0f)
 
 
 
@@ -126,7 +127,7 @@ void CursolButtonMovement()
 
 			if (cursor.position.x > CURSOR_ARRAY_X_MIN)
 			{
-				cursor.position.x += -80.0f;
+				cursor.position.x += -MOVE_ONE_SPACE;
 				cursor.array_x--;
 			}
 		}
@@ -145,7 +146,7 @@ void CursolButtonMovement()
 			//}
 			if (cursor.position.x < CURSOR_ARRAY_X_MAX)
 			{
-				cursor.position.x += 80.0f;
+				cursor.position.x += MOVE_ONE_SPACE;
 				cursor.array_x++;
 			}
 		}
@@ -158,7 +159,7 @@ void CursolButtonMovement()
 			}*/
 			if (cursor.position.y > CURSOR_ARRAY_Y_MIN)
 			{
-				cursor.position.y += -80.0f;
+				cursor.position.y += -MOVE_ONE_SPACE;
 				cursor.array_y--;
 			}
 		}
@@ -171,7 +172,7 @@ void CursolButtonMovement()
 			}*/
 			if (cursor.position.y < CURSOR_ARRAY_Y_MAX)
 			{
-				cursor.position.y += 80.0f;
+				cursor.position.y += MOVE_ONE_SPACE;
 				cursor.array_y++;
 			}
 		}
