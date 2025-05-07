@@ -2,7 +2,7 @@
 
 #include "../Utility/Geometry.h"
 
-#define WOODROCK_MAX (20)
+#define WOODROCK_MAX (80)
 
 
 enum eWoodRockState // Hit数の列挙
