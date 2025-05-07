@@ -4,6 +4,7 @@
 #include "../Object/Obstacle.h"
 #include "../Object/Tool.h"
 #include "../Object/Goal.h"
+#include "../Object/Cursor.h"
 
 
 CreateStage stage;
@@ -14,6 +15,7 @@ int sea;
 int trout[256][256];
 int math;
 
+//void Put_Road(const Tool* tool, const Cursor* cursor);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 
@@ -25,7 +27,7 @@ void MapInit(void)
 }
 void MapUpdate(void)
 {
-
+	/*Put_Road(Get_Tool(), GetCursor1());*/
 }
 void MapDraw(void)
 {
@@ -34,7 +36,7 @@ void MapDraw(void)
 	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
 	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);*/
 
-	MapCreate(GetWood(),GetRock(),GetHole(),Get_Tool(),GetLake(),GetGoal());
+	MapCreate(GetWood(), GetRock(), GetHole(), Get_Tool(), GetLake(), GetGoal());
 }
 
 const CreateStage* GetStage(void)
@@ -143,7 +145,7 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 				break;
 
 			case 4:
-				stage.hole_x[g] = x;
+				stage.road_x[g] = x;
 				stage.road_y[g] = y;
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
 				g++;
@@ -176,3 +178,12 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 	}
 
 }
+
+//void Put_Road(const Tool*tool, const Cursor* cursor)
+//{
+//	if ()
+//	{
+//		stage.array[cursor->array_x][cursor->array_y] = 4;
+//		Road_Flag_off();
+//	}
+//}

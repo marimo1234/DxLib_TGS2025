@@ -5,6 +5,7 @@
 #include "../Scene/InGame/InGameScene.h"
 #include "../Object/WoodRock.h"
 #include "../Object/Cursor.h"
+#include "../Object/map.h"
 
 
 #define PICKAXE_X		(1175)		//つるはしx座標
@@ -42,6 +43,7 @@ Tool tool;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
+void Put_Road(const Cursor*cursor, const CreateStage* stage);
 
 
 void ToolInit(void)
@@ -83,7 +85,7 @@ void ToolManagerUpdate(void)
 	{
 		Move_Frame();
 		//道路設置
-		Put_Road();
+		/*Put_Road();*/
 	}
 	else
 	{
@@ -166,7 +168,7 @@ void Move_Frame(void)
 }
 
 //道路を置く
-void Put_Road(void)
+void Put_Road(const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -181,8 +183,11 @@ void Put_Road(void)
 			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
 			if (tool.road_num > 0)
 			{
-					tool.road_num--;
-					tool.road_flag = true;
+				if (cursor->array_x == stage->beside && cursor->array_y == stage->vertical)
+				{
+						tool.road_num--;
+						/*tool.road_flag[i] = true;*/
+				}
 			}
 		}
 	}
@@ -304,7 +309,7 @@ void Tool_Reset(void)
 //道のフラグをFALSEに
 void Road_Flag_off(void)
 {
-	tool.road_flag = false;
+	/*tool.road_flag = false;*/
 }
 
 //丸太の道のフラグをFALSEに
