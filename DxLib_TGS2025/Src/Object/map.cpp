@@ -23,13 +23,17 @@ void MapInit(void)
 {
 	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
 	/*math= LoadGraph("Resource/images/1trout.png");*/
+	StageCreate();
+	StageRoad();
+	MapValueInit();
+	
 
 }
 void MapUpdate(void)
 {
 	//ステージ読み込み、描画
-	StageCreate();
-	StageRoad();
+	/*StageCreate();
+	StageRoad();*/
 
 	Put_Road(Get_Tool());
 }
@@ -128,51 +132,51 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 			switch (stage.array[x][y])
 			{
 			case 1:
-				stage.wood_x[i] = x;
-				stage.wood_y[i] = y;
+				/*stage.wood_x[i] = x;
+				stage.wood_y[i] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[i], TRUE);
 				i++;
 				break;
 
 			case 2:
-				stage.rock_x[j] = x;
-				stage.rock_y[j] = y;
+				/*stage.rock_x[j] = x;
+				stage.rock_y[j] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[j], TRUE);
 				j++;
 				break;
 
 			case 3:
-				stage.hole_x[f] = x;
-				stage.hole_y[f] = y;
+				/*stage.hole_x[f] = x;
+				stage.hole_y[f] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);
 				f++;
 				break;
 
 			case 4:
-				stage.road_x[g] = x;
-				stage.road_y[g] = y;
+				/*stage.road_x[g] = x;
+				stage.road_y[g] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
 				g++;
 				break;
 
 
 			case 5:
-				stage.wood_road_x[h] = x;
-				stage.wood_road_y[h] = y;
+				/*stage.wood_road_x[h] = x;
+				stage.wood_road_y[h] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
 				h++;
 				break;
 
 			case 6:
-				stage.lake_x[k] = x;
-				stage.lake_y[k] = y;
+				/*stage.lake_x[k] = x;
+				stage.lake_y[k] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
 				k++;
 				break;
 
 			case 7:
-				stage.goal_x[l] = x;
-				stage.goal_y[l] = y;
+				/*stage.goal_x[l] = x;
+				stage.goal_y[l] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
 				l++;
 				break;
@@ -195,4 +199,61 @@ void Put_Road(const Tool*tool)
 			}
 		}
 	}
+}
+
+void MapValueInit(void)
+{
+	int i = 0;		//木
+	int j = 0;		//岩
+	int f = 0;		//穴
+	int g = 0;		//道
+	int h = 0;		//丸太の道
+	int k = 0;      //湖の画像
+	int l = 0;      //ゴールの画像  
+
+	for (int y = 0; y < 7; y++)
+	{
+		for (int x = 0; x < 12; x++)
+		{
+			switch (stage.array[x][y])
+			{
+			case 1:
+				stage.wood_x[i] = x;
+				stage.wood_y[i] = y;
+				i++;
+				break;
+			case 2:
+				stage.rock_x[j] = x;
+				stage.rock_y[j] = y;
+				j++;
+				break;
+			case 3:
+				stage.hole_x[f] = x;
+				stage.hole_y[f] = y;
+				f++;
+				break;
+			case 4:
+				stage.road_x[g] = x;
+				stage.road_y[g] = y;
+				g++;
+				break;
+			case 5:
+				stage.wood_road_x[h] = x;
+				stage.wood_road_y[h] = y;
+				h++;
+				break;
+			case 6:
+				stage.lake_x[k] = x;
+				stage.lake_y[k] = y;
+				k++;
+				break;
+			case 7:
+				stage.goal_x[l] = x;
+				stage.goal_y[l] = y;
+				l++;
+				break;
+			}
+		}
+	}
+
 }

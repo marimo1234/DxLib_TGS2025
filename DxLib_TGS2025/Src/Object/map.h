@@ -33,4 +33,5 @@ void MapDraw(void);
 void StageRoad(void);
 void StageCreate(void);
 
+void MapValueInit(void);
 const CreateStage* GetStage(void);
