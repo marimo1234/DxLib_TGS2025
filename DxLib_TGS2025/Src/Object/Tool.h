@@ -35,7 +35,7 @@ void ToolInit(void);
 void ToolManagerUpdate(void);
 void ToolDraw(void);
 void Move_Frame(void);
-void Put_Wood_Road(void);
+void Put_Wood_Road_FLAG(void);
 void Sub_Num(void);
 void Tool_Reset(void);
 

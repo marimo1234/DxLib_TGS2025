@@ -42,7 +42,7 @@ Tool tool;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road(const Cursor*cursor);
+void Put_Road_FLAG(const Cursor*cursor);
 
 
 void ToolInit(void)
@@ -83,7 +83,7 @@ void ToolManagerUpdate(void)
 	{
 		Move_Frame();
 		//道路設置
-		Put_Road(GetCursor1());
+		Put_Road_FLAG(GetCursor1());
 	}
 	else
 	{
@@ -166,7 +166,7 @@ void Move_Frame(void)
 }
 
 //道路を置く
-void Put_Road(const Cursor* cursor)
+void Put_Road_FLAG(const Cursor* cursor)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -189,7 +189,7 @@ void Put_Road(const Cursor* cursor)
 }
 
 //丸太の道路を置く
-void Put_Wood_Road(void)
+void Put_Wood_Road_FLAG(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタンが押されたら
