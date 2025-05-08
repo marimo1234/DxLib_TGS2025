@@ -132,9 +132,6 @@ void InGameSceneDraw(void)
 	//ゴールの描画
 	GoalDraw();
 	
-	//ステージ読み込み、描画
-	StageRoad();
-	StageCreate();
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します

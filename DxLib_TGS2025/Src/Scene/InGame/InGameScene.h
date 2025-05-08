@@ -29,6 +29,4 @@ const InGame* GetInGame(void);
 
 void GameStart();
 void StageChange(void);
-void StageRoad(void);
-void StageCreate(void);
 //void StageChange(const Goal* goal);

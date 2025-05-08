@@ -27,6 +27,10 @@ void MapInit(void)
 }
 void MapUpdate(void)
 {
+	//ステージ読み込み、描画
+	StageCreate();
+	StageRoad();
+
 	Put_Road(Get_Tool());
 }
 void MapDraw(void)

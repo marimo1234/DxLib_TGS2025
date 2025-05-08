@@ -30,5 +30,7 @@ struct CreateStage
 void MapInit(void);
 void MapUpdate(void);
 void MapDraw(void);
+void StageRoad(void);
+void StageCreate(void);
 
 const CreateStage* GetStage(void);
