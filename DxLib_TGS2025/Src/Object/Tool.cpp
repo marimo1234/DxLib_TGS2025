@@ -43,6 +43,7 @@ void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
 void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
+void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 
 
 void ToolInit(void)
@@ -85,6 +86,7 @@ void ToolManagerUpdate(void)
 		Move_Frame();
 		//道路設置
 		Put_Road_FLAG(GetCursor1(),GetStage());
+		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
 	else
 	{
@@ -179,7 +181,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 		if (tool.item_number == 0)
 		{
 
-			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
+			//道路の数が0より多いなら
 			if (tool.road_num > 0)
 			{
 
@@ -188,7 +190,8 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 				if (cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)
 				{
 					//カーソルの位置のマップの配列の中身が0なら
-					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					if ((stage->array[cursor->array_x][cursor->array_y] == 0)||
+						(stage->array[cursor->array_x][cursor->array_y]==5))
 					{
 						tool.road_num--;
 						tool.road_flag[cursor->array_x][cursor->array_y] = true;
@@ -199,7 +202,8 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 				else if (cursor->array_x == tool.base_x  && cursor->array_y == tool.base_y-1)
 				{
 					//カーソルの位置のマップの配列の中身が0なら
-					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					if ((stage->array[cursor->array_x][cursor->array_y] == 0) || 
+						(stage->array[cursor->array_x][cursor->array_y] == 5))
 					{
 						tool.road_num--;
 						tool.road_flag[cursor->array_x][cursor->array_y] = true;
@@ -210,7 +214,8 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 				else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y+1)
 				{
 					//カーソルの位置のマップの配列の中身が0なら
-					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					if ((stage->array[cursor->array_x][cursor->array_y] == 0) || 
+						(stage->array[cursor->array_x][cursor->array_y] == 5))
 					{
 						tool.road_num--;
 						tool.road_flag[cursor->array_x][cursor->array_y] = true;
@@ -223,22 +228,58 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 }
 
 //丸太の道路を置く
-void Put_Wood_Road_FLAG(void)
+void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタンが押されたら
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 
-		//アイテムが道路なら
+		//アイテムが木の道路なら
 		if (tool.item_number == 1)
 		{
 
-			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
+			//木の道路の数が0より多いなら
 			if (tool.wood_road_num > 0)
 			{
-				tool.wood_road_num--;
-				tool.wood_road_flag = true;
+
+
+				//右の時
+				if (cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)
+				{
+					//カーソルの位置のマップの配列の中身が0なら
+					if ((stage->array[cursor->array_x][cursor->array_y] == 6) || 
+						(stage->array[cursor->array_x][cursor->array_y] == 4))
+					{
+						tool.wood_road_num--;
+						tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_x += 1;
+					}
+				}
+				//上の時
+				else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)
+				{
+					//カーソルの位置のマップの配列の中身が0なら
+					if ((stage->array[cursor->array_x][cursor->array_y] == 6) ||
+						(stage->array[cursor->array_x][cursor->array_y] == 4))
+					{
+						tool.wood_road_num--;
+						tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_y -= 1;
+					}
+				}
+				//下の時
+				else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)
+				{
+					//カーソルの位置のマップの配列の中身が0なら
+					if ((stage->array[cursor->array_x][cursor->array_y] == 6) ||
+						(stage->array[cursor->array_x][cursor->array_y] == 4))
+					{
+						tool.wood_road_num--;
+						tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_y += 1;
+					}
+				}
 			}
 		}
 	}
@@ -337,6 +378,7 @@ void Tool_Reset(void)
 		for (int i = 0; i < 12; i++)
 		{
 			tool.road_flag[i][j] = false;
+			tool.wood_road_flag[i][j] = false;
 		}
 	}
 }

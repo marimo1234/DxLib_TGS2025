@@ -19,6 +19,7 @@ int stage_start;
 
 void Stage_Start(const InGame* ingame);
 void Put_Road(const Tool* tool, const Cursor* cursor);
+void Put_Wood_Road(const Tool* tool, const Cursor* cursor);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
@@ -38,6 +39,7 @@ void MapUpdate(void)
 	Stage_Start(GetInGame());
 	Delete_WoodRock(GetWood(), GetRock());
 	Put_Road(Get_Tool(), GetCursor1());
+	Put_Wood_Road(Get_Tool(), GetCursor1());
 	
 	
 	
@@ -51,7 +53,7 @@ void MapUpdate(void)
 				{
 					continue;
 				}
-				if (stage.array[i][j] == 4)
+				if ((stage.array[i][j] == 4) || (stage.array[i][j] == 5))
 				{
 					stage.array[i][j] = 0;
 				}
@@ -188,6 +190,8 @@ void Stage_Start(const InGame* ingame)
 	}
 }
 
+
+//カーソルの位置と対応している配列の中身を道に変更
 void Put_Road(const Tool* tool, const Cursor* cursor)
 {
 	if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
@@ -195,6 +199,18 @@ void Put_Road(const Tool* tool, const Cursor* cursor)
 		stage.array[cursor->array_x][cursor->array_y] = 4;
 	}
 }
+
+
+//カーソルの位置と対応している配列の中身を丸太の道に変更
+void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
+{
+	if (tool->wood_road_flag[cursor->array_x][cursor->array_y] == true)
+	{
+		stage.array[cursor->array_x][cursor->array_y] = 5;
+	}
+}
+
+
 void Delete_WoodRock(const Wood* wood,const Rock* rock)
 {
 	if (rock->delete_flg[rock->count_x][rock->count_y] == true)
