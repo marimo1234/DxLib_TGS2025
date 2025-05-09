@@ -134,14 +134,14 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 			case 1:
 				/*stage.wood_x[i] = x;
 				stage.wood_y[i] = y;*/
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[i], TRUE);
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				i++;
 				break;
 
 			case 2:
 				/*stage.rock_x[j] = x;
 				stage.rock_y[j] = y;*/
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[j], TRUE);
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
 				j++;
 				break;
 
