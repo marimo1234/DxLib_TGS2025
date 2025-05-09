@@ -5,6 +5,7 @@
 #include "../Object/Tool.h"
 #include "../Object/Goal.h"
 #include "../Object/Cursor.h"
+#include "../Scene/InGame/InGameScene.h"
 
 
 CreateStage stage;
@@ -14,8 +15,10 @@ int groundreef;
 int sea;
 int trout[256][256];
 int math;
+int stage_start;
 
-void Put_Road(const Tool* tool,const Cursor* cursor);
+void Stage_Start(const InGame* ingame);
+void Put_Road(const Tool* tool, const Cursor* cursor);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 
@@ -29,7 +32,26 @@ void MapInit(void)
 
 void MapUpdate(void)
 {
-	Put_Road(Get_Tool(),GetCursor1());
+	/*Stage_Start(GetInGame());*/
+	Stage_Start(GetInGame());
+	Put_Road(Get_Tool(), GetCursor1());
+	if (stage_start == false)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				if ((i == 3 && j == 3)||(i == 4 && j == 3) )
+				{
+					continue;
+				}
+				if (stage.array[i][j] == 4)
+				{
+					stage.array[i][j] = 0;
+				}
+			}
+		}
+	}
 }
 
 void MapDraw(void)
@@ -157,6 +179,22 @@ void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool*
 		}
 	}
 
+}
+
+//ステージスタート
+void Stage_Start(const InGame* ingame)
+{
+	//TRUEならstageもTRUEに
+	if (ingame->start == true)
+	{
+		stage_start = true;
+	}
+
+	//そうでなければFALSEに
+	else
+	{
+		stage_start = false;
+	}
 }
 
 void Put_Road(const Tool* tool, const Cursor* cursor)
