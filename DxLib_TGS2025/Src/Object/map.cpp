@@ -26,6 +26,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool*
 void MapInit(void)
 {
 	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
+	stage.trout_image= LoadGraph("Resource/images/trout.png");
 	StageCreate();
 	StageRoad();
 	MapValueInit();
@@ -62,6 +63,7 @@ void MapUpdate(void)
 void MapDraw(void)
 {
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
+	MapTroutDraw();
 	MapCreate(GetWood(), GetRock(), GetHole(), Get_Tool(), GetLake(), GetGoal());
 }
 
@@ -264,4 +266,15 @@ void MapValueInit(void)
 		}
 	}
 
+}
+
+void MapTroutDraw(void)
+{
+	for (int y = 0; y < 7; y++)
+	{
+		for (int x = 0; x < 12; x++)
+		{
+			DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
+		}
+	}
 }

@@ -11,6 +11,7 @@ struct CreateStage
 	int kinds;		//ステージの種類
 	int stage_x;
 	int stage_y;
+	int trout_image;
 	int wood_x[80];
 	int wood_y[80];
 	int rock_x[80];
@@ -38,3 +39,4 @@ void StageCreate(void);
 
 void MapValueInit(void);
 const CreateStage* GetStage(void);
+void MapTroutDraw(void);
