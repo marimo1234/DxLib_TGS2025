@@ -46,6 +46,9 @@ void WoodRockInit(void)
 		}
 	}
 
+	wood.fps = 0;
+	rock.fps = 0;
+
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
 	{
@@ -159,7 +162,14 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
-		wood.delete_flg [wood.count_x][wood.count_y] = true;
+
+		wood.fps++;
+		if (wood.fps > 60)
+		{
+			wood.delete_flg[wood.count_x][wood.count_y] = true;
+			wood.hit_count[wood.count_x][wood.count_y] = eHit0;
+			wood.fps = 0;
+		}
 		WoodMove();
 		break;
 	}
@@ -202,7 +212,15 @@ void RockAnimation(void)
 
 	case eHit3:// Hit数3
 		rock.animation[rock.count_x][rock.count_y] = rock.image[3];
-		rock.delete_flg[rock.count_x][rock.count_y] = true;
+
+		rock.fps++;
+		if (rock.fps > 60)
+		{
+			rock.delete_flg[rock.count_x][rock.count_y] = true;
+			rock.hit_count[rock.count_x][rock.count_y] = eHit0;
+			rock.fps = 0;
+		}
+
 		RockMove();
 		break;
 	}
@@ -247,7 +265,8 @@ void WoodRockSub (const Tool*tool)
 
 void ItemSlotCheck(const Tool* tool)
 {
-	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d", tool->item_number);
+	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d %d %d", tool->item_number,wood.fps,rock.fps);
+	
 }
 
 void CursorWoodRockCheck(const Cursor* cursor)
@@ -269,6 +288,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 			//カーソルと木の配列番号が一致したら
 			if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
 			{
+				//変更する配列番号を記憶
 				wood.count_x = stage->wood_x[i];
 				wood.count_y = stage->wood_y[i];
 				//ツールがオノになっていたら
@@ -295,12 +315,12 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	//カーソルの配列番号が木だったら
 	if (stage->array[cursor->array_x][cursor->array_y] == 1);
 	{
-
 		for (int i = 0; i < WOODROCK_MAX; i++)
 		{
 			//カーソルと岩の配列番号が一致したら
 			if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
 			{
+				//変更する配列番号を記憶
 				rock.count_x = stage->rock_x[i];
 				rock.count_y = stage->rock_y[i];
 				//ツールがつるはしになっていたら

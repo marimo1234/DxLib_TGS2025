@@ -24,6 +24,7 @@ struct Wood
 	int count_x;
 	int count_y;
 	bool delete_flg[12][7];
+	int fps;
 };
 
 struct Rock
@@ -37,6 +38,7 @@ struct Rock
 	int count_x;
 	int count_y;
 	bool delete_flg[12][7];
+	int fps;
 };
 
 
