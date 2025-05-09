@@ -37,10 +37,12 @@ void WoodRockInit(void)
 			wood.hit_flag[i][j] = false;
 			wood.hit_count[i][j] = eHit0;
 			wood.animation[i][j] = wood.image[0];
+			wood.delete_flg[i][j] = false;
 
 			rock.hit_flag[i][j] = false;
 			rock.hit_count[i][j] = eHit0;
 			rock.animation[i][j] = rock.image[0];
+			rock.delete_flg[i][j] = false;
 		}
 	}
 
@@ -157,6 +159,7 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
+		wood.delete_flg [wood.count_x][wood.count_y] = true;
 		WoodMove();
 		break;
 	}
@@ -199,6 +202,7 @@ void RockAnimation(void)
 
 	case eHit3:// Hit数3
 		rock.animation[rock.count_x][rock.count_y] = rock.image[3];
+		rock.delete_flg[rock.count_x][rock.count_y] = true;
 		RockMove();
 		break;
 	}
@@ -338,10 +342,12 @@ void WoodRockReset(void)
 			wood.hit_flag[i][j] = false;
 			wood.hit_count[i][j] = eHit0;
 			wood.animation[i][j] = wood.image[0];
+			wood.delete_flg[i][j] = false;
 
 			rock.hit_flag[i][j] = false;
 			rock.hit_count[i][j] = eHit0;
 			rock.animation[i][j] = rock.image[0];
+			rock.delete_flg[i][j] = false;
 		}
 	}
 }

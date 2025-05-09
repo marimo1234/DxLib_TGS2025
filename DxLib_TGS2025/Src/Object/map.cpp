@@ -22,28 +22,19 @@ void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool*
 void MapInit(void)
 {
 	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
-	/*math= LoadGraph("Resource/images/1trout.png");*/
 	StageCreate();
 	StageRoad();
 	MapValueInit();
-	
-
 }
+
 void MapUpdate(void)
 {
-	//ステージ読み込み、描画
-	/*StageCreate();
-	StageRoad();*/
-
 	Put_Road(Get_Tool(),GetCursor1());
 }
+
 void MapDraw(void)
 {
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
-	/*trout[0][0] = DrawRotaGraphF(540, 380, 1.0, 0.0, math, TRUE);
-	trout[1][0] = DrawRotaGraphF(615, 380, 1.0, 0.0, math, TRUE);
-	trout[2][0] = DrawRotaGraphF(690, 380, 1.0, 0.0, math, TRUE);*/
-
 	MapCreate(GetWood(), GetRock(), GetHole(), Get_Tool(), GetLake(), GetGoal());
 }
 
@@ -115,8 +106,8 @@ void StageCreate(void)
 	}
 }
 
-void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*tool,
-               const Lake*lake,const Goal*goal)
+void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
+	const Lake* lake, const Goal* goal)
 {
 	int i = 0;		//木
 	int j = 0;		//岩
@@ -132,51 +123,32 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 			switch (stage.array[x][y])
 			{
 			case 1:
-				/*stage.wood_x[i] = x;
-				stage.wood_y[i] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				i++;
 				break;
-
 			case 2:
-				/*stage.rock_x[j] = x;
-				stage.rock_y[j] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
 				j++;
 				break;
-
 			case 3:
-				/*stage.hole_x[f] = x;
-				stage.hole_y[f] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);
 				f++;
 				break;
-
 			case 4:
-				/*stage.road_x[g] = x;
-				stage.road_y[g] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
 				g++;
 				break;
-
-
 			case 5:
-				/*stage.wood_road_x[h] = x;
-				stage.wood_road_y[h] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
 				h++;
 				break;
 
 			case 6:
-				/*stage.lake_x[k] = x;
-				stage.lake_y[k] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
 				k++;
 				break;
 
 			case 7:
-				/*stage.goal_x[l] = x;
-				stage.goal_y[l] = y;*/
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
 				l++;
 				break;
@@ -187,12 +159,12 @@ void MapCreate(const Wood* wood,const Rock* rock,const Hole* hole,const Tool*too
 
 }
 
-void Put_Road(const Tool*tool,const Cursor* cursor)
+void Put_Road(const Tool* tool, const Cursor* cursor)
 {
-			if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
-			{
-				stage.array[cursor->array_x][cursor->array_y]= 4;
-			}
+	if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
+	{
+		stage.array[cursor->array_x][cursor->array_y] = 4;
+	}
 }
 
 void MapValueInit(void)
