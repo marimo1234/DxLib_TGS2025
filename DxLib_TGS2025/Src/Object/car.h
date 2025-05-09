@@ -9,6 +9,8 @@ struct Car
 	int animation;
 	int image[2];
 	bool start;
+	int x;
+	int y;
 
 };
 

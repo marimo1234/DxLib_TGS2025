@@ -7,17 +7,26 @@
 
 //int car_direction = 0;
 
-int x=0;
-int y=0;
+
+int detict[12][7];
 void CarStart(const InGame* ingame);
-void CarStartPotion(const CreateStage* create);
+void CarDetectPotion(const CreateStage* create);
 
 Car car;
 
-void CarStartPotion(const CreateStage* create)
+void CarDetectPotion(const CreateStage* create)
 {
-	car.position.x = create->beside * 106;
-	car.position.y = create->vertical * 102;
+	
+	
+	if (create->array[car.x][car.y] == 4)
+	{
+		DrawFormatString(930, 50, GetColor(255, 255, 255), "%d", create->array[car.x][car.y]);
+	}
+	if (create->array[car.x][car.y] != 4)
+	{
+		DrawFormatString(930, 50, GetColor(255, 255, 255), "死んだ" );
+		car.start = false;
+	}
 }
 
 void CarInit(void)
@@ -35,7 +44,10 @@ void CarInit(void)
 
 void CarManagerUpdate(void)
 {
+	car.x = ((car.position.x-200) / 80) ;
+	car.y = car.position.y / 100;
 	CarStart(GetInGame());
+	
 
 	if (car.start == true)
 	{
@@ -44,7 +56,7 @@ void CarManagerUpdate(void)
 
 		if (car.position.x > 690.2f)
 		{
-			car.position.x = 540.0f;
+			car.position.x = 440.0f;
 		}
 
 		
@@ -59,7 +71,12 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 		DrawRotaGraph(car.position.x, car.position.y, 1.0, 0.0, car.animation, TRUE);
+		DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
+		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
+		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
+		CarDetectPotion(GetStage());
 }
+
 
 //車の処理をスタートするフラグ
 void CarStart(const InGame* ingame)
@@ -82,6 +99,6 @@ const Car* GetCar(void)
 
 void CarReset(void)
 {
-	car.position.x = 540.0f;
-	car.position.y = 380.0f;
+	car.position.x = 440.0f;
+	car.position.y = 360.0f;
 }
