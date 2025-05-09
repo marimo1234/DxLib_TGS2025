@@ -18,6 +18,8 @@ enum eToolState
 
 struct Tool
 {
+	int base_x;
+	int base_y;
 	int item_number;			//選択しているアイテムの種類
 	int road_img;				//道の画像ハンドル
 	int road_num;				//道の所持数

@@ -59,7 +59,8 @@ void ToolInit(void)
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
 	//仮
-	
+	tool.base_x = 4;
+	tool.base_y = 3;
 
 	//アイテム枠画像読み込み
 	itemframe_img = LoadGraph("Resource/images/item_frame.png");
@@ -182,11 +183,39 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 			if (tool.road_num > 0)
 			{
 
-				//カーソルの位置のマップの配列の中身が0なら
-				if (stage->array[cursor->array_x][cursor->array_y] == 0)
+
+				//右の時
+				if (cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)
 				{
-					tool.road_num--;
-					tool.road_flag[cursor->array_x][cursor->array_y] = true;
+					//カーソルの位置のマップの配列の中身が0なら
+					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					{
+						tool.road_num--;
+						tool.road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_x += 1;
+					}
+				}
+				//上の時
+				else if (cursor->array_x == tool.base_x  && cursor->array_y == tool.base_y-1)
+				{
+					//カーソルの位置のマップの配列の中身が0なら
+					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					{
+						tool.road_num--;
+						tool.road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_y -= 1;
+					}
+				}
+				//下の時
+				else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y+1)
+				{
+					//カーソルの位置のマップの配列の中身が0なら
+					if (stage->array[cursor->array_x][cursor->array_y] == 0)
+					{
+						tool.road_num--;
+						tool.road_flag[cursor->array_x][cursor->array_y] = true;
+						tool.base_y += 1;
+					}
 				}
 			}
 		}
