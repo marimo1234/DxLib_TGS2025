@@ -57,6 +57,7 @@ void WoodRockItemCount(void);
 void WoodRockReset(void);
 void WoodMove(void);
 void RockMove(void);
+void WR_Delete_Flag(void);
 
 
 

@@ -136,6 +136,7 @@ void WoodAnimation(void)
 		{
 			wood.hit_count[wood.count_x][wood.count_y] = eHit1;
 			wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
+			
 
 		}
 		break;
@@ -162,15 +163,10 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
-
-		wood.fps++;
-		if (wood.fps > 60)
-		{
-			wood.delete_flg[wood.count_x][wood.count_y] = true;
-			wood.hit_count[wood.count_x][wood.count_y] = eHit0;
-			wood.fps = 0;
-		}
+	    wood.delete_flg[wood.count_x][wood.count_y] = true;
 		WoodMove();
+		wood.hit_count[wood.count_x][wood.count_y] = eHit0;
+		
 		break;
 	}
 
@@ -187,6 +183,7 @@ void RockAnimation(void)
 		{
 			rock.hit_count[rock.count_x][rock.count_y] = eHit1;
 			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+
 		}
 		break;
 
@@ -212,17 +209,11 @@ void RockAnimation(void)
 
 	case eHit3:// Hit数3
 		rock.animation[rock.count_x][rock.count_y] = rock.image[3];
-
-		rock.fps++;
-		if (rock.fps > 60)
-		{
-			rock.delete_flg[rock.count_x][rock.count_y] = true;
-			rock.hit_count[rock.count_x][rock.count_y] = eHit0;
-			rock.fps = 0;
-		}
-
+		rock.delete_flg[rock.count_x][rock.count_y] = true;
+		rock.hit_count[rock.count_x][rock.count_y] = eHit0;
 		RockMove();
 		break;
+		
 	}
 
 }
@@ -404,4 +395,16 @@ void RockMove(void)
 		rock.position.y += -2.0f * da; //上向きがマイナス方向だから－つけてます
 	}
 
+}
+
+void WR_Delete_Flag(void)
+{
+	if (wood.delete_flg[wood.count_x][wood.count_y] == true)
+	{
+		wood.delete_flg[wood.count_x][wood.count_y] = false;
+	}
+	if (rock.delete_flg[rock.count_x][rock.count_y] == true)
+	{
+		rock.delete_flg[rock.count_x][rock.count_y] = false;
+	}
 }

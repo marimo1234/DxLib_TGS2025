@@ -19,6 +19,7 @@ int stage_start;
 
 void Stage_Start(const InGame* ingame);
 void Put_Road(const Tool* tool, const Cursor* cursor);
+void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 
@@ -34,7 +35,11 @@ void MapUpdate(void)
 {
 	/*Stage_Start(GetInGame());*/
 	Stage_Start(GetInGame());
+	Delete_WoodRock(GetWood(), GetRock());
 	Put_Road(Get_Tool(), GetCursor1());
+	
+	
+	
 	if (stage_start == false)
 	{
 		for (int j = 0; j < 7; j++)
@@ -131,13 +136,6 @@ void StageCreate(void)
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal)
 {
-	int i = 0;		//木
-	int j = 0;		//岩
-	int f = 0;		//穴
-	int g = 0;		//道
-	int h = 0;		//丸太の道
-	int k = 0;      //湖の画像
-	int l = 0;      //ゴールの画像  
 	for (int y = 0; y < 7; y++)
 	{
 		for (int x = 0; x < 12; x++)
@@ -145,34 +143,25 @@ void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool*
 			switch (stage.array[x][y])
 			{
 			case 1:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
-				i++;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);				
 				break;
 			case 2:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
-				j++;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);				
 				break;
 			case 3:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);
-				f++;
+				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);				
 				break;
 			case 4:
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
-				g++;
 				break;
 			case 5:
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
-				h++;
 				break;
-
 			case 6:
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
-				k++;
 				break;
-
 			case 7:
 				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
-				l++;
 				break;
 			}
 
@@ -202,6 +191,19 @@ void Put_Road(const Tool* tool, const Cursor* cursor)
 	if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
 	{
 		stage.array[cursor->array_x][cursor->array_y] = 4;
+	}
+}
+void Delete_WoodRock(const Wood* wood,const Rock* rock)
+{
+	if (rock->delete_flg[rock->count_x][rock->count_y] == true)
+	{
+		stage.array[rock->count_x][rock->count_y] = 0;
+		WR_Delete_Flag();
+	}
+	if (wood->delete_flg[wood->count_x][wood->count_y] == true)
+	{
+		stage.array[wood->count_x][wood->count_y] = 0;
+		WR_Delete_Flag();
 	}
 }
 
