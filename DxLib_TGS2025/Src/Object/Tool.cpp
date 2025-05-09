@@ -42,7 +42,7 @@ Tool tool;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road_FLAG(const Cursor*cursor);
+void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
 
 
 void ToolInit(void)
@@ -83,7 +83,7 @@ void ToolManagerUpdate(void)
 	{
 		Move_Frame();
 		//道路設置
-		Put_Road_FLAG(GetCursor1());
+		Put_Road_FLAG(GetCursor1(),GetStage());
 	}
 	else
 	{
@@ -166,7 +166,7 @@ void Move_Frame(void)
 }
 
 //道路を置く
-void Put_Road_FLAG(const Cursor* cursor)
+void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -181,8 +181,13 @@ void Put_Road_FLAG(const Cursor* cursor)
 			//道路の数が0より多いかつ、道路を置いた数が10を超えていないなら
 			if (tool.road_num > 0)
 			{
-						tool.road_num--;
-						tool.road_flag[cursor->array_x][cursor->array_y] = true;
+
+				//カーソルの位置のマップの配列の中身が0なら
+				if (stage->array[cursor->array_x][cursor->array_y] == 0)
+				{
+					tool.road_num--;
+					tool.road_flag[cursor->array_x][cursor->array_y] = true;
+				}
 			}
 		}
 	}
