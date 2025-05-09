@@ -8,10 +8,10 @@
 #include "../Object/map.h"
 
 
-#define PICKAXE_X		(1175)		//つるはしx座標
-#define PICKAXE_Y		(675)		//つるはしy座標
-#define FRAME_X			(1400)		//枠x座標
-#define FRAME_Y			(1150)		//枠y座標
+#define PICKAXE_X		(1120)		//つるはしx座標
+#define PICKAXE_Y		(680)		//つるはしy座標
+#define FRAME_X			(1000)		//枠x座標
+#define FRAME_Y			(680)		//枠y座標
 #define STONETILE_X		(937)		//石の地面x座標
 #define STONETILE_Y		(670)		//石の地面y座標
 #define LOGTILE_X		(1010)		//丸太の地面x座標
@@ -49,8 +49,8 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void ToolInit(void)
 {
 	//初期化
-	frameselect_x = 952;
-	frameselect_y = 670;
+	frameselect_x = 1120;
+	frameselect_y = 680;
 	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
@@ -103,16 +103,16 @@ void ToolDraw(void)
 	//アイテム枠の描画
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, itemframe_img, TRUE);
 	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(PICKAXE_X, PICKAXE_Y,0.1,0.0,pickaxe_img, TRUE);
+	DrawRotaGraph(PICKAXE_X, PICKAXE_Y, 0.5, 0.0, pickaxe_img, TRUE);
+	//斧の描画（アイテム枠）
+	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//道路の描画（アイテム枠）
 	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.65,0.0,tool.road_img, TRUE);
 	/*DrawRotaGraph(540, 380, 1.0, 0.0, tool.road_img, TRUE);*/
 	//丸太の地面の描画（アイテム枠）
 	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, tool.wood_road_img, TRUE);
-	//斧の描画（アイテム枠）
-	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
 	//枠選択の描画（アイテム枠）
-	DrawRotaGraph(frameselect_x, frameselect_y, 0.15, 0.0, frameselect_img, TRUE);
+	DrawRotaGraph(frameselect_x, frameselect_y, 1.0, 0.0, frameselect_img, TRUE);
 	//道路の所持数
 	DrawExtendFormatString(930, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.road_num);
 	//木の道の所持数
@@ -165,7 +165,7 @@ void Move_Frame(void)
 		}
 	}
 	//x座標変更
-	frameselect_x = 952 + (tool.item_number * 73);
+	frameselect_x = 1120-((3-tool.item_number) * 80);
 }
 
 //道路を置く
