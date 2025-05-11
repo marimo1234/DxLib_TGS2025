@@ -20,6 +20,7 @@ void CarDetectPosition(const CreateStage* create);
 Car car;
 void CarInit(void)
 {
+	time = 0;
 	car.position.x=440.0f;
 	car.position.y=360.0f;
 	car.direction = eRight;
@@ -60,16 +61,16 @@ void CarManagerUpdate(void)
 			break;
 		case eDown:
 			car.position.y += 0.1f;
-			time++;
+			time ++;
 			break;
 		case eRight:
 			car.position.x += 0.1f;
-			time++;
+			time ++;
 			break;
 		case eStop:
 			car.position.x += 0.0f;
 			car.position.y += 0.0f;
-			time++;
+			time ++;
 			break;
 		default:
 			break;
@@ -92,7 +93,11 @@ void CarDraw(void)
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
 		DrawFormatString(930, 50, GetColor(255, 255, 255), "%d", time);
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);
-		CarDetectPosition(GetStage());
+		if (time%800==0)
+		{
+			CarDetectPosition(GetStage());
+		}
+		
 
 		/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[a_cnt], car.next_y[a_cnt], a_cnt);*/
 }
@@ -119,8 +124,8 @@ const Car* GetCar(void)
 
 void CarReset(void)
 {
-	/*car.position.x = 440.0f;
-	car.position.y = 360.0f;*/
+	car.position.x = 440.0f;
+	car.position.y = 360.0f;
 }
 
 void CarDetectPosition(const CreateStage* create)
@@ -129,68 +134,71 @@ void CarDetectPosition(const CreateStage* create)
 	DrawFormatString(630, 200, GetColor(255, 255, 255), "%d", create->array[car.x][car.y - 1]);
 	switch (car.direction)
 	{
-	case 2:
-		if (create->array[car.x + 1][car.y] == 4)
+	case eRight:
+		
+		if (create->array[car.x][car.y - 1] == 4)
 		{
-			car.direction = 2;
+			car.direction = eUp;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		else if (create->array[car.x][car.y + 1] == 4)
 		{
-			car.direction = -1;
+			car.direction = eDown;
 			old_x = car.x;
 			old_y = car.y;
 		}
-		else if (create->array[car.x][car.y - 1] == 4)
+		else if (create->array[car.x + 1][car.y] == 4)
 		{
-			car.direction = 1;
+			car.direction = eRight;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		else
 		{
-			car.direction = 0;
+			car.direction = eStop;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		break;
-	case 1:
-		if (create->array[car.x + 1][car.y] == 4)
+	case eUp:
+		
+		if (create->array[car.x][car.y - 1] == 4)
 		{
-			car.direction = 2;
+			car.direction = eUp;
 			old_x = car.x;
 			old_y = car.y;
 		}
-		else if (create->array[car.x][car.y - 1] == 4)
+		else if (create->array[car.x + 1][car.y] == 4)
 		{
-			car.direction = 1;
+			car.direction = eRight;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		else
 		{
-			car.direction = 0;
+			car.direction = eStop;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		break;
-	case -1:
-		if (create->array[car.x + 1][car.y] == 4)
+	case eDown:
+		
+		if (create->array[car.x][car.y + 1] == 4)
 		{
-			car.direction = 2;
+			car.direction = eDown;
 			old_x = car.x;
 			old_y = car.y;
 		}
-		else if (create->array[car.x][car.y + 1] == 4)
+		else if (create->array[car.x + 1][car.y] == 4)
 		{
-			car.direction = -1;
+			car.direction = eRight;
 			old_x = car.x;
 			old_y = car.y;
 		}
 		else
 		{
-			car.direction = 0;
+			car.direction = eStop;
 			old_x = car.x;
 			old_y = car.y;
 		}
