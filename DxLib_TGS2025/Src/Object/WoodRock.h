@@ -23,8 +23,9 @@ struct Wood
 	bool hit_flag[12][7];
 	int count_x;
 	int count_y;
-	bool delete_flg[12][7];
-	int fps;
+	bool delete_flag[12][7];
+	bool move_flag;
+
 };
 
 struct Rock
@@ -37,8 +38,9 @@ struct Rock
 	bool hit_flag[12][7];
 	int count_x;
 	int count_y;
-	bool delete_flg[12][7];
-	int fps;
+	bool delete_flag[12][7];
+	bool move_flag;
+	
 };
 
 

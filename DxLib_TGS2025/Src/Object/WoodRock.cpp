@@ -16,9 +16,6 @@ int woodrock_start;
 Wood wood;
 Rock rock;
 
-void ItemSlotCheck(const Tool* tool);
-void CursorWoodRockCheck(const Cursor* cursor);
-
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 
@@ -29,7 +26,7 @@ void WoodRockSub(const Tool* tool);
 //初期化
 void WoodRockInit(void)
 {
-	//ヒットフラグ、ヒット数、アニメーションの初期化
+	//ヒットフラグ、ヒット数、アニメーション、削除フラグの初期化
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -37,17 +34,20 @@ void WoodRockInit(void)
 			wood.hit_flag[i][j] = false;
 			wood.hit_count[i][j] = eHit0;
 			wood.animation[i][j] = wood.image[0];
-			wood.delete_flg[i][j] = false;
+			wood.delete_flag[i][j] = false;
+			
 
 			rock.hit_flag[i][j] = false;
 			rock.hit_count[i][j] = eHit0;
 			rock.animation[i][j] = rock.image[0];
-			rock.delete_flg[i][j] = false;
+			rock.delete_flag[i][j] = false;
+			
 		}
 	}
 
-	wood.fps = 0;
-	rock.fps = 0;
+	//ムーブフラグの初期化
+	wood.move_flag = false;
+	rock.move_flag = false;
 
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
@@ -76,7 +76,8 @@ void WoodRockInit(void)
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
 
-	
+	rock.position.x = 600.0f;
+	rock.position.y = 360.0f;
 }
 
 //更新
@@ -105,20 +106,31 @@ void WoodRockUpdate(void)
 		WoodRockReset();
 	}
 
-
+	//ムーブフラグがtrueのとき
+	if (wood.move_flag== true)
+	{
+		WoodMove();
+	}
+	if (rock.move_flag == true)
+	{
+		RockMove();
+	}
 }
 
 //描画処理
 void WoodRockDraw(void)
 {
 	//画像の描画
-	/*DrawRotaGraphF(wood.position.x, wood.position.y, 1.0, 0.0, wood.animation, TRUE);*/
-	/*DrawRotaGraphF(rock.position.x, rock.position.y, 1.0, 0.0, rock.animation, TRUE);*/
-
-	//どのツールを持っているかを受け取る
-	ItemSlotCheck(Get_Tool());
-	//カーソルの座標を受け取る
-	CursorWoodRockCheck(GetCursor1());
+	//ムーブフラグがtrueのとき
+	if (wood.move_flag == true)
+	{
+		DrawRotaGraphF(wood.position.x, wood.position.y, 1.0, 0.0, wood.image[3], TRUE);
+	}
+	if (rock.move_flag== true)
+	{
+		DrawRotaGraphF(rock.position.x, rock.position.y, 1.0, 0.0, rock.image[3], TRUE);
+	}
+	
 	//アイテム化した木と岩の数の描画
 	WoodRockItemCount();
 	
@@ -163,8 +175,10 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
-	    wood.delete_flg[wood.count_x][wood.count_y] = true;
-		WoodMove();
+	    wood.delete_flag[wood.count_x][wood.count_y] = true;//削除フラグをtrueにする
+		wood.position.x = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
+		wood.position.y = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
+		wood.move_flag = true;//ムーブフラグをtrueにする
 		wood.hit_count[wood.count_x][wood.count_y] = eHit0;
 		
 		break;
@@ -208,10 +222,14 @@ void RockAnimation(void)
 		break;
 
 	case eHit3:// Hit数3
+
 		rock.animation[rock.count_x][rock.count_y] = rock.image[3];
-		rock.delete_flg[rock.count_x][rock.count_y] = true;
-		rock.hit_count[rock.count_x][rock.count_y] = eHit0;
-		RockMove();
+		rock.delete_flag[rock.count_x][rock.count_y] = true; //削除フラグをtrueにする
+		rock.position.x = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
+		rock.position.y = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
+		rock.move_flag = true;//ムーブフラグをtrueにする
+		rock.hit_count[rock.count_x][rock.count_y] = eHit0;//0に戻す
+		
 		break;
 		
 	}
@@ -228,7 +246,7 @@ const Rock* GetRock(void)
 	return &rock;
 }
 
-
+//処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame)
 {
 	if (ingame->start == true)
@@ -242,6 +260,7 @@ void WoodRockStart(const InGame* ingame)
 
 }
 
+//木、石が使われたときに所有数を減らす
 void WoodRockSub (const Tool*tool)
 {
 	if (tool->rock_sub_flag == true)
@@ -254,18 +273,7 @@ void WoodRockSub (const Tool*tool)
 	}
 }
 
-void ItemSlotCheck(const Tool* tool)
-{
-	DrawFormatString(200, 100, GetColor(255, 255, 255), "%d %d %d", tool->item_number,wood.fps,rock.fps);
-	
-}
-
-void CursorWoodRockCheck(const Cursor* cursor)
-{
-	DrawFormatString(300, 100, GetColor(255, 255, 255), "%f    %f", cursor->position.x, cursor->position.y);
-}
-
-
+//木の当たり判定
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -299,6 +307,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	}
 }
 
+//石の当たり判定
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -308,7 +317,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	{
 		for (int i = 0; i < WOODROCK_MAX; i++)
 		{
-			//カーソルと岩の配列番号が一致したら
+			//カーソルと石の配列番号が一致したら
 			if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
 			{
 				//変更する配列番号を記憶
@@ -331,80 +340,118 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	}
 }
 
+//アイテム化したアイテムをカウントする位置
 void WoodRockItemCount(void)
 {
-	DrawRotaGraphF(950, 70, 1.0, 0.0, wood.image[3], TRUE);
-	DrawExtendFormatString(1000, 75, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
-	DrawRotaGraphF(1060, 70, 1.0, 0.0, rock.image[3], TRUE);
-	DrawExtendFormatString(1110, 75, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
+	DrawRotaGraphF(1170, 110, 1.0, 0.0, wood.image[3], TRUE);
+	DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
+	DrawRotaGraphF(1170, 50, 1.0, 0.0, rock.image[3], TRUE);
+	DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
 }
 
 void WoodRockReset(void)
 {
 
-	///アイテム数の初期化
+	//アイテム数の初期化
 	wood.item_num = 0;
 	rock.item_num = 0;
 
+	//ムーブフラグの初期化
+	wood.move_flag = false;
+	rock.move_flag = false;
+
+
+	//初期化
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{
+			//木
 			wood.hit_flag[i][j] = false;
 			wood.hit_count[i][j] = eHit0;
 			wood.animation[i][j] = wood.image[0];
-			wood.delete_flg[i][j] = false;
-
+			wood.delete_flag[i][j] = false;
+			
+			//石
 			rock.hit_flag[i][j] = false;
 			rock.hit_count[i][j] = eHit0;
 			rock.animation[i][j] = rock.image[0];
-			rock.delete_flg[i][j] = false;
+			rock.delete_flag[i][j] = false;
+			
 		}
 	}
+	
 }
 
 void WoodMove(void)
 {
-	float dx = fabsf(wood.position.x - 950.0f); // X座標の差
-	float dy = fabsf(wood.position.y - 70.0f); // Y座標の差
-	float da = dy / dx;//傾き
+	float mx = 1170.0f; //Xの最大値
+	float my = 110.0f; // Yの最小値
+	float bx = wood.position.x;//ポジションの格納
+	float by = wood.position.y;
 
-	if (wood.position.x <= 950.0f)
+	//二次関数（アイテムカウントしている位置を頂点と考える）
+	float bp = pow(bx - mx, 2);
+	float ba = (by - my) / bp;
+	float y = ba * bp + my;
+
+	//二次関数（x+1の座標を求める）
+	float bx2 = bx + 1.0f;
+	float bp2 = pow(bx2 - mx, 2);
+	float y2 = ba * bp2 + my;
+
+	//xが1増加した時のyの増加量を求める
+	float fy = fabsf(y2 - y);
+
+	wood.position.x += 7.0f;
+	wood.position.y += 7.0f * -fy; 
+
+	if (wood.position.y + 1 < my)
 	{
-		wood.position.x += 2.0f;
-	}
-	if (wood.position.y >= 70.0f)
-	{
-		wood.position.y += -2.0f*da; //上向きがマイナス方向だから－つけてます
+		wood.move_flag = false;
 	}
 
 }
 
 void RockMove(void)
 {
-	float dx = fabsf(rock.position.x - 1060.0f); // X座標の差
-	float dy = fabsf(rock.position.y - 70.0f); // Y座標の差
-	float da = dy / dx;//傾き
+	float mx = 1170.0f; //Xの最大値
+	float my = 50.0f; // Yの最小値
+	float bx = rock.position.x;//ポジションの格納
+	float by = rock.position.y;
 
-	if (rock.position.x <= 1060.0f)
-	{
-		rock.position.x += 2.0f;
-	}
-	if (rock.position.y >= 70.0f)
-	{
-		rock.position.y += -2.0f * da; //上向きがマイナス方向だから－つけてます
-	}
+	//二次関数（アイテムカウントしている位置を頂点と考える）
+	float bp = pow(bx - mx, 2);
+	float ba = (by - my) / bp;
+	float y = ba * bp + my;
 
+	//二次関数（x+1の座標を求める）
+	float bx2 = bx + 1.0f;
+	float bp2 = pow(bx2 - mx, 2);
+	float y2 = ba * bp2 + my;
+
+	//xが1増加した時のyの増加量を求める
+	float fy = fabsf(y2 - y);
+
+		rock.position.x += 7.0f;
+	rock.position.y += 7.0f * -fy; 
+
+	if (rock.position.y+1 < my)
+	{
+		rock.move_flag = false;
+	}
 }
 
+
+//フラグがtrueになったらfalseにする
 void WR_Delete_Flag(void)
 {
-	if (wood.delete_flg[wood.count_x][wood.count_y] == true)
+	if (wood.delete_flag[wood.count_x][wood.count_y] == true)
 	{
-		wood.delete_flg[wood.count_x][wood.count_y] = false;
+		wood.delete_flag[wood.count_x][wood.count_y] = false;
 	}
-	if (rock.delete_flg[rock.count_x][rock.count_y] == true)
+	if (rock.delete_flag[rock.count_x][rock.count_y] == true)
 	{
-		rock.delete_flg[rock.count_x][rock.count_y] = false;
+		rock.delete_flag[rock.count_x][rock.count_y] = false;
 	}
 }

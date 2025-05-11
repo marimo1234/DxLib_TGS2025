@@ -213,12 +213,12 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
 
 void Delete_WoodRock(const Wood* wood,const Rock* rock)
 {
-	if (rock->delete_flg[rock->count_x][rock->count_y] == true)
+	if (rock->delete_flag[rock->count_x][rock->count_y] == true)
 	{
 		stage.array[rock->count_x][rock->count_y] = 0;
 		WR_Delete_Flag();
 	}
-	if (wood->delete_flg[wood->count_x][wood->count_y] == true)
+	if (wood->delete_flag[wood->count_x][wood->count_y] == true)
 	{
 		stage.array[wood->count_x][wood->count_y] = 0;
 		WR_Delete_Flag();
