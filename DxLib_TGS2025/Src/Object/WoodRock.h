@@ -11,6 +11,7 @@ enum eWoodRockState // Hit数の列挙
 	eHit1,
 	eHit2,
 	eHit3,
+	eHitEnd
 };
 
 struct Wood

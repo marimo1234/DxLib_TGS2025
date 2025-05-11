@@ -3,6 +3,14 @@
 
 #include "../Utility/Geometry.h"
 
+enum CarDirection
+{
+	eUp,
+	eDown,
+	eRight,
+	eStop,
+};
+
 struct Car
 {
 	Vector2D position;
@@ -11,7 +19,11 @@ struct Car
 	bool start;
 	int x;
 	int y;
-
+	int direction;
+	int current_x;
+	int current_y;
+	int next_x[84];
+	int next_y[84];
 };
 
 void CarInit(void);

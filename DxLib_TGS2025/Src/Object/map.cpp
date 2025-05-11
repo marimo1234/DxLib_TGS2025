@@ -9,6 +9,7 @@
 
 
 CreateStage stage;
+NextDestination destination;
 
 int ground;
 int groundreef;
@@ -31,6 +32,12 @@ void MapInit(void)
 	StageCreate();
 	StageRoad();
 	MapValueInit();
+
+	//目的地の初期化
+	destination.x = 4;
+	destination.y= 3;
+
+	destination.count = 0;
 }
 
 void MapUpdate(void)
@@ -60,6 +67,10 @@ void MapUpdate(void)
 			}
 		}
 	}
+
+	
+
+	
 }
 
 void MapDraw(void)
@@ -67,11 +78,17 @@ void MapDraw(void)
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
 	MapTroutDraw();
 	MapCreate(GetWood(), GetRock(), GetHole(), Get_Tool(), GetLake(), GetGoal());
+
+	DrawFormatString(100, 500, GetColor(255, 255, 255), "%d\n%d\n%d", destination.count, destination.x, destination.y);
 }
 
 const CreateStage* GetStage(void)
 {
 	return&stage;
+}
+const NextDestination* GetDestination(void)
+{
+	return&destination;
 }
 //ステージ生成
 void StageRoad(void)
@@ -197,6 +214,10 @@ void Put_Road(const Tool* tool, const Cursor* cursor)
 	if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
 	{
 		stage.array[cursor->array_x][cursor->array_y] = 4;
+
+		destination.x= cursor->array_x;
+		destination.y= cursor->array_y;
+		
 	}
 }
 
@@ -207,6 +228,9 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
 	if (tool->wood_road_flag[cursor->array_x][cursor->array_y] == true)
 	{
 		stage.array[cursor->array_x][cursor->array_y] = 5;
+
+		destination.x = cursor->array_x;
+		destination.y = cursor->array_y;
 	}
 }
 

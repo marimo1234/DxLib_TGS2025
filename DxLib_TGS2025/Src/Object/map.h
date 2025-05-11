@@ -31,6 +31,15 @@ struct CreateStage
 	int rock_count[80];
 };
 
+struct NextDestination
+{
+	int x;
+	int y;
+	int count;
+	bool flag;
+
+};
+
 void MapInit(void);
 void MapUpdate(void);
 void MapDraw(void);
@@ -39,4 +48,5 @@ void StageCreate(void);
 
 void MapValueInit(void);
 const CreateStage* GetStage(void);
+const NextDestination* GetDestination(void);
 void MapTroutDraw(void);

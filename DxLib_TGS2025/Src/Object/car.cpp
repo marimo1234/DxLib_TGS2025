@@ -9,102 +9,34 @@
 int time;
 int old_x;
 int old_y;
-int houkou=2;
-int detict[12][7];
+int a = 0;
+
+int detict[12][7] = {};
 void CarStart(const InGame* ingame);
-void CarDetectPotion(const CreateStage* create);
+void CarDetectPosition(const CreateStage* create);
+void CarNextDestination(const NextDestination* destination);
 
 Car car;
-
-void CarDetectPotion(const CreateStage* create)
-{
-	DrawFormatString(630, 300, GetColor(255, 255, 255), "%d", create->array[car.x + 1][car.y]);
-	DrawFormatString(630, 200, GetColor(255, 255, 255), "%d", create->array[car.x ][car.y-1]);
-	switch (houkou)
-	{
-	case 2:
-		if (create->array[car.x + 1][car.y] == 4)
-		{
-			houkou = 2;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x][car.y + 1] == 4)
-		{
-			houkou = -1;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x][car.y - 1] == 4)
-		{
-			houkou = 1;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			houkou = 0;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		break;
-	case 1:
-		if (create->array[car.x + 1][car.y] == 4)
-		{
-			houkou = 2;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x][car.y - 1] == 4)
-		{
-			houkou = 1;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			houkou = 0;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		break;
-	case -1:
-		if (create->array[car.x + 1][car.y] == 4)
-		{
-			houkou = 2;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x][car.y + 1] == 4)
-		{
-			houkou = -1;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			houkou = 0;
-			old_x = car.x;
-			old_y = car.y;
-		}
-	default:
-		break;
-	}
-	detict[car.x][car.y] = create->array[car.x][car.y];
-
-}
-
 void CarInit(void)
 {
-	
-	car.position.x;
-	car.position.y;
+	car.position.x=440.0f;
+	car.position.y=360.0f;
+	car.direction = eRight;
 	/*car_direction = 0;*/
 
 	car.image[0] = LoadGraph("Resource/images/left_car.png");
 	car.image[1] = LoadGraph("Resource/images/front_car.png");
 
 	car.start = false;
+
+	car.current_x = 3;
+	car.current_y = 3;
+
+	for (int i = 0; i < 84; i++)
+	{
+		car.next_x[i] = -1;
+		car.next_y[i] = -1;
+	}
 }
 
 void CarManagerUpdate(void)
@@ -119,34 +51,28 @@ void CarManagerUpdate(void)
 	if (car.start == true)
 	{
 		car.animation = car.image[0];
-		switch (houkou)
+		switch (car.direction)
 		{
-		case 0:
-			car.position.x += 0;
-			car.position.y += 0;
+		case eUp:
+			car.position.y -= 0.1f;
 			time++;
 			break;
-		case 1:
-			car.position.y -= 0.1;
+		case eDown:
+			car.position.y += 0.1f;
 			time++;
 			break;
-		case -1:
-			car.position.y += 0.1;
+		case eRight:
+			car.position.x += 0.1f;
 			time++;
 			break;
-		case 2:
-			car.position.x += 0.1;
+		case eStop:
+			car.position.x += 0.0f;
+			car.position.y += 0.0f;
 			time++;
 			break;
 		default:
 			break;
 		}
-		
-		if (car.position.x > 690.2f)
-		{
-			car.position.x = 440.0f;
-		}
-
 		
 	}
 	else
@@ -154,6 +80,7 @@ void CarManagerUpdate(void)
 		CarReset();
 	}
 
+	CarNextDestination(GetDestination());
 }
 
 void CarDraw(void)
@@ -163,9 +90,10 @@ void CarDraw(void)
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
 		DrawFormatString(930, 50, GetColor(255, 255, 255), "%d", time);
-		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", houkou);
-		CarDetectPotion(GetStage());
-		
+		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);
+		CarDetectPosition(GetStage());
+
+		DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[a], car.next_y[a], a);
 }
 
 
@@ -190,6 +118,72 @@ const Car* GetCar(void)
 
 void CarReset(void)
 {
-	car.position.x = 440.0f;
-	car.position.y = 360.0f;
+	/*car.position.x = 440.0f;
+	car.position.y = 360.0f;*/
+}
+
+void CarDetectPosition(const CreateStage* create)
+{
+	DrawFormatString(630, 300, GetColor(255, 255, 255), "%d", create->array[car.x + 1][car.y]);
+	DrawFormatString(630, 200, GetColor(255, 255, 255), "%d", create->array[car.x][car.y - 1]);
+	
+		if (create->array[car.x + 1][car.y] == 4|| create->array[car.x + 1][car.y] == 5)
+		{
+			car.direction = eRight;
+			old_x = car.x;
+			old_y = car.y;
+		}
+		else if (create->array[car.x][car.y - 1] == 4 || create->array[car.x + 1][car.y] == 5)
+		{
+			car.direction = eUp;
+			old_x = car.x;
+			old_y = car.y;
+		}
+		else if (create->array[car.x][car.y + 1] == 4 || create->array[car.x + 1][car.y] == 5)
+		{
+			car.direction = eDown;
+			old_x = car.x;
+			old_y = car.y;
+		}
+		else
+		{
+			car.direction = eStop;
+			old_x = car.x;
+			old_y = car.y;
+		}
+	detict[car.x][car.y] = create->array[car.x][car.y];
+
+	/*if (car.current_x < car.next_x)
+	{
+		car.direction = eRight;
+		car.current_x = car.next_x;
+	}
+	else if (car.current_y > car.next_y)
+	{
+		car.direction = eUp;
+	}
+	else if (car.current_y < car.next_y)
+	{
+		car.direction = eDown;
+	}
+	else
+	{
+
+	}*/
+
+}
+
+void CarNextDestination(const NextDestination* destination)
+{
+	int count = 0;
+	car.next_x[count] = destination->x;
+	car.next_y[count] = destination->y;
+
+	if (car.next_x[count] != destination->x || car.next_y[count] != destination->y)
+	{
+		count++;
+	}
+
+	a = count;
+	DrawFormatString(300, 300, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x, car.next_y, a);
 }

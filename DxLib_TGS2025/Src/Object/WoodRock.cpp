@@ -148,7 +148,7 @@ void WoodAnimation(void)
 		{
 			wood.hit_count[wood.count_x][wood.count_y] = eHit1;
 			wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
-			
+
 
 		}
 		break;
@@ -175,15 +175,17 @@ void WoodAnimation(void)
 
 	case eHit3:// Hit数3
 		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
-	    wood.delete_flag[wood.count_x][wood.count_y] = true;//削除フラグをtrueにする
+		wood.delete_flag[wood.count_x][wood.count_y] = true;//削除フラグをtrueにする
 		wood.position.x = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
 		wood.position.y = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
 		wood.move_flag = true;//ムーブフラグをtrueにする
-		wood.hit_count[wood.count_x][wood.count_y] = eHit0;
-		
+		wood.hit_count[wood.count_x][wood.count_y] = eHitEnd;
+
+		break;
+
+	default:
 		break;
 	}
-
 }
 //岩のアニメーション
 void RockAnimation(void)
@@ -228,10 +230,12 @@ void RockAnimation(void)
 		rock.position.x = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position.y = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
 		rock.move_flag = true;//ムーブフラグをtrueにする
-		rock.hit_count[rock.count_x][rock.count_y] = eHit0;//0に戻す
+		rock.hit_count[rock.count_x][rock.count_y] = eHitEnd;//0に戻す
 		
 		break;
 		
+	default:
+		break;
 	}
 
 }
