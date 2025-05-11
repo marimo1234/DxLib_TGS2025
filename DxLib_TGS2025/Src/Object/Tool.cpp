@@ -8,36 +8,26 @@
 #include "../Object/map.h"
 
 
-#define PICKAXE_X		(1120)		//つるはしx座標
-#define PICKAXE_Y		(680)		//つるはしy座標
-#define FRAME_X			(1000)		//枠x座標
-#define FRAME_Y			(680)		//枠y座標
-#define STONETILE_X		(937)		//石の地面x座標
-#define STONETILE_Y		(670)		//石の地面y座標
-#define LOGTILE_X		(1010)		//丸太の地面x座標
-#define LOGTILE_Y		(670)		//丸太の地面y座標
-#define AX_X			(1085)		//斧x座標
-#define AX_Y			(670)		//斧y座標
+#define PICKAXE_X			(1120)		//つるはし(x)
+#define PICKAXE_Y			(680)		//つるはし(y)
+#define FRAME_X				(1000)		//枠(x)
+#define FRAME_Y				(680)		//枠(y)
+#define ROAD_X				(880)		//道路(x)
+#define ROAD_Y				(680)		//道路(y)
+#define WOODROAD_X			(960)		//木の道路(x)
+#define WOODROAD_Y			(680)		//木の道路(y)
+#define AX_X				(1040)		//斧(x)
+#define AX_Y				(680)		//斧(y)
+#define ROAD_NUM_X			(870)		//道路の所持数(x)
+#define ROAD_NUM_Y			(690)		//道路の所持数(y)
+#define WOODROAD_NUM_X		(950)		//木の道路の所持数(x)
+#define WOODROAD_NUM_Y		(690)		//木の道路の所持数(y)
+#define ITEM_SELECT_BASE	(1120)		//アイテムセレクトの基準(x)
 
-int pickaxe_img;		//つるはしの画像ハンドル
-int itemframe_img;		//枠の画像ハンドル
-int ax_img;				//斧の画像ハンドル
-int frameselect_img;	//選択枠（アイテム）の画像ハンドル
-
-int frameselect_x;		//選択枠のｘ座標
-int frameselect_y;		//選択枠のｙ座標
-
-float pickaxe_angle;	//つるはしの角度
-
-int road_x;				//道のｘ座標
-int road_y;				//道のｙ座標
-
-int tool_start;			//操作可能かの変数
-
-//仮変数
-
+int tool_start;			//ゲームスタート
 
 Tool tool;
+Tool_Img tool_img;
 
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
@@ -49,41 +39,50 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void ToolInit(void)
 {
 	//初期化
-	frameselect_x = 1120;
-	frameselect_y = 680;
+	tool.frameselect_x = 1120;
+	tool.frameselect_y = 680;
 	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
-	road_x = 500;
-	road_y = 500;
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	//仮
 	tool.base_x = 4;
 	tool.base_y = 3;
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{				
+			tool.road_flag[i][j] = false;
+			tool.wood_road_flag[i][j] = false;
+		}
+	}
+	//仮
+	
 
 	//アイテム枠画像読み込み
-	itemframe_img = LoadGraph("Resource/images/item_frame.png");
+	tool_img.itemframe = LoadGraph("Resource/images/item_frame.png");
 	//ピッケル画像読み込み
-	pickaxe_img=LoadGraph("Resource/images/pickaxe.png");
+	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
 	//石の地面画像の読み込み
 	tool.road_img=LoadGraph("Resource/images/stone_tiles.png");
 	//丸太の地面画像の読み込み
 	tool.wood_road_img = LoadGraph("Resource/images/Log.png");
 	//斧の画像読み込み
-	ax_img = LoadGraph("Resource/images/ax.png");
+	tool_img.ax = LoadGraph("Resource/images/ax.png");
 	//選択枠(アイテム)の画像読み込み
-	frameselect_img = LoadGraph("Resource/images/frameselect.png");
+	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
 }
 
+//更新
 void ToolManagerUpdate(void)
 {
 	Sub_Num();
 
+	//ゲームスタートがtrueなら
 	if (tool_start == true)
 	{
-		Move_Frame();
+		Move_ItemSelect();
 		//道路設置
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
@@ -98,42 +97,43 @@ void ToolManagerUpdate(void)
 	WoodRoad_Add_Num(GetWood());
 }
 
+//描画
 void ToolDraw(void) 
 {
-	//アイテム枠の描画
-	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, itemframe_img, TRUE);
+	//アイテム枠
+	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, tool_img.itemframe, TRUE);
 	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(PICKAXE_X, PICKAXE_Y, 0.5, 0.0, pickaxe_img, TRUE);
+	DrawRotaGraph(PICKAXE_X, PICKAXE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
 	//斧の描画（アイテム枠）
-	DrawRotaGraph(AX_X, AX_Y, 0.15, 0.0, ax_img, TRUE);
+	DrawRotaGraph(AX_X, AX_Y, 1.0, 0.0, tool_img.ax, TRUE);
 	//道路の描画（アイテム枠）
-	DrawRotaGraph(STONETILE_X, STONETILE_Y,0.65,0.0,tool.road_img, TRUE);
-	/*DrawRotaGraph(540, 380, 1.0, 0.0, tool.road_img, TRUE);*/
+	DrawRotaGraph(ROAD_X, ROAD_Y, 0.8, 0.0, tool.road_img, TRUE);
 	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(LOGTILE_X, LOGTILE_Y, 0.35, 0.0, tool.wood_road_img, TRUE);
+	DrawRotaGraph(WOODROAD_X, WOODROAD_Y, 0.4, 0.0, tool.wood_road_img, TRUE);
 	//枠選択の描画（アイテム枠）
-	DrawRotaGraph(frameselect_x, frameselect_y, 1.0, 0.0, frameselect_img, TRUE);
+	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
 	//道路の所持数
-	DrawExtendFormatString(930, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.road_num);
+	DrawExtendFormatString(ROAD_NUM_X, ROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.road_num);
 	//木の道の所持数
-	DrawExtendFormatString(1010, 600, 2.0, 2.0, GetColor(255, 255, 255), "%d", tool.wood_road_num);
+	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
 
 	//仮
 }
 
-void Move_Frame(void)
+//アイテムセレクトの
+void Move_ItemSelect(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//ＲＢが押されたら
+	//ＲＢが押されたら右にずれていく
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::ePress)
 	{
 		switch (tool.item_number)
 		{
 		case eRoad:
-			tool.item_number = eLog;
+			tool.item_number = eWoodRoad;
 			break;
-		case eLog:
+		case eWoodRoad:
 			tool.item_number = eAx;
 			break;
 		case eAx:
@@ -145,7 +145,7 @@ void Move_Frame(void)
 		}
 	}
 
-	//ＬＢが押されたら
+	//ＬＢが押されたら左にずれていく
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::ePress)
 	{
 		switch (tool.item_number)
@@ -153,11 +153,11 @@ void Move_Frame(void)
 		case eRoad:
 			tool.item_number = ePickaxe;
 			break;
-		case eLog:
+		case eWoodRoad:
 			tool.item_number = eRoad;
 			break;
 		case eAx:
-			tool.item_number = eLog;
+			tool.item_number = eWoodRoad;
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
@@ -165,7 +165,7 @@ void Move_Frame(void)
 		}
 	}
 	//x座標変更
-	frameselect_x = 1120-((3-tool.item_number) * 80);
+	tool.frameselect_x = ITEM_SELECT_BASE - ((3 - tool.item_number) * 80);
 }
 
 //道路を置く
@@ -353,7 +353,7 @@ void const WoodRoad_Add_Num(const Wood* wood)
 	}
 }
 
-//数を増やした後にフラグを戻す
+//木と岩の所持数を増やした後にフラグを戻す
 void Sub_Num(void)
 {
 	//岩の所持数をマイナス1するフラグを元に戻す
