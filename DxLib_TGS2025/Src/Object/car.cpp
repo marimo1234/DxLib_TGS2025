@@ -111,8 +111,10 @@ void CarReset(void)
 void GetNextDestination(const NextDestination* destination)
 {
 	//道が置かれたときの座標を取得して番号をつける
+	//次の移動位置が同じでないなら
 	if (car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y)
 	{
+		//Xが左方向にならないように、Yが上下に行ったり来たりしないように
 		if (car.next_x[car.road_count] <= destination->x && car.next_y[car.road_count - 1] != destination->y)
 		{
 			car.road_count++;
