@@ -113,9 +113,12 @@ void GetNextDestination(const NextDestination* destination)
 	//道が置かれたときの座標を取得して番号をつける
 	if (car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y)
 	{
-		++car.road_count;
-		car.next_x[car.road_count] = destination->x;
-		car.next_y[car.road_count] = destination->y;
+		if (car.next_x[car.road_count] <= destination->x && car.next_y[car.road_count - 1] != destination->y)
+		{
+			car.road_count++;
+			car.next_x[car.road_count] = destination->x;
+			car.next_y[car.road_count] = destination->y;
+		}
 	}
 }
 
