@@ -16,6 +16,14 @@ enum eToolState
 	ePickaxe,
 };
 
+enum eRoadImgState
+{
+	eVertical,		//縦
+	eBeside,		//横
+	eRtop,			//右上
+	eRbottom,		//右下
+};
+
 struct Tool
 {
 	int frameselect_x;			//選択枠のｘ座標
@@ -39,6 +47,10 @@ struct Tool_Img
 	int itemframe;		//枠の画像ハンドル
 	int ax;				//斧の画像ハンドル
 	int item_select;	//選択枠（アイテム）の画像ハンドル
+	int road_beside;	//左右への道の画像ハンドル
+	int road_vertical;	//上下への道の画像ハンドル
+	int road_Rbottom;	//右下への道の画像ハンドル
+	int road_Rtop;		//右上への道の画像ハンドル
 };
 
 void ToolInit(void);
