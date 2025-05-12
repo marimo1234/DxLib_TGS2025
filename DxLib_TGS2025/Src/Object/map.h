@@ -1,6 +1,6 @@
 ﻿ #pragma once
 
-#define ONE_SIDE_LENGTH (80)
+
 
 //ステージ生成の構造体
 struct CreateStage
@@ -35,16 +35,12 @@ struct NextDestination
 {
 	int x;
 	int y;
-	int count;
-	bool flag;
-
 };
 
 void MapInit(void);
 void MapUpdate(void);
 void MapDraw(void);
-void StageRoad(void);
-void StageCreate(void);
+void StageLoad(void);
 
 void MapValueInit(void);
 const CreateStage* GetStage(void);

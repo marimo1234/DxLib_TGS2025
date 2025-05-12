@@ -7,15 +7,13 @@
 #include "../Object/Cursor.h"
 #include "../Scene/InGame/InGameScene.h"
 
+#define MAP_TROUT_LENGTH (80)
 
 CreateStage stage;
 NextDestination destination;
 
 int ground;
 int groundreef;
-int sea;
-int trout[256][256];
-int math;
 int stage_start;
 
 void Stage_Start(const InGame* ingame);
@@ -25,27 +23,34 @@ void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 
+//初期化
 void MapInit(void)
 {
+	//画像の取得
 	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
 	stage.trout_image= LoadGraph("Resource/images/trout.png");
-	StageCreate();
-	StageRoad();
+	//csvファイルから値を取得
+	StageLoad();
+	//マップの各値を初期化
 	MapValueInit();
 
 	//目的地の初期化
 	destination.x = 4;
 	destination.y= 3;
 
-	destination.count = 0;
+	
 }
 
+//更新
 void MapUpdate(void)
 {
-	/*Stage_Start(GetInGame());*/
+	//ステージ処理開始
 	Stage_Start(GetInGame());
+	//採取した後に描画を消す
 	Delete_WoodRock(GetWood(), GetRock());
+	//道を置く
 	Put_Road(Get_Tool(), GetCursor1());
+	//橋を置く
 	Put_Wood_Road(Get_Tool(), GetCursor1());
 	
 	
@@ -75,11 +80,13 @@ void MapUpdate(void)
 
 void MapDraw(void)
 {
+	//背景の描画
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
+	//マスの描画
 	MapTroutDraw();
+	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetHole(), Get_Tool(), GetLake(), GetGoal());
 
-	DrawFormatString(100, 500, GetColor(255, 255, 255), "%d\n%d\n%d", destination.count, destination.x, destination.y);
 }
 
 const CreateStage* GetStage(void)
@@ -91,7 +98,7 @@ const NextDestination* GetDestination(void)
 	return&destination;
 }
 //ステージ生成
-void StageRoad(void)
+void StageLoad(void)
 {
 	//構造体CreateStageの初期化
 	stage.beside = 0;
@@ -140,20 +147,7 @@ void StageRoad(void)
 	}
 }
 
-void StageCreate(void)
-{
-	for (stage.vertical = 0; stage.vertical < 7; stage.vertical++)
-	{
-		for (stage.beside = 0; stage.beside < 12; stage.beside++)
-		{
-			DrawFormatString(stage.stage_x, stage.stage_y, GetColor(255, 255, 255), "%d", stage.array[stage.beside][stage.vertical]);
-			stage.stage_x += 20;
-		}
-		stage.stage_x = 100;
-		stage.stage_y += 20;
-	}
-}
-
+//マップ作成
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal)
 {
@@ -163,26 +157,26 @@ void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool*
 		{
 			switch (stage.array[x][y])
 			{
-			case 1:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);				
+			case 1://木
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);				
 				break;
-			case 2:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);				
+			case 2://石
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);				
 				break;
-			case 3:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);				
+			case 3://穴
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, hole->image, TRUE);				
 				break;
-			case 4:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
+			case 4://道
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, tool->road_img, TRUE);
 				break;
-			case 5:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
+			case 5://橋
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
 				break;
-			case 6:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
+			case 6://湖
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
 				break;
-			case 7:
-				DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
+			case 7://ゴール
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
 				break;
 			}
 
@@ -249,6 +243,7 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 	}
 }
 
+//マップの各値を初期化
 void MapValueInit(void)
 {
 	int i = 0;		//木
@@ -308,13 +303,14 @@ void MapValueInit(void)
 
 }
 
+//マスの描画
 void MapTroutDraw(void)
 {
 	for (int y = 0; y < 7; y++)
 	{
 		for (int x = 0; x < 12; x++)
 		{
-			DrawRotaGraphF(ONE_SIDE_LENGTH * x + 200, ONE_SIDE_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
+			DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
 		}
 	}
 }

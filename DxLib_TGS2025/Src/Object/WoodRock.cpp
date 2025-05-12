@@ -9,6 +9,13 @@
 
 #include <math.h>
 
+#define WOODROCK_X_MAX (12)
+#define WOODROCK_Y_MAX (7)
+
+#define WOOD_ITEM_X (1170.0f)
+#define WOOD_ITEM_Y (110.0f)
+#define ROCK_ITEM_X (1170.0f)
+#define ROCK_ITEM_Y (50.0f)
 
 
 int woodrock_start;
@@ -27,9 +34,9 @@ void WoodRockSub(const Tool* tool);
 void WoodRockInit(void)
 {
 	//ヒットフラグ、ヒット数、アニメーション、削除フラグの初期化
-	for (int j = 0; j < 7; j++)
+	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < WOODROCK_X_MAX; i++)
 		{
 			wood.hit_flag[i][j] = false;
 			wood.hit_count[i][j] = eHit0;
@@ -347,9 +354,9 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 //アイテム化したアイテムをカウントする位置
 void WoodRockItemCount(void)
 {
-	DrawRotaGraphF(1170, 110, 1.0, 0.0, wood.image[3], TRUE);
+	DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
 	DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
-	DrawRotaGraphF(1170, 50, 1.0, 0.0, rock.image[3], TRUE);
+	DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
 	DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
 }
 
@@ -389,8 +396,8 @@ void WoodRockReset(void)
 
 void WoodMove(void)
 {
-	float mx = 1170.0f; //Xの最大値
-	float my = 110.0f; // Yの最小値
+	float mx = WOOD_ITEM_X; //Xの最大値
+	float my = WOOD_ITEM_Y; // Yの最小値
 	float bx = wood.position.x;//ポジションの格納
 	float by = wood.position.y;
 
@@ -419,8 +426,8 @@ void WoodMove(void)
 
 void RockMove(void)
 {
-	float mx = 1170.0f; //Xの最大値
-	float my = 50.0f; // Yの最小値
+	float mx = ROCK_ITEM_X; //Xの最大値
+	float my = ROCK_ITEM_Y; // Yの最小値
 	float bx = rock.position.x;//ポジションの格納
 	float by = rock.position.y;
 
