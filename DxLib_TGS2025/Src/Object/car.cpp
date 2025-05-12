@@ -5,17 +5,14 @@
 #include"../Object/map.h"
 
 
-//int car_direction = 0;
 int time;
 int old_x;
 int old_y;
-//int a_cnt = 0;
 
 int detict[12][7] = {};
 void CarStart(const InGame* ingame);
-void CarDetectPosition(const CreateStage* create);
-//void CarDetectPosition(const CreateStage* create);
-//void CarNextDestination(const NextDestination* destination);
+void CarDetectPosition(void);
+void GetNextDestination(const NextDestination* destination);
 
 Car car;
 void CarInit(void)
@@ -24,6 +21,8 @@ void CarInit(void)
 	car.position.x=440.0f;
 	car.position.y=360.0f;
 	car.direction = eRight;
+	car.road_count = 0;
+	car.next_count = 1;
 	/*car_direction = 0;*/
 
 	car.image[0] = LoadGraph("Resource/images/left_car.png");
@@ -31,9 +30,10 @@ void CarInit(void)
 
 	car.start = false;
 
-	car.current_x = 3;
+	car.current_x = 3;//ステージ①の初期位置
 	car.current_y = 3;
-
+	
+	//次の目的地の初期化
 	for (int i = 0; i < 84; i++)
 	{
 		car.next_x[i] = -1;
@@ -49,40 +49,17 @@ void CarManagerUpdate(void)
 	old_y = car.y;
 	CarStart(GetInGame());
 	
-
 	if (car.start == true)
 	{
 		car.animation = car.image[0];
-		switch (car.direction)
-		{
-		case eUp:
-			car.position.y -= 0.1f;
-			time++;
-			break;
-		case eDown:
-			car.position.y += 0.1f;
-			time ++;
-			break;
-		case eRight:
-			car.position.x += 0.1f;
-			time ++;
-			break;
-		case eStop:
-			car.position.x += 0.0f;
-			car.position.y += 0.0f;
-			time ++;
-			break;
-		default:
-			break;
-		}
-		
+		CarMovePosition();
 	}
 	else
 	{
 		CarReset();
 	}
 
-	/*CarNextDestination(GetDestination());*/
+	GetNextDestination(GetDestination());
 }
 
 void CarDraw(void)
@@ -95,11 +72,12 @@ void CarDraw(void)
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);
 		if (time%800==0)
 		{
-			CarDetectPosition(GetStage());
+			/*CarDetectPosition();*/
 		}
 		
 
-		/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[a_cnt], car.next_y[a_cnt], a_cnt);*/
+		DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
+		DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
 }
 
 
@@ -128,120 +106,29 @@ void CarReset(void)
 	car.position.y = 360.0f;
 }
 
-void CarDetectPosition(const CreateStage* create)
-{
-	DrawFormatString(630, 300, GetColor(255, 255, 255), "%d", create->array[car.x + 1][car.y]);
-	DrawFormatString(630, 200, GetColor(255, 255, 255), "%d", create->array[car.x][car.y - 1]);
-	switch (car.direction)
-	{
-	case eRight:
-		
-		if (create->array[car.x][car.y - 1] == 4)
-		{
-			car.direction = eUp;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x][car.y + 1] == 4)
-		{
-			car.direction = eDown;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x + 1][car.y] == 4)
-		{
-			car.direction = eRight;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			car.direction = eStop;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		break;
-	case eUp:
-		
-		if (create->array[car.x][car.y - 1] == 4)
-		{
-			car.direction = eUp;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x + 1][car.y] == 4)
-		{
-			car.direction = eRight;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			car.direction = eStop;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		break;
-	case eDown:
-		
-		if (create->array[car.x][car.y + 1] == 4)
-		{
-			car.direction = eDown;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else if (create->array[car.x + 1][car.y] == 4)
-		{
-			car.direction = eRight;
-			old_x = car.x;
-			old_y = car.y;
-		}
-		else
-		{
-			car.direction = eStop;
-			old_x = car.x;
-			old_y = car.y;
-		}
-	default:
-		break;
-	}
-	detict[car.x][car.y] = create->array[car.x][car.y];
-
-}
-
-//void CarNextDestination(const NextDestination* destination)
-//{
-//	
-//	if (car.next_x[a_cnt] != destination->x || car.next_y[a_cnt] != destination->y)
-//	{
-//		car.next_x[a_cnt] = destination->x;
-//		car.next_y[a_cnt] = destination->y;
-//		a_cnt++;
-//	}
-//	
-//}
-
-
 //void CarDetectPosition(const CreateStage* create)
 //{
 //	DrawFormatString(630, 300, GetColor(255, 255, 255), "%d", create->array[car.x + 1][car.y]);
 //	DrawFormatString(630, 200, GetColor(255, 255, 255), "%d", create->array[car.x][car.y - 1]);
-//	
-//		if (create->array[car.x + 1][car.y] == 4|| create->array[car.x + 1][car.y] == 5)
-//		{
-//			car.direction = eRight;
-//			old_x = car.x;
-//			old_y = car.y;
-//		}
-//		else if (create->array[car.x][car.y - 1] == 4 || create->array[car.x + 1][car.y] == 5)
+//	switch (car.direction)
+//	{
+//	case eRight:
+//		
+//		if (create->array[car.x][car.y - 1] == 4)
 //		{
 //			car.direction = eUp;
 //			old_x = car.x;
 //			old_y = car.y;
 //		}
-//		else if (create->array[car.x][car.y + 1] == 4 || create->array[car.x + 1][car.y] == 5)
+//		else if (create->array[car.x][car.y + 1] == 4)
 //		{
 //			car.direction = eDown;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		else if (create->array[car.x + 1][car.y] == 4)
+//		{
+//			car.direction = eRight;
 //			old_x = car.x;
 //			old_y = car.y;
 //		}
@@ -251,24 +138,130 @@ void CarDetectPosition(const CreateStage* create)
 //			old_x = car.x;
 //			old_y = car.y;
 //		}
+//		break;
+//	case eUp:
+//		
+//		if (create->array[car.x][car.y - 1] == 4)
+//		{
+//			car.direction = eUp;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		else if (create->array[car.x + 1][car.y] == 4)
+//		{
+//			car.direction = eRight;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		else
+//		{
+//			car.direction = eStop;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		break;
+//	case eDown:
+//		
+//		if (create->array[car.x][car.y + 1] == 4)
+//		{
+//			car.direction = eDown;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		else if (create->array[car.x + 1][car.y] == 4)
+//		{
+//			car.direction = eRight;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//		else
+//		{
+//			car.direction = eStop;
+//			old_x = car.x;
+//			old_y = car.y;
+//		}
+//	default:
+//		break;
+//	}
 //	detict[car.x][car.y] = create->array[car.x][car.y];
 //
-//	if (car.current_x < car.next_x)
-//	{
-//		car.direction = eRight;
-//		car.current_x = car.next_x;
-//	}
-//	else if (car.current_y > car.next_y)
-//	{
-//		car.direction = eUp;
-//	}
-//	else if (car.current_y < car.next_y)
-//	{
-//		car.direction = eDown;
-//	}
-//	else
-//	{
-//
-//	}
-//
 //}
+
+void GetNextDestination(const NextDestination* destination)
+{
+	if (car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y)
+	{
+		++car.road_count;
+		car.next_x[car.road_count] = destination->x;
+		car.next_y[car.road_count] = destination->y;
+	}
+}
+
+
+void CarMovePosition(void)
+{
+	switch (car.direction)
+	{
+	case eUp:
+		car.position.y -= 0.1f;
+		time++;
+		if (car.position.y < (car.current_y) * 80.0f + 121.0f)
+		{
+			CarDetectPosition();
+		}
+		break;
+	case eDown:
+		car.position.y += 0.1f;
+		time++;
+		if (car.position.y > (car.current_y) * 80.0f + 119.0f)
+		{
+			CarDetectPosition();
+		}
+		break;
+	case eRight:
+		car.position.x += 0.1f;
+		time++;
+		if (car.position.x > (car.current_x) * 80.0f + 199.0f)
+		{
+			CarDetectPosition();
+		}
+		break;
+	case eStop:
+		car.position.x += 0.0f;
+		car.position.y += 0.0f;
+		time++;
+		break;
+	default:
+		break;
+	}
+}
+
+void CarDetectPosition(void)
+{
+	if (car.current_x < car.next_x[car.next_count])//関数化する//↑の条件式にそれぞれ関数を入れる
+	{
+		car.direction = eRight;
+		car.current_x = car.next_x[car.next_count];
+		car.current_y = car.next_y[car.next_count];
+		car.next_count++;
+	}
+	else if (car.current_y > car.next_y[car.next_count])
+	{
+		car.direction = eUp;
+		car.current_x = car.next_x[car.next_count];
+		car.current_y = car.next_y[car.next_count];
+		car.next_count++;
+	}
+	else if (car.current_y < car.next_y[car.next_count])
+	{
+		car.direction = eDown;
+		car.current_x = car.next_x[car.next_count];
+		car.current_y = car.next_y[car.next_count];
+		car.next_count++;
+	}
+	else
+	{
+
+	}
+
+}

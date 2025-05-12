@@ -24,6 +24,8 @@ struct Car
 	int current_y;
 	int next_x[84];
 	int next_y[84];
+	int road_count;
+	int next_count;
 };
 
 void CarInit(void);
@@ -33,4 +35,5 @@ void CarDraw(void);
 const Car* GetCar(void);
 
 void CarReset(void);
+void CarMovePosition(void);
 
