@@ -175,7 +175,7 @@ void CarDetectPosition(void)
 {
 	//現在のX位置よりも次のX位置が大きかったら
 	if (car.current_x < car.next_x[car.next_count]&&
-		car.current_y == car.next_y[car.next_count])//関数化する//↑の条件式にそれぞれ関数を入れる
+		car.current_y == car.next_y[car.next_count])
 	{
 		car.direction = eRight;//右に
 
