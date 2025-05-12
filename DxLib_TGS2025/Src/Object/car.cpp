@@ -115,7 +115,7 @@ void GetNextDestination(const NextDestination* destination)
 	if (car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y)
 	{
 		//Xが左方向にならないように、Yが上下に行ったり来たりしないように
-		if (car.next_x[car.road_count] <= destination->x && car.next_y[car.road_count - 1] != destination->y)
+		if (car.next_x[car.road_count] <= destination->x )
 		{
 			car.road_count++;
 			car.next_x[car.road_count] = destination->x;
