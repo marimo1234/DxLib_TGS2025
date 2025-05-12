@@ -25,6 +25,7 @@
 #define ITEM_SELECT_BASE	(1120)		//アイテムセレクトの基準(x)
 
 int tool_start;			//ゲームスタート
+//仮
 
 Tool tool;
 Tool_Img tool_img;
@@ -34,6 +35,8 @@ void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
 void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
+void Road_Imghandle_Init(const CreateStage* stage);
+void Road_Imghandle_Update(const CreateStage* stage);
 
 
 void ToolInit(void)
@@ -49,15 +52,19 @@ void ToolInit(void)
 	tool.wood_sub_flag = false;
 	tool.base_x = 4;
 	tool.base_y = 3;
+	tool.old_base_x = 0;
+	tool.old_base_y = 0;
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{				
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
+			tool.road_img_array[i][j] = -1;
 		}
 	}
 	//仮
+	
 	
 
 	//アイテム枠画像読み込み
@@ -76,8 +83,11 @@ void ToolInit(void)
 	//仮
 	tool_img.road_vertical = LoadGraph("Resource/images/RoadVertical.png");
 	tool_img.road_beside = LoadGraph("Resource/images/RoadBeside.png");
-	tool_img.road_Rtop = LoadGraph("Resource/images/RoadTopRight.png");
-	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadBottomRight.png");
+	tool_img.road_Topright = LoadGraph("Resource/images/RoadTopRight.png");
+	tool_img.road_Btmright = LoadGraph("Resource/images/RoadBottomRight.png");
+	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
+	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
+	Road_Imghandle_Init(GetStage());
 }
 
 //更新
@@ -124,9 +134,10 @@ void ToolDraw(void)
 	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
 
 	//仮
+	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d", tool_img.road_beside);
 }
 
-//アイテムセレクトの
+//アイテムセレクトの動き
 void Move_ItemSelect(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -203,6 +214,8 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						{
 							tool.road_num--;
 							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.old_base_x = tool.base_x;
+							tool.old_base_y = tool.base_y;
 							tool.base_x += 1;
 						}
 					}
@@ -215,6 +228,8 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						{
 							tool.road_num--;
 							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.old_base_x = tool.base_x;
+							tool.old_base_y = tool.base_y;
 							tool.base_y -= 1;
 						}
 					}
@@ -227,9 +242,12 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						{
 							tool.road_num--;
 							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.old_base_x = tool.base_x;
+							tool.old_base_y = tool.base_y;
 							tool.base_y += 1;
 						}
 					}
+					Road_Imghandle_Update(GetStage());
 				}
 			}
 		}
@@ -313,7 +331,7 @@ void Tool_Start(const InGame* ingame)
 	}
 }
 
-//Toolの値渡し
+//構造体Toolの値渡し
 const Tool* Get_Tool(void)
 {
 	return &tool;
@@ -393,4 +411,80 @@ void Tool_Reset(void)
 			tool.wood_road_flag[i][j] = false;
 		}
 	}
+}
+
+//道路画像ハンドル初期化
+void Road_Imghandle_Init(const CreateStage*stage)
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (stage->array[i][j]==4)
+			{
+				tool.road_img_array[i][j] = tool_img.road_beside;
+			}
+		}
+	}
+}
+
+//道路画像更新
+void Road_Imghandle_Update(const CreateStage*stage)
+{
+	/***************************前に置いた道が左********************************/
+	if (tool.old_base_x == tool.base_x - 1 && tool.old_base_y == tool.base_y)
+	{
+
+		//置いた道の左上が道
+		if (stage->array[tool.base_x - 1][tool.base_y - 1] == 4)
+		{
+			//前に置いた道の画像ハンドル変更(下右
+			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Btmright;	
+		}
+
+		//置いた左下が道
+		else if (stage->array[tool.base_x - 1][tool.base_y + 1] == 4)
+		{
+			//前に置いた道の画像ハンドル変更(上右
+			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Topright;		
+		}
+
+		//置いた道の画像ハンドル代入(横向き
+		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;		
+	}
+	/***************************************************************************/
+
+
+	/***************************前に置いた道が上********************************/
+	else if (tool.old_base_x == tool.base_x && tool.old_base_y == tool.base_y - 1)
+	{
+
+		//置いた道の左上が道
+		if (stage->array[tool.base_x - 1][tool.base_y - 1] == 4)
+		{
+			//前に置いた道の画像ハンドル変更(右下
+			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rbottom;
+		}
+
+		//置いた道の画像ハンドル代入(縦向き
+		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+	}
+	/***************************************************************************/
+
+
+	/***************************前に置いた道が下********************************/
+	else if (tool.old_base_x == tool.base_x && tool.old_base_y == tool.base_y + 1)
+	{
+
+		//置いた左下が道
+		if (stage->array[tool.base_x - 1][tool.base_y + 1] == 4)
+		{
+			//前に置いた道の画像ハンドル変更(右上
+			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rtop;
+		}
+
+		//置いた道の画像ハンドル代入(縦向き
+		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+	}
+	/***************************************************************************/
 }
