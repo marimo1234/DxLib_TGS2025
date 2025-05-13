@@ -76,7 +76,7 @@ void GoalStart(const InGame* ingame)
 	}
 	else
 	{
-		goal.start == false;
+		goal.start = false;
 	}
 }
 

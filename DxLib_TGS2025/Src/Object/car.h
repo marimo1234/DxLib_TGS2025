@@ -14,6 +14,7 @@ enum CarDirection
 struct Car
 {
 	Vector2D position;
+	Vector2D velocity;
 	int animation;
 	int image[4];
 	bool start;
@@ -27,6 +28,8 @@ struct Car
 	int road_count;
 	int next_count;
 	int old_direction;
+	bool goal_flag;
+	
 };
 
 void CarInit(void);
