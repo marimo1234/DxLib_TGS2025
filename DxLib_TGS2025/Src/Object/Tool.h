@@ -36,6 +36,9 @@ struct Tool
 	int road_img_array[12][7];	//道の画像ハンドル配列
 	int old_base_x;				//ひとつ前の基準x
 	int old_base_y;				//ひとつ前の基準y
+	int old_base_x2;			//ふたつ前の基準x
+	int old_base_y2;			//ふたつ前の基準y
+	int stage_number;
 };
 
 struct Tool_Img
@@ -58,6 +61,8 @@ void ToolDraw(void);
 void Move_ItemSelect(void);
 void Sub_Num(void);
 void Tool_Reset(void);
-
+void Base_Chenge(void);
+void Base_Init(void);
+void Road_WoodRoad_FLAG_OFF(void);
 
 const Tool* Get_Tool(void);
