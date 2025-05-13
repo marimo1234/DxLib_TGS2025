@@ -56,6 +56,8 @@ void WoodRockInit(void)
 	wood.move_flag = false;
 	rock.move_flag = false;
 
+	wood.fps = 0;
+	rock.fps = 0;
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
 	{
@@ -151,37 +153,55 @@ void WoodAnimation(void)
 	{
 	case eHit0:// Hit数0
 		wood.animation[wood.count_x][wood.count_y] = wood.image[0];
+
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
-			wood.hit_count[wood.count_x][wood.count_y] = eHit1;
-			wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
-
+			wood.animation[wood.count_x][wood.count_y] = wood.image[1];
+			wood.fps++;
+			if (wood.fps > 30)
+			{
+				wood.hit_count[wood.count_x][wood.count_y] = eHit1;
+				wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
+				wood.fps = 0;
+			}
 
 		}
 		break;
 
 	case eHit1:// Hit数1
-		wood.animation[wood.count_x][wood.count_y] = wood.image[1];
+		/*wood.animation[wood.count_x][wood.count_y] = wood.image[1];*/
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
-			wood.hit_count[wood.count_x][wood.count_y] = eHit2;
-			wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
+			wood.animation[wood.count_x][wood.count_y] = wood.image[2];
+			wood.fps++;
+			if (wood.fps > 30)
+			{
+				wood.hit_count[wood.count_x][wood.count_y] = eHit2;
+				wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
+				wood.fps = 0;
+			}
 		}
 
 		break;
 
 	case eHit2:// Hit数2
-		wood.animation[wood.count_x][wood.count_y] = wood.image[2];
+		
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
-			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
-			wood.hit_count[wood.count_x][wood.count_y] = eHit3;
-			wood.hit_flag[wood.count_x][wood.count_y] = false;   //hitフラグをfalseにする
+			/*wood.animation[wood.count_x][wood.count_y] = wood.image[3];*/
+			wood.fps++;
+			if (wood.fps > 30)
+			{
+				wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
+				wood.hit_count[wood.count_x][wood.count_y] = eHit3;
+				wood.hit_flag[wood.count_x][wood.count_y] = false;   //hitフラグをfalseにする
+				wood.fps = 0;
+			}
 		}
 		break;
 
 	case eHit3:// Hit数3
-		wood.animation[wood.count_x][wood.count_y] = wood.image[3];
+		
 		wood.delete_flag[wood.count_x][wood.count_y] = true;//削除フラグをtrueにする
 		wood.position.x = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
 		wood.position.y = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
