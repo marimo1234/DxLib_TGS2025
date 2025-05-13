@@ -37,6 +37,7 @@ void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
+void Set_Base_Road(const CreateStage* stage);
 
 
 void ToolInit(void)
@@ -50,8 +51,6 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	tool.base_x = 4;
-	tool.base_y = 3;
 	tool.old_base_x = 0;
 	tool.old_base_y = 0;
 	for (int j = 0; j < 7; j++)
@@ -63,6 +62,7 @@ void ToolInit(void)
 			tool.road_img_array[i][j] = -1;
 		}
 	}
+	Set_Base_Road(GetStage());
 	//仮
 	
 	
@@ -409,6 +409,22 @@ void Tool_Reset(void)
 		{
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
+		}
+	}
+}
+
+//基準の道の配列格納
+void Set_Base_Road(const CreateStage* stage)
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (stage->array[i][j]==4)
+			{
+				tool.base_x = i;
+				tool.base_y = j;
+			}
 		}
 	}
 }
