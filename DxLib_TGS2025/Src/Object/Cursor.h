@@ -20,4 +20,3 @@ void CursorUpdate(void);
 void CursorDraw(void);
 const Cursor* GetCursor1(void);
 void CursolButtonMovement();       // 十字キーの移動
-void cursoranime(void);

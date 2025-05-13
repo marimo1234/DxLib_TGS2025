@@ -24,6 +24,7 @@ int animation_num = 0;
 int animation_count = 0;
 int cursor_image1, cursor_image2;
 int cursor_ax;
+static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
 
 void CursorStart(const InGame* ingame);
 
@@ -57,15 +58,44 @@ void CursorUpdate(void)
 {
 	CursolButtonMovement();
 	CursorStart(GetInGame());
+	if (is_animating_pickaxe)
+	{
+		animation_count++;
+
+		if (animation_count % 15 == 0)
+		{
+			animation_num++;
+			if (animation_num > 2)
+			{
+				is_animating_pickaxe = false;
+				animation_num = 0;
+				animation_count = 0;
+			}
+		}
+	}
 }
 
 //カーソルの描画
 void CursorDraw(void)
 {
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
-	DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);// カーソルアニメーション
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);
+	if (is_animating_pickaxe)
+	{
+		if (is_animating_pickaxe % 2 == 0)
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+		}
+		else
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
+		}
+	}
+	else
+	{
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+	}
 }
 
 void CursorStart(const InGame* ingame)
@@ -129,6 +159,13 @@ void CursolButtonMovement()
 				cursor.array_y++;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
+		}
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		{
+			// アニメーション開始
+			animation_num = 0;
+			animation_count = 0;
+			is_animating_pickaxe = true;
 		}
 	}
 }
