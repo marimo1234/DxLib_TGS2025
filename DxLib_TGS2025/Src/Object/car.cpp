@@ -8,15 +8,18 @@
 #define CAR_TROUT_LNEGTH (80.0f)
 
 int time;
+int overroad;
 
 void CarStart(const InGame* ingame);
 void CarDetectPosition(void);
 void GetNextDestination(const NextDestination* destination);
+void OverRoad(void);
 
 Car car;
 void CarInit(void)
 {
 	time = 0;
+	overroad = 0;
 	car.position.x=440.0f;//初期位置
 	car.position.y=360.0f;
 	car.direction = eRight;//進行方向
@@ -130,9 +133,19 @@ void CarMovePosition(void)
 	switch (car.direction)
 	{
 	case eStop://止まる
-		car.position.x += 0.0f;
+		/*car.position.x += 0.0f;
 		car.position.y += 0.0f;
-		time++;
+		time++;*/
+		if (overroad<500)
+		{
+			OverRoad();
+		}
+		if (overroad > 499)
+		{
+			car.position.x += 0.0f;
+		    car.position.y += 0.0f;
+		}
+				
 		break;
 	case eUp://上に
 		car.animation = car.image[1];
@@ -178,7 +191,7 @@ void CarDetectPosition(void)
 		car.current_y == car.next_y[car.next_count])
 	{
 		car.direction = eRight;//右に
-
+		car.old_direction = eRight;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
 		car.current_y = car.next_y[car.next_count];
 		car.next_count++;                          //次の位置の配列番号にする
@@ -188,7 +201,7 @@ void CarDetectPosition(void)
 		car.current_x == car.next_x[car.next_count])
 	{
 		car.direction = eUp;//上に
-
+		car.old_direction = eUp;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
 		car.current_y = car.next_y[car.next_count];
 		car.next_count++;                          //次の位置の配列番号にする
@@ -198,6 +211,7 @@ void CarDetectPosition(void)
 		car.current_x == car.next_x[car.next_count])
 	{
 		car.direction = eDown;//下に
+		car.old_direction = eDown;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
 		car.current_y = car.next_y[car.next_count];
 		car.next_count++;                          //次の位置の配列番号にする
@@ -208,4 +222,28 @@ void CarDetectPosition(void)
 		car.direction = eStop;//ストップ
 	}
 
+}
+void OverRoad(void)
+{
+	switch (car.old_direction)
+	{
+	case eUp://上に
+		car.animation = car.image[1];
+		car.position.y -= 0.1f;
+		overroad++;
+		break;
+	case eDown://下に
+		car.animation = car.image[1];
+		car.position.y += 0.1f;
+		overroad++;
+		break;
+	case eRight://右に
+		car.animation = car.image[0];
+		car.position.x += 0.1f;
+		overroad++;
+		break;
+
+	default:
+		break;
+	}
 }

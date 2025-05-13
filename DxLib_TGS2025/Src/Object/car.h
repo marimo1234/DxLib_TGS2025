@@ -26,6 +26,7 @@ struct Car
 	int next_y[84];
 	int road_count;
 	int next_count;
+	int old_direction;
 };
 
 void CarInit(void);
