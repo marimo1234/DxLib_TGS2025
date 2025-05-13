@@ -51,31 +51,7 @@ void MapUpdate(void)
 	//道を置く
 	Put_Road(Get_Tool(), GetCursor1());
 	//橋を置く
-	Put_Wood_Road(Get_Tool(), GetCursor1());
-	
-	
-	
-	/*if (stage_start == false)
-	{
-		for (int j = 0; j < 7; j++)
-		{
-			for (int i = 0; i < 12; i++)
-			{
-				if ((i == 3 && j == 3)||(i == 4 && j == 3) )
-				{
-					continue;
-				}
-				if ((stage.array[i][j] == 4) || (stage.array[i][j] == 5))
-				{
-					stage.array[i][j] = 0;
-				}
-			}
-		}
-	}*/
-
-	
-
-	
+	Put_Wood_Road(Get_Tool(), GetCursor1());	
 }
 
 void MapDraw(void)
