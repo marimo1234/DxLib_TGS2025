@@ -35,7 +35,7 @@ void MapInit(void)
 	MapValueInit();
 
 	//目的地の初期化
-	destination.x = 4;
+	destination.x = 3;
 	destination.y= 3;
 
 	

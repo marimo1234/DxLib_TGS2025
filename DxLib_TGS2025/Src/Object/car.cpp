@@ -20,8 +20,8 @@ void CarInit(void)
 {
 	time = 0;
 	overroad = 0;
-	car.position.x=440.0f;//初期位置
-	car.position.y=360.0f;
+	car.position.x= car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
+	car.position.y= car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 1;//取得した道の配列番号
@@ -34,7 +34,7 @@ void CarInit(void)
 
 	car.start = false;//車の処理フラグ
 
-	car.current_x = 3;//ステージ①の初期位置
+	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
 	
 	//次の目的地の初期化
@@ -105,8 +105,8 @@ const Car* GetCar(void)
 //ステージ切り替えするときのリセット
 void CarReset(void)
 {
-	car.position.x = 440.0f;
-	car.position.y = 360.0f;
+	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;
+	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.direction = eRight;
 	car.road_count = 0;
 	car.next_count = 1;
@@ -119,13 +119,9 @@ void GetNextDestination(const NextDestination* destination)
 	//次の移動位置が同じでないなら
 	if (car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y)
 	{
-		//Xが左方向にならないように、Yが上下に行ったり来たりしないように
-		if (car.next_x[car.road_count] <= destination->x )
-		{
 			car.road_count++;
 			car.next_x[car.road_count] = destination->x;
 			car.next_y[car.road_count] = destination->y;
-		}
 	}
 }
 
@@ -151,9 +147,9 @@ void CarMovePosition(void)
 		break;
 	case eUp://上に
 		car.animation = car.image[2];
-		car.position.y -= 0.1f;
+		car.position.y -= 0.2f;
 		time++;
-		if (car.position.y < (car.current_y) * CAR_TROUT_LNEGTH + 121.0f)//微調整で120に1足している
+		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 121.0f)//微調整で120に1足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
@@ -161,9 +157,9 @@ void CarMovePosition(void)
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
-		car.position.y += 0.1f;
+		car.position.y += 0.2f;
 		time++;
-		if (car.position.y > (car.current_y) * CAR_TROUT_LNEGTH + 119.0f)//微調整で120から1引いている
+		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.0f)//微調整で120から1引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
@@ -171,9 +167,9 @@ void CarMovePosition(void)
 		break;
 	case eRight://右に
 		car.animation = car.image[0];
-		car.position.x += 0.1f;
+		car.position.x += 0.2f;
 		time++;
-		if (car.position.x > (car.current_x) * CAR_TROUT_LNEGTH + 199.0f)//微調整で200から1引いている
+		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.0f)//微調整で200から1引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();

@@ -16,6 +16,7 @@
 #define WOOD_ITEM_Y (110.0f)
 #define ROCK_ITEM_X (1170.0f)
 #define ROCK_ITEM_Y (50.0f)
+#define HIT_COOLTIME (30)
 
 
 int woodrock_start;
@@ -158,7 +159,7 @@ void WoodAnimation(void)
 		{
 			wood.animation[wood.count_x][wood.count_y] = wood.image[1];
 			wood.fps++;
-			if (wood.fps > 30)
+			if (wood.fps > HIT_COOLTIME)
 			{
 				wood.hit_count[wood.count_x][wood.count_y] = eHit1;
 				wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
@@ -169,12 +170,11 @@ void WoodAnimation(void)
 		break;
 
 	case eHit1:// Hit数1
-		/*wood.animation[wood.count_x][wood.count_y] = wood.image[1];*/
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
 			wood.animation[wood.count_x][wood.count_y] = wood.image[2];
 			wood.fps++;
-			if (wood.fps > 30)
+			if (wood.fps > HIT_COOLTIME)
 			{
 				wood.hit_count[wood.count_x][wood.count_y] = eHit2;
 				wood.hit_flag[wood.count_x][wood.count_y] = false;//hitフラグをfalseにする
@@ -188,15 +188,10 @@ void WoodAnimation(void)
 		
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
-			/*wood.animation[wood.count_x][wood.count_y] = wood.image[3];*/
-			wood.fps++;
-			if (wood.fps > 30)
-			{
 				wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
 				wood.hit_count[wood.count_x][wood.count_y] = eHit3;
 				wood.hit_flag[wood.count_x][wood.count_y] = false;   //hitフラグをfalseにする
 				wood.fps = 0;
-			}
 		}
 		break;
 
@@ -223,25 +218,36 @@ void RockAnimation(void)
 	case eHit0:// Hit数0
 		rock.animation[rock.count_x][rock.count_y] = rock.image[0];
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
-		{
-			rock.hit_count[rock.count_x][rock.count_y] = eHit1;
-			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+		{			
+			rock.animation[rock.count_x][rock.count_y] = rock.image[1];
 
+			rock.fps++;
+			if (rock.fps > HIT_COOLTIME)
+			{	
+				rock.hit_count[rock.count_x][rock.count_y] = eHit1;
+				rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+				rock.fps = 0;
+			}
 		}
 		break;
 
 	case eHit1:// Hit数1
-		rock.animation[rock.count_x][rock.count_y] = rock.image[1];
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
 		{
-			rock.hit_count[rock.count_x][rock.count_y] = eHit2;
-			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+			rock.animation[rock.count_x][rock.count_y] = rock.image[2];
+			rock.fps++;
+			if (rock.fps > HIT_COOLTIME)
+			{
+				rock.hit_count[rock.count_x][rock.count_y] = eHit2;
+				rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+				rock.fps = 0;
+			}
 		}
 
 		break;
 
 	case eHit2:// Hit数2
-		rock.animation[rock.count_x][rock.count_y] = rock.image[2];
+		
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
 		{
 			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
@@ -251,8 +257,6 @@ void RockAnimation(void)
 		break;
 
 	case eHit3:// Hit数3
-
-		rock.animation[rock.count_x][rock.count_y] = rock.image[3];
 		rock.delete_flag[rock.count_x][rock.count_y] = true; //削除フラグをtrueにする
 		rock.position.x = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position.y = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
