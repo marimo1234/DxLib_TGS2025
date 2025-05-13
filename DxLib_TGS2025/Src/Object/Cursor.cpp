@@ -4,6 +4,7 @@
 #include"../Utility/PadInputManager.h"
 #include "../System/System.h"
 #include "../Object/Map.h"
+#include"../Object/Tool.h"
 #include "DxLib.h"
 
 #define CURSOR_ARRAY_X_MAX (11)
@@ -13,13 +14,16 @@
 #define MOVE_ONE_SPACE (80.0f)
 
 Cursor cursor;
-int cursor_image, cursor_image1,cursor_image2;
+int cursor_image;
 static int numx = 0;
 static int numy = 0;
 static int move_wait_time = 0;
 int aif = 0;
 int cursorstart;
-
+int animation_num = 0;
+int animation_count = 0;
+int cursor_image1, cursor_image2;
+int cursor_ax;
 
 void CursorStart(const InGame* ingame);
 
@@ -44,8 +48,8 @@ void CursorInit(void)
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe1.png");
-	cursor_image2 = LoadGraph("Resource/Images/ax.png");
-
+	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.png");
+	cursor_ax = LoadGraph("Resource/Images/ax.png");
 }
 
 //カーソルの更新
@@ -59,7 +63,7 @@ void CursorUpdate(void)
 void CursorDraw(void)
 {
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
-	DrawRotaGraph(cursor.position.x, cursor.position.y - 40.0, 0.05, 0.0, cursor_image1, TRUE);// カーソルの上に出る道具の画像の描画
+	DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);// カーソルアニメーション
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);
 }
@@ -128,6 +132,3 @@ void CursolButtonMovement()
 		}
 	}
 }
-
-
-
