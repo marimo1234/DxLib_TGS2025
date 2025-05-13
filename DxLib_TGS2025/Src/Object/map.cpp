@@ -55,7 +55,7 @@ void MapUpdate(void)
 	
 	
 	
-	if (stage_start == false)
+	/*if (stage_start == false)
 	{
 		for (int j = 0; j < 7; j++)
 		{
@@ -71,7 +71,7 @@ void MapUpdate(void)
 				}
 			}
 		}
-	}
+	}*/
 
 	
 
