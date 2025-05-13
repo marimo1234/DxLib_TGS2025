@@ -15,7 +15,7 @@ struct Car
 {
 	Vector2D position;
 	int animation;
-	int image[2];
+	int image[4];
 	bool start;
 	int x;
 	int y;

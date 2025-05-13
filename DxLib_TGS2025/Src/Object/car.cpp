@@ -27,8 +27,10 @@ void CarInit(void)
 	car.next_count = 1;//取得した道の配列番号
 	
 
-	car.image[0] = LoadGraph("Resource/images/left_car.png");
-	car.image[1] = LoadGraph("Resource/images/front_car.png");
+	car.image[0] = LoadGraph("Resource/images/car_right.png");
+	car.image[1] = LoadGraph("Resource/images/car_left.png");
+	car.image[2] = LoadGraph("Resource/images/car_up.png");
+	car.image[3] = LoadGraph("Resource/images/car_down.png");
 
 	car.start = false;//車の処理フラグ
 
@@ -66,7 +68,7 @@ void CarManagerUpdate(void)
 
 void CarDraw(void)
 {
-		DrawRotaGraph(car.position.x, car.position.y, 1.0, 0.0, car.animation, TRUE);
+		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 		DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -148,7 +150,7 @@ void CarMovePosition(void)
 				
 		break;
 	case eUp://上に
-		car.animation = car.image[1];
+		car.animation = car.image[2];
 		car.position.y -= 0.1f;
 		time++;
 		if (car.position.y < (car.current_y) * CAR_TROUT_LNEGTH + 121.0f)//微調整で120に1足している
@@ -158,7 +160,7 @@ void CarMovePosition(void)
 		}
 		break;
 	case eDown://下に
-		car.animation = car.image[1];
+		car.animation = car.image[3];
 		car.position.y += 0.1f;
 		time++;
 		if (car.position.y > (car.current_y) * CAR_TROUT_LNEGTH + 119.0f)//微調整で120から1引いている
@@ -228,12 +230,12 @@ void OverRoad(void)
 	switch (car.old_direction)
 	{
 	case eUp://上に
-		car.animation = car.image[1];
+		car.animation = car.image[2];
 		car.position.y -= 0.1f;
 		overroad++;
 		break;
 	case eDown://下に
-		car.animation = car.image[1];
+		car.animation = car.image[3];
 		car.position.y += 0.1f;
 		overroad++;
 		break;
