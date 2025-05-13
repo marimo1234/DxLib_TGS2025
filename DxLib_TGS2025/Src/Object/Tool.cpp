@@ -337,7 +337,7 @@ const Tool* Get_Tool(void)
 	return &tool;
 }
 
-//岩の道を増やす
+//道の数を増やす
 void const Road_Add_Num(const Rock* rock)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -360,7 +360,7 @@ void const Road_Add_Num(const Rock* rock)
 	}
 }
 
-//木の道を増やす
+//木の道の数を増やす
 void const WoodRoad_Add_Num(const Wood* wood)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
