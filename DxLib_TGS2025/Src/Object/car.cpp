@@ -146,7 +146,7 @@ void CarMovePosition(void)
 	{
 
 	case eStop://止まる
-		if (car.goal_flag = false)
+		if (car.goal_flag == false)
 		{
 			if (overroad < 400)
 			{
@@ -159,7 +159,7 @@ void CarMovePosition(void)
 				car.gameover_image = true;
 			}
 		}
-		else
+		else if (car.goal_flag == true)
 		{
 			car.goalprint = true;
 		}
