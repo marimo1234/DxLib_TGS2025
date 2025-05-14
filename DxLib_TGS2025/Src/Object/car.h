@@ -31,6 +31,8 @@ struct Car
 	bool goal_flag;
 	int gameover;
 	bool gameover_image;
+	int goal;
+	int goalprint;
 	
 };
 
