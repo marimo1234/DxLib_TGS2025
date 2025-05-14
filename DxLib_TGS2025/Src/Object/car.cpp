@@ -144,16 +144,22 @@ void CarMovePosition(void)
 	{
 
 	case eStop://止まる
-		
-		if (overroad<400)
+		if (car.goal_flag = false)
 		{
-			OverRoad();
+			if (overroad < 400)
+			{
+				OverRoad();
+			}
+			if (overroad > 399)
+			{
+				car.position.x += 0.0f;
+				car.position.y += 0.0f;
+				car.gameover_image = true;
+			}
 		}
-		if (overroad > 399)
+		else
 		{
-			car.position.x += 0.0f;
-		    car.position.y += 0.0f;
-			car.gameover_image = true;
+			
 		}
 				
 		break;
@@ -264,6 +270,10 @@ void CarGoalCheck(const CreateStage* stage)
 	{
 		car.velocity.x = 2.0f;
 		car.velocity.y = 2.0f;
+
+		car.next_x[car.road_count + 1] = stage->goal_x[0];
+		car.next_y[car.road_count + 1] = stage->goal_y[0];
+		car.goal_flag = true;
 	}
 	else
 	{
