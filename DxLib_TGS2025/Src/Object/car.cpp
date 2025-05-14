@@ -7,7 +7,6 @@
 
 #define CAR_TROUT_LNEGTH (80.0f)
 
-int time;
 int overroad;
 
 void CarStart(const InGame* ingame);
@@ -19,7 +18,6 @@ void CarGoalCheck(const CreateStage* stage);
 Car car;
 void CarInit(void)
 {
-	time = 0;
 	overroad = 0;
 	car.position.x= car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
 	car.position.y= car.current_y * CAR_TROUT_LNEGTH + 120.0f;
@@ -79,7 +77,6 @@ void CarDraw(void)
 		DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
-		DrawFormatString(930, 50, GetColor(255, 255, 255), "%d", time);
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);
 		
 		
@@ -156,7 +153,6 @@ void CarMovePosition(void)
 	case eUp://上に
 		car.animation = car.image[2];
 		car.position.y -= car.velocity.y;
-		time++;
 		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に1足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -166,7 +162,6 @@ void CarMovePosition(void)
 	case eDown://下に
 		car.animation = car.image[3];
 		car.position.y += car.velocity.y;
-		time++;
 		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から1引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -176,7 +171,6 @@ void CarMovePosition(void)
 	case eRight://右に
 		car.animation = car.image[0];
 		car.position.x += car.velocity.x;
-		time++;
 		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から1引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
