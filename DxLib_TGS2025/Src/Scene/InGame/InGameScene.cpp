@@ -127,7 +127,7 @@ void InGameSceneDraw(void)
 	CarDraw();
 
 	//カーソルの描画
-	CursorDraw();
+	CursorDraw(Get_Tool());
 
 	//ゴールの描画
 	GoalDraw();

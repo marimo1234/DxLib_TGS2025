@@ -2,6 +2,7 @@
 
 #include "../Utility/Geometry.h"
 #include"../Utility/PadInputManager.h"
+#include"../Object/Tool.h"
 
 
 struct Cursor
@@ -17,6 +18,6 @@ struct Cursor
 
 void CursorInit(void);
 void CursorUpdate(void);
-void CursorDraw(void);
+void CursorDraw(const Tool* tool);
 const Cursor* GetCursor1(void);
-void CursolButtonMovement();       // 十字キーの移動
+void CursolButtonMovement(const Tool* tool);       // 十字キーの移動
