@@ -31,28 +31,31 @@ struct Tool
 	int wood_road_flag[12][7];	//丸太の道を置いたことを知らせるフラグ
 	int rock_sub_flag;			//岩の所持数を引くフラグ
 	int wood_sub_flag;			//木の所持数数を引くフラグ
-
-	//仮
 	int road_img_array[12][7];	//道の画像ハンドル配列
 	int old_base_x;				//ひとつ前の基準x
 	int old_base_y;				//ひとつ前の基準y
 	int old_base_x2;			//ふたつ前の基準x
 	int old_base_y2;			//ふたつ前の基準y
 	int stage_number;
+
+	//仮
 };
 
 struct Tool_Img
 {
-	int pickaxe;		//つるはしの画像ハンドル
-	int itemframe;		//枠の画像ハンドル
-	int ax;				//斧の画像ハンドル
-	int item_select;	//選択枠（アイテム）の画像ハンドル
-	int road_beside;	//左右への道の画像ハンドル
-	int road_vertical;	//上下への道の画像ハンドル
-	int road_Btmright;	//下右への道の画像ハンドル
-	int road_Topright;	//上右への道の画像ハンドル
-	int road_Rbottom;	//右下への道の画像ハンドル
-	int road_Rtop;		//右上への道の画像ハンドル
+	int pickaxe;			//つるはしの画像ハンドル
+	int itemframe;			//枠の画像ハンドル
+	int ax;					//斧の画像ハンドル
+	int item_select;		//選択枠（アイテム）の画像ハンドル
+	int road_beside;		//左右への道の画像ハンドル
+	int road_vertical;		//上下への道の画像ハンドル
+	int road_Btmright;		//下右への道の画像ハンドル
+	int road_Topright;		//上右への道の画像ハンドル
+	int road_Rbottom;		//右下への道の画像ハンドル
+	int road_Rtop;			//右上への道の画像ハンドル
+	int possible_beside;	//設置可能位置の画像ハンドル(横
+	int possible_vertical;	//設置可能位置の画像ハンドル(縦
+	int possible_wood_road;	//設置可能位置の画像ハンドル(木
 };
 
 void ToolInit(void);

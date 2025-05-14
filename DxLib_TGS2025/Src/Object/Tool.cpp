@@ -23,6 +23,7 @@
 #define WOODROAD_NUM_X		(950)		//木の道路の所持数(x)
 #define WOODROAD_NUM_Y		(690)		//木の道路の所持数(y)
 #define ITEM_SELECT_BASE	(1120)		//アイテムセレクトの基準(x)
+#define MAP_TROUT_LENGTH	(80)		//マップの配列の
 
 int tool_start;			//ゲームスタート
 //仮
@@ -37,6 +38,8 @@ void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
+void Poosible_Prace(const CreateStage* stage);
+
 
 //初期化
 void ToolInit(void)
@@ -50,7 +53,7 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	tool.stage_number = 1;
+	tool.stage_number = 0;
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -85,6 +88,9 @@ void ToolInit(void)
 	tool_img.road_Btmright = LoadGraph("Resource/images/RoadBottomRight.png");
 	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
 	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
+	tool_img.possible_beside = LoadGraph("Resource/images/Possible_Beside.png");
+	tool_img.possible_vertical= LoadGraph("Resource/images/Possible_Vertical.png");
+	tool_img.possible_wood_road= LoadGraph("Resource/images/possible_wood_road.png");
 	Road_Imghandle_Init(GetStage());
 }
 
@@ -134,6 +140,7 @@ void ToolDraw(void)
 
 	//仮
 	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d  %d", tool.base_x,tool.base_y);
+	Poosible_Prace(GetStage());
 }
 
 //アイテムセレクトの動き
@@ -361,6 +368,9 @@ void Tool_Start(const InGame* ingame)
 	{
 		tool_start = false;
 	}
+
+	//なんステージ目か
+	tool.stage_number = ingame->stage_num;
 }
 
 //構造体Toolの値渡し
@@ -463,7 +473,7 @@ void Road_Imghandle_Init(const CreateStage*stage)
 //配列の基準初期化
 void Base_Init(void)
 {
-	if (tool.stage_number == 1)
+	if (tool.stage_number == 0)
 	{
 		tool.base_x = 3;
 		tool.base_y = 3;
@@ -472,6 +482,15 @@ void Base_Init(void)
 		tool.old_base_x2 = 0;
 		tool.old_base_y2 = 0;
 	}
+	/*if (tool.stage_number == 0)
+	{
+		tool.base_x = 3;
+		tool.base_y = 3;
+		tool.old_base_x = 2;
+		tool.old_base_y = 3;
+		tool.old_base_x2 = 0;
+		tool.old_base_y2 = 0;
+	}*/
 }
 
 //配列の基準変更
@@ -670,3 +689,58 @@ void Road_Imghandle_Update(const CreateStage*stage)
 }
 
 //道の設置可能位置
+void Poosible_Prace(const CreateStage* stage)
+{
+	if (tool.item_number == 0)
+	{
+		if (tool.road_num > 0)
+		{
+			//右が空
+			if (stage->array[tool.base_x + 1][tool.base_y] == 0)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x + 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 1.0, 0.0, tool_img.possible_beside, TRUE);
+			}
+			//左が空
+			if (stage->array[tool.base_x - 1][tool.base_y] == 0)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x - 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 1.0, 0.0, tool_img.possible_beside, TRUE);
+			}
+			//上が空
+			if (stage->array[tool.base_x][tool.base_y - 1] == 0)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120, 1.0, 0.0, tool_img.possible_vertical, TRUE);
+			}
+			//下が空
+			if (stage->array[tool.base_x][tool.base_y + 1] == 0)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 1.0, 0.0, tool_img.possible_vertical, TRUE);
+			}
+		}
+	}
+	else if (tool.item_number == 1)
+	{
+		if (tool.wood_road_num > 0)
+		{
+			//右が湖
+			if (stage->array[tool.base_x + 1][tool.base_y] == 6)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x + 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+			}
+			//左が湖
+			if (stage->array[tool.base_x - 1][tool.base_y] == 6)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x - 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+			}
+			//上が湖
+			if (stage->array[tool.base_x][tool.base_y - 1] == 6)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+			}
+			//下が湖
+			if (stage->array[tool.base_x][tool.base_y + 1] == 6)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+			}
+		}
+	}
+}
