@@ -345,7 +345,7 @@ void Road_WoodRoad_FLAG_OFF(void)
 	{
 		tool.wood_road_flag[tool.base_x][tool.base_y] = false;
 	}
-}
+} 
 
 //ゲームスタート受け取り
 void Tool_Start(const InGame* ingame)
@@ -486,107 +486,185 @@ void Base_Chenge(void)
 //道路画像更新
 void Road_Imghandle_Update(const CreateStage*stage)
 {
-	/***************************前に置いた道が左********************************/
+	///******************************前に置いた道が左***********************************///
 	if (tool.old_base_x == tool.base_x - 1 && tool.old_base_y == tool.base_y)
 	{
 
-		//置いた道の左上が道かつ、二つ前に置いた道
-		if ((stage->array[tool.base_x - 1][tool.base_y - 1] == 4 || stage->array[tool.base_x - 1][tool.base_y - 1] == 5) &&
-			(tool.base_x - 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2))
+		/********************二つ前の道*********************/
+		//二つ前に置いた道が左上
+		if (tool.base_x - 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(下右
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Btmright;
 		}
 
-		//置いた道の左下が道かつ、二つ前に置いた道
-		else if ((stage->array[tool.base_x - 1][tool.base_y + 1] == 4 || stage->array[tool.base_x - 1][tool.base_y + 1] == 5) &&
-			(tool.base_x - 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2))
+		//二つ前に置いた道が左下
+		else if (tool.base_x - 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(上右
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Topright;
 		}
+		/***************************************************/
 
-		//置いた道の画像ハンドル代入(左右
-		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;	
+
+		/********************置いた道***********************/
+		//置いた道の画像ハンドル代入
+		//ゴールが上
+		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
+		}
+		//ゴールが下
+		else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
+		}
+		else
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
+		}
+		/***************************************************/
+
 	}
-	/***************************************************************************/
+	///*********************************************************************************///
+ 
 
 
-	/***************************前に置いた道が右********************************/
+ 
+
+	
+	///******************************前に置いた道が右***********************************///
 	if (tool.old_base_x == tool.base_x + 1 && tool.old_base_y == tool.base_y)
 	{
 
+		/********************二つ前の道*********************/
 		//置いた道の右上が道かつ、二つ前に置いた道
-		if ((stage->array[tool.base_x + 1][tool.base_y - 1] == 4 || stage->array[tool.base_x + 1][tool.base_y - 1] == 5) &&
-			(tool.base_x + 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2))
+		if (tool.base_x + 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(右上
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rtop;
 		}
 
 		//置いた道の右下が道かつ、二つ前に置いた道
-		else if ((stage->array[tool.base_x + 1][tool.base_y + 1] == 4 || stage->array[tool.base_x + 1][tool.base_y + 1] == 5) &&
-			(tool.base_x + 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2))
+		else if (tool.base_x + 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(右下
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rbottom;
 		}
+		/***************************************************/
 
-		//置いた道の画像ハンドル代入(左右
-		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
+
+		/********************置いた道***********************/
+		//置いた道の画像ハンドル代入
+		//ゴールが上
+		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
+		}
+		//ゴールが下
+		else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
+		}
+		else
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
+		}
+		/***************************************************/
+
 	}
-	/***************************************************************************/
+	///*********************************************************************************///
 
 
 
-	/***************************前に置いた道が上********************************/
+
+
+
+	///******************************前に置いた道が上***********************************///
 	else if (tool.old_base_x == tool.base_x && tool.old_base_y == tool.base_y - 1)
 	{
 
+		/********************二つ前の道*********************/
 		//置いた道の左上が道かつ、二つ前に置いた道
-		if ((stage->array[tool.base_x - 1][tool.base_y - 1] == 4 || stage->array[tool.base_x - 1][tool.base_y - 1] == 5) &&
-			(tool.base_x - 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2))
+		if (tool.base_x - 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(右下
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rbottom;
 		}
 
 		//置いた道の右上が道かつ、二つ前に置いた道
-		else if ((stage->array[tool.base_x + 1][tool.base_y - 1] == 4 || stage->array[tool.base_x + 1][tool.base_y - 1] == 5) &&
-			(tool.base_x + 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2))
+		else if (tool.base_x + 1 == tool.old_base_x2 && tool.base_y - 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(上右
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Topright;
 		}
+		/***************************************************/
 
-		//置いた道の画像ハンドル代入(縦向き
-		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+
+		/********************置いた道***********************/
+		//置いた道の画像ハンドル代入
+		//ゴールが右
+		if (stage->array[tool.base_x + 1][tool.base_y] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
+		}
+		//ゴールが左
+		else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
+		}
+		else
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+		}
+		/***************************************************/
+
 	}
-	/***************************************************************************/
+	///*********************************************************************************///
 
 
-	/***************************前に置いた道が下********************************/
+
+
+
+
+	///******************************前に置いた道が下***********************************///
 	else if (tool.old_base_x == tool.base_x && tool.old_base_y == tool.base_y + 1)
 	{
 
+		/********************二つ前の道*********************/
 		//置いた左下が道かつ、二つ前に置いた道
-		if ((stage->array[tool.base_x - 1][tool.base_y + 1] == 4 || stage->array[tool.base_x - 1][tool.base_y + 1] == 5) &&
-			(tool.base_x - 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2))
+		if (tool.base_x - 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(右上
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Rtop;
 		}
 
 		//置いた右下が道かつ、二つ前に置いた道
-		else if ((stage->array[tool.base_x + 1][tool.base_y + 1] == 4 || stage->array[tool.base_x + 1][tool.base_y + 1] == 5) &&
-			(tool.base_x + 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2))
+		else if (tool.base_x + 1 == tool.old_base_x2 && tool.base_y + 1 == tool.old_base_y2)
 		{
 			//前に置いた道の画像ハンドル変更(下右
 			tool.road_img_array[tool.old_base_x][tool.old_base_y] = tool_img.road_Btmright;
 		}
+		/***************************************************/
 
-		//置いた道の画像ハンドル代入(縦向き
-		tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+		/********************置いた道***********************/
+		//置いた道の画像ハンドル代入
+		//ゴールが右
+		if (stage->array[tool.base_x + 1][tool.base_y] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
+		}
+		//ゴールが左
+		else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
+		}
+		else
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+		}
+		/***************************************************/
+
 	}
-	/***************************************************************************/
+	///********************************************************************************///
 }
