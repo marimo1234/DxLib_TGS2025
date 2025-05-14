@@ -179,6 +179,7 @@
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\ChatGPT Image 2025年4月16日 17_43_33.png" />
     <Image Include="..\..\..\..\..\Downloads\Pixelart0\Pixelart0\01_1536x768\art_097.png" />
+    <Image Include="..\..\..\..\..\Pictures\GAMEOVER.png" />
     <Image Include="..\..\..\..\..\Pictures\Saved Pictures\ChatGPT Image 2025年4月18日 11_54_40.png" />
     <Image Include="..\..\..\..\..\Pictures\Saved Pictures\ChatGPT sougen.png" />
     <Image Include="Resource\GroundReef.png" />

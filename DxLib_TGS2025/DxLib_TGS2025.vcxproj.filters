@@ -53,5 +53,6 @@
     <Image Include="Resource\images\GroundReef.png" />
     <Image Include="Resource\images\item_frame.png" />
     <Image Include="Resource\images\left_car.png" />
+    <Image Include="..\..\..\..\..\Pictures\GAMEOVER.png" />
   </ItemGroup>
 </Project>

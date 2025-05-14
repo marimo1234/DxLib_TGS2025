@@ -29,6 +29,8 @@ struct Car
 	int next_count;
 	int old_direction;
 	bool goal_flag;
+	int gameover;
+	bool gameover_image;
 	
 };
 
