@@ -445,7 +445,7 @@ void Tool_Reset(void)
 	}
 }
 
-//道路画像ハンドル初期化
+//道画像ハンドル初期化
 void Road_Imghandle_Init(const CreateStage*stage)
 {
 	for (int j = 0; j < 7; j++)
@@ -483,7 +483,7 @@ void Base_Chenge(void)
 	tool.old_base_y = tool.base_y;
 }
 
-//道路画像更新
+//道画像更新
 void Road_Imghandle_Update(const CreateStage*stage)
 {
 	///******************************前に置いた道が左***********************************///
@@ -668,3 +668,5 @@ void Road_Imghandle_Update(const CreateStage*stage)
 	}
 	///********************************************************************************///
 }
+
+//道の設置可能位置
