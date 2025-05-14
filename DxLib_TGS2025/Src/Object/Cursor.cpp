@@ -20,11 +20,12 @@ static int numy = 0;
 static int move_wait_time = 0;
 int aif = 0;
 int cursorstart;
-int animation_num = 0;
-int animation_count = 0;
+int pickaxe_animation_num = 0, pickaxe_animation_count = 0;
+int ax_anim_num = 0, ax_anim_count = 0;
 int cursor_image1, cursor_image2;
 int cursor_ax;
 static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
+static bool is_animating_ax = false;       // 斧のアニメーションフラグ
 
 void CursorStart(const InGame* ingame);
 
@@ -56,46 +57,71 @@ void CursorInit(void)
 //カーソルの更新
 void CursorUpdate(void)
 {
-	CursolButtonMovement();
+	CursolButtonMovement(Get_Tool());
 	CursorStart(GetInGame());
+	// ツルハシのアニメーション
 	if (is_animating_pickaxe)
 	{
-		animation_count++;
+		pickaxe_animation_count++;
 
-		if (animation_count % 15 == 0)
+		if (pickaxe_animation_count % 15 == 0)
 		{
-			animation_num++;
-			if (animation_num > 2)
+			pickaxe_animation_num++;
+			if (pickaxe_animation_num > 2)
 			{
 				is_animating_pickaxe = false;
-				animation_num = 0;
-				animation_count = 0;
+				pickaxe_animation_num = 0;
+				pickaxe_animation_count = 0;
+			}
+		}
+	}
+	// 斧のアニメーション
+	if (is_animating_ax)
+	{
+		ax_anim_count++;
+		if (ax_anim_count % 15 == 0)
+		{
+			ax_anim_num++;
+			if (ax_anim_num > 2)
+			{
+				is_animating_ax = false;
+				ax_anim_num = 0;
+				ax_anim_count = 0;
 			}
 		}
 	}
 }
 
 //カーソルの描画
-void CursorDraw(void)
+void CursorDraw(const Tool*tool)
 {
+
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);
-	if (is_animating_pickaxe)
+	if (tool->item_number == ePickaxe && is_animating_pickaxe) 
 	{
-		if (is_animating_pickaxe % 2 == 0)
+		if (pickaxe_animation_num == 0)
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
 		}
-		else
+		else if (pickaxe_animation_num == 1)
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
 		}
 	}
-	else
+	else if (tool->item_number == eAx && is_animating_ax) 
 	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+		if (ax_anim_num == 0)
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+		}
+		else if (ax_anim_num == 1)
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+		}
 	}
+
 }
 
 void CursorStart(const InGame* ingame)
@@ -112,7 +138,7 @@ const Cursor* GetCursor1(void)
 	return &cursor;
 }
 
-void CursolButtonMovement()
+void CursolButtonMovement(const Tool* tool)
 {
 	if (cursorstart == TRUE)
 	{
@@ -160,12 +186,27 @@ void CursolButtonMovement()
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		// もしツルハシなら
+		if (tool->item_number == ePickaxe)
 		{
-			// アニメーション開始
-			animation_num = 0;
-			animation_count = 0;
-			is_animating_pickaxe = true;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			{
+				// アニメーション開始
+				pickaxe_animation_num = 0;
+				pickaxe_animation_count = 0;
+				is_animating_pickaxe = true;
+			}
+		}
+		// もし斧なら
+		if (tool->item_number == eAx)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			{
+				// アニメーション開始
+				ax_anim_num = 0;
+				ax_anim_count = 0;
+				is_animating_ax = true;
+			}
 		}
 	}
 }
