@@ -91,12 +91,12 @@ const Goal* GetGoal(void)
 void GoalFlag(const InGame* ingame, const Car* car)
 {
 
-	if (goal.position.x < car->position.x && goal.position.y == car->position.y)
+	/*if (goal.position.x < car->position.x && goal.position.y == car->position.y)
 	{
 		goal.flag = true;
 		goalprint = true;
 		
-	}
+	}*/
 
 	if (ingame->next_stage_flag == true)
 	{
