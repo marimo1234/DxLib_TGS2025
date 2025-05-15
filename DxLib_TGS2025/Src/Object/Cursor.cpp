@@ -50,7 +50,7 @@ void CursorInit(void)
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe1.png");
-	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.png");
+	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
 	cursor_ax = LoadGraph("Resource/Images/ax.png");
 }
 
@@ -67,7 +67,7 @@ void CursorUpdate(void)
 		if (pickaxe_animation_count % 15 == 0)
 		{
 			pickaxe_animation_num++;
-			if (pickaxe_animation_num > 2)
+			if (pickaxe_animation_num > 1)
 			{
 				is_animating_pickaxe = false;
 				pickaxe_animation_num = 0;
@@ -82,7 +82,7 @@ void CursorUpdate(void)
 		if (ax_anim_count % 15 == 0)
 		{
 			ax_anim_num++;
-			if (ax_anim_num > 2)
+			if (ax_anim_num > 1)
 			{
 				is_animating_ax = false;
 				ax_anim_num = 0;
@@ -99,24 +99,38 @@ void CursorDraw(const Tool*tool)
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);
-	if (tool->item_number == ePickaxe && is_animating_pickaxe) 
+	if (tool->item_number == ePickaxe) 
 	{
-		if (pickaxe_animation_num == 0)
+		if (is_animating_pickaxe)
+		{
+			if (pickaxe_animation_num == 0)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+			}
+			else if (pickaxe_animation_num == 1)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
+			}
+		}
+		else
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
 		}
-		else if (pickaxe_animation_num == 1)
-		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
-		}
 	}
-	else if (tool->item_number == eAx && is_animating_ax) 
+	else if (tool->item_number == eAx) 
 	{
-		if (ax_anim_num == 0)
+		if (is_animating_ax)
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+			if (ax_anim_num == 0)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+			}
+			else if (ax_anim_num == 1)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, -90.0, cursor_ax, TRUE);
+			}
 		}
-		else if (ax_anim_num == 1)
+		else
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
 		}
@@ -189,7 +203,7 @@ void CursolButtonMovement(const Tool* tool)
 		// もしツルハシなら
 		if (tool->item_number == ePickaxe)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			if (!is_animating_pickaxe && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				// アニメーション開始
 				pickaxe_animation_num = 0;
@@ -200,7 +214,7 @@ void CursolButtonMovement(const Tool* tool)
 		// もし斧なら
 		if (tool->item_number == eAx)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			if (!is_animating_ax && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 			{
 				// アニメーション開始
 				ax_anim_num = 0;
