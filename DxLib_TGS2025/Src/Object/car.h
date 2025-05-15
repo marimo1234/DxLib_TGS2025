@@ -8,6 +8,7 @@ enum CarDirection
 	eUp,
 	eDown,
 	eRight,
+	eLeft,
 	eStop,
 };
 

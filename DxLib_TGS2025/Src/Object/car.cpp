@@ -27,9 +27,10 @@ void CarInit(void)
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 1;//取得した道の配列番号
-	car.goal_flag = false;
-	car.gameover_image = false;
+	car.goal_flag = false;//ゴールまで道がつながっているかどうか
+	car.gameover_image = false;//GameOverをだすか
 
+	//画像の読み込み
 	car.image[0] = LoadGraph("Resource/images/car_right.png");
 	car.image[1] = LoadGraph("Resource/images/car_left.png");
 	car.image[2] = LoadGraph("Resource/images/car_up.png");
@@ -168,7 +169,7 @@ void CarMovePosition(void)
 	case eUp://上に
 		car.animation = car.image[2];
 		car.position.y -= car.velocity.y;
-		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に1足している
+		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
@@ -177,7 +178,7 @@ void CarMovePosition(void)
 	case eDown://下に
 		car.animation = car.image[3];
 		car.position.y += car.velocity.y;
-		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から1引いている
+		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
@@ -186,7 +187,17 @@ void CarMovePosition(void)
 	case eRight://右に
 		car.animation = car.image[0];
 		car.position.x += car.velocity.x;
-		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から1引いている
+		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から0.2引いている
+		{
+			//車の現在位置を検知して次の進行方向を決める
+			CarDetectPosition();
+		}
+		break;
+
+	case eLeft:
+		car.animation = car.image[1];
+		car.position.x -= car.velocity.x;
+		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
@@ -210,6 +221,15 @@ void CarDetectPosition(void)
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
 		car.current_y = car.next_y[car.next_count];
 		car.next_count++;                          //次の位置の配列番号にする
+	}
+	else if (car.current_x > car.next_x[car.next_count] &&
+		car.current_y == car.next_y[car.next_count])
+	{
+		car.direction = eLeft;//右に
+		car.old_direction = eLeft;
+		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
+		car.current_y = car.next_y[car.next_count];
+		car.next_count++;
 	}
 	//現在のY位置よりも次のY位置が小さかったら
 	else if (car.current_y > car.next_y[car.next_count]&&
@@ -236,7 +256,6 @@ void CarDetectPosition(void)
 	{
 		car.direction = eStop;//ストップ
 	}
-
 }
 void OverRoad(void)
 {
@@ -256,6 +275,11 @@ void OverRoad(void)
 		car.animation = car.image[0];
 		car.position.x += 0.2;
 		overroad+=2;
+		break;
+	case eLeft:
+		car.animation = car.image[1];
+		car.position.x -= 0.2;
+		overroad += 2;
 		break;
 
 	default:
