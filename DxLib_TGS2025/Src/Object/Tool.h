@@ -29,8 +29,8 @@ struct Tool
 	int wood_road_img;			//丸太の道の画像ハンドル
 	int wood_road_num;			//丸太の道の所持数
 	int wood_road_flag[12][7];	//丸太の道を置いたことを知らせるフラグ
-	int rock_sub_flag;			//岩の所持数を引くフラグ
-	int wood_sub_flag;			//木の所持数数を引くフラグ
+	bool rock_sub_flag;			//岩の所持数を引くフラグ
+	bool wood_sub_flag;			//木の所持数数を引くフラグ
 	int road_img_array[12][7];	//道の画像ハンドル配列
 	int old_base_x;				//ひとつ前の基準x
 	int old_base_y;				//ひとつ前の基準y

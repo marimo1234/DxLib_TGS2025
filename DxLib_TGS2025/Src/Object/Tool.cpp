@@ -25,7 +25,7 @@
 #define ITEM_SELECT_BASE	(1120)		//アイテムセレクトの基準(x)
 #define MAP_TROUT_LENGTH	(80)		//マップの配列の
 
-int tool_start;			//ゲームスタート
+bool tool_start;			//ゲームスタート
 //仮
 
 Tool tool;
@@ -42,7 +42,7 @@ void Poosible_Prace(const CreateStage* stage);
 
 
 //初期化
-void ToolInit(void)
+void ToolInit(void) 
 {
 	//初期化
 	tool.frameselect_x = 1120;
@@ -53,7 +53,7 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
-	tool.stage_number = 0;
+	tool.stage_number = 10;
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -98,6 +98,7 @@ void ToolInit(void)
 void ToolManagerUpdate(void)
 {
 	Sub_Num();
+	Tool_Start(GetInGame());
 
 	//ゲームスタートがtrueなら
 	if (tool_start == true)
@@ -112,8 +113,7 @@ void ToolManagerUpdate(void)
 	{
 		Tool_Reset();
 	}
-
-	Tool_Start(GetInGame());
+	
 	Road_Add_Num(GetRock());
 	WoodRoad_Add_Num(GetWood());
 }
@@ -137,10 +137,12 @@ void ToolDraw(void)
 	DrawExtendFormatString(ROAD_NUM_X, ROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.road_num);
 	//木の道の所持数
 	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
+	//設置可能位置表示
+	Poosible_Prace(GetStage());
 
 	//仮
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d  %d", tool.base_x,tool.base_y);
-	Poosible_Prace(GetStage());
+	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d", tool.stage_number);
+	
 }
 
 //アイテムセレクトの動き
@@ -443,8 +445,12 @@ void Sub_Num(void)
 //ステージ切り替え時の値リセット
 void Tool_Reset(void)
 {
+	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
+	tool.rock_sub_flag = false;
+	tool.wood_sub_flag = false;
+	tool.stage_number = 0;		//今だけ
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -453,6 +459,8 @@ void Tool_Reset(void)
 			tool.wood_road_flag[i][j] = false;
 		}
 	}
+	Base_Init();
+	Road_Imghandle_Init(GetStage());
 }
 
 //道画像ハンドル初期化
@@ -482,15 +490,6 @@ void Base_Init(void)
 		tool.old_base_x2 = 0;
 		tool.old_base_y2 = 0;
 	}
-	/*if (tool.stage_number == 0)
-	{
-		tool.base_x = 3;
-		tool.base_y = 3;
-		tool.old_base_x = 2;
-		tool.old_base_y = 3;
-		tool.old_base_x2 = 0;
-		tool.old_base_y2 = 0;
-	}*/
 }
 
 //配列の基準変更
