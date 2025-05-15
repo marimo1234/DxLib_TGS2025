@@ -39,6 +39,7 @@ struct Tool
 	int stage_number;
 
 	//仮
+	int old_base_array[12][7];
 };
 
 struct Tool_Img
