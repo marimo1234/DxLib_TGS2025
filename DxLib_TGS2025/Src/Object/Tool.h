@@ -40,6 +40,10 @@ struct Tool
 
 	//仮
 	int old_base_array[12][7];
+	int stage_array_exceed_x;
+	int stage_array_below_x;
+	int stage_array_exceed_y;
+	int stage_array_below_y;
 };
 
 struct Tool_Img
@@ -66,7 +70,7 @@ void Move_ItemSelect(void);
 void Sub_Num(void);
 void Tool_Reset(void);
 void Base_Chenge(void);
-void Base_Init(void);
+void Stage_Init(void);
 void Road_WoodRoad_FLAG_OFF(void);
 
 const Tool* Get_Tool(void);
