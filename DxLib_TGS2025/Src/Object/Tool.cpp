@@ -10,7 +10,7 @@
 
 #define PICKAXE_X				(1120)		//つるはし(x)
 #define PICKAXE_Y				(680)		//つるはし(y)
-#define FRAME_X					(1000)		//枠(x)
+#define FRAME_X					(1040)		//枠(x)
 #define FRAME_Y					(680)		//枠(y)
 #define ROAD_X					(880)		//道路(x)
 #define ROAD_Y					(680)		//道路(y)
@@ -22,8 +22,9 @@
 #define ROAD_NUM_Y				(690)		//道路の所持数(y)
 #define WOODROAD_NUM_X			(950)		//木の道路の所持数(x)
 #define WOODROAD_NUM_Y			(690)		//木の道路の所持数(y)
-#define ITEM_SELECT_BASE		(1120)		//アイテムセレクトの基準(x)
-#define MAP_TROUT_LENGTH		(80)		//マップの配列の
+#define ITEM_SELECT_BASE_X		(1200)		//アイテムの基準(x)
+#define ITEM_SELECT_BASE_Y		(680)		//アイテムの基準(y)
+#define MAP_TROUT_LENGTH		(80)		//マップの配列の間隔
 #define ARRAY_EXCEED_LIMIT_X	(12)		//配列要素を超過した値(x
 #define ARRAY_BELOW_LIMIT_X		(-1)		//配列要素を下回った値(x
 #define ARRAY_EXCEED_LIMIT_Y	(7)			//配列要素を超過した値(y
@@ -42,6 +43,8 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
 void Poosible_Prace(const CreateStage* stage);
+void Break_Road_FLAG(const Cursor*cursor);
+void Stage_Init(const CreateStage*stage);
 
 
 //初期化
@@ -50,7 +53,7 @@ void ToolInit(void)
 	//初期化
 	tool.frameselect_x = 1120;
 	tool.frameselect_y = 680;
-	tool.item_number = ePickaxe;
+	tool.item_number = eDrill;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -67,11 +70,12 @@ void ToolInit(void)
 		{				
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
+			tool.road_break_flag[i][j] = false;
 			tool.road_img_array[i][j] = -1;
 			tool.old_base_array[i][j] = 0;
 		}
 	}
-	Stage_Init();
+	Stage_Init(GetStage());
 
 	//******画像読み込み******//
 	//アイテム枠
@@ -82,6 +86,8 @@ void ToolInit(void)
 	tool.wood_road_img = LoadGraph("Resource/images/Log.png");
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
+	//ドリル
+	tool_img.drill= LoadGraph("Resource/images/Drill.png");
 	//選択枠(アイテム)
 	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
 	//道
@@ -95,6 +101,7 @@ void ToolInit(void)
 	tool_img.possible_beside = LoadGraph("Resource/images/Possible_Beside.png");
 	tool_img.possible_vertical= LoadGraph("Resource/images/Possible_Vertical.png");
 	tool_img.possible_wood_road= LoadGraph("Resource/images/possible_wood_road.png");
+	//配置済み道
 	Road_Imghandle_Init(GetStage());
 }
 
@@ -108,8 +115,9 @@ void ToolManagerUpdate(void)
 	if (tool_start == true)
 	{
 		Move_ItemSelect();
-		Road_WoodRoad_FLAG_OFF();
-		//道路設置
+		Road_FLAG_OFF();
+		
+		/*Break_Road_FLAG(GetCursor1());	*/		//道を壊す
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
@@ -127,14 +135,16 @@ void ToolDraw(void)
 {
 	//アイテム枠
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, tool_img.itemframe, TRUE);
+	//ドリルの描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.drill, TRUE);
 	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(PICKAXE_X, PICKAXE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 1, ITEM_SELECT_BASE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
 	//斧の描画（アイテム枠）
-	DrawRotaGraph(AX_X, AX_Y, 1.0, 0.0, tool_img.ax, TRUE);
-	//道路の描画（アイテム枠）
-	DrawRotaGraph(ROAD_X, ROAD_Y, 0.8, 0.0, tool_img.road_vertical, TRUE);
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 2, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.ax, TRUE);
 	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(WOODROAD_X, WOODROAD_Y, 0.4, 0.0, tool.wood_road_img, TRUE);
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 3, ITEM_SELECT_BASE_Y, 0.4, 0.0, tool.wood_road_img, TRUE);
+	//道路の描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 4, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.road_vertical, TRUE);
 	//枠選択の描画（アイテム枠）
 	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
 	//道路の所持数
@@ -145,8 +155,7 @@ void ToolDraw(void)
 	Poosible_Prace(GetStage());
 
 	//仮
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d", tool.stage_number);
-	
+	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d,%d", tool.base_x,tool.base_y);	
 }
 
 //アイテムセレクトの動き
@@ -169,6 +178,9 @@ void Move_ItemSelect(void)
 			tool.item_number = ePickaxe;
 			break;
 		case ePickaxe:
+			tool.item_number = eDrill;
+			break;
+		case eDrill:
 			tool.item_number = eRoad;
 			break;
 		}
@@ -180,7 +192,7 @@ void Move_ItemSelect(void)
 		switch (tool.item_number)
 		{
 		case eRoad:
-			tool.item_number = ePickaxe;
+			tool.item_number = eDrill;
 			break;
 		case eWoodRoad:
 			tool.item_number = eRoad;
@@ -191,13 +203,16 @@ void Move_ItemSelect(void)
 		case ePickaxe:
 			tool.item_number = eAx;
 			break;
+		case eDrill:
+			tool.item_number = ePickaxe;
+			break;
 		}
 	}
 	//x座標変更
-	tool.frameselect_x = ITEM_SELECT_BASE - ((3 - tool.item_number) * 80);
+	tool.frameselect_x = ITEM_SELECT_BASE_X - ((4 - tool.item_number) * 80);
 }
 
-//道路を置く
+//道を置く
 void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -217,54 +232,45 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 				//ゴールとつながっていないなら
 				if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7)&&stage->array[tool.base_x][tool.base_y-1]!=7)
 				{
-					//右の時
-					if (cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)
+
+					//右の時,カーソルの位置のマップの配列の中身が0なら
+					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)&&
+						(stage->array[tool.base_x + 1][tool.base_y] == 0))
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 0)
-						{
 							tool.road_num--;
-							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.road_flag[tool.base_x + 1][tool.base_y] = true;
 							Base_Chenge();
 							tool.base_x += 1;
-						}
 					}
 
-					//左の時
-					else if (cursor->array_x == tool.base_x-1 && cursor->array_y == tool.base_y)
+					//左の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x-1 && cursor->array_y == tool.base_y)&&
+						(stage->array[tool.base_x - 1][tool.base_y] == 0))
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 0)
-						{
 							tool.road_num--;
-							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.road_flag[tool.base_x - 1][tool.base_y] = true;
 							Base_Chenge();
 							tool.base_x -= 1;
-						}
 					}
-					//上の時
-					else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)
+
+					//上の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)&& 
+						(stage->array[tool.base_x][tool.base_y - 1] == 0))
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 0)
-						{
 							tool.road_num--;
-							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.road_flag[tool.base_x][tool.base_y - 1] = true;
 							Base_Chenge();
 							tool.base_y -= 1;
-						}
 					}
-					//下の時
-					else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)
+
+					//下の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)&& 
+						(stage->array[tool.base_x][tool.base_y + 1] == 0))
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 0)
-						{
 							tool.road_num--;
-							tool.road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.road_flag[tool.base_x][tool.base_y + 1] = true;
 							Base_Chenge();
 							tool.base_y += 1;
-						}
 					}
 					Road_Imghandle_Update(GetStage());
 				}
@@ -273,7 +279,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 	}
 }
 
-//丸太の道路を置く
+//木の道を置く
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -292,53 +298,44 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 				//ゴールにつながっていないか
 				if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7) && stage->array[tool.base_x][tool.base_y - 1] != 7)
 				{
-					//右の時
-					if (cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)
+					//右の時,カーソルの位置のマップの配列の中身が6なら
+					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
+						stage->array[tool.base_x + 1][tool.base_y] == 6)
 					{
-						//カーソルの位置のマップの配列の中身が6なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 6)
-						{
-							tool.wood_road_num--;
-							tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
-							Base_Chenge();
-							tool.base_x += 1;
-						}
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x + 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x += 1;
 					}
-					//左の時
-					else if (cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y)
+
+					//左の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
+						stage->array[tool.base_x - 1][tool.base_y] == 6)
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 6)
-						{
-							tool.wood_road_num--;
-							tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
-							Base_Chenge();
-							tool.base_x -= 1;
-						}
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x - 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x -= 1;
 					}
-					//上の時
-					else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)
+
+					//上の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)&&
+						stage->array[tool.base_x][tool.base_y - 1] == 6)
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 6)
-						{
 							tool.wood_road_num--;
-							tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.wood_road_flag[tool.base_x][tool.base_y - 1] = true;
 							Base_Chenge();
 							tool.base_y -= 1;
-						}
 					}
-					//下の時
-					else if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)
+
+					//下の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)&& 
+						stage->array[tool.base_x][tool.base_y + 1] == 6)
 					{
-						//カーソルの位置のマップの配列の中身が0なら
-						if (stage->array[cursor->array_x][cursor->array_y] == 6)
-						{
 							tool.wood_road_num--;
-							tool.wood_road_flag[cursor->array_x][cursor->array_y] = true;
+							tool.wood_road_flag[tool.base_x][tool.base_y + 1] = true;
 							Base_Chenge();
 							tool.base_y += 1;
-						}
 					}
 					Road_Imghandle_Update(GetStage());
 				}
@@ -347,8 +344,45 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 	}
 }
 
+//道を壊す
+void Break_Road_FLAG(const Cursor*cursor)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	//Aボタン押されたら
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+
+		//アイテムがドリルなら
+		if (tool.item_number == 4)
+		{
+
+			//カーソルの位置がベースなら
+			if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y)
+			{
+				tool.road_break_flag[tool.base_x][tool.base_y] = true;
+				for (int j = 0; j < 7; j++)
+				{
+					for (int i = 0; i < 12; i++)
+					{
+						if (tool.old_base_array[i][j] == 1)
+						{
+							tool.base_x = i;
+							tool.base_y = j;
+
+						}
+						if (tool.old_base_array[i][j] > 0)
+						{
+							tool.old_base_array[i][j]--;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 //道と木の道のフラグをFALSEにする
-void Road_WoodRoad_FLAG_OFF(void)
+void Road_FLAG_OFF(void)
 {
 	if (tool.road_flag[tool.base_x][tool.base_y] == true)
 	{
@@ -357,6 +391,10 @@ void Road_WoodRoad_FLAG_OFF(void)
 	if (tool.wood_road_flag[tool.base_x][tool.base_y] == true)
 	{
 		tool.wood_road_flag[tool.base_x][tool.base_y] = false;
+	}
+	if (tool.road_break_flag[tool.base_x][tool.base_y] == true)
+	{
+		tool.road_break_flag[tool.base_x][tool.base_y] = false;
 	}
 } 
 
@@ -464,7 +502,7 @@ void Tool_Reset(void)
 			tool.road_img_array[i][j] = -1;
 		}
 	}
-	Stage_Init();
+	Stage_Init(GetStage());
 	Road_Imghandle_Init(GetStage());
 }
 
@@ -484,7 +522,7 @@ void Road_Imghandle_Init(const CreateStage*stage)
 }
 
 //ステージごとのの基準初期化
-void Stage_Init(void)
+void Stage_Init(const CreateStage*stage)
 {
 	if (tool.stage_number == 0)
 	{
@@ -495,6 +533,13 @@ void Stage_Init(void)
 		tool.stage_array_exceed_y = 7;
 		tool.stage_array_below_x = -1;
 		tool.stage_array_below_y = -1;
+	}
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			tool.stage_begin_array[i][j] = stage->array[i][j];
+		}
 	}
 }
 

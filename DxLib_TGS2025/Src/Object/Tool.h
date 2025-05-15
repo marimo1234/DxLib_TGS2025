@@ -14,6 +14,7 @@ enum eToolState
 	eWoodRoad,
 	eAx,
 	ePickaxe,
+	eDrill,
 };
 
 struct Tool
@@ -31,6 +32,7 @@ struct Tool
 	int wood_road_flag[12][7];	//丸太の道を置いたことを知らせるフラグ
 	bool rock_sub_flag;			//岩の所持数を引くフラグ
 	bool wood_sub_flag;			//木の所持数数を引くフラグ
+	bool road_break_flag[12][7];
 	int road_img_array[12][7];	//道の画像ハンドル配列
 	int old_base_x;				//ひとつ前の基準x
 	int old_base_y;				//ひとつ前の基準y
@@ -44,6 +46,7 @@ struct Tool
 	int stage_array_below_x;
 	int stage_array_exceed_y;
 	int stage_array_below_y;
+	int stage_begin_array[12][7];
 };
 
 struct Tool_Img
@@ -51,6 +54,7 @@ struct Tool_Img
 	int pickaxe;			//つるはしの画像ハンドル
 	int itemframe;			//枠の画像ハンドル
 	int ax;					//斧の画像ハンドル
+	int drill;
 	int item_select;		//選択枠（アイテム）の画像ハンドル
 	int road_beside;		//左右への道の画像ハンドル
 	int road_vertical;		//上下への道の画像ハンドル
@@ -70,7 +74,7 @@ void Move_ItemSelect(void);
 void Sub_Num(void);
 void Tool_Reset(void);
 void Base_Chenge(void);
-void Stage_Init(void);
-void Road_WoodRoad_FLAG_OFF(void);
+void Road_FLAG_OFF(void);
+
 
 const Tool* Get_Tool(void);

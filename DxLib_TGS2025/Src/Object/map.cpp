@@ -22,6 +22,7 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Hole* hole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
+void Break_Road(const Tool* tool, const Cursor* cursor);
 
 //初期化
 void MapInit(void)
@@ -57,6 +58,9 @@ void MapUpdate(void)
 		Put_Road(Get_Tool(), GetCursor1());
 		//橋を置く
 		Put_Wood_Road(Get_Tool(), GetCursor1());
+
+		//道を壊す
+		/*Break_Road(Get_Tool(),GetCursor1());*/
 	}
 	else
 	{
@@ -191,13 +195,18 @@ void Stage_Start(const InGame* ingame)
 //カーソルの位置と対応している配列の中身を道に変更
 void Put_Road(const Tool* tool, const Cursor* cursor)
 {
-	if (tool->road_flag[cursor->array_x][cursor->array_y] == true)
+	for (int j = 0; j < 7; j++)
 	{
-		stage.array[cursor->array_x][cursor->array_y] = 4;
+		for (int i = 0; i < 12; i++)
+		{
+			if (tool->road_flag[i][j] == true)
+			{
+				stage.array[i][j] = 4;
 
-		destination.x= cursor->array_x;
-		destination.y= cursor->array_y;
-		
+				destination.x = i;
+				destination.y = j;
+			}
+		}
 	}
 }
 
@@ -205,15 +214,42 @@ void Put_Road(const Tool* tool, const Cursor* cursor)
 //カーソルの位置と対応している配列の中身を丸太の道に変更
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
 {
-	if (tool->wood_road_flag[cursor->array_x][cursor->array_y] == true)
+	for (int j = 0; j < 7; j++)
 	{
-		stage.array[cursor->array_x][cursor->array_y] = 5;
+		for (int i = 0; i < 12; i++)
+		{
+			if (tool->wood_road_flag[i][j] == true)
+			{
+				stage.array[i][j] = 5;
 
-		destination.x = cursor->array_x;
-		destination.y = cursor->array_y;
+				destination.x = i;
+				destination.y = j;
+			}
+		}
 	}
 }
 
+//カーソルの位置と対応しているベースの道を壊す
+void Break_Road(const Tool* tool,const Cursor*cursor)
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (tool->road_break_flag[i][j] == true)
+			{
+				if (tool->stage_begin_array[i][j] == 6)
+				{
+					stage.array[i][j] = 6;
+				}
+				else
+				{
+					stage.array[i][j] = 0;
+				}
+			}
+		}
+	}
+}
 
 void Delete_WoodRock(const Wood* wood,const Rock* rock)
 {
