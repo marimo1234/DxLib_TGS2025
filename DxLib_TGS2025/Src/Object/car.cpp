@@ -77,10 +77,11 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
-		DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
+
+	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
-		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);
+		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);*/
 		if (car.gameover_image==true)
 		{
 			DrawRotaGraphF(615, 380, 1.0, 0.0, car.gameover, TRUE);
@@ -90,9 +91,9 @@ void CarDraw(void)
 			//ゴールの文字を出す
 			DrawRotaGraphF(615,380, 1.0, 0.0, car.goal, TRUE);
 		}
-		DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
+	/*	DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 		DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
-		DrawFormatString(400, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );
+		DrawFormatString(400, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
 		
 }
 

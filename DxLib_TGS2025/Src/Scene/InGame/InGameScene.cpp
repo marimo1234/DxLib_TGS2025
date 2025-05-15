@@ -135,7 +135,7 @@ void InGameSceneDraw(void)
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
-	DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);
+	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
 	DrawFormatString(50, 60, GetColor(255, 255, 255), "Aで伐る、壊す、作った道を置く");
 	DrawFormatString(50, 120, GetColor(255, 255, 255), "Bで材料があれば道、橋を作れる");
