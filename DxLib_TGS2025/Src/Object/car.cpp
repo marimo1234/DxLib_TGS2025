@@ -120,11 +120,27 @@ const Car* GetCar(void)
 //ステージ切り替えするときのリセット
 void CarReset(void)
 {
+	car.current_x = 2;//ステージ①の初期位置
+	car.current_y = 3;
 	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;
 	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.direction = eRight;
+	car.velocity.x = 0.2f;//速度
+	car.velocity.y = 0.2f;
 	car.road_count = 0;
 	car.next_count = 1;
+	car.goal_flag = false;//ゴールまで道がつながっているかどうか
+	car.gameover_image = false;//GameOverをだすか
+	overroad = 0;
+	car.start = false;//車の処理フラグ
+	car.goalprint = false;
+	car.current_x = 2;//ステージ①の初期位置
+	car.current_y = 3;
+	for (int i = 0; i < 84; i++)
+	{
+		car.next_x[i] = -1;
+		car.next_y[i] = -1;
+	}
 }
 
 //次の進行場所を取得する
@@ -257,6 +273,7 @@ void CarDetectPosition(void)
 		car.direction = eStop;//ストップ
 	}
 }
+//GameOver時のアニメーション
 void OverRoad(void)
 {
 	switch (car.old_direction)
@@ -294,15 +311,19 @@ void CarGoalCheck(const CreateStage* stage)
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] - 1] == 7 ||
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7)
 	{
+		//車の速度を上げる
 		car.velocity.x = 2.0f;
 		car.velocity.y = 2.0f;
 
+		//ゴールの配列番号を一番先端に入れる
 		car.next_x[car.road_count + 1] = stage->goal_x[0];
 		car.next_y[car.road_count + 1] = stage->goal_y[0];
+		//ゴールまで道がつながったかどうか
 		car.goal_flag = true;
 	}
 	else
 	{
+		//ゴール以外の時の速度
 		car.velocity.x = 0.2f;
 		car.velocity.y = 0.2f;
 	}

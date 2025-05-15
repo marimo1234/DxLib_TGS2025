@@ -9,10 +9,12 @@ struct Goal
 	bool start;
 	int image;
 	int flag_image;
+	int count;
 };
 
 void GoalInit(void);
 void GoalUpdate(void);
 void GoalDraw(void);
+void GoalReset(void);
 
 const Goal* GetGoal(void);

@@ -3,6 +3,7 @@
 #include"../Scene/InGame/InGameScene.h"
 #include"../Utility/PadInputManager.h"
 #include "../Object/Car.h"
+#include "../Object/Map.h"
 
 
 //仮名
@@ -12,7 +13,7 @@ int i=255;
 
 //スタートしたか？
 void GoalStart(const InGame* ingame);
-void GoalFlag(const InGame* ingame, const Car* car);
+void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage);
 
 
 
@@ -20,14 +21,12 @@ void GoalFlag(const InGame* ingame, const Car* car);
 //初期化
 void GoalInit(void)
 {
-	goal.position.x = 690.0f;
-	goal.position.y = 380.0f;
 	//ゴールしたかの判定フラグ
 	goal.flag = false;
 
 	//ゲームがスタートしたかの判定フラグ
 	goal.start = false;
-
+	goal.count = 0;
 	//画像の読み込み
 	goal.flag_image = LoadGraph("Resource/images/GOAL_FLAG2.png");
 	goal.image = LoadGraph("Resource/images/GOAL.png");
@@ -39,31 +38,19 @@ void GoalUpdate(void)
 	//ゴール処理をスタート
 	GoalStart(GetInGame());
 	//ゴールしたかどうか
-	GoalFlag(GetInGame(),GetCar());
+	GoalFlag(GetInGame(), GetCar(), GetStage());
 
-	
-		PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (goal.start = false)
+	{
+		GoalReset();
+	}
 
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
-		{
-			goalprint = false;
-		}
-	
-	
 }
 
 //描画
 void GoalDraw(void)
 {
-	//画像の描画
-	/*DrawRotaGraphF(goal.position.x, goal.position.y, 1.0, 0.0, goal.flag_image, TRUE);*/
-	SetDrawBright(i, i, i);
-	//ゴールしたら
-	if (goalprint==true)
-	{
-			//ゴールの文字を出す
-			/*DrawRotaGraphF(615,380, 1.0, 0.0, goal.image, TRUE);*/
-	}
+	
 }
 	
 
@@ -88,15 +75,19 @@ const Goal* GetGoal(void)
 }
 
 
-void GoalFlag(const InGame* ingame, const Car* car)
+void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage)
 {
 
-	/*if (goal.position.x < car->position.x && goal.position.y == car->position.y)
+	if (car->current_x == stage->goal_x[0] && car->current_y == stage->goal_y[0] && car->direction == eStop)
 	{
-		goal.flag = true;
-		goalprint = true;
+		goal.count++;
+		if (goal.count > 120)
+		{
+			goal.flag = true;
+			goal.count = 0;
+		}
 		
-	}*/
+	}
 
 	if (ingame->next_stage_flag == true)
 	{
@@ -104,3 +95,14 @@ void GoalFlag(const InGame* ingame, const Car* car)
 	}
 
 }
+
+void GoalReset(void)
+{
+	//ゴールしたかの判定フラグ
+	goal.flag = false;
+
+	//ゲームがスタートしたかの判定フラグ
+	goal.start = false;
+	goal.count = 0;
+}
+

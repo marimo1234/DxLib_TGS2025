@@ -12,6 +12,8 @@ struct CreateStage
 	int stage_x;
 	int stage_y;
 	int trout_image;
+	int start;
+
 	int wood_x[80];
 	int wood_y[80];
 	int rock_x[80];
@@ -43,6 +45,7 @@ void MapDraw(void);
 void StageLoad(void);
 
 void MapValueInit(void);
+void MapReset(void);
+void MapTroutDraw(void);
 const CreateStage* GetStage(void);
 const NextDestination* GetDestination(void);
-void MapTroutDraw(void);

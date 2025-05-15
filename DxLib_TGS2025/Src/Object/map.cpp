@@ -37,6 +37,7 @@ void MapInit(void)
 	//目的地の初期化
 	destination.x = 3;
 	destination.y= 3;
+	stage.start = false;
 
 	
 }
@@ -46,12 +47,21 @@ void MapUpdate(void)
 {
 	//ステージ処理開始
 	Stage_Start(GetInGame());
-	//採取した後に描画を消す
-	Delete_WoodRock(GetWood(), GetRock());
-	//道を置く
-	Put_Road(Get_Tool(), GetCursor1());
-	//橋を置く
-	Put_Wood_Road(Get_Tool(), GetCursor1());	
+	
+
+	if (stage.start == true)
+	{
+		//採取した後に描画を消す
+		Delete_WoodRock(GetWood(), GetRock());
+		//道を置く
+		Put_Road(Get_Tool(), GetCursor1());
+		//橋を置く
+		Put_Wood_Road(Get_Tool(), GetCursor1());
+	}
+	else
+	{
+		MapReset();
+	}
 }
 
 void MapDraw(void)
@@ -167,13 +177,13 @@ void Stage_Start(const InGame* ingame)
 	//TRUEならstageもTRUEに
 	if (ingame->start == true)
 	{
-		stage_start = true;
+		stage.start = true;
 	}
 
 	//そうでなければFALSEに
 	else
 	{
-		stage_start = false;
+		stage.start = false;
 	}
 }
 
@@ -289,4 +299,17 @@ void MapTroutDraw(void)
 			DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
 		}
 	}
+}
+
+void MapReset(void)
+{
+	//スタートフラグの初期化
+	stage.start = false;
+	//目的地の初期化
+	destination.x = 3;
+	destination.y = 3;
+
+	StageLoad();
+	MapValueInit();
+	MapTroutDraw();
 }
