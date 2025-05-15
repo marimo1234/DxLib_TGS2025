@@ -281,22 +281,22 @@ void OverRoad(void)
 	{
 	case eUp://上に
 		car.animation = car.image[2];
-		car.position.y -= 0.2;
+		car.position.y -= 0.1f;
 		overroad+=2;
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
-		car.position.y += 0.2;
+		car.position.y += 0.1f;
 		overroad+=2;
 		break;
 	case eRight://右に
 		car.animation = car.image[0];
-		car.position.x += 0.2;
+		car.position.x += 0.1f;
 		overroad+=2;
 		break;
 	case eLeft:
 		car.animation = car.image[1];
-		car.position.x -= 0.2;
+		car.position.x -= 0.1f;
 		overroad += 2;
 		break;
 
@@ -325,8 +325,8 @@ void CarGoalCheck(const CreateStage* stage)
 	else
 	{
 		//ゴール以外の時の速度
-		car.velocity.x = 0.2f;
-		car.velocity.y = 0.2f;
+		car.velocity.x = 0.1f;
+		car.velocity.y = 0.1f;
 	}
 
 
