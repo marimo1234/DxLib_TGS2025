@@ -20,8 +20,10 @@ int pickaxe_animation_num = 0, pickaxe_animation_count = 0;
 int ax_anim_num = 0, ax_anim_count = 0;
 int cursor_image1, cursor_image2;
 int cursor_ax;
+int cursor_drill;
 static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
 static bool is_animating_ax = false;       // 斧のアニメーションフラグ
+static bool is_animating_drill = false;    // ドリルのアニメーションフラグ
 
 void CursorStart(const InGame* ingame);
 
@@ -48,6 +50,7 @@ void CursorInit(void)
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe1.png");
 	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
+	cursor_drill = LoadGraph("Resource/Images/Drill.png");
 }
 
 //カーソルの更新
@@ -139,6 +142,11 @@ void CursorDraw(const Tool*tool)
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
 		}
+	}
+	else if(tool->item_number==eDrill)
+	{
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
+
 	}
 
 }
