@@ -10,8 +10,6 @@
 #define MAP_TROUT_LENGTH (80)
 
 CreateStage stage;
-NextDestination destination;
-
 int ground;
 int groundreef;
 int stage_start;
@@ -35,9 +33,7 @@ void MapInit(void)
 	//マップの各値を初期化
 	MapValueInit();
 
-	//目的地の初期化
-	destination.x = 3;
-	destination.y= 3;
+	
 	stage.start = false;
 
 	
@@ -84,10 +80,7 @@ const CreateStage* GetStage(void)
 {
 	return&stage;
 }
-const NextDestination* GetDestination(void)
-{
-	return&destination;
-}
+
 //ステージ生成
 void StageLoad(void)
 {
@@ -203,9 +196,6 @@ void Put_Road(const Tool* tool, const Cursor* cursor)
 			if (tool->road_flag[i][j] == true)
 			{
 				stage.array[i][j] = 4;
-
-				destination.x = i;
-				destination.y = j;
 			}
 		}
 	}
@@ -222,9 +212,6 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
 			if (tool->wood_road_flag[i][j] == true)
 			{
 				stage.array[i][j] = 5;
-
-				destination.x = i;
-				destination.y = j;
 			}
 		}
 	}
@@ -342,9 +329,6 @@ void MapReset(void)
 {
 	//スタートフラグの初期化
 	stage.start = false;
-	//目的地の初期化
-	destination.x = 3;
-	destination.y = 3;
 
 	StageLoad();
 	MapValueInit();
