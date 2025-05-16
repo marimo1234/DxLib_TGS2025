@@ -33,6 +33,7 @@ void NextStageFlag(const Goal* goal);
 //初期化
 void InGameSceneInit(void)
 {
+	ingame.manuar_back= LoadGraph("Resource/images/waku.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
@@ -136,10 +137,12 @@ void InGameSceneDraw(void)
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
+	DrawRotaGraphF(50, 10,1.1,0.0,ingame.manuar_back, TRUE);
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "Aで伐る、壊す、作った道を置く");
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "Bで材料があれば道、橋を作れる");
-	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB,LBでアイテムスロットを操作できる");
+	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB＆LB：アイテムスロットを操作できる");
+	DrawFormatString(50, 60, GetColor(255, 255, 255), "A：木、石を伐る、道を壊す、作った道、橋を薄く光っている場所に置く");
+	DrawFormatString(50, 120, GetColor(255, 255, 255), "B：材料があれば道、橋を作れる");
+	
 }
 const InGame* GetInGame(void)
 {
