@@ -8,16 +8,8 @@
 #include "../Object/map.h"
 
 
-#define PICKAXE_X				(1120)		//つるはし(x)
-#define PICKAXE_Y				(680)		//つるはし(y)
 #define FRAME_X					(1040)		//枠(x)
 #define FRAME_Y					(680)		//枠(y)
-#define ROAD_X					(880)		//道路(x)
-#define ROAD_Y					(680)		//道路(y)
-#define WOODROAD_X				(960)		//木の道路(x)
-#define WOODROAD_Y				(680)		//木の道路(y)
-#define AX_X					(1040)		//斧(x)
-#define AX_Y					(680)		//斧(y)
 #define ROAD_NUM_X				(870)		//道路の所持数(x)
 #define ROAD_NUM_Y				(690)		//道路の所持数(y)
 #define WOODROAD_NUM_X			(950)		//木の道路の所持数(x)
