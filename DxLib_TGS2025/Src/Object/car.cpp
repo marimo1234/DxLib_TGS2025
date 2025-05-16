@@ -143,13 +143,16 @@ void CarReset(void)
 	car.road_count = 0;
 	car.next_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
-	gameover.image_flag = false;//GameOverをだすか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
 	car.goalprint = false;
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
-	gameover.image_count = 0;
+
+	gameover.image_flag = false;//GameOverをだすか
+	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
+	gameover.flag = false;//GameOver後にリセットさせるフラグ
+
 	for (int i = 0; i < 84; i++)
 	{
 		car.next_x[i] = -1;
