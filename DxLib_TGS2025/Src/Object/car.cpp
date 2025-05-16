@@ -163,7 +163,7 @@ void GetNextDestination(const Tool*tool)
 		for (int i = 0; i < 12; i++)
 		{
 			/*car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y*/
-			if (tool->road_flag[i][j] == true)
+			if (tool->road_flag[i][j] == true|| tool->wood_road_flag[i][j] == true)
 			{
 				car.road_count++;
 				car.next_x[car.road_count] = i;

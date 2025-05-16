@@ -35,7 +35,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
 void Poosible_Prace(const CreateStage* stage);
-void Break_Road_FLAG(const Cursor*cursor);
+void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage);
 void Stage_Init(const CreateStage*stage);
 
 
@@ -109,7 +109,7 @@ void ToolManagerUpdate(void)
 		Move_ItemSelect();
 		Road_FLAG_OFF();
 		
-		Break_Road_FLAG(GetCursor1());			//道を壊す
+		Break_Road_FLAG(GetCursor1(),GetStage());			//道を壊す
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
@@ -337,7 +337,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 }
 
 //道を壊す
-void Break_Road_FLAG(const Cursor*cursor)
+void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタン押されたら
@@ -347,24 +347,28 @@ void Break_Road_FLAG(const Cursor*cursor)
 		//アイテムがドリルなら
 		if (tool.item_number == 4)
 		{
-
-			//カーソルの位置がベースなら
-			if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y)
+			//ゴールとつながっていないなら
+			if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7) &&
+				stage->array[tool.base_x][tool.base_y - 1] != 7)
 			{
-				tool.road_break_flag[tool.base_x][tool.base_y] = true;
-				tool.road_img_array[tool.base_x][tool.base_y] = -1;
-				for (int j = 0; j < 7; j++)
+				//カーソルの位置がベースなら
+				if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y)
 				{
-					for (int i = 0; i < 12; i++)
+					tool.road_break_flag[tool.base_x][tool.base_y] = true;
+					tool.road_img_array[tool.base_x][tool.base_y] = -1;
+					for (int j = 0; j < 7; j++)
 					{
-						if (tool.old_base_array[i][j] == 1)
+						for (int i = 0; i < 12; i++)
 						{
-							tool.base_x = i;
-							tool.base_y = j;
-						}
-						if (tool.old_base_array[i][j] > 0)
-						{
-							tool.old_base_array[i][j]--;
+							if (tool.old_base_array[i][j] == 1)
+							{
+								tool.base_x = i;
+								tool.base_y = j;
+							}
+							if (tool.old_base_array[i][j] > 0)
+							{
+								tool.old_base_array[i][j]--;
+							}
 						}
 					}
 				}

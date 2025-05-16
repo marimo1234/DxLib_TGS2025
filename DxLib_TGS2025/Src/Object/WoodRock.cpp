@@ -29,29 +29,14 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 
 void WoodRockStart(const InGame* ingame);
 void WoodRockSub(const Tool* tool);
+void WoodRockHitInit(const CreateStage* stage);
 
 
 //初期化
 void WoodRockInit(void)
 {
 	//ヒットフラグ、ヒット数、アニメーション、削除フラグの初期化
-	for (int j = 0; j < WOODROCK_Y_MAX; j++)
-	{
-		for (int i = 0; i < WOODROCK_X_MAX; i++)
-		{
-			wood.hit_flag[i][j] = false;
-			wood.hit_count[i][j] = eHit0;
-			wood.animation[i][j] = wood.image[0];
-			wood.delete_flag[i][j] = false;
-			
-
-			rock.hit_flag[i][j] = false;
-			rock.hit_count[i][j] = eHit0;
-			rock.animation[i][j] = rock.image[0];
-			rock.delete_flag[i][j] = false;
-			
-		}
-	}
+	WoodRockHitInit(GetStage());
 
 	//ムーブフラグの初期化
 	wood.move_flag = false;
@@ -397,24 +382,7 @@ void WoodRockReset(void)
 
 
 	//初期化
-	for (int j = 0; j < 7; j++)
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			//木
-			wood.hit_flag[i][j] = false;
-			wood.hit_count[i][j] = eHit0;
-			wood.animation[i][j] = wood.image[0];
-			wood.delete_flag[i][j] = false;
-			
-			//石
-			rock.hit_flag[i][j] = false;
-			rock.hit_count[i][j] = eHit0;
-			rock.animation[i][j] = rock.image[0];
-			rock.delete_flag[i][j] = false;
-			
-		}
-	}
+	WoodRockHitInit(GetStage());
 	
 }
 
@@ -488,5 +456,37 @@ void WR_Delete_Flag(void)
 	if (rock.delete_flag[rock.count_x][rock.count_y] == true)
 	{
 		rock.delete_flag[rock.count_x][rock.count_y] = false;
+	}
+}
+void WoodRockHitInit(const CreateStage* stage)
+{
+	for (int j = 0; j < WOODROCK_Y_MAX; j++)
+	{
+		for (int i = 0; i < WOODROCK_X_MAX; i++)
+		{
+
+			wood.hit_flag[i][j] = false;
+			wood.animation[i][j] = wood.image[0];
+			wood.delete_flag[i][j] = false;
+
+
+			rock.hit_flag[i][j] = false;
+			rock.animation[i][j] = rock.image[0];
+			rock.delete_flag[i][j] = false;
+
+			if (stage->array[i][j] == 1)
+			{
+				wood.hit_count[i][j] = eHit0;
+			}
+			else if (stage->array[i][j] == 2)
+			{
+				rock.hit_count[i][j] = eHit0;
+			}
+			else
+			{
+				wood.hit_count[i][j] = eHitEnd;
+				rock.hit_count[i][j] = eHitEnd;
+			}
+		}
 	}
 }
