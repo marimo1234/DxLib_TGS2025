@@ -18,32 +18,37 @@ void CarGoalCheck(const CreateStage* stage);
 void GetBreakRoadPosition(const Tool* tool);
 
 Car car;
+GameOver gameover;
 void CarInit(void)
 {
 
 	overroad = 0;
-	car.position.x= car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
-	car.position.y= car.current_y * CAR_TROUT_LNEGTH + 120.0f;
+	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
+	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.velocity.x = 0.2f;//速度
 	car.velocity.y = 0.2f;
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
-	car.gameover_image = false;//GameOverをだすか
+	gameover.image_flag = false;//GameOverをだすか
+	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
+	gameover.flag = false;//GameOver後にリセットさせるフラグ
 
 	//画像の読み込み
 	car.image[0] = LoadGraph("Resource/images/car_right.png");
 	car.image[1] = LoadGraph("Resource/images/car_left.png");
 	car.image[2] = LoadGraph("Resource/images/car_up.png");
 	car.image[3] = LoadGraph("Resource/images/car_down.png");
-	car.gameover = LoadGraph("Resource/images/GAMEOVER.png");
 	car.goal = LoadGraph("Resource/images/GOAL.png");
+	gameover.image = LoadGraph("Resource/images/GAMEOVER.png");
+
+
 	car.start = false;//車の処理フラグ
 	car.goalprint = false;
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
-	
+
 	//次の目的地の初期化
 	for (int i = 0; i < 84; i++)
 	{
@@ -59,7 +64,7 @@ void CarManagerUpdate(void)
 {
 	//車の処理をスタートするフラグ
 	CarStart(GetInGame());
-	
+
 	//次の進行場所を取得する
 	GetNextDestination(Get_Tool());
 	GetBreakRoadPosition(Get_Tool());
@@ -69,7 +74,7 @@ void CarManagerUpdate(void)
 		//車の移動処理
 		CarGoalCheck(GetStage());
 		CarMovePosition();
-		
+
 	}
 	else
 	{
@@ -77,31 +82,31 @@ void CarManagerUpdate(void)
 		CarReset();
 	}
 
-	
+
 }
 
 void CarDraw(void)
 {
-		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
+	DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);*/
-		if (car.gameover_image==true)
-		{
-			DrawRotaGraphF(615, 380, 1.0, 0.0, car.gameover, TRUE);
-		}
-		if (car.goalprint == true)
-		{
-			//ゴールの文字を出す
-			DrawRotaGraphF(615,380, 1.0, 0.0, car.goal, TRUE);
-		}
-		/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
-		DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-		DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
-		DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
-		
+	if (gameover.image_flag == true)
+	{
+		DrawRotaGraphF(615, 380, 1.0, 0.0, gameover.image, TRUE);
+	}
+	if (car.goalprint == true)
+	{
+		//ゴールの文字を出す
+		DrawRotaGraphF(615, 380, 1.0, 0.0, car.goal, TRUE);
+	}
+	/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
+	DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
+	DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
+
 }
 
 
@@ -116,7 +121,7 @@ void CarStart(const InGame* ingame)
 	{
 		car.start = false;
 	}
-	
+
 }
 
 //車の情報を取得
@@ -138,12 +143,13 @@ void CarReset(void)
 	car.road_count = 0;
 	car.next_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
-	car.gameover_image = false;//GameOverをだすか
+	gameover.image_flag = false;//GameOverをだすか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
 	car.goalprint = false;
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
+	gameover.image_count = 0;
 	for (int i = 0; i < 84; i++)
 	{
 		car.next_x[i] = -1;
@@ -154,7 +160,7 @@ void CarReset(void)
 }
 
 //次の進行場所を取得する
-void GetNextDestination(const Tool*tool)
+void GetNextDestination(const Tool* tool)
 {
 	//道が置かれたときの座標を取得して番号をつける
 	//次の移動位置が同じでないなら
@@ -163,18 +169,19 @@ void GetNextDestination(const Tool*tool)
 		for (int i = 0; i < 12; i++)
 		{
 			/*car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y*/
-			if (tool->road_flag[i][j] == true|| tool->wood_road_flag[i][j] == true)
+			if (tool->road_flag[i][j] == true || tool->wood_road_flag[i][j] == true)
 			{
 				car.road_count++;
 				car.next_x[car.road_count] = i;
 				car.next_y[car.road_count] = j;
-				
-				
+
+
 			}
 		}
 	}
 }
 
+//壊すポジションを取得
 void GetBreakRoadPosition(const Tool* tool)
 {
 	for (int j = 0; j < 7; j++)
@@ -183,7 +190,7 @@ void GetBreakRoadPosition(const Tool* tool)
 		{
 			if (tool->road_break_flag[i][j] == true)
 			{
-				
+
 				car.next_x[car.road_count] = -1;
 				car.next_y[car.road_count] = -1;
 				car.road_count--;
@@ -208,16 +215,22 @@ void CarMovePosition(void)
 			}
 			if (overroad > 399)
 			{
+				gameover.image_count++;
 				car.position.x += 0.0f;
 				car.position.y += 0.0f;
-				car.gameover_image = true;
+				gameover.image_flag = true;
+
+				if (gameover.image_count > 120)
+				{
+					gameover.image_flag = true;
+				}
 			}
 		}
 		else if (car.goal_flag == true)
 		{
 			car.goalprint = true;
 		}
-				
+
 		break;
 	case eUp://上に
 		car.animation = car.image[2];
@@ -256,7 +269,7 @@ void CarMovePosition(void)
 			CarDetectPosition();
 		}
 		break;
-	
+
 	default:
 		break;
 	}
@@ -266,7 +279,7 @@ void CarMovePosition(void)
 void CarDetectPosition(void)
 {
 	//現在のX位置よりも次のX位置が大きかったら
-	if (car.current_x < car.next_x[car.next_count]&&
+	if (car.current_x < car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
 	{
 		car.direction = eRight;//右に
@@ -285,7 +298,7 @@ void CarDetectPosition(void)
 		car.next_count++;
 	}
 	//現在のY位置よりも次のY位置が小さかったら
-	else if (car.current_y > car.next_y[car.next_count]&&
+	else if (car.current_y > car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
 		car.direction = eUp;//上に
@@ -295,7 +308,7 @@ void CarDetectPosition(void)
 		car.next_count++;                          //次の位置の配列番号にする
 	}
 	//現在のY位置よりも次のY位置が大きかったら
-	else if (car.current_y < car.next_y[car.next_count]&&
+	else if (car.current_y < car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
 		car.direction = eDown;//下に
@@ -318,17 +331,17 @@ void OverRoad(void)
 	case eUp://上に
 		car.animation = car.image[2];
 		car.position.y -= 0.1f;
-		overroad+=2;
+		overroad += 2;
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
 		car.position.y += 0.1f;
-		overroad+=2;
+		overroad += 2;
 		break;
 	case eRight://右に
 		car.animation = car.image[0];
 		car.position.x += 0.1f;
-		overroad+=2;
+		overroad += 2;
 		break;
 	case eLeft:
 		car.animation = car.image[1];
@@ -364,7 +377,5 @@ void CarGoalCheck(const CreateStage* stage)
 		car.velocity.x = 0.1f;
 		car.velocity.y = 0.1f;
 	}
-	
+
 }
-
-
