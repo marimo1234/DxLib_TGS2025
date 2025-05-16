@@ -9,6 +9,7 @@
 #include "../../Object/map.h"
 #include "../../Object/Tool.h"
 #include "../../Object/Goal.h"
+#include "../../Object/car.h"
 #include "DxLib.h"
 
 #include <math.h>
@@ -29,11 +30,12 @@ InGame ingame;
 
 
 void NextStageFlag(const Goal* goal);
+void GameOverReset(const GameOver* gameover);
 
 //初期化
 void InGameSceneInit(void)
 {
-	ingame.manuar_back= LoadGraph("Resource/images/waku.png");
+	ingame.manual_back= LoadGraph("Resource/images/waku.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
@@ -93,6 +95,8 @@ eSceneType InGameSceneUpdate()
 
 	//ゴールしたなら次のステージへ
 	StageChange();
+	//ゲームオーバーになったらリセットします
+	GameOverReset(GetGameOver());
 
 
 
@@ -137,7 +141,7 @@ void InGameSceneDraw(void)
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
-	DrawRotaGraphF(50, 10,1.1,0.0,ingame.manuar_back, TRUE);
+	DrawRotaGraphF(50, 10,1.1,0.0,ingame.manual_back, TRUE);
 	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
 	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB＆LB：アイテムスロットを操作できる");
 	DrawFormatString(50, 60, GetColor(255, 255, 255), "A：木、石を伐る、道を壊す、作った道、橋を薄く光っている場所に置く");
@@ -164,7 +168,6 @@ void GameStart(void)
 }
 
 
-
 //インゲームBGM再生
 void PlayBgm(void)
 {
@@ -185,6 +188,14 @@ void NextStageFlag(const Goal* goal)
 	}
 
 	
+}
+
+void GameOverReset(const GameOver* gameover)
+{
+	if (gameover->flag == true)
+	{
+		ingame.start = false;
+	}
 }
 
 //ステージチェンジ処理
@@ -231,3 +242,5 @@ void StageChange(void)
 		break;
 	}
 }
+
+

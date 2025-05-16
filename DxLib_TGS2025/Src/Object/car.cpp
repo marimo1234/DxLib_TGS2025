@@ -106,7 +106,7 @@ void CarDraw(void)
 	DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
 	DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
-
+	/*DrawFormatString(450, 350, GetColor(255, 255, 255), "%d",gameover.image_count); */
 }
 
 
@@ -128,6 +128,12 @@ void CarStart(const InGame* ingame)
 const Car* GetCar(void)
 {
 	return &car;
+}
+
+//ゲームオーバー情報を取得
+const GameOver* GetGameOver(void)
+{
+	return &gameover;
 }
 
 //ステージ切り替えするときのリセット
@@ -225,7 +231,8 @@ void CarMovePosition(void)
 
 				if (gameover.image_count > 120)
 				{
-					gameover.image_flag = true;
+					gameover.flag = true;
+					gameover.image_count = 0;
 				}
 			}
 		}
