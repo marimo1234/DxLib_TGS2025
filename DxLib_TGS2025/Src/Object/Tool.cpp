@@ -6,6 +6,7 @@
 #include "../Object/WoodRock.h"
 #include "../Object/Cursor.h"
 #include "../Object/map.h"
+#include "../Object/car.h"
 
 
 #define FRAME_X					(1040)		//枠(x)
@@ -35,7 +36,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
 void Poosible_Prace(const CreateStage* stage);
-void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage);
+void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage, const Car* car);
 void Stage_Init(const CreateStage*stage);
 
 
@@ -109,7 +110,7 @@ void ToolManagerUpdate(void)
 		Move_ItemSelect();
 		Road_FLAG_OFF();
 		
-		Break_Road_FLAG(GetCursor1(),GetStage());			//道を壊す
+		Break_Road_FLAG(GetCursor1(),GetStage(),GetCar());			//道を壊す
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
@@ -337,7 +338,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 }
 
 //道を壊す
-void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage)
+void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタン押されたら
@@ -347,12 +348,14 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage)
 		//アイテムがドリルなら
 		if (tool.item_number == 4)
 		{
+
 			//ゴールとつながっていないなら
 			if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7) &&
 				stage->array[tool.base_x][tool.base_y - 1] != 7)
 			{
-				//カーソルの位置がベースなら
-				if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y)
+				//カーソルの位置がベースでcarのnextではなければ
+				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
+					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count]))
 				{
 					tool.road_break_flag[tool.base_x][tool.base_y] = true;
 					tool.road_img_array[tool.base_x][tool.base_y] = -1;
@@ -808,8 +811,8 @@ void Poosible_Prace(const CreateStage* stage)
 
 {
 	//ゴールではないなら
-	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 || stage->array[tool.base_x - 1][tool.base_y] != 7) ||
-		(stage->array[tool.base_x][tool.base_y + 1] != 7 || stage->array[tool.base_x][tool.base_y - 1] != 7))
+	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 && stage->array[tool.base_x - 1][tool.base_y] != 7) &&
+		(stage->array[tool.base_x][tool.base_y + 1] != 7 && stage->array[tool.base_x][tool.base_y - 1] != 7))
 	{
 		//アイテムが道なら
 		if (tool.item_number == 0)
