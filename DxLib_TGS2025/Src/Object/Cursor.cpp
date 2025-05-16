@@ -47,7 +47,7 @@ void CursorInit(void)
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe1.png");
 	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
-	cursor_ax = LoadGraph("Resource/Images/ax.png");
+	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
 }
 
 //カーソルの更新
