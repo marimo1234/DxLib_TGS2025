@@ -811,8 +811,8 @@ void Poosible_Prace(const CreateStage* stage)
 
 {
 	//ゴールではないなら
-	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 || stage->array[tool.base_x - 1][tool.base_y] != 7) ||
-		(stage->array[tool.base_x][tool.base_y + 1] != 7 || stage->array[tool.base_x][tool.base_y - 1] != 7))
+	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 && stage->array[tool.base_x - 1][tool.base_y] != 7) &&
+		(stage->array[tool.base_x][tool.base_y + 1] != 7 && stage->array[tool.base_x][tool.base_y - 1] != 7))
 	{
 		//アイテムが道なら
 		if (tool.item_number == 0)
