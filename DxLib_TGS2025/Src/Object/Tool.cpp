@@ -117,7 +117,7 @@ void ToolManagerUpdate(void)
 		Move_ItemSelect();
 		Road_FLAG_OFF();
 		
-		/*Break_Road_FLAG(GetCursor1());	*/		//道を壊す
+		Break_Road_FLAG(GetCursor1());			//道を壊す
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
@@ -155,7 +155,7 @@ void ToolDraw(void)
 	Poosible_Prace(GetStage());
 
 	//仮
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d,%d", tool.base_x,tool.base_y);	
+	/*DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d,%d", tool.base_x, tool.road_img_array[tool.base_x][tool.base_y]);*/
 }
 
 //アイテムセレクトの動き
@@ -360,6 +360,7 @@ void Break_Road_FLAG(const Cursor*cursor)
 			if (cursor->array_x == tool.base_x && cursor->array_y == tool.base_y)
 			{
 				tool.road_break_flag[tool.base_x][tool.base_y] = true;
+				tool.road_img_array[tool.base_x][tool.base_y] = -1;
 				for (int j = 0; j < 7; j++)
 				{
 					for (int i = 0; i < 12; i++)
@@ -368,7 +369,6 @@ void Break_Road_FLAG(const Cursor*cursor)
 						{
 							tool.base_x = i;
 							tool.base_y = j;
-
 						}
 						if (tool.old_base_array[i][j] > 0)
 						{
@@ -392,9 +392,15 @@ void Road_FLAG_OFF(void)
 	{
 		tool.wood_road_flag[tool.base_x][tool.base_y] = false;
 	}
-	if (tool.road_break_flag[tool.base_x][tool.base_y] == true)
+	for (int j = 0; j < 7; j++)
 	{
-		tool.road_break_flag[tool.base_x][tool.base_y] = false;
+		for (int i = 0; i < 12; i++)
+		{
+			if (tool.road_break_flag[i][j] == true)
+			{
+				tool.road_break_flag[i][j] = false;
+			}
+		}
 	}
 } 
 
@@ -860,7 +866,7 @@ void Poosible_Prace(const CreateStage* stage)
 					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
 				}
 				//下が湖
-				if (tool.base_y + 1 < tool.stage_array_below_y && stage->array[tool.base_x][tool.base_y + 1] == 6)
+				if (tool.base_y + 1 < tool.stage_array_exceed_y && stage->array[tool.base_x][tool.base_y + 1] == 6)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
 				}

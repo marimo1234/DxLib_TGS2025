@@ -54,13 +54,14 @@ void MapUpdate(void)
 	{
 		//採取した後に描画を消す
 		Delete_WoodRock(GetWood(), GetRock());
+		//道を壊す
+		Break_Road(Get_Tool(),GetCursor1());
 		//道を置く
 		Put_Road(Get_Tool(), GetCursor1());
 		//橋を置く
 		Put_Wood_Road(Get_Tool(), GetCursor1());
 
-		//道を壊す
-		/*Break_Road(Get_Tool(),GetCursor1());*/
+		
 	}
 	else
 	{
