@@ -107,8 +107,11 @@ void CursorDraw(const Tool*tool)
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);*/
-	if (tool->item_number == ePickaxe) 
+	
+	// もしitem_numberがePickaxeなら
+	if (tool->item_number == ePickaxe)
 	{
+		// ツルハシのアニメーションを動かす
 		if (is_animating_pickaxe)
 		{
 			if (pickaxe_animation_num == 0)
@@ -120,13 +123,16 @@ void CursorDraw(const Tool*tool)
 				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
 			}
 		}
+		// アニメーションが動いてなければcursor_image1にする
 		else
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
 		}
 	}
+	// もしitem_numberがeAxなら
 	else if (tool->item_number == eAx) 
 	{
+		// 斧のアニメーションを動かす
 		if (is_animating_ax)
 		{
 			if (ax_anim_num == 0)
@@ -138,13 +144,16 @@ void CursorDraw(const Tool*tool)
 				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, -90.0, cursor_ax, TRUE);
 			}
 		}
+		// アニメーションが動いていなければcursor_axにする
 		else
 		{
 			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
 		}
 	}
+	// もしitem_numberがeDrillなら
 	else if(tool->item_number==eDrill)
 	{
+		// cursor_drillを描画する
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
 
 	}
