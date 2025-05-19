@@ -17,6 +17,14 @@ enum eToolState
 	ePickaxe,
 };
 
+enum eOldPosition
+{
+	eRP,		//右
+	eLP,		//左
+	eTP,		//上
+	eBP,		//下
+};
+
 struct Tool
 {
 	int frameselect_x;				//選択枠のｘ座標
@@ -40,6 +48,7 @@ struct Tool
 	int stage_array_exceed_y;		//ステージごとの配列上限（ｙ
 	int stage_array_below_y;		//ステージごとの配列下限（ｙ
 	int stage_begin_array[12][7];	//ステージ読み込み時の配列
+	int old_position_direction;
 
 	bool rock_sub_flag;				//岩の所持数を引くフラグ
 	bool wood_sub_flag;				//木の所持数数を引くフラグ
@@ -64,6 +73,7 @@ struct Tool_Img
 	int possible_beside;	//設置可能位置の画像ハンドル(横
 	int possible_vertical;	//設置可能位置の画像ハンドル(縦
 	int possible_wood_road;	//設置可能位置の画像ハンドル(木
+	int possible_break;		//破壊可能位置の画像ハンドル
 
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
@@ -85,6 +95,7 @@ void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
 void Item_Frame_Draw(void);
+void Search_Old_Position(void);
 
 
 const Tool* Get_Tool(void);
