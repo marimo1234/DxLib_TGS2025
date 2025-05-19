@@ -18,7 +18,10 @@ struct InGame
 	bool start;
 	int stage_num;
 	bool next_stage_flag;
-	int manual_back;
+	int manual_open;
+	int manual_image;
+	int space;
+	int back;
 };
 
 

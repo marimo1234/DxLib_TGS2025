@@ -40,12 +40,11 @@ void CarInit(void)
 	car.image[1] = LoadGraph("Resource/images/car_left.png");
 	car.image[2] = LoadGraph("Resource/images/car_up.png");
 	car.image[3] = LoadGraph("Resource/images/car_down.png");
-	car.goal = LoadGraph("Resource/images/GOAL.png");
-	gameover.image = LoadGraph("Resource/images/GAMEOVER.png");
+	
 
 
 	car.start = false;//車の処理フラグ
-	car.goalprint = false;
+	
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
 
@@ -93,15 +92,7 @@ void CarDraw(void)
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);*/
-	if (gameover.image_flag == true)
-	{
-		DrawRotaGraphF(615, 380, 1.0, 0.0, gameover.image, TRUE);
-	}
-	if (car.goalprint == true)
-	{
-		//ゴールの文字を出す
-		DrawRotaGraphF(615, 380, 1.0, 0.0, car.goal, TRUE);
-	}
+	
 	/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
@@ -151,7 +142,6 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
-	car.goalprint = false;
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
 
@@ -236,10 +226,7 @@ void CarMovePosition(void)
 				}
 			}
 		}
-		else if (car.goal_flag == true)
-		{
-			car.goalprint = true;
-		}
+		
 
 		break;
 	case eUp://上に

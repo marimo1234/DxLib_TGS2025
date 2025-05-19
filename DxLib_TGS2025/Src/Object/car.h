@@ -30,12 +30,9 @@ struct Car
     int next_count;
     int old_direction;
     bool goal_flag;
-    int goal;
-    int goalprint;
-    /*bool gameover_image;
-    int gameover;
-    int gameover_count;
-    bool gameover_flag; */
+   
+    
+   
 
 };
 
