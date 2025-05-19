@@ -5,6 +5,7 @@
 #include "../System/System.h"
 #include "../Object/Map.h"
 #include"../Object/Tool.h"
+#include"../Object/Car.h"
 #include "DxLib.h"
 
 #define CURSOR_ARRAY_X_MAX (11)
@@ -26,6 +27,7 @@ static bool is_animating_ax = false;       // 斧のアニメーションフラ�
 static bool is_animating_drill = false;    // ドリルのアニメーションフラグ
 
 void CursorStart(const InGame* ingame);
+void GetCarInitPosition(const Car* car);
 
 
 //カーソルの初期化
@@ -33,8 +35,8 @@ void CursorInit(void)
 {
 	//初期設定
 	cursor_image = {};
-	cursor.position.x = 200.0f;				//初期位置（Ｘ）
-	cursor.position.y = 120.0f;				//初期位置（Ｙ）
+	cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;			    	//初期位置（Ｘ）
+	cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;				//初期位置（Ｙ）
 	cursor.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
@@ -42,8 +44,9 @@ void CursorInit(void)
 	cursorstart = false;
 
 	//カーソルの配列番号
-	cursor.array_x = 0;
-	cursor.array_y = 0;
+	GetCarInitPosition(GetCar());
+	/*cursor.array_x = 0;
+	cursor.array_y = 0;*/
 
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
@@ -190,8 +193,9 @@ void CursolButtonMovement(const Tool* tool)
 			// 十字ボタンの左を押したとき
 			if (cursor.array_x > CURSOR_ARRAY_X_MIN)
 			{
-				cursor.position.x += -MOVE_ONE_SPACE;
 				cursor.array_x--;
+				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
+				
 			}
 
 			// 移動のSE（もし使うならここに入れてね）
@@ -201,8 +205,9 @@ void CursolButtonMovement(const Tool* tool)
 			// 十字ボタンの右を押したとき
 			if (cursor.array_x < CURSOR_ARRAY_X_MAX)
 			{
-				cursor.position.x += MOVE_ONE_SPACE;
 				cursor.array_x++;
+				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
+				
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
@@ -211,8 +216,9 @@ void CursolButtonMovement(const Tool* tool)
 			// 十字ボタンの上を押したとき
 			if (cursor.array_y > CURSOR_ARRAY_Y_MIN)
 			{
-				cursor.position.y += -MOVE_ONE_SPACE;
 				cursor.array_y--;
+				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
+				
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
@@ -220,9 +226,10 @@ void CursolButtonMovement(const Tool* tool)
 		{
 			// 十字ボタンの下を押したとき
 			if (cursor.array_y < CURSOR_ARRAY_Y_MAX)
-			{
-				cursor.position.y += MOVE_ONE_SPACE;
+			{ 
 				cursor.array_y++;
+				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
+				
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
@@ -253,16 +260,24 @@ void CursolButtonMovement(const Tool* tool)
 
 void CursorReset(void)
 {
-	cursor.position.x = 200.0f;				//初期位置（Ｘ）
-	cursor.position.y = 120.0f;				//初期位置（Ｙ）
+	GetCarInitPosition(GetCar());      //カーソルの配列番号
+
+	cursor.position.x = MOVE_ONE_SPACE*cursor.array_x+200.0f;			    	//初期位置（Ｘ）
+	cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;				//初期位置（Ｙ）
 	cursor.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 	cursorstart = false;
-	//カーソルの配列番号
-	cursor.array_x = 0;
-	cursor.array_y = 0;
+	
+	
 	static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
 	static bool is_animating_ax = false;       // 斧のアニメーションフラグ
+}
+
+
+void GetCarInitPosition(const Car* car)
+{
+	cursor.array_x = car->current_x;
+	cursor.array_y = car->current_y;
 }
