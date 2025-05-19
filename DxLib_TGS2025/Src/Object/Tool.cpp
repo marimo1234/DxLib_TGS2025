@@ -9,13 +9,11 @@
 #include "../Object/car.h"
 
 
-#define FRAME_X					(1040)		//枠(x)
-#define FRAME_Y					(680)		//枠(y)
 #define ROAD_NUM_X				(870)		//道路の所持数(x)
 #define ROAD_NUM_Y				(690)		//道路の所持数(y)
 #define WOODROAD_NUM_X			(950)		//木の道路の所持数(x)
 #define WOODROAD_NUM_Y			(690)		//木の道路の所持数(y)
-#define ITEM_SELECT_BASE_X		(1200)		//アイテムの基準(x)
+#define ITEM_SELECT_BASE_X		(880)		//アイテムの基準(x)
 #define ITEM_SELECT_BASE_Y		(680)		//アイテムの基準(y)
 #define MAP_TROUT_LENGTH		(80)		//マップの配列の間隔
 #define ARRAY_EXCEED_LIMIT_X	(12)		//配列要素を超過した値(x
@@ -44,9 +42,11 @@ void Stage_Init(const CreateStage*stage);
 void ToolInit(void) 
 {
 	//初期化
-	tool.frameselect_x = 1120;
+	tool.frameselect_x = 1200;
 	tool.frameselect_y = 680;
-	tool.item_number = eDrill;
+	tool.item_frame_x = 880;
+	tool.item_frame_y = 680;
+	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -59,6 +59,16 @@ void ToolInit(void)
 	tool.stage_array_exceed_y = 0;
 	tool.stage_array_below_x = 0;
 	tool.stage_array_below_y = 0;
+
+	tool_img.item_frame_ex_rate = 0.8;
+	tool_img.pickaxe_ex_rate = 0.4;
+	tool_img.ax_ex_rate = 0.8;
+	tool_img.drill_ex_rate = 0.8;
+	tool_img.woodroad_ex_rate = 0.3;
+	tool_img.road_ex_rate = 0.6;
+	tool_img.road_num_ex_rate = 1.0;
+	tool_img.woodroad_num_ex_rate = 1.0;
+
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -74,7 +84,7 @@ void ToolInit(void)
 
 	//******画像読み込み******//
 	//アイテム枠
-	tool_img.itemframe = LoadGraph("Resource/images/item_frame.png");
+	tool_img.itemframe= LoadGraph("Resource/images/item_frame.png");
 	//ピッケル
 	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
 	//木の道
@@ -129,24 +139,11 @@ void ToolManagerUpdate(void)
 //描画
 void ToolDraw(void) 
 {
-	//アイテム枠
-	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, tool_img.itemframe, TRUE);
-	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
-	//斧の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 1, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.ax, TRUE);
-	//ドリルの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 2, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.drill, TRUE);
-	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 3, ITEM_SELECT_BASE_Y, 0.4, 0.0, tool.wood_road_img, TRUE);
-	//道路の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 4, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.road_vertical, TRUE);
+	//アイテム欄
+	Item_Frame_Draw();
 	//枠選択の描画（アイテム枠）
-	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
-	//道路の所持数
-	DrawExtendFormatString(ROAD_NUM_X, ROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.road_num);
-	//木の道の所持数
-	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, 1.5, 1.5, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
+	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.1, 0.0, tool_img.item_select, TRUE);
+	
 	//設置可能位置表示
 	Poosible_Prace(GetStage());
 
@@ -205,7 +202,86 @@ void Move_ItemSelect(void)
 		}
 	}
 	//x座標変更
-	tool.frameselect_x = ITEM_SELECT_BASE_X - ((4 - tool.item_number) * 80);
+	tool.frameselect_x = ITEM_SELECT_BASE_X + (tool.item_number * 80);
+}
+
+//アイテム欄描画
+void Item_Frame_Draw(void)
+{
+	//アイテム枠
+	tool.item_frame_x = 880;
+	tool_img.item_frame_ex_rate = 1.0;
+	for (int i = 0; i < 5; i++)
+	{
+		if (tool.item_number == i)
+		{
+			tool_img.item_frame_ex_rate = 1.0;
+		}
+		else
+		{
+			tool_img.item_frame_ex_rate = 1.0;
+		}
+		DrawRotaGraph(tool.item_frame_x, tool.item_frame_y, tool_img.item_frame_ex_rate, 0.0, tool_img.itemframe, TRUE);
+		tool.item_frame_x += 80;
+	}
+
+	//アイテム
+	switch (tool.item_number)
+	{
+	case ePickaxe:
+		tool_img.pickaxe_ex_rate += 0.15;
+		break;
+	case eAx:
+		tool_img.ax_ex_rate += 0.3;
+		break;
+	case eDrill:
+		tool_img.drill_ex_rate += 0.2;
+		break;
+	case eWoodRoad:
+		tool_img.woodroad_ex_rate += 0.1;
+		tool_img.woodroad_num_ex_rate += 0.2;
+		break;
+	case eRoad:
+		tool_img.road_ex_rate += 0.2;
+		tool_img.road_num_ex_rate += 0.2;
+		break;
+	}
+
+	//つるはしの描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 4, ITEM_SELECT_BASE_Y, tool_img.pickaxe_ex_rate, 0.0, tool_img.pickaxe, TRUE);
+	//斧の描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 3, ITEM_SELECT_BASE_Y, tool_img.ax_ex_rate, 0.0, tool_img.ax, TRUE);
+	//ドリルの描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.drill_ex_rate, 0.0, tool_img.drill, TRUE);
+	//丸太の地面の描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 1, ITEM_SELECT_BASE_Y, tool_img.woodroad_ex_rate, 0.0, tool.wood_road_img, TRUE);
+	//道路の描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
+
+	//道路の所持数
+	DrawExtendFormatString(ROAD_NUM_X, ROAD_NUM_Y, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.road_num);
+	//木の道の所持数
+	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
+	switch (tool.item_number)
+	{
+	case ePickaxe:
+		tool_img.pickaxe_ex_rate -= 0.15;
+		break;
+	case eAx:
+		tool_img.ax_ex_rate -= 0.3;
+		break;
+	case eDrill:
+		tool_img.drill_ex_rate -= 0.2;
+		break;
+	case eWoodRoad:
+		tool_img.woodroad_ex_rate -= 0.1;
+		tool_img.woodroad_num_ex_rate -= 0.2;
+		break;
+	case eRoad:
+		tool_img.road_ex_rate -= 0.2;
+		tool_img.road_num_ex_rate -= 0.2;
+		break;
+	}
 }
 
 //道を置く
@@ -358,7 +434,8 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 			{
 				//カーソルの位置がベースでcarのnextではなければ
 				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
-					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count]))
+					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count])&&
+					(cursor->array_x!=car->current_x||cursor->array_y!=car->current_y))
 				{
 					//道だったら岩を+1
 					if (stage->array[tool.base_x][tool.base_y] == 4)

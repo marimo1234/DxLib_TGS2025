@@ -35,7 +35,7 @@ void GameOverReset(const GameOver* gameover);
 //初期化
 void InGameSceneInit(void)
 {
-	ingame.manual_back= LoadGraph("Resource/images/waku.png");
+	ingame.manual_back= LoadGraph("Resource/images/sousasetumei.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
@@ -141,11 +141,10 @@ void InGameSceneDraw(void)
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
-	DrawRotaGraphF(50, 10,1.1,0.0,ingame.manual_back, TRUE);
-	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
-	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB＆LB：アイテムスロットを操作できる");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "A：木、石を伐る、道を壊す、作った道、橋を薄く光っている場所に置く");
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "B：材料があれば道、橋を作れる");
+	if (ingame.start==false)
+	{
+		DrawRotaGraphF(640, 360,1.0,0.0,ingame.manual_back, TRUE);
+	}
 	
 }
 const InGame* GetInGame(void)

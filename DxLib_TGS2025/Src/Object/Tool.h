@@ -23,6 +23,8 @@ struct Tool
 	int frameselect_y;				//選択枠のｙ座標
 	int base_x;						//配列の基準ｘ
 	int base_y;						//配列の基準ｙ
+	int item_frame_x;				//枠のｘ座標
+	int item_frame_y;				//枠のｙ座標
 
 	int item_number;				//選択しているアイテムの種類
 	int road_num;					//道の所持数
@@ -62,6 +64,15 @@ struct Tool_Img
 	int possible_beside;	//設置可能位置の画像ハンドル(横
 	int possible_vertical;	//設置可能位置の画像ハンドル(縦
 	int possible_wood_road;	//設置可能位置の画像ハンドル(木
+
+	float item_frame_ex_rate;		//アイテム枠の拡大率
+	float pickaxe_ex_rate;			//つるはしの拡大率
+	float ax_ex_rate;				//斧の拡大率
+	float drill_ex_rate;			//ドリルの拡大率
+	float woodroad_ex_rate;			//木の道の拡大率
+	float road_ex_rate;				//道の拡大率
+	float road_num_ex_rate;			//道の所持数の拡大率
+	float woodroad_num_ex_rate;		//木の道の所持数の拡大率
 };
 
 void ToolInit(void);
@@ -73,6 +84,7 @@ void Tool_Reset(void);
 void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
+void Item_Frame_Draw(void);
 
 
 const Tool* Get_Tool(void);
