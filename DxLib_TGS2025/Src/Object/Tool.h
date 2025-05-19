@@ -41,6 +41,8 @@ struct Tool
 
 	bool rock_sub_flag;				//岩の所持数を引くフラグ
 	bool wood_sub_flag;				//木の所持数数を引くフラグ
+	bool rock_add_flag;				//岩の所持数を足すフラグ
+	bool wood_add_flag;				//木の所持数を足すフラグ
 	bool road_break_flag[12][7];	//道を壊したことを伝えるフラグ
 };
 

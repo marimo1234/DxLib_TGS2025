@@ -489,6 +489,10 @@ void Sub_Num(void)
 	}
 }
 
+void Add_num(void)
+{
+}
+
 //ステージ切り替え時の値リセット
 void Tool_Reset(void)
 {
