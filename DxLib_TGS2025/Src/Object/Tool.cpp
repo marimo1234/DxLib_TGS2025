@@ -131,12 +131,12 @@ void ToolDraw(void)
 {
 	//アイテム枠
 	DrawRotaGraph(FRAME_X, FRAME_Y, 1.0, 0.0, tool_img.itemframe, TRUE);
-	//ドリルの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.drill, TRUE);
 	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 1, ITEM_SELECT_BASE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
+	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, 0.5, 0.0, tool_img.pickaxe, TRUE);
 	//斧の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 2, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.ax, TRUE);
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 1, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.ax, TRUE);
+	//ドリルの描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 2, ITEM_SELECT_BASE_Y, 1.0, 0.0, tool_img.drill, TRUE);
 	//丸太の地面の描画（アイテム枠）
 	DrawRotaGraph(ITEM_SELECT_BASE_X - 80 * 3, ITEM_SELECT_BASE_Y, 0.4, 0.0, tool.wood_road_img, TRUE);
 	//道路の描画（アイテム枠）
@@ -168,15 +168,15 @@ void Move_ItemSelect(void)
 			tool.item_number = eWoodRoad;
 			break;
 		case eWoodRoad:
+			tool.item_number = eDrill;
+			break;
+		case eDrill:
 			tool.item_number = eAx;
 			break;
 		case eAx:
 			tool.item_number = ePickaxe;
 			break;
 		case ePickaxe:
-			tool.item_number = eDrill;
-			break;
-		case eDrill:
 			tool.item_number = eRoad;
 			break;
 		}
@@ -188,19 +188,19 @@ void Move_ItemSelect(void)
 		switch (tool.item_number)
 		{
 		case eRoad:
-			tool.item_number = eDrill;
+			tool.item_number = ePickaxe;
 			break;
 		case eWoodRoad:
 			tool.item_number = eRoad;
 			break;
-		case eAx:
+		case eDrill:
 			tool.item_number = eWoodRoad;
+			break;
+		case eAx:
+			tool.item_number = eDrill;
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
-			break;
-		case eDrill:
-			tool.item_number = ePickaxe;
 			break;
 		}
 	}
@@ -218,7 +218,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 	{
 
 		//アイテムが道路なら
-		if (tool.item_number == 0)
+		if (tool.item_number == eRoad)
 		{
 
 			//道路の数が0より多いなら
@@ -284,7 +284,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 	{
 
 		//アイテムが木の道路なら
-		if (tool.item_number == 1)
+		if (tool.item_number == eWoodRoad)
 		{
 
 			//木の道路の数が0より多いなら
@@ -349,7 +349,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 	{
 
 		//アイテムがドリルなら
-		if (tool.item_number == 4)
+		if (tool.item_number == eDrill)
 		{
 
 			//ゴールとつながっていないなら
@@ -366,7 +366,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 						tool.rock_add_flag = true;
 					}
 					//木の道だったら木を+1
-					else if (stage->array[tool.base_x][tool.base_y] == 4)
+					else if (stage->array[tool.base_x][tool.base_y] == 5)
 					{
 						tool.wood_add_flag = true;
 					}
@@ -449,7 +449,7 @@ void const Road_Add_Num(const Rock* rock)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//アイテムが道路なら
-	if (tool.item_number == 0)
+	if (tool.item_number == eRoad)
 	{
 		
 		//岩の所持数が1以上なら
@@ -472,7 +472,7 @@ void const WoodRoad_Add_Num(const Wood* wood)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//アイテムが木の道路なら
-	if (tool.item_number == 1)
+	if (tool.item_number == eWoodRoad)
 	{
 
 		//木の所持数が1以上なら

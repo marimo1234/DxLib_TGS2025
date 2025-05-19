@@ -12,9 +12,9 @@ enum eToolState
 {
 	eRoad,
 	eWoodRoad,
+	eDrill,
 	eAx,
 	ePickaxe,
-	eDrill,
 };
 
 struct Tool
