@@ -146,11 +146,6 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640, 360,1.0,0.0,ingame.manual_back, TRUE);
 	}
 	
-	DrawFormatString(50, 10, GetColor(255, 255, 255), "X：ゲームスタート");
-	DrawFormatString(50, 170, GetColor(255, 255, 255), "RB＆LB：アイテムスロットを操作できる");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "A：木、石を伐る、道を壊す、作った道、橋を薄く光っている場所に置く");
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "B：材料があれば道、橋を作れる");
-	
 }
 const InGame* GetInGame(void)
 {
