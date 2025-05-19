@@ -7,8 +7,9 @@ struct Goal
 	Vector2D position;
 	bool flag;
 	bool start;
-	int image;
+	int print_image;
 	int flag_image;
+	bool print_flag;
 	int count;
 };
 

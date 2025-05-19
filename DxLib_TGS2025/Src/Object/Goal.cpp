@@ -27,9 +27,11 @@ void GoalInit(void)
 	//ゲームがスタートしたかの判定フラグ
 	goal.start = false;
 	goal.count = 0;
+
+	goal.print_flag = false;
 	//画像の読み込み
 	goal.flag_image = LoadGraph("Resource/images/GOAL_FLAG2.png");
-	goal.image = LoadGraph("Resource/images/GOAL.png");
+	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 }
 
 //更新
@@ -50,7 +52,10 @@ void GoalUpdate(void)
 //描画
 void GoalDraw(void)
 {
-	
+	if (goal.print_flag == true)
+	{
+		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.print_image, TRUE);
+	}
 }
 	
 
@@ -81,9 +86,11 @@ void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage)
 	if (car->current_x == stage->goal_x[0] && car->current_y == stage->goal_y[0] && car->direction == eStop)
 	{
 		goal.count++;
+		goal.print_flag = true;
 		if (goal.count > 120)
 		{
 			goal.flag = true;
+			goal.print_flag = false;
 			goal.count = 0;
 		}
 		
