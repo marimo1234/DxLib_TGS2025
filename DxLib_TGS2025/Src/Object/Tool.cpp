@@ -60,7 +60,7 @@ void ToolInit(void)
 	tool.stage_array_below_x = 0;
 	tool.stage_array_below_y = 0;
 
-	tool_img.item_frame_ex_rate = 0.8;
+	tool_img.item_frame_ex_rate = 1.0;
 	tool_img.pickaxe_ex_rate = 0.4;
 	tool_img.ax_ex_rate = 0.8;
 	tool_img.drill_ex_rate = 0.8;
@@ -142,7 +142,7 @@ void ToolDraw(void)
 	//アイテム欄
 	Item_Frame_Draw();
 	//枠選択の描画（アイテム枠）
-	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.1, 0.0, tool_img.item_select, TRUE);
+	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
 	
 	//設置可能位置表示
 	Poosible_Prace(GetStage());
@@ -210,17 +210,8 @@ void Item_Frame_Draw(void)
 {
 	//アイテム枠
 	tool.item_frame_x = 880;
-	tool_img.item_frame_ex_rate = 1.0;
 	for (int i = 0; i < 5; i++)
 	{
-		if (tool.item_number == i)
-		{
-			tool_img.item_frame_ex_rate = 1.0;
-		}
-		else
-		{
-			tool_img.item_frame_ex_rate = 1.0;
-		}
 		DrawRotaGraph(tool.item_frame_x, tool.item_frame_y, tool_img.item_frame_ex_rate, 0.0, tool_img.itemframe, TRUE);
 		tool.item_frame_x += 80;
 	}
