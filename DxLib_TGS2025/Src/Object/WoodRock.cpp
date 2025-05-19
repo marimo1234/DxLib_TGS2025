@@ -29,7 +29,9 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 
 void WoodRockStart(const InGame* ingame);
 void WoodRockSub(const Tool* tool);
+void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
+void WoodRockSub(const Tool* tool);
 
 
 //初期化
@@ -94,6 +96,7 @@ void WoodRockUpdate(void)
 
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
+		WoodRockAdd(Get_Tool());
 	}
 	else
 	{
@@ -290,6 +293,18 @@ void WoodRockSub (const Tool*tool)
 	if (tool->wood_sub_flag == true)
 	{
 		wood.item_num--;
+	}
+}
+
+void WoodRockAdd(const Tool* tool)
+{
+	if(tool->rock_add_flag == true)
+	{
+		rock.item_num++;
+	}
+	if (tool->wood_add_flag == true)
+	{
+		wood.item_num++;
 	}
 }
 
