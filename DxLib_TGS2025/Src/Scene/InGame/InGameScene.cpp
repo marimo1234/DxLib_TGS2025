@@ -42,7 +42,7 @@ void InGameSceneInit(void)
 	//操作説明の表示
 	ingame.manual_open = false;
 	//操作説明の画像
-	ingame.manual_image= LoadGraph("Resource/images/sousasetumei.png");
+	ingame.manual_image= LoadGraph("Resource/images/manual.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
@@ -181,6 +181,13 @@ void GameStart(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
 		{
 			ingame.manual_open = true;
+		}
+	}
+	else if (ingame.manual_open == true)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+		{
+			ingame.manual_open = false;
 		}
 	}
 }
