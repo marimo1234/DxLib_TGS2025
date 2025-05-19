@@ -35,7 +35,14 @@ void GameOverReset(const GameOver* gameover);
 //初期化
 void InGameSceneInit(void)
 {
-	ingame.manual_back= LoadGraph("Resource/images/sousasetumei.png");
+	//説明の後ろに表示
+	ingame.back = LoadGraph("Resource/images/waku.png");
+	//インゲーム前の画面
+	ingame.space= LoadGraph("Resource/images/aida.png");
+	//操作説明の表示
+	ingame.manual_open = false;
+	//操作説明の画像
+	ingame.manual_image= LoadGraph("Resource/images/sousasetumei.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
@@ -141,9 +148,14 @@ void InGameSceneDraw(void)
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
-	if (ingame.start==false)
+	if (ingame.start==false&&ingame.manual_open==true)
 	{
-		DrawRotaGraphF(640, 360,1.0,0.0,ingame.manual_back, TRUE);
+		DrawRotaGraphF(640, 360,1.0,0.0,ingame.manual_image, TRUE);
+	}
+	if (ingame.start == false && ingame.manual_open == false)
+	{
+		DrawRotaGraphF(640, 360, 3.0, 0.0, ingame.back, TRUE);
+		DrawRotaGraphF(640, 360, 1.0, 0.0, ingame.space, TRUE);
 	}
 	
 }
@@ -162,6 +174,13 @@ void GameStart(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
 			ingame.start = true;
+		}
+	}
+	if (ingame.manual_open == false)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+		{
+			ingame.manual_open = true;
 		}
 	}
 }
