@@ -11,6 +11,8 @@ struct Goal
 	int flag_image;
 	bool print_flag;
 	int count;
+
+	int gameover_image;
 };
 
 void GoalInit(void);

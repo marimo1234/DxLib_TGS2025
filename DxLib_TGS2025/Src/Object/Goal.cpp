@@ -14,6 +14,7 @@ int i=255;
 //スタートしたか？
 void GoalStart(const InGame* ingame);
 void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage);
+void GameOverDraw(const GameOver* gameover);
 
 
 
@@ -32,6 +33,8 @@ void GoalInit(void)
 	//画像の読み込み
 	goal.flag_image = LoadGraph("Resource/images/GOAL_FLAG2.png");
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
+
+	goal.gameover_image= LoadGraph("Resource/images/GAMEOVER.png");
 }
 
 //更新
@@ -56,6 +59,8 @@ void GoalDraw(void)
 	{
 		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.print_image, TRUE);
 	}
+
+	GameOverDraw(GetGameOver());
 }
 	
 
@@ -111,5 +116,13 @@ void GoalReset(void)
 	//ゲームがスタートしたかの判定フラグ
 	goal.start = false;
 	goal.count = 0;
+}
+
+void GameOverDraw(const GameOver* gameover)
+{
+	if (gameover->image_flag == true)
+	{
+		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.gameover_image, TRUE);
+	}
 }
 
