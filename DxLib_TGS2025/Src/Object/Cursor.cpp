@@ -16,6 +16,7 @@
 
 Cursor cursor;
 int cursor_image;
+int cursor_se;
 int cursorstart;
 int pickaxe_animation_num = 0, pickaxe_animation_count = 0;
 int ax_anim_num = 0, ax_anim_count = 0;
@@ -54,6 +55,7 @@ void CursorInit(void)
 	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
+	cursor_se = LoadSoundMem("Resource/Sounds");
 }
 
 //カーソルの更新
