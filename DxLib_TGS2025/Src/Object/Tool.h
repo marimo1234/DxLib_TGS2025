@@ -72,6 +72,7 @@ void Sub_Num(void);
 void Tool_Reset(void);
 void Base_Chenge(void);
 void Road_FLAG_OFF(void);
+void Add_Road_Num(void);
 
 
 const Tool* Get_Tool(void);

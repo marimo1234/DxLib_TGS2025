@@ -52,6 +52,8 @@ void ToolInit(void)
 	tool_start = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
+	tool.rock_add_flag = false;
+	tool.wood_add_flag = false;
 	tool.stage_number = 0;
 	tool.stage_array_exceed_x = 0;
 	tool.stage_array_exceed_y = 0;
@@ -102,6 +104,7 @@ void ToolInit(void)
 void ToolManagerUpdate(void)
 {
 	Sub_Num();
+	Add_Road_Num();
 	Tool_Start(GetInGame());
 
 	//ゲームスタートがtrueなら
@@ -357,12 +360,24 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
 					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count]))
 				{
+					//道だったら岩を+1
+					if (stage->array[tool.base_x][tool.base_y] == 4)
+					{
+						tool.rock_add_flag = true;
+					}
+					//木の道だったら木を+1
+					else if (stage->array[tool.base_x][tool.base_y] == 4)
+					{
+						tool.wood_add_flag = true;
+					}
+				
 					tool.road_break_flag[tool.base_x][tool.base_y] = true;
 					tool.road_img_array[tool.base_x][tool.base_y] = -1;
 					for (int j = 0; j < 7; j++)
 					{
 						for (int i = 0; i < 12; i++)
 						{
+							
 							if (tool.old_base_array[i][j] == 1)
 							{
 								tool.base_x = i;
@@ -474,7 +489,7 @@ void const WoodRoad_Add_Num(const Wood* wood)
 	}
 }
 
-//木と岩の所持数を増やした後にフラグを戻す
+//道の所持数を増やした後にフラグを戻す
 void Sub_Num(void)
 {
 	//岩の所持数をマイナス1するフラグを元に戻す
@@ -489,8 +504,19 @@ void Sub_Num(void)
 	}
 }
 
-void Add_num(void)
+//木と岩の所持数を増やした後にフラグを戻す
+void Add_Road_Num(void)
 {
+	//岩の所持数をプラス1するフラグを元に戻す
+	if (tool.rock_add_flag == true)
+	{
+		tool.rock_add_flag = false;
+	}
+	//木の所持数をプラス1するフラグを元に戻す
+	if (tool.wood_add_flag == true)
+	{
+		tool.wood_add_flag = false;
+	}
 }
 
 //ステージ切り替え時の値リセット
@@ -501,6 +527,8 @@ void Tool_Reset(void)
 	tool.wood_road_num = 0;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
+	tool.rock_add_flag = false;
+	tool.wood_add_flag = false;
 	tool.stage_number = 0;		//今だけ
 	for (int j = 0; j < 7; j++)
 	{
