@@ -14,9 +14,13 @@ struct Obstacle
 	Size2D box_size;		//矩形の大きさ
 };
 
-struct Hole
+struct Mole
 {
-	int image;
+	bool start;
+	int image[4];
+	int image_num;
+	int animation;
+	int image_count;
 };
 
 struct Lake
@@ -28,5 +32,8 @@ void ObstacleManagerInit(void);
 void ObstacleManagerUpdate(void);
 void ObstacleManagerDraw(void);
 const Obstacle * GetObstacle(void);
-const Hole* GetHole(void);
+const Mole* GetMole(void);
 const Lake* GetLake(void);
+
+void MoleRandomDirection(void);
+void MoleReset(void);
