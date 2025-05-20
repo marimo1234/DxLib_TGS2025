@@ -156,8 +156,8 @@ void ToolDraw(void)
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
 	//仮
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d",
-		tool.old_position_direction);
+	/*DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d",
+		tool.old_position_direction);*/
 }
 
 //アイテムセレクトの動き
