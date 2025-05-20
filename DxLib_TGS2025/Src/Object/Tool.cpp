@@ -39,8 +39,6 @@ void Stage_Init(const CreateStage*stage);
 void Possible_Break(const CreateStage*stage,const Cursor*cursor,const Car*car);
 
 
-
-
 //初期化
 void ToolInit(void) 
 {
@@ -68,7 +66,7 @@ void ToolInit(void)
 	tool_img.pickaxe_ex_rate = 0.4;
 	tool_img.ax_ex_rate = 0.8;
 	tool_img.drill_ex_rate = 0.8;
-	tool_img.woodroad_ex_rate = 0.3;
+	tool_img.woodroad_ex_rate = 0.6;
 	tool_img.road_ex_rate = 0.6;
 	tool_img.road_num_ex_rate = 1.0;
 	tool_img.woodroad_num_ex_rate = 1.0;
@@ -81,6 +79,7 @@ void ToolInit(void)
 			tool.wood_road_flag[i][j] = false;
 			tool.road_break_flag[i][j] = false;
 			tool.road_img_array[i][j] = -1;
+			tool.wood_road_img_array[i][j] = -1;
 			tool.old_base_array[i][j] = 0;
 		}
 	}
@@ -93,6 +92,12 @@ void ToolInit(void)
 	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
 	//木の道
 	tool.wood_road_img = LoadGraph("Resource/images/Log.png");
+	tool_img.wood_road_vertical= LoadGraph("Resource/images/wooodroad_vertical.png");
+	tool_img.wood_road_beside= LoadGraph("Resource/images/wooodroad_beside.png");
+	tool_img.wood_road_Topright = LoadGraph("Resource/images/woodroad_TR.png");
+	tool_img.wood_road_Btmright = LoadGraph("Resource/images/woodroad_BR.png");
+	tool_img.wood_road_Rbottom = LoadGraph("Resource/images/woodroad_RB.png");
+	tool_img.wood_road_Rtop = LoadGraph("Resource/images/woodroad_RTop.png");
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
 	//ドリル
@@ -154,10 +159,6 @@ void ToolDraw(void)
 	Possible_Prace(GetStage());
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
-
-	//仮
-	/*DrawFormatString(50, 400, GetColor(255, 255, 255), "tool%d",
-		tool.old_position_direction);*/
 }
 
 //アイテムセレクトの動き
@@ -238,7 +239,7 @@ void Item_Frame_Draw(void)
 		tool_img.drill_ex_rate += 0.2;
 		break;
 	case eWoodRoad:
-		tool_img.woodroad_ex_rate += 0.1;
+		tool_img.woodroad_ex_rate += 0.2;
 		tool_img.woodroad_num_ex_rate += 0.2;
 		break;
 	case eRoad:
@@ -253,8 +254,8 @@ void Item_Frame_Draw(void)
 	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 3, ITEM_SELECT_BASE_Y, tool_img.ax_ex_rate, 0.0, tool_img.ax, TRUE);
 	//ドリルの描画（アイテム枠）
 	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.drill_ex_rate, 0.0, tool_img.drill, TRUE);
-	//丸太の地面の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 1, ITEM_SELECT_BASE_Y, tool_img.woodroad_ex_rate, 0.0, tool.wood_road_img, TRUE);
+	//木の道の描画（アイテム枠）
+	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 1, ITEM_SELECT_BASE_Y, tool_img.woodroad_ex_rate, 0.0, tool_img.wood_road_beside, TRUE);
 	//道路の描画（アイテム枠）
 	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
 
@@ -274,7 +275,7 @@ void Item_Frame_Draw(void)
 		tool_img.drill_ex_rate -= 0.2;
 		break;
 	case eWoodRoad:
-		tool_img.woodroad_ex_rate -= 0.1;
+		tool_img.woodroad_ex_rate -= 0.2;
 		tool_img.woodroad_num_ex_rate -= 0.2;
 		break;
 	case eRoad:
@@ -619,7 +620,7 @@ void Tool_Reset(void)
 	tool_img.pickaxe_ex_rate = 0.4;
 	tool_img.ax_ex_rate = 0.8;
 	tool_img.drill_ex_rate = 0.8;
-	tool_img.woodroad_ex_rate = 0.3;
+	tool_img.woodroad_ex_rate = 0.6;
 	tool_img.road_ex_rate = 0.6;
 	tool_img.road_num_ex_rate = 1.0;
 	tool_img.woodroad_num_ex_rate = 1.0;
@@ -630,6 +631,7 @@ void Tool_Reset(void)
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
 			tool.road_img_array[i][j] = -1;
+			tool.wood_road_img_array[i][j] = -1;
 		}
 	}
 	Stage_Init(GetStage());
@@ -651,7 +653,7 @@ void Road_Imghandle_Init(const CreateStage*stage)
 	}
 }
 
-//ステージごとのの基準初期化
+//ステージごとの基準初期化
 void Stage_Init(const CreateStage*stage)
 {
 	if (tool.stage_number == 0)
@@ -673,7 +675,7 @@ void Stage_Init(const CreateStage*stage)
 	}
 }
 
-//配列の基準変更
+//道の配列の基準変更
 void Base_Chenge(void)
 {
 	for (int j = 0; j < 7; j++)
@@ -866,6 +868,7 @@ void Road_Imghandle_Update(const CreateStage*stage)
 	}
 }
 
+//前置いたところがどの方向か
 void Search_Old_Position(void)
 {
 	if (tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.old_base_array[tool.base_x - 1][tool.base_y] == 1)
