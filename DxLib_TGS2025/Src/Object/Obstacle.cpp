@@ -16,7 +16,7 @@ int item_images[1];
 //障害物の初期化
 void ObstacleManagerInit(void)
 {
-	hole.image = LoadGraph("Resource/images/hole.png");
+	hole.image = LoadGraph("Resource/images/mole_down.png");
 	lake.image = LoadGraph("Resource/images/lake.png");
 
 }
