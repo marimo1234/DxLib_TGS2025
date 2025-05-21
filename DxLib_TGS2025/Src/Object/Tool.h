@@ -43,7 +43,6 @@ struct Tool
 	int item_number;				//選択しているアイテムの種類
 	int road_num;					//道の所持数
 	int road_flag[12][7];			//道を置いたことを知らせるフラグ
-	int wood_road_img;				//木の道の画像ハンドル
 	int wood_road_num;				//木の道の所持数
 	int wood_road_flag[12][7];		//木の道を置いたことを知らせるフラグ
 	int road_img_array[12][7];		//道の画像ハンドル配列
@@ -71,6 +70,7 @@ struct Tool_Img
 	int ax;					//斧の画像ハンドル
 	int drill;				//ドリルの画像ハンドル
 	int item_select;		//選択枠（アイテム）の画像ハンドル
+	int wood_road_img;		//木の道の画像ハンドル
 	
 	int road_beside;		//左右への道の画像ハンドル
 	int road_vertical;		//上下への道の画像ハンドル
