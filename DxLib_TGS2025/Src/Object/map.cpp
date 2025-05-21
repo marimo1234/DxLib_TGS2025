@@ -154,7 +154,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
 				break;
 			case 5://橋
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 0.5, 0.0, tool->wood_road_img, TRUE);
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
 				break;
 			case 6://湖
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);

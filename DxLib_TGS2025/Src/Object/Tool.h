@@ -25,6 +25,12 @@ enum eOldPosition
 	eBP,		//下
 };
 
+enum eNowBaseState
+{
+	eBlank,
+	eLake,
+};
+
 struct Tool
 {
 	int frameselect_x;				//選択枠のｘ座標
@@ -41,7 +47,6 @@ struct Tool
 	int wood_road_num;				//木の道の所持数
 	int wood_road_flag[12][7];		//木の道を置いたことを知らせるフラグ
 	int road_img_array[12][7];		//道の画像ハンドル配列
-	int wood_road_img_array[12][7];
 	int stage_number;				//何ステージか
 	int old_base_array[12][7];		//道を置いた順番
 	int stage_array_exceed_x;		//ステージごとの配列上限（ｘ
@@ -50,6 +55,7 @@ struct Tool
 	int stage_array_below_y;		//ステージごとの配列下限（ｙ
 	int stage_begin_array[12][7];	//ステージ読み込み時の配列
 	int old_position_direction;
+	int now_base_state;
 
 	bool rock_sub_flag;				//岩の所持数を引くフラグ
 	bool wood_sub_flag;				//木の所持数数を引くフラグ

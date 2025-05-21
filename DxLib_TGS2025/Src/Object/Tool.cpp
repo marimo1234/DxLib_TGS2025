@@ -37,6 +37,11 @@ void Possible_Prace(const CreateStage* stage);
 void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage, const Car* car);
 void Stage_Init(const CreateStage*stage);
 void Possible_Break(const CreateStage*stage,const Cursor*cursor,const Car*car);
+void Now_Base_State(const CreateStage* stage);
+void Old_Position_Left(const CreateStage* stage);
+void Old_Position_Right(const CreateStage* stage);
+void Old_Position_Top(const CreateStage* stage);
+void Old_Position_Bottom(const CreateStage* stage);
 
 
 //初期化
@@ -49,6 +54,7 @@ void ToolInit(void)
 	tool.item_frame_y = 680;
 	tool.item_number = ePickaxe;
 	tool.old_position_direction = eLP;
+	tool.now_base_state = eBlank;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -79,7 +85,6 @@ void ToolInit(void)
 			tool.wood_road_flag[i][j] = false;
 			tool.road_break_flag[i][j] = false;
 			tool.road_img_array[i][j] = -1;
-			tool.wood_road_img_array[i][j] = -1;
 			tool.old_base_array[i][j] = 0;
 		}
 	}
@@ -630,8 +635,6 @@ void Tool_Reset(void)
 		{
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
-			tool.road_img_array[i][j] = -1;
-			tool.wood_road_img_array[i][j] = -1;
 		}
 	}
 	Stage_Init(GetStage());
@@ -695,11 +698,190 @@ void Base_Chenge(void)
 void Road_Imghandle_Update(const CreateStage*stage)
 {
 	Search_Old_Position();
+	Now_Base_State(GetStage());
 	switch (tool.old_position_direction)
 	{
-		//**********前に置いた位置が左**********//
+	//**********前に置いた位置が左**********//
 	case eLP:
+		Old_Position_Left(GetStage());
+
+	//**************************************//
+
+
+
+
+		//**********前に置いた位置が右**********//
+	case eRP:
 		
+		if (stage->array[tool.base_x][tool.base_y] == 0)
+		{
+			//ゴールが上
+			if (stage->array[tool.base_x][tool.base_y - 1] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
+				tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_beside;
+			}
+			//ゴールが下
+			else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
+				tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_beside;
+			}
+			//右だけ
+			else
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
+				tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_beside;
+			}
+
+			//二つ前右上
+			if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x + 1][tool.base_y - 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(右上
+				tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_Rtop;
+			}
+			//二つ前右下
+			else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x + 1][tool.base_y + 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(右下
+				tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_Rbottom;
+			}
+			break;
+		}
+		//**************************************//
+
+
+
+
+		//**********前に置いた位置が上**********//
+	case eTP:
+		
+		if (stage->array[tool.base_x][tool.base_y] == 0)
+		{
+			//ゴールが右
+			if (stage->array[tool.base_x + 1][tool.base_y] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
+				tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
+			}
+			//ゴールが左
+			else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
+				tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
+			}
+			//上だけ
+			else
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+				tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
+			}
+
+			//二つ前左上
+			if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x - 1][tool.base_y - 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(右下
+				tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_Rbottom;
+			}
+			//二つ前右上
+			else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x + 1][tool.base_y - 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(上右
+				tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_Topright;
+			}
+			break;
+		}
+		//**************************************//
+
+
+
+
+		//**********前に置いた位置が下**********//
+	case eBP:
+
+
+			//ゴールが右
+			if (stage->array[tool.base_x + 1][tool.base_y] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
+				tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
+			}
+			//ゴールが左
+			else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
+				tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
+			}
+			//下だけ
+			else
+			{
+				tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
+				tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
+			}
+
+			//二つ前左下
+			if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x - 1][tool.base_y + 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(右上
+				tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_Rtop;
+			}
+			//二つ前右下
+			else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
+				(tool.old_base_array[tool.base_x + 1][tool.base_y + 1] == 2))
+			{
+				//前に置いた道の画像ハンドル変更(下右
+				tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_Btmright;
+			}
+			break;
+	}
+		//**************************************//
+}
+
+//前置いたところがどの方向か
+void Search_Old_Position(void)
+{
+	if (tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.old_base_array[tool.base_x - 1][tool.base_y] == 1)
+	{
+		tool.old_position_direction = eLP;
+	}
+	else if (tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.old_base_array[tool.base_x + 1][tool.base_y] == 1)
+	{
+		tool.old_position_direction = eRP;
+	}
+	else if (tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y && tool.old_base_array[tool.base_x][tool.base_y - 1] == 1)
+	{
+		tool.old_position_direction = eTP;
+	}
+	else if (tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y && tool.old_base_array[tool.base_x][tool.base_y + 1] == 1)
+	{
+		tool.old_position_direction = eBP;
+	}
+}
+
+//今の位置が空白か湖か
+void Now_Base_State(const CreateStage*stage)
+{
+	if (stage->array[tool.base_x][tool.base_y] == 0)
+	{
+		tool.now_base_state = eBlank;
+	}
+	else if (stage->array[tool.base_x][tool.base_y] == 6)
+	{
+		tool.now_base_state = eLake;
+	}
+}
+
+//前の位置が左の処理
+void Old_Position_Left(const CreateStage* stage)
+{
+	switch (tool.now_base_state)
+	{
+	case eBlank:
 
 		//ゴールが上
 		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
@@ -735,158 +917,24 @@ void Road_Imghandle_Update(const CreateStage*stage)
 			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Topright;
 		}
 		break;
-		//**************************************//
-
-
-
-
-		//**********前に置いた位置が右**********//
-	case eRP:
-		
-		
-		//ゴールが上
-		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
-			tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_beside;
-		}
-		//ゴールが下
-		else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
-			tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_beside;
-		}
-		//右だけ
-		else
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
-			tool.road_img_array[tool.base_x+1][tool.base_y] = tool_img.road_beside;
-		}
-
-		//二つ前右上
-		if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x + 1][tool.base_y - 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(右上
-			tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_Rtop;
-		}
-		//二つ前右下
-		else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x + 1][tool.base_y + 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(右下
-			tool.road_img_array[tool.base_x + 1][tool.base_y] = tool_img.road_Rbottom;
-		}
+	case eLake:
 		break;
-		//**************************************//
-
-
-
-
-		//**********前に置いた位置が上**********//
-	case eTP:
-		
-
-		//ゴールが右
-		if (stage->array[tool.base_x + 1][tool.base_y] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
-			tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
-		}
-		//ゴールが左
-		else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
-			tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
-		}
-		//上だけ
-		else
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
-			tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_vertical;
-		}
-
-		//二つ前左上
-		if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x - 1][tool.base_y - 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(右下
-			tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_Rbottom;
-		}
-		//二つ前右上
-		else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x + 1][tool.base_y - 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(上右
-			tool.road_img_array[tool.base_x][tool.base_y - 1] = tool_img.road_Topright;
-		}
-		break;
-		//**************************************//
-
-
-
-
-		//**********前に置いた位置が下**********//
-	case eBP:
-		
-		
-		//ゴールが右
-		if (stage->array[tool.base_x + 1][tool.base_y] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
-			tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
-		}
-		//ゴールが左
-		else if (stage->array[tool.base_x - 1][tool.base_y] == 7)
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
-			tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
-		}
-		//下だけ
-		else
-		{
-			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_vertical;
-			tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_vertical;
-		}
-
-		//二つ前左下
-		if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x - 1][tool.base_y + 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(右上
-			tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_Rtop;
-		}
-		//二つ前右下
-		else if ((tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
-			(tool.old_base_array[tool.base_x + 1][tool.base_y + 1] == 2))
-		{
-			//前に置いた道の画像ハンドル変更(下右
-			tool.road_img_array[tool.base_x][tool.base_y + 1] = tool_img.road_Btmright;
-		}
-		break;
-		//**************************************//
 	}
 }
 
-//前置いたところがどの方向か
-void Search_Old_Position(void)
+void Old_Position_Right(const CreateStage* stage)
 {
-	if (tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.old_base_array[tool.base_x - 1][tool.base_y] == 1)
-	{
-		tool.old_position_direction = eLP;
-	}
-	else if (tool.base_x + 1 < ARRAY_EXCEED_LIMIT_X && tool.old_base_array[tool.base_x + 1][tool.base_y] == 1)
-	{
-		tool.old_position_direction = eRP;
-	}
-	else if (tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y && tool.old_base_array[tool.base_x][tool.base_y - 1] == 1)
-	{
-		tool.old_position_direction = eTP;
-	}
-	else if (tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y && tool.old_base_array[tool.base_x][tool.base_y + 1] == 1)
-	{
-		tool.old_position_direction = eBP;
-	}
+
+}
+
+void Old_Position_Top(const CreateStage* stage)
+{
+
+}
+
+void Old_Position_Bottom(const CreateStage* stage)
+{
+
 }
 
 //道の設置可能位置
