@@ -119,9 +119,10 @@ void ToolInit(void)
 	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
 	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
 	//透過させた道
-	tool_img.possible_beside = LoadGraph("Resource/images/Possible_Beside.png");
-	tool_img.possible_vertical= LoadGraph("Resource/images/Possible_Vertical.png");
-	tool_img.possible_wood_road= LoadGraph("Resource/images/possible_wood_road.png");
+	tool_img.possible_roadB = LoadGraph("Resource/images/Possible_Beside.png");
+	tool_img.possible_roadV= LoadGraph("Resource/images/Possible_Vertical.png");
+	tool_img.possible_wood_roadB= LoadGraph("Resource/images/Possible_wood_roadB.png");
+	tool_img.possible_wood_roadV= LoadGraph("Resource/images/Possible_wood_roadV.png");
 	//破壊可能を示す色(赤
 	tool_img.possible_break= LoadGraph("Resource/images/possible_break.png");
 	//配置済み道
@@ -1428,25 +1429,25 @@ void Possible_Prace(const CreateStage* stage)
 				if (tool.base_x + 1 < tool.stage_array_exceed_x && stage->array[tool.base_x + 1][tool.base_y] == 0)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x + 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120,
-						1.0, 0.0, tool_img.possible_beside, TRUE);
+						1.0, 0.0, tool_img.possible_roadB, TRUE);
 				}
 				//左が空
 				if (tool.base_x - 1 > tool.stage_array_below_x && stage->array[tool.base_x - 1][tool.base_y] == 0)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x - 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120,
-						1.0, 0.0, tool_img.possible_beside, TRUE);
+						1.0, 0.0, tool_img.possible_roadB, TRUE);
 				}
 				//上が空
 				if (tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y && stage->array[tool.base_x][tool.base_y - 1] == 0)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120,
-						1.0, 0.0, tool_img.possible_vertical, TRUE);
+						1.0, 0.0, tool_img.possible_roadV, TRUE);
 				}
 				//下が空
 				if (tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y && stage->array[tool.base_x][tool.base_y + 1] == 0)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 
-						1.0, 0.0, tool_img.possible_vertical, TRUE);
+						1.0, 0.0, tool_img.possible_roadV, TRUE);
 				}
 			}
 		}
@@ -1459,22 +1460,22 @@ void Possible_Prace(const CreateStage* stage)
 				//右が湖
 				if (tool.base_x + 1 < tool.stage_array_exceed_x && stage->array[tool.base_x + 1][tool.base_y] == 6)
 				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x + 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x + 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 1.0, 0.0, tool_img.possible_wood_roadB, TRUE);
 				}
 				//左が湖
 				if (tool.base_x - 1 > tool.stage_array_below_x  && stage->array[tool.base_x - 1][tool.base_y] == 6)
 				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x - 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+					DrawRotaGraphF(MAP_TROUT_LENGTH * (tool.base_x - 1) + 200, MAP_TROUT_LENGTH * tool.base_y + 120, 1.0, 0.0, tool_img.possible_wood_roadB, TRUE);
 				}
 				//上が湖
 				if (tool.base_y - 1 > tool.stage_array_below_x && stage->array[tool.base_x][tool.base_y - 1] == 6)
 				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y - 1) + 120, 1.0, 0.0, tool_img.possible_wood_roadV, TRUE);
 				}
 				//下が湖
 				if (tool.base_y + 1 < tool.stage_array_exceed_y && stage->array[tool.base_x][tool.base_y + 1] == 6)
 				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 0.5, 0.0, tool_img.possible_wood_road, TRUE);
+					DrawRotaGraphF(MAP_TROUT_LENGTH * tool.base_x + 200, MAP_TROUT_LENGTH * (tool.base_y + 1) + 120, 1.0, 0.0, tool_img.possible_wood_roadV, TRUE);
 				}
 			}
 		}

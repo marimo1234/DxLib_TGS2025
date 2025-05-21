@@ -84,12 +84,13 @@ struct Tool_Img
 	int wood_road_Btmright;	//下右への木の道の画像ハンドル
 	int wood_road_Topright;	//上右への木の道の画像ハンドル
 	int wood_road_Rbottom;	//右下への木の道の画像ハンドル
-	int wood_road_Rtop;		//右上への道の画像ハンドル
+	int wood_road_Rtop;		//右上への木の道の画像ハンドル
 
-	int possible_beside;	//設置可能位置の画像ハンドル(横
-	int possible_vertical;	//設置可能位置の画像ハンドル(縦
-	int possible_wood_road;	//設置可能位置の画像ハンドル(木
-	int possible_break;		//破壊可能位置の画像ハンドル
+	int possible_roadB;			//設置可能位置の道の画像ハンドル(横
+	int possible_roadV;			//設置可能位置の道の画像ハンドル(縦
+	int possible_wood_roadB;	//設置可能位置の木の道の画像ハンドル(横
+	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
+	int possible_break;			//破壊可能位置の画像ハンドル
 
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
