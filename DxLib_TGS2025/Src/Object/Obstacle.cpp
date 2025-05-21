@@ -19,6 +19,7 @@ Mole mole;
 Lake lake;
 
 void MoleStart(const InGame* ingame);
+void MolePutRock(const CreateStage* stage);
 
 int obstacle_images[7];
 int item_images[1];
@@ -32,8 +33,18 @@ void ObstacleManagerInit(void)
 		mole.image[i] = -1;
 	}
 
-	mole.image_num = 0;
-	mole.image_count = 0;
+
+	for (int j = 0; j < 12; j++)
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			mole.image_num[i][j] = 0;
+			mole.put_rock_flag[i][j] = false;
+			mole.animation[i][j] = mole.image[mole.image_num[i][j]];
+		}
+	}
+
+
 	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
@@ -41,8 +52,6 @@ void ObstacleManagerInit(void)
 	lake.image = LoadGraph("Resource/images/lake.png");
 
 	mole.start = false;
-	mole.animation = mole.image[mole.image_num];
-
 }
 
 //障害物の更新
@@ -55,6 +64,9 @@ void ObstacleManagerUpdate(void)
 	
 	if (mole.start == true)
 	{
+		//石を置くフラグ
+		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
+		//モグラの向きをランダムで変える
 		MoleRandomDirection();
 	}
 	else
@@ -105,27 +117,58 @@ void MoleStart(const InGame* ingame)
 
 }
 
+//モグラの向きをランダムで変える
 void MoleRandomDirection(void)
 {
 	mole.image_count++;
 
-	if (mole.image_count > 120)
+	if (mole.image_count > 180)
 	{
-		mole.image_num = GetRand(3);
+		mole.image_num[0][0] = GetRand(3);
+		mole.put_rock_flag[0][0] = true;
 		mole.image_count = 0;
+		
 	}
-	mole.animation = mole.image[mole.image_num];
+	mole.animation[0][0] = mole.image[mole.image_num[0][0]];
 
 }
 
+//モグラのリセット
 void MoleReset(void)
 {
-
-
-	mole.image_num = 0;
+	mole.start = false;
 	mole.image_count = 0;
 
-	mole.start = false;
-	mole.animation = mole.image[0];
+
+	for (int j = 0; j < 12; j++)
+	{
+		for (int i = 0; i < 7; i++)
+		{
+			mole.image_num[i][j] = 0;
+			mole.put_rock_flag[i][j] = false;
+			mole.animation[i][j] = mole.image[mole.image_num[i][j]];
+		}
+	}
 
 }
+
+//石を置くフラグのリセット
+void MolePutFlagReset(void)
+{
+	if (mole.put_rock_flag[0][0] == true)
+	{
+		mole.put_rock_flag[0][0] = false;
+	}
+}
+
+//石を置く条件
+void MolePutRock(const CreateStage* stage)
+{
+	switch (mole.image_num[0][0])
+	{
+	case 0:
+		break;
+	}
+}
+
+

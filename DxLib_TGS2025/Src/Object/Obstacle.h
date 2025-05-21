@@ -18,9 +18,10 @@ struct Mole
 {
 	bool start;
 	int image[4];
-	int image_num;
-	int animation;
+	int image_num[12][7];
+	int animation[12][7];
 	int image_count;
+	bool put_rock_flag[12][7];
 };
 
 struct Lake
@@ -37,3 +38,4 @@ const Lake* GetLake(void);
 
 void MoleRandomDirection(void);
 void MoleReset(void);
+void MolePutFlagReset(void);
