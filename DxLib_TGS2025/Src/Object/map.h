@@ -18,8 +18,8 @@ struct CreateStage
 	int wood_y[80];
 	int rock_x[80];
 	int rock_y[80];
-	int hole_x[20];
-	int hole_y[20];
+	int mole_x[20];
+	int mole_y[20];
 	int road_x[80];
 	int road_y[20];
 	int wood_road_x[20];

@@ -36,6 +36,6 @@ const Obstacle * GetObstacle(void);
 const Mole* GetMole(void);
 const Lake* GetLake(void);
 
-void MoleRandomDirection(void);
+
 void MoleReset(void);
 void MolePutFlagReset(void);

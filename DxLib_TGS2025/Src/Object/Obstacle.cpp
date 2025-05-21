@@ -20,6 +20,7 @@ Lake lake;
 
 void MoleStart(const InGame* ingame);
 void MolePutRock(const CreateStage* stage);
+void MoleRandomDirection(const CreateStage* stage);
 
 int obstacle_images[7];
 int item_images[1];
@@ -67,7 +68,7 @@ void ObstacleManagerUpdate(void)
 		//石を置くフラグ
 		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
 		//モグラの向きをランダムで変える
-		MoleRandomDirection();
+		MoleRandomDirection(GetStage());
 	}
 	else
 	{
@@ -78,7 +79,7 @@ void ObstacleManagerUpdate(void)
 //障害物の描画
 void ObstacleManagerDraw(void)
 {
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d ", mole.image_count, mole.image_num);
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d ", mole.image_count/60, mole.image_num[1][1]);
 }
 
 //構造体Obstacle
@@ -118,19 +119,23 @@ void MoleStart(const InGame* ingame)
 }
 
 //モグラの向きをランダムで変える
-void MoleRandomDirection(void)
+void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
-	if (mole.image_count > 180)
+	if (mole.image_count / 60 > 2)
 	{
-		mole.image_num[0][0] = GetRand(3);
-		mole.put_rock_flag[0][0] = true;
-		mole.image_count = 0;
-		
-	}
-	mole.animation[0][0] = mole.image[mole.image_num[0][0]];
+		for (int i = 0; i < 20; i++)
+		{
 
+			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
+			/*mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i]] = true;*/
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+
+			mole.image_count = 0;
+
+		}
+	}
 }
 
 //モグラのリセット
@@ -164,10 +169,16 @@ void MolePutFlagReset(void)
 //石を置く条件
 void MolePutRock(const CreateStage* stage)
 {
-	switch (mole.image_num[0][0])
+	for (int j = 0; j < 12; j++)
 	{
-	case 0:
-		break;
+		for (int i = 0; i < 7; i++)
+		{
+			switch (mole.image_num[0][0])
+			{
+			case 0:
+				break;
+			}
+		}
 	}
 }
 

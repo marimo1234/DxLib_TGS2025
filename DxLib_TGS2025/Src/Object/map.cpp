@@ -283,8 +283,8 @@ void MapValueInit(void)
 				j++;
 				break;
 			case 3:
-				stage.hole_x[f] = x;
-				stage.hole_y[f] = y;
+				stage.mole_x[f] = x;
+				stage.mole_y[f] = y;
 				f++;
 				break;
 			case 4:
