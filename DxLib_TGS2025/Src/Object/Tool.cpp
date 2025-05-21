@@ -863,14 +863,14 @@ void Search_Old_Position(void)
 	}
 }
 
-//今の位置が空白か湖か
+//今の位置が道か木の道か
 void Now_Base_State(const CreateStage*stage)
 {
-	if (stage->array[tool.base_x][tool.base_y] == 0)
+	if (stage->array[tool.base_x][tool.base_y] == 4)
 	{
 		tool.now_base_state = eBlank;
 	}
-	else if (stage->array[tool.base_x][tool.base_y] == 6)
+	else if (stage->array[tool.base_x][tool.base_y] == 5)
 	{
 		tool.now_base_state = eLake;
 	}
@@ -881,43 +881,153 @@ void Old_Position_Left(const CreateStage* stage)
 {
 	switch (tool.now_base_state)
 	{
-	case eBlank:
+	case eBlank:			//今の位置が空白
 
 		//ゴールが上
 		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
-			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
 		}
 		//ゴールが下
 		else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
-			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
 		}
 		//左だけ
 		else
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_beside;
-			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
 		}
 
 		//二つ前左上
 		if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
 			(tool.old_base_array[tool.base_x - 1][tool.base_y - 1] == 2))
 		{
-			//前に置いた道の画像ハンドル変更(下右
-			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Btmright;
+			if (stage->array[tool.base_x - 1][tool.base_y - 1] == 4)
+			{
+				//前に置いた道の画像ハンドル変更(下右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Btmright;
+			}
+			else
+			{
+				//前に置いた道の画像ハンドル変更(下右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_Btmright;
+			}
 		}
 		//二つ前左下
 		else if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
 			(tool.old_base_array[tool.base_x - 1][tool.base_y + 1] == 2))
 		{
-			//前に置いた道の画像ハンドル変更(上右
-			tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Topright;
+			if (stage->array[tool.base_x - 1][tool.base_y + 1] == 4)
+			{
+				//前に置いた道の画像ハンドル変更(上右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Topright;
+			}
+			else
+			{
+				//前に置いた道の画像ハンドル変更(上右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_Topright;
+			}
 		}
 		break;
-	case eLake:
+
+
+
+	case eLake:			//今の位置が湖
+		//ゴールが上
+		if (stage->array[tool.base_x][tool.base_y - 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rtop;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
+		}
+		//ゴールが下
+		else if (stage->array[tool.base_x][tool.base_y + 1] == 7)
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rbottom;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
+		}
+		//左だけ
+		else
+		{
+			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_beside;
+			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
+			}
+			else
+			{
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_beside;
+			}
+		}
+
+		//二つ前左上
+		if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y - 1 > ARRAY_BELOW_LIMIT_Y) &&
+			(tool.old_base_array[tool.base_x - 1][tool.base_y - 1] == 2))
+		{
+			if (stage->array[tool.base_x - 1][tool.base_y - 1] == 4)
+			{
+				//前に置いた道の画像ハンドル変更(下右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Btmright;
+			}
+			else
+			{
+				//前に置いた道の画像ハンドル変更(下右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_Btmright;
+			}
+		}
+		//二つ前左下
+		else if ((tool.base_x - 1 > ARRAY_BELOW_LIMIT_X && tool.base_y + 1 < ARRAY_EXCEED_LIMIT_Y) &&
+			(tool.old_base_array[tool.base_x - 1][tool.base_y + 1] == 2))
+		{
+			if (stage->array[tool.base_x - 1][tool.base_y + 1] == 4)
+			{
+				//前に置いた道の画像ハンドル変更(上右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_Topright;
+			}
+			else
+			{
+				//前に置いた道の画像ハンドル変更(上右
+				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.wood_road_Topright;
+			}
+		}
 		break;
 	}
 }
