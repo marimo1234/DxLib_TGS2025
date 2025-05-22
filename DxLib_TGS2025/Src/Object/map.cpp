@@ -21,6 +21,7 @@ void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 void Break_Road(const Tool* tool, const Cursor* cursor);
+void MolePutRock(const Mole* mole);
 
 //初期化
 void MapInit(void)
@@ -56,7 +57,8 @@ void MapUpdate(void)
 		Put_Road(Get_Tool(), GetCursor1());
 		//橋を置く
 		Put_Wood_Road(Get_Tool(), GetCursor1());
-
+		//モグラが石を置く
+		MolePutRock(GetMole());
 		
 	}
 	else
@@ -252,6 +254,21 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 		WR_Delete_Flag();
 	}
 }
+
+void MolePutRock(const Mole* mole)
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (mole->put_rock_flag[i][j] == true)
+			{
+				stage.array[i][j] = 2;
+			}
+		}
+	}
+}
+
 
 //マップの各値を初期化
 void MapValueInit(void)

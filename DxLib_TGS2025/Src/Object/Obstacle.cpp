@@ -19,7 +19,7 @@ Mole mole;
 Lake lake;
 
 void MoleStart(const InGame* ingame);
-void MolePutRock(const CreateStage* stage);
+void MolePutRockFlag(const CreateStage* stage);
 void MoleRandomDirection(const CreateStage* stage);
 
 int obstacle_images[7];
@@ -35,9 +35,9 @@ void ObstacleManagerInit(void)
 	}
 
 
-	for (int j = 0; j < 12; j++)
+	for (int j = 0; j < 7; j++)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 12; i++)
 		{
 			mole.image_num[i][j] = 0;
 			mole.put_rock_flag[i][j] = false;
@@ -127,10 +127,12 @@ void MoleRandomDirection(const CreateStage* stage)
 	{
 		for (int i = 0; i < 20; i++)
 		{
-
+			MolePutFlagReset();
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
 			/*mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i]] = true;*/
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+
+			MolePutRockFlag(GetStage());
 
 			mole.image_count = 0;
 
@@ -145,9 +147,9 @@ void MoleReset(void)
 	mole.image_count = 0;
 
 
-	for (int j = 0; j < 12; j++)
+	for (int j = 0; j < 7; j++)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 12; i++)
 		{
 			mole.image_num[i][j] = 0;
 			mole.put_rock_flag[i][j] = false;
@@ -160,26 +162,59 @@ void MoleReset(void)
 //石を置くフラグのリセット
 void MolePutFlagReset(void)
 {
-	if (mole.put_rock_flag[0][0] == true)
+	for (int j = 0; j < 7; j++)
 	{
-		mole.put_rock_flag[0][0] = false;
+		for (int i = 0; i < 12; i++)
+		{
+			if (mole.put_rock_flag[i][j] == true)
+			{
+				mole.put_rock_flag[i][j] = false;
+			}
+		}
 	}
 }
 
 //石を置く条件
-void MolePutRock(const CreateStage* stage)
+//最初の方向のマスがtrueになるのをどうにかしないといけない
+void MolePutRockFlag(const CreateStage* stage)
 {
-	for (int j = 0; j < 12; j++)
+	for (int i = 0; i < 20; i++)
 	{
-		for (int i = 0; i < 7; i++)
+		if (stage->mole_x[i] >= 0 && stage->mole_y[i] >= 0)
 		{
-			switch (mole.image_num[0][0])
+
+			switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 			{
 			case 0:
+				if (stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
+				{
+					mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
+				}
+				break;
+			case 1:
+				if (stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+				{
+					mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
+				}
+				break;
+			case 2:
+				if (stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+				{
+					mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
+				}
+				break;
+			case 3:
+				if (stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+				{
+					mole.put_rock_flag[stage->mole_x[i] +1][stage->mole_y[i]] = true;
+				}
+				break;
+			default:
 				break;
 			}
 		}
 	}
+	
 }
 
 
