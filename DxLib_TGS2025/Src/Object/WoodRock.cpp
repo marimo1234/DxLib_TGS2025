@@ -261,20 +261,17 @@ void RockAnimation(void)
 		
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
 		{
-			rock.animation[rock.count_x][rock.count_y] = rock.image[3];
-			rock.fps++;
-			if (rock.fps > 10)
-			{
-				rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-				rock.hit_count[rock.count_x][rock.count_y] = eHit3;
-				rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
-				rock.fps = 0;
-			}
+		
+
+			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
+			rock.hit_count[rock.count_x][rock.count_y] = eHit3;
+			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+			rock.fps = 0;
+
 		}
 		break;
 
 	case eHit3:// Hit数3
-		rock.animation[rock.count_x][rock.count_y] = NULL;
 		rock.delete_flag[rock.count_x][rock.count_y] = true; //削除フラグをtrueにする
 		rock.position.x = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position.y = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
