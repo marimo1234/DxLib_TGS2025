@@ -186,9 +186,9 @@ void Move_ItemSelect(void)
 			tool.item_number = eWoodRoad;
 			break;
 		case eWoodRoad:
-			tool.item_number = eDrill;
+			tool.item_number = eHammer;
 			break;
-		case eDrill:
+		case eHammer:
 			tool.item_number = eAx;
 			break;
 		case eAx:
@@ -211,11 +211,11 @@ void Move_ItemSelect(void)
 		case eWoodRoad:
 			tool.item_number = eRoad;
 			break;
-		case eDrill:
+		case eHammer:
 			tool.item_number = eWoodRoad;
 			break;
 		case eAx:
-			tool.item_number = eDrill;
+			tool.item_number = eHammer;
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
@@ -246,7 +246,7 @@ void Item_Frame_Draw(void)
 	case eAx:
 		tool_img.ax_ex_rate += 0.3;
 		break;
-	case eDrill:
+	case eHammer:
 		tool_img.drill_ex_rate += 0.2;
 		break;
 	case eWoodRoad:
@@ -282,7 +282,7 @@ void Item_Frame_Draw(void)
 	case eAx:
 		tool_img.ax_ex_rate -= 0.3;
 		break;
-	case eDrill:
+	case eHammer:
 		tool_img.drill_ex_rate -= 0.2;
 		break;
 	case eWoodRoad:
@@ -446,7 +446,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 	{
 
 		//アイテムがドリルなら
-		if (tool.item_number == eDrill)
+		if (tool.item_number == eHammer)
 		{
 
 			//ゴールとつながっていないなら

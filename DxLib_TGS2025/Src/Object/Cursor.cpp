@@ -156,7 +156,7 @@ void CursorDraw(const Tool*tool)
 		}
 	}
 	// もしitem_numberがeDrillなら
-	else if(tool->item_number==eDrill)
+	else if(tool->item_number==eHammer)
 	{
 		// cursor_drillを描画する
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);

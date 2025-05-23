@@ -12,7 +12,7 @@ enum eToolState
 {
 	eRoad,
 	eWoodRoad,
-	eDrill,
+	eHammer,
 	eAx,
 	ePickaxe,
 };
