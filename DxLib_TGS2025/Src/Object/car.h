@@ -18,6 +18,7 @@ struct Car
     Vector2D velocity;
     int animation;
     int image[4];
+    int cutin_image[3];
     bool start;
     int x;
     int y;
