@@ -43,6 +43,7 @@ void Old_Position_Left(const CreateStage* stage);
 void Old_Position_Right(const CreateStage* stage);
 void Old_Position_Top(const CreateStage* stage);
 void Old_Position_Bottom(const CreateStage* stage);
+void Put_Road_Effect(int x, int y);
 
 
 //初期化
@@ -77,6 +78,10 @@ void ToolInit(void)
 	tool_img.road_ex_rate = 0.6;
 	tool_img.road_num_ex_rate = 1.0;
 	tool_img.woodroad_num_ex_rate = 1.0;
+
+	//仮
+	tool.put_fps = 0;
+	tool.put_flag = false;
 
 
 	for (int j = 0; j < 7; j++)
@@ -125,6 +130,9 @@ void ToolInit(void)
 	tool_img.possible_wood_roadV= LoadGraph("Resource/images/Possible_wood_roadV.png");
 	//破壊可能を示す色(赤
 	tool_img.possible_break= LoadGraph("Resource/images/possible_break.png");
+	//道を置いた時のエフェクト
+	tool_img.put_road[0] = LoadGraph("Resource/images/put1.png");
+	tool_img.put_road[1] = LoadGraph("Resource/images/put2.png");
 	//配置済み道
 	Road_Imghandle_Init(GetStage());
 }
@@ -162,6 +170,12 @@ void ToolDraw(void)
 	Item_Frame_Draw();
 	//枠選択の描画（アイテム枠）
 	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
+
+	//仮
+	if (tool.put_flag == true)
+	{
+		Put_Road_Effect(tool.base_x, tool.base_y);
+	}
 	
 	//設置可能位置表示
 	Possible_Prace(GetStage());
@@ -321,6 +335,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y)&&
 						(stage->array[tool.base_x + 1][tool.base_y] == 0))
 					{
+							tool.put_flag = true;
 							tool.road_num--;
 							tool.road_flag[tool.base_x + 1][tool.base_y] = true;
 							Base_Chenge();
@@ -332,6 +347,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 					else if ((cursor->array_x == tool.base_x-1 && cursor->array_y == tool.base_y)&&
 						(stage->array[tool.base_x - 1][tool.base_y] == 0))
 					{
+						tool.put_flag = true;
 							tool.road_num--;
 							tool.road_flag[tool.base_x - 1][tool.base_y] = true;
 							Base_Chenge();
@@ -343,6 +359,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1)&& 
 						(stage->array[tool.base_x][tool.base_y - 1] == 0))
 					{
+						tool.put_flag = true;
 							tool.road_num--;
 							tool.road_flag[tool.base_x][tool.base_y - 1] = true;
 							Base_Chenge();
@@ -354,12 +371,15 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1)&& 
 						(stage->array[tool.base_x][tool.base_y + 1] == 0))
 					{
+						tool.put_flag = true;
 							tool.road_num--;
 							tool.road_flag[tool.base_x][tool.base_y + 1] = true;
 							Base_Chenge();
 							tool.base_y += 1;
 							Road_Imghandle_Update(GetStage());
 					}
+					
+
 					
 				}
 			}
@@ -628,6 +648,7 @@ void Tool_Reset(void)
 	tool.rock_add_flag = false;
 	tool.wood_add_flag = false;
 	tool.stage_number = 0;			//ステージ切り替えができるまで
+	tool.put_fps = 0;
 	tool_img.item_frame_ex_rate = 1.0;
 	tool_img.pickaxe_ex_rate = 0.4;
 	tool_img.ax_ex_rate = 0.8;
@@ -1501,4 +1522,24 @@ void Possible_Break(const CreateStage*stage,const Cursor*cursor,const Car*car)
 			}
 		}
 	}
+}
+
+//道を置いた時のエフェクト
+void Put_Road_Effect(int x,int y)
+{
+	tool.put_fps++;
+	if (tool.put_fps < 10)
+	{
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.put_road[1], TRUE);
+	}
+	else if (tool.put_fps < 20)
+	{
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, tool_img.put_road[0], TRUE);
+	}
+	else
+	{
+		tool.put_fps = 0;
+		tool.put_flag = false;
+	}
+	
 }

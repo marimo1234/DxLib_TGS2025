@@ -61,6 +61,11 @@ struct Tool
 	bool rock_add_flag;				//岩の所持数を足すフラグ
 	bool wood_add_flag;				//木の所持数を足すフラグ
 	bool road_break_flag[12][7];	//道を壊したことを伝えるフラグ
+
+	int put_fps;
+
+	int put_flag;
+	
 };
 
 struct Tool_Img
@@ -92,6 +97,8 @@ struct Tool_Img
 	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
 	int possible_break;			//破壊可能位置の画像ハンドル
 
+	int put_road[2];
+
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
 	float ax_ex_rate;				//斧の拡大率
@@ -113,6 +120,7 @@ void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
 void Item_Frame_Draw(void);
 void Search_Old_Position(void);
+
 
 
 const Tool* Get_Tool(void);
