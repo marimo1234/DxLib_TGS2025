@@ -78,7 +78,11 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
-	DrawRotaGraphF(250,40 ,1.0, 0.0, ikl, TRUE); 
+
+	/*for (int i = 0; i < 21; i++)
+	{
+		DrawRotaGraphF(i*60+40, GetRand(30)+20, 1.0, 0.0, ikl, TRUE);
+	}*/
 
 }
 
