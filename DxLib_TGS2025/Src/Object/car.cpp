@@ -16,6 +16,7 @@ void GetNextDestination(const Tool* tool);
 void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
 void GetBreakRoadPosition(const Tool* tool);
+void CutIn(const CreateStage* stage);
 
 Car car;
 GameOver gameover;
@@ -40,8 +41,10 @@ void CarInit(void)
 	car.image[1] = LoadGraph("Resource/images/car_left.png");
 	car.image[2] = LoadGraph("Resource/images/car_up.png");
 	car.image[3] = LoadGraph("Resource/images/car_down.png");
-	
 
+	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
+	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
+	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
 
 	car.start = false;//車の処理フラグ
 	
@@ -374,5 +377,10 @@ void CarGoalCheck(const CreateStage* stage)
 		car.velocity.x = 0.1f;
 		car.velocity.y = 0.1f;
 	}
+
+}
+
+void CutIn(const CreateStage* stage)
+{
 
 }
