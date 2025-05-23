@@ -28,9 +28,9 @@ void MolePutRock(const Mole* mole);
 void MapInit(void)
 {
 	//画像の取得
-	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
+	groundreef = LoadGraph("Resource/images/MapOriginal3.png");
 	stage.trout_image= LoadGraph("Resource/images/trout.png");
-	ikl= LoadGraph("Resource/images/back_tree02.png");
+	ikl= LoadGraph("Resource/images/Back_Wood.png");
 	//csvファイルから値を取得
 	StageLoad();
 	//マップの各値を初期化
@@ -78,7 +78,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
-	DrawRotaGraphF(250,50 ,0.2, 0.0, ikl, TRUE); 
+	DrawRotaGraphF(250,40 ,1.0, 0.0, ikl, TRUE); 
 
 }
 
