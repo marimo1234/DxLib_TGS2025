@@ -281,7 +281,7 @@ void MolePutRock(const Mole* mole)
 						stage.rock_x[stage.rock_count] = i;
 						stage.rock_y[stage.rock_count] = j;
 					}
-					//もし場所が被っているなら番号を更新しなくていい
+					//もし場所が被っているなら番号を更新しない
 					else if (stage.rock_x[k] == i && stage.rock_y[k] == j)
 					{
 						stage.rock_count_flag = false;
