@@ -75,6 +75,7 @@ void MapDraw(void)
 	MapTroutDraw();
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
 
 }
 
@@ -241,6 +242,7 @@ void Break_Road(const Tool* tool,const Cursor*cursor)
 	}
 }
 
+//岩を消すフラグがtrueなら消す
 void Delete_WoodRock(const Wood* wood,const Rock* rock)
 {
 	if (rock->delete_flag[rock->count_x][rock->count_y] == true)
@@ -255,15 +257,43 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 	}
 }
 
+//モグラが岩を置くフラグがtrueなら岩を置く
 void MolePutRock(const Mole* mole)
 {
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{
+			//置くフラグがtrueなら
 			if (mole->put_rock_flag[i][j] == true)
 			{
+				//岩を描画
 				stage.array[i][j] = 2;
+				//置かれた岩が何番目の岩か数えるフラグ
+				stage.rock_count_flag = true;
+
+				//今まで岩があった場所と被っているか
+				for (int k = 0; k < stage.rock_count; k++)
+				{
+					//被っていないなら新しい番目に配列番号を入れる
+					if (stage.rock_x[k] != i || stage.rock_y[k] != j)
+					{
+						stage.rock_x[stage.rock_count] = i;
+						stage.rock_y[stage.rock_count] = j;
+					}
+					//もし場所が被っているなら番号を更新しなくていい
+					else if (stage.rock_x[k] == i && stage.rock_y[k] == j)
+					{
+						stage.rock_count_flag = false;
+					}
+				}
+				//新しい番目に入れたときに番号を更新
+				if (stage.rock_count_flag == true)
+				{
+					stage.rock_count++;
+				}
+				//フラグの初期化
+				stage.rock_count_flag = false;
 			}
 		}
 	}
@@ -273,8 +303,9 @@ void MolePutRock(const Mole* mole)
 //マップの各値を初期化
 void MapValueInit(void)
 {
-	int i = 0;		//木
-	int j = 0;		//岩
+	int i = 0;	//木
+	stage.rock_count = 0;	//岩
+	stage.rock_count_flag = 0;;
 	int f = 0;		//穴
 	int g = 0;		//道
 	int h = 0;		//丸太の道
@@ -290,14 +321,12 @@ void MapValueInit(void)
 			case 1:
 				stage.wood_x[i] = x;
 				stage.wood_y[i] = y;
-				stage.wood_count[i] = i;
 				i++;
 				break;
 			case 2:
-				stage.rock_x[j] = x;
-				stage.rock_y[j] = y;
-				stage.rock_count[j] = j;
-				j++;
+				stage.rock_x[stage.rock_count] = x;
+				stage.rock_y[stage.rock_count] = y;
+				stage.rock_count++;
 				break;
 			case 3:
 				stage.mole_x[f] = x;

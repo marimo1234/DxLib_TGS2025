@@ -12,6 +12,11 @@
 
 #define ITEM_NUM	(9)		//アイテムの要素
 
+#define PUT_ROCK_Y_MIN (0)
+#define PUT_ROCK_Y_MAX (6)
+#define PUT_ROCK_X_MIN (0)
+#define PUT_ROCK_X_MAX (11)
+
 void ObstacleAnimationControl(const Cursor* cursor);
 
 Obstacle obstacle[D_OBSTACLE_MAX];
@@ -69,6 +74,7 @@ void ObstacleManagerUpdate(void)
 		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
 		//モグラの向きをランダムで変える
 		MoleRandomDirection(GetStage());
+		
 	}
 	else
 	{
@@ -79,7 +85,7 @@ void ObstacleManagerUpdate(void)
 //障害物の描画
 void ObstacleManagerDraw(void)
 {
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d ", mole.image_count/60, mole.image_num[1][1]);
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", mole.image_count/60, mole.image_num[1][1]);
 }
 
 //構造体Obstacle
@@ -123,7 +129,7 @@ void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
-	if (mole.image_count / 60 > 2)
+	if (mole.image_count / 60 > 4)
 	{
 		for (int i = 0; i < 20; i++)
 		{
@@ -180,41 +186,39 @@ void MolePutRockFlag(const CreateStage* stage)
 {
 	for (int i = 0; i < 20; i++)
 	{
-		if (stage->mole_x[i] >= 0 && stage->mole_y[i] >= 0)
-		{
 
-			switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
+		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
+		{
+		case 0:
+			if (stage->mole_y[i] != PUT_ROCK_Y_MAX && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
-			case 0:
-				if (stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
-				{
-					mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
-				}
-				break;
-			case 1:
-				if (stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
-				{
-					mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
-				}
-				break;
-			case 2:
-				if (stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
-				{
-					mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
-				}
-				break;
-			case 3:
-				if (stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
-				{
-					mole.put_rock_flag[stage->mole_x[i] +1][stage->mole_y[i]] = true;
-				}
-				break;
-			default:
-				break;
+				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
 			}
+			break;
+		case 1:
+			if (stage->mole_y[i] != PUT_ROCK_Y_MIN && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+			{
+				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
+			}
+			break;
+		case 2:
+			if (stage->mole_x[i] != PUT_ROCK_X_MIN && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+			{
+				mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
+			}
+			break;
+		case 3:
+			if (stage->mole_x[i] != PUT_ROCK_X_MAX && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+			{
+				mole.put_rock_flag[stage->mole_x[i] + 1][stage->mole_y[i]] = true;
+			}
+			break;
+		default:
+			break;
 		}
+
 	}
-	
+
 }
 
 

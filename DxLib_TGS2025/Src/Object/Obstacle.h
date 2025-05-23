@@ -6,6 +6,7 @@
 #define		D_OBS_ANIM_MAX	(7)
 
 
+
 struct Obstacle
 {
 	int is_active;			//有効フラグ
@@ -13,6 +14,14 @@ struct Obstacle
 	Position2D position;	//位置情報
 	Size2D box_size;		//矩形の大きさ
 };
+ 
+//enum eMoleDirection
+//{
+//	eMoleUp,
+//	eMoleDown,
+//	eMoleRight,
+//	eMoleLeft,
+//};
 
 struct Mole
 {
@@ -22,6 +31,7 @@ struct Mole
 	int animation[12][7];
 	int image_count;
 	bool put_rock_flag[12][7];
+	
 };
 
 struct Lake

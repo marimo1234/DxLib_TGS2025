@@ -29,8 +29,9 @@ struct CreateStage
 	int goal_x[5];
 	int goal_y[5];
 
-	int wood_count[80];
-	int rock_count[80];
+	int wood_count;
+	int rock_count;
+	int rock_count_flag;
 };
 
 

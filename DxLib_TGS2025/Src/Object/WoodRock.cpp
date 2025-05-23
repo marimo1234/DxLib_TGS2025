@@ -5,6 +5,7 @@
 #include "../Object/Tool.h"
 #include "../Object/Cursor.h"
 #include "../Object/Map.h"
+#include "../Object/Obstacle.h"
 #include"../Scene/InGame/InGameScene.h"
 
 #include <math.h>
@@ -32,6 +33,7 @@ void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
 void WoodRockSub(const Tool* tool);
+void GetMoleRockPosition(const Mole* mole);
 
 
 //初期化
@@ -97,6 +99,8 @@ void WoodRockUpdate(void)
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
 		WoodRockAdd(Get_Tool());
+
+		GetMoleRockPosition(GetMole());
 	}
 	else
 	{
@@ -258,12 +262,12 @@ void RockAnimation(void)
 	}
 
 }
-
+//木の情報を取得
 const Wood* GetWood(void)
 {
 	return &wood;
 }
-
+//岩の情報を取得
 const Rock* GetRock(void)
 {
 	return &rock;
@@ -295,7 +299,7 @@ void WoodRockSub (const Tool*tool)
 		wood.item_num--;
 	}
 }
-
+//木、石が使われたときに所有数を増やす
 void WoodRockAdd(const Tool* tool)
 {
 	if(tool->rock_add_flag == true)
@@ -342,13 +346,13 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 	}
 }
 
-//石の当たり判定
+//岩の当たり判定
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//カーソルの配列番号が木だったら
-	if (stage->array[cursor->array_x][cursor->array_y] == 1);
+	//カーソルの配列番号が岩だったら
+	if (stage->array[cursor->array_x][cursor->array_y] == 2);
 	{
 		for (int i = 0; i < WOODROCK_MAX; i++)
 		{
@@ -383,7 +387,7 @@ void WoodRockItemCount(void)
 	DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
 	DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
 }
-
+//リセット
 void WoodRockReset(void)
 {
 
@@ -400,7 +404,7 @@ void WoodRockReset(void)
 	WoodRockHitInit(GetStage());
 	
 }
-
+//アイテム化した時の木の挙動
 void WoodMove(void)
 {
 	float mx = WOOD_ITEM_X; //Xの最大値
@@ -430,7 +434,7 @@ void WoodMove(void)
 	}
 
 }
-
+//アイテム化した時の岩の挙動
 void RockMove(void)
 {
 	float mx = ROCK_ITEM_X; //Xの最大値
@@ -461,7 +465,7 @@ void RockMove(void)
 }
 
 
-//フラグがtrueになったらfalseにする
+//Deleteフラグがtrueになったらfalseにする
 void WR_Delete_Flag(void)
 {
 	if (wood.delete_flag[wood.count_x][wood.count_y] == true)
@@ -473,6 +477,7 @@ void WR_Delete_Flag(void)
 		rock.delete_flag[rock.count_x][rock.count_y] = false;
 	}
 }
+//Hitカウントの初期化
 void WoodRockHitInit(const CreateStage* stage)
 {
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
@@ -501,6 +506,21 @@ void WoodRockHitInit(const CreateStage* stage)
 			{
 				wood.hit_count[i][j] = eHitEnd;
 				rock.hit_count[i][j] = eHitEnd;
+			}
+		}
+	}
+}
+//モグラ外資を置いた場所のHitカウントを初期化する
+void GetMoleRockPosition(const Mole* mole)
+{
+	for (int j = 0; j < WOODROCK_Y_MAX; j++)
+	{
+		for (int i = 0; i < WOODROCK_X_MAX; i++)
+		{
+			if (mole->put_rock_flag[i][j] == true)
+			{
+				rock.hit_count[i][j] = eHit0;
+				rock.animation[i][j] = rock.image[0];
 			}
 		}
 	}
