@@ -107,7 +107,7 @@ void ToolInit(void)
 	tool_img.wood_road_Rtop = LoadGraph("Resource/images/woodroad_RTop.png");
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
-	//ドリル
+	//ハンマー
 	tool_img.drill= LoadGraph("Resource/images/Drill.png");
 	//選択枠(アイテム)
 	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
@@ -445,7 +445,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 
-		//アイテムがドリルなら
+		//アイテムがハンマーなら
 		if (tool.item_number == eHammer)
 		{
 
