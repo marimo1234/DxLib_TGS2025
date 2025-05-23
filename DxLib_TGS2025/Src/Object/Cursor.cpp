@@ -199,6 +199,11 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
 				
 			}
+			else if (cursor.array_x == CURSOR_ARRAY_X_MIN)
+			{
+				cursor.array_x = CURSOR_ARRAY_X_MAX;
+				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+			}
 
 			// 移動のSE（もし使うならここに入れてね）
 		}
@@ -211,6 +216,11 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
 				
 			}
+			else if (cursor.array_x == CURSOR_ARRAY_X_MAX)
+			{
+				cursor.array_x = CURSOR_ARRAY_X_MIN;
+				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
@@ -222,6 +232,11 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
 				
 			}
+			else if (cursor.array_y == CURSOR_ARRAY_Y_MIN)
+			{
+				cursor.array_y = CURSOR_ARRAY_Y_MAX;
+				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
+			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
@@ -232,6 +247,11 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.array_y++;
 				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
 				
+			}
+			else if (cursor.array_y == CURSOR_ARRAY_Y_MAX)
+			{
+				cursor.array_y = CURSOR_ARRAY_Y_MIN;
+				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 		}
