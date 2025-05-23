@@ -13,6 +13,7 @@ CreateStage stage;
 int ground;
 int groundreef;
 int stage_start;
+int ikl;
 
 void Stage_Start(const InGame* ingame);
 void Put_Road(const Tool* tool, const Cursor* cursor);
@@ -29,6 +30,7 @@ void MapInit(void)
 	//画像の取得
 	groundreef = LoadGraph("Resource/images/MapOriginal2.png");
 	stage.trout_image= LoadGraph("Resource/images/trout.png");
+	ikl= LoadGraph("Resource/images/back_tree02.png");
 	//csvファイルから値を取得
 	StageLoad();
 	//マップの各値を初期化
@@ -76,6 +78,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
+	DrawRotaGraphF(250,50 ,0.2, 0.0, ikl, TRUE); 
 
 }
 
