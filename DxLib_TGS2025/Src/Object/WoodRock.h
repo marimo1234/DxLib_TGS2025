@@ -43,6 +43,11 @@ struct Rock
 	bool delete_flag[12][7];
 	bool move_flag;
 	int fps;
+
+	int effect_image[4];
+	bool effect_flag;
+	int effect_num;
+	int effect_count;
 };
 
 
@@ -62,6 +67,7 @@ void WoodRockReset(void);
 void WoodMove(void);
 void RockMove(void);
 void WR_Delete_Flag(void);
+void RockEffect(int x, int y);
 
 
 

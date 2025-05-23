@@ -53,6 +53,7 @@ void WoodRockInit(void)
 	{
 		wood.image[i] = -1;
 		rock.image[i] = -1;
+		rock.effect_image[i] = -1;
 	}
 	//配列番号の初期化
 	wood.count_x = 0;
@@ -64,6 +65,10 @@ void WoodRockInit(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
+
+	rock.effect_num = 0;
+	rock.effect_count = 0;
+
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
 	wood.image[1] = LoadGraph("Resource/images/Wood1.png");
@@ -74,6 +79,11 @@ void WoodRockInit(void)
 	rock.image[1] = LoadGraph("Resource/images/Rock1.png");
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
+
+	rock.effect_image[0]= LoadGraph("Resource/images/rock_fragment1.png");
+	rock.effect_image[1]= LoadGraph("Resource/images/rock_fragment2.png");
+	rock.effect_image[2]= LoadGraph("Resource/images/rock_fragment3.png");
+	rock.effect_image[3]= LoadGraph("Resource/images/rock_fragment4.png");
 
 	rock.position.x = 600.0f;
 	rock.position.y = 360.0f;
@@ -135,6 +145,15 @@ void WoodRockDraw(void)
 	
 	//アイテム化した木と岩の数の描画
 	WoodRockItemCount();
+
+	if (rock.effect_flag == true)
+	{
+		RockEffect(rock.count_x,rock.count_y);
+	}
+	else
+	{
+		rock.effect_num = 0;
+	}
 	
 
 }
@@ -242,13 +261,20 @@ void RockAnimation(void)
 		
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
 		{
-			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-			rock.hit_count[rock.count_x][rock.count_y] = eHit3;
-			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+			rock.animation[rock.count_x][rock.count_y] = rock.image[3];
+			rock.fps++;
+			if (rock.fps > 10)
+			{
+				rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
+				rock.hit_count[rock.count_x][rock.count_y] = eHit3;
+				rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+				rock.fps = 0;
+			}
 		}
 		break;
 
 	case eHit3:// Hit数3
+		rock.animation[rock.count_x][rock.count_y] = NULL;
 		rock.delete_flag[rock.count_x][rock.count_y] = true; //削除フラグをtrueにする
 		rock.position.x = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position.y = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
@@ -370,6 +396,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 					{
 						//Hitフラグをtrueにする
 						rock.hit_flag[rock.count_x][rock.count_y] = true;
+						rock.effect_flag = true;
 					}
 				}
 			}
@@ -399,6 +426,8 @@ void WoodRockReset(void)
 	wood.move_flag = false;
 	rock.move_flag = false;
 
+	rock.effect_num = 0;
+	rock.effect_count = 0;
 
 	//初期化
 	WoodRockHitInit(GetStage());
@@ -524,4 +553,28 @@ void GetMoleRockPosition(const Mole* mole)
 			}
 		}
 	}
+}
+
+void RockEffect(int x, int y)
+{
+	
+	if (rock.effect_num < 4)
+	{
+		rock.effect_count++;
+
+		if (rock.effect_count > 5)
+		{
+			rock.effect_num++;
+			rock.effect_count = 0;
+
+		}
+	}
+	else
+	{
+		/*rock.effect_num = 0;*/
+		rock.effect_count = 0;
+		rock.effect_flag = false;
+	}
+	
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.effect_image[rock.effect_num],TRUE);
 }
