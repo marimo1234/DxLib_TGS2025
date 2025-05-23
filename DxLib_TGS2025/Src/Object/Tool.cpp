@@ -133,6 +133,9 @@ void ToolInit(void)
 	//道を置いた時のエフェクト
 	tool_img.put_road[0] = LoadGraph("Resource/images/put1.png");
 	tool_img.put_road[1] = LoadGraph("Resource/images/put2.png");
+	//道を壊したときのエフェクト
+	tool_img.break_road[0]= LoadGraph("Resource/images/dust1.png");
+	tool_img.break_road[1]= LoadGraph("Resource/images/dust2.png");
 	//配置済み道
 	Road_Imghandle_Init(GetStage());
 }
@@ -1530,11 +1533,11 @@ void Put_Road_Effect(int x,int y)
 	tool.put_fps++;
 	if (tool.put_fps < 10)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.put_road[1], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.break_road[0], TRUE);
 	}
 	else if (tool.put_fps < 20)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, tool_img.put_road[0], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, tool_img.break_road[1], TRUE);
 	}
 	else
 	{

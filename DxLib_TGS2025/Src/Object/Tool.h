@@ -98,6 +98,7 @@ struct Tool_Img
 	int possible_break;			//破壊可能位置の画像ハンドル
 
 	int put_road[2];
+	int break_road[2];
 
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
