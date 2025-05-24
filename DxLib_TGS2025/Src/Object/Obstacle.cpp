@@ -26,6 +26,7 @@ Lake lake;
 void MoleStart(const InGame* ingame);
 void MolePutRockFlag(const CreateStage* stage);
 void MoleRandomDirection(const CreateStage* stage);
+void MoleInit(const CreateStage* stage);
 
 int obstacle_images[7];
 int item_images[1];
@@ -39,18 +40,8 @@ void ObstacleManagerInit(void)
 		mole.image[i] = -1;
 	}
 
-
-	for (int j = 0; j < 7; j++)
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			mole.image_num[i][j] = 0;
-			mole.put_rock_flag[i][j] = false;
-			mole.animation[i][j] = mole.image[mole.image_num[i][j]];
-		}
-	}
-
-
+	MoleInit(GetStage());
+	
 	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
@@ -129,7 +120,7 @@ void MoleRandomDirection(const CreateStage* stage)
 
 	if (mole.image_count / 60 > 4)
 	{
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < stage->mole_count; i++)
 		{
 			MolePutFlagReset();
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
@@ -149,17 +140,8 @@ void MoleReset(void)
 	mole.start = false;
 	mole.image_count = 0;
 
-
-	for (int j = 0; j < 7; j++)
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			mole.image_num[i][j] = 0;
-			mole.put_rock_flag[i][j] = false;
-			mole.animation[i][j] = mole.image[mole.image_num[i][j]];
-		}
-	}
-
+	MoleInit(GetStage());
+	
 }
 
 //石を置くフラグのリセット
@@ -181,7 +163,7 @@ void MolePutFlagReset(void)
 //最初の方向のマスがtrueになるのをどうにかしないといけない
 void MolePutRockFlag(const CreateStage* stage)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < stage->mole_count; i++)
 	{
 
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
@@ -216,6 +198,27 @@ void MolePutRockFlag(const CreateStage* stage)
 
 	}
 
+}
+
+void MoleInit(const CreateStage* stage)
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (stage->array[i][j] == 3)
+			{
+				mole.image_num[i][j] = 0;
+				mole.animation[i][j] = mole.image[mole.image_num[i][j]];
+			}
+			else
+			{
+				mole.image_num[i][j] = -1;
+				mole.animation[i][j] = -1;
+			}
+			mole.put_rock_flag[i][j] = false;
+		}
+	}
 }
 
 

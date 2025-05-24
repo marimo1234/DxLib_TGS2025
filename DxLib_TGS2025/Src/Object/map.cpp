@@ -313,7 +313,7 @@ void MapValueInit(void)
 	int i = 0;	//木
 	stage.rock_count = 0;	//岩
 	stage.rock_count_flag = 0;;
-	int f = 0;		//穴
+	stage.mole_count = 0;	//穴
 	int g = 0;		//道
 	int h = 0;		//丸太の道
 	int k = 0;      //湖の画像
@@ -336,9 +336,9 @@ void MapValueInit(void)
 				stage.rock_count++;
 				break;
 			case 3:
-				stage.mole_x[f] = x;
-				stage.mole_y[f] = y;
-				f++;
+				stage.mole_x[stage.mole_count] = x;
+				stage.mole_y[stage.mole_count] = y;
+				stage.mole_count++;
 				break;
 			case 4:
 				stage.road_x[g] = x;

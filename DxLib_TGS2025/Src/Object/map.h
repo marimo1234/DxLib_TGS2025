@@ -32,6 +32,7 @@ struct CreateStage
 	int wood_count;
 	int rock_count;
 	int rock_count_flag;
+	int mole_count;
 };
 
 

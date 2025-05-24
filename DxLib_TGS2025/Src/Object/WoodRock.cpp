@@ -56,6 +56,7 @@ void WoodRockInit(void)
 	}
 	for (int i = 0; i < 4; i++)
 	{
+		wood.effect_image[i] = -1;
 		rock.effect_image[i] = -1;
 	}
 	//配列番号の初期化
@@ -71,7 +72,8 @@ void WoodRockInit(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
-
+	wood.effect_num = 0;
+	wood.effect_count = 0;
 	rock.effect_num = 0;
 	rock.effect_count = 0;
 
@@ -87,6 +89,11 @@ void WoodRockInit(void)
 	rock.image[1] = LoadGraph("Resource/images/Rock1.png");
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
+
+	wood.effect_image[0] = LoadGraph("Resource/images/rock_fragment1.png");
+	wood.effect_image[1] = LoadGraph("Resource/images/rock_fragment2.png");
+	wood.effect_image[2] = LoadGraph("Resource/images/rock_fragment3.png");
+	wood.effect_image[3] = LoadGraph("Resource/images/rock_fragment4.png");
 
 	rock.effect_image[0]= LoadGraph("Resource/images/rock_fragment1.png");
 	rock.effect_image[1]= LoadGraph("Resource/images/rock_fragment2.png");
@@ -118,6 +125,7 @@ void WoodRockUpdate(void)
 		WoodRockSub(Get_Tool());
 		WoodRockAdd(Get_Tool());
 
+		//モグラが岩を置く場所を取得
 		GetMoleRockPosition(GetMole());
 	}
 	else
@@ -155,6 +163,16 @@ void WoodRockDraw(void)
 	//アイテム化した木と岩の数の描画
 	WoodRockItemCount();
 
+	WoodRockEffectDraw();
+	/*if (wood.effect_flag == true)
+	{
+		WoodEffect(wood.count_x, wood.count_y);
+	}
+	else
+	{
+		wood.effect_num = 0;
+	}
+
 	if (rock.effect_flag == true)
 	{
 		RockEffect(rock.count_x,rock.count_y);
@@ -162,7 +180,7 @@ void WoodRockDraw(void)
 	else
 	{
 		rock.effect_num = 0;
-	}
+	}*/
 	
 	DrawFormatString(200, 250, GetColor(255, 255, 255), "%d", rock.move_count);
 }
@@ -178,6 +196,7 @@ void WoodAnimation(void)
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
 			wood.animation[wood.count_x][wood.count_y] = wood.image[1];
+			wood.effect_flag = true;
 			wood.fps++;
 			if (wood.fps > HIT_COOLTIME)
 			{
@@ -193,6 +212,7 @@ void WoodAnimation(void)
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
 			wood.animation[wood.count_x][wood.count_y] = wood.image[2];
+			wood.effect_flag = true;
 			wood.fps++;
 			if (wood.fps > HIT_COOLTIME)
 			{
@@ -208,10 +228,11 @@ void WoodAnimation(void)
 		
 		if (wood.hit_flag[wood.count_x][wood.count_y] == true)
 		{
-				wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
-				wood.hit_count[wood.count_x][wood.count_y] = eHit3;
-				wood.hit_flag[wood.count_x][wood.count_y] = false;   //hitフラグをfalseにする
-				wood.fps = 0;
+			wood.effect_flag = true;
+			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
+			wood.hit_count[wood.count_x][wood.count_y] = eHit3;
+			wood.hit_flag[wood.count_x][wood.count_y] = false;   //hitフラグをfalseにする
+			wood.fps = 0;
 		}
 		break;
 
@@ -434,6 +455,9 @@ void WoodRockReset(void)
 	wood.move_flag = false;
 	rock.move_flag = false;
 
+	wood.effect_num = 0;
+	wood.effect_count = 0;
+
 	rock.effect_num = 0;
 	rock.effect_count = 0;
 
@@ -468,11 +492,11 @@ void WoodMove(void)
 
 	if (wood.move_count > 20)
 	{
-		wood.position.x += 7.0f;
-		wood.position.y += 7.0f * -fy;
+		wood.position.x += 9.0f;
+		wood.position.y += 9.0f * -fy;
 	}
 
-	if (wood.position.y + 1 < my)
+	if (wood.position.y + 2 < my)
 	{
 		wood.move_count = 0;
 		wood.move_flag = false;
@@ -506,12 +530,12 @@ void RockMove(void)
 
 	if (rock.move_count > 20)
 	{
-		rock.position.x += 7.0f;
-		rock.position.y += 7.0f * -fy;
+		rock.position.x += 9.0f;
+		rock.position.y += 9.0f * -fy;
 	}
 	
 
-	if (rock.position.y+1 < my)
+	if (rock.position.y+2 < my)
 	{
 		rock.move_count = 0;
 		rock.move_flag = false;
@@ -580,6 +604,28 @@ void GetMoleRockPosition(const Mole* mole)
 	}
 }
 
+void WoodEffect(int x, int y)
+{
+	if (wood.effect_num < 4)
+	{
+		wood.effect_count++;
+
+		if (wood.effect_count > 5)
+		{
+			wood.effect_num++;
+			wood.effect_count = 0;
+
+		}
+	}
+	else
+	{
+		wood.effect_count = 0;
+		wood.effect_flag = false;
+	}
+
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
+}
+
 void RockEffect(int x, int y)
 {
 	
@@ -601,4 +647,25 @@ void RockEffect(int x, int y)
 	}
 	
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.effect_image[rock.effect_num],TRUE);
+}
+
+void WoodRockEffectDraw(void) 
+{
+	if (wood.effect_flag == true)
+	{
+		WoodEffect(wood.count_x, wood.count_y);
+	}
+	else
+	{
+		wood.effect_num = 0;
+	}
+
+	if (rock.effect_flag == true)
+	{
+		RockEffect(rock.count_x, rock.count_y);
+	}
+	else
+	{
+		rock.effect_num = 0;
+	}
 }
