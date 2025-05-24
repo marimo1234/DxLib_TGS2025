@@ -90,10 +90,10 @@ void WoodRockInit(void)
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
 
-	wood.effect_image[0] = LoadGraph("Resource/images/rock_fragment1.png");
-	wood.effect_image[1] = LoadGraph("Resource/images/rock_fragment2.png");
-	wood.effect_image[2] = LoadGraph("Resource/images/rock_fragment3.png");
-	wood.effect_image[3] = LoadGraph("Resource/images/rock_fragment4.png");
+	wood.effect_image[0] = LoadGraph("Resource/images/reef_effect1.png");
+	wood.effect_image[1] = LoadGraph("Resource/images/reef_effect2.png");
+	wood.effect_image[2] = LoadGraph("Resource/images/reef_effect3.png");
+	wood.effect_image[3] = LoadGraph("Resource/images/reef_effect4.png");
 
 	rock.effect_image[0]= LoadGraph("Resource/images/rock_fragment1.png");
 	rock.effect_image[1]= LoadGraph("Resource/images/rock_fragment2.png");
@@ -163,24 +163,9 @@ void WoodRockDraw(void)
 	//アイテム化した木と岩の数の描画
 	WoodRockItemCount();
 
+	//エフェクトの描画
 	WoodRockEffectDraw();
-	/*if (wood.effect_flag == true)
-	{
-		WoodEffect(wood.count_x, wood.count_y);
-	}
-	else
-	{
-		wood.effect_num = 0;
-	}
-
-	if (rock.effect_flag == true)
-	{
-		RockEffect(rock.count_x,rock.count_y);
-	}
-	else
-	{
-		rock.effect_num = 0;
-	}*/
+	
 	
 	DrawFormatString(200, 250, GetColor(255, 255, 255), "%d", rock.move_count);
 }
