@@ -65,8 +65,6 @@ void ObstacleManagerUpdate(void)
 {
 
 	MoleStart(GetInGame());
-	/*MoleRandomDirection();*/
-
 	
 	if (mole.start == true)
 	{
@@ -135,7 +133,6 @@ void MoleRandomDirection(const CreateStage* stage)
 		{
 			MolePutFlagReset();
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
-			/*mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i]] = true;*/
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 
 			MolePutRockFlag(GetStage());
