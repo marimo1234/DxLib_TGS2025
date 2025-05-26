@@ -43,12 +43,20 @@ void InGameSceneInit(void)
 	ingame.manual_open = false;
 	//操作説明の画像
 	ingame.manual_image= LoadGraph("Resource/images/manual.png");
+
+	ingame.menu_image = LoadGraph("Resource/images/menu1.png");
+	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージを1ステージ目に設定
 	ingame.stage_num = eOne;
 	//ステージ次のステージに変更するフラグ
 	ingame.next_stage_flag = false;
+
+	ingame.menu_flag = false;
+	ingame.menu_num = 0;
+	ingame.menu_cursor_x=450.0f;
+	ingame.menu_cursor_y = 350.0f;
 
 	//確認用変数　後々消します
 	atr = 0;
@@ -105,11 +113,25 @@ eSceneType InGameSceneUpdate()
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver());
 
+	InGameMenu();
 
 
-	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (ingame.menu_num == 0 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		return eResult;	//インゲーム画面へ
+		ingame.menu_flag = false;
+	}
+	if (ingame.menu_num == 1 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		ingame.start = false;
+		ingame.menu_flag = false;
+	}
+	if (ingame.menu_num==2&&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		return eTitle;	//タイトルに戻る
 	}
 
 	return eInGame;
@@ -158,6 +180,11 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640, 360, 1.0, 0.0, ingame.space, TRUE);
 	}
 	
+	if (ingame.menu_flag == true)
+	{
+		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
+		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
+	}
 }
 const InGame* GetInGame(void)
 {
@@ -268,4 +295,34 @@ void StageChange(void)
 	}
 }
 
+void InGameMenu(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+	{
+		ingame.menu_flag = true;
+	}
+
+	if (ingame.menu_flag == true)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+		{
+			ingame.menu_num--;
+			if (ingame.menu_num < 0)
+			{
+				ingame.menu_num = 2;
+			}
+			
+			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
+		}
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+		{
+			ingame.menu_num++;
+			ingame.menu_num = ingame.menu_num % 3;
+			
+			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
+		}
+	}
+}
 
