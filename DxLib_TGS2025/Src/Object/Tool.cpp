@@ -777,6 +777,36 @@ void Stage_Init(const CreateStage*stage)
 		tool.stage_array_below_x = -1;
 		tool.stage_array_below_y = -1;
 	}
+	if (tool.stage_number == 2)
+	{
+		tool.base_x = 3;
+		tool.base_y = 3;
+		tool.old_base_array[2][3] = 1;
+		tool.stage_array_exceed_x = 12;
+		tool.stage_array_exceed_y = 7;
+		tool.stage_array_below_x = -1;
+		tool.stage_array_below_y = -1;
+	}
+	if (tool.stage_number == 3)
+	{
+		tool.base_x = 3;
+		tool.base_y = 3;
+		tool.old_base_array[2][3] = 1;
+		tool.stage_array_exceed_x = 12;
+		tool.stage_array_exceed_y = 7;
+		tool.stage_array_below_x = -1;
+		tool.stage_array_below_y = -1;
+	}
+	if (tool.stage_number == 4)
+	{
+		tool.base_x = 3;
+		tool.base_y = 3;
+		tool.old_base_array[2][3] = 1;
+		tool.stage_array_exceed_x = 12;
+		tool.stage_array_exceed_y = 7;
+		tool.stage_array_below_x = -1;
+		tool.stage_array_below_y = -1;
+	}
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
