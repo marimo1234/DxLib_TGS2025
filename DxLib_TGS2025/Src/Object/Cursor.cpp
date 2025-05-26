@@ -18,14 +18,17 @@ Cursor cursor;
 int cursor_image;
 int cursor_se;
 int cursorstart;
-int pickaxe_animation_num = 0, pickaxe_animation_count = 0;
-int ax_anim_num = 0, ax_anim_count = 0;
+int pickaxe_animation_num = 0, pickaxe_animation_count = 0, hammer_animation_count = 0;
+int ax_anim_num = 0, ax_anim_count = 0, hammer_anim_num = 0, hammer_anim_count = 0;
 int cursor_image1, cursor_image2;
 int cursor_ax;
 int cursor_drill;
+int cursor_road;
+int cursor_hasi;
 static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
 static bool is_animating_ax = false;       // 斧のアニメーションフラグ
 static bool is_animating_drill = false;    // ドリルのアニメーションフラグ
+static bool is_animating_Hammer = false;    // ハンマーのアニメーションフラグ
 
 void CursorStart(const InGame* ingame);
 void GetCarInitPosition(const Car* car);
@@ -55,7 +58,9 @@ void CursorInit(void)
 	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
-	cursor_se = LoadSoundMem("Resource/Sounds");
+	cursor_road = LoadGraph("Resorce/Images/RoadVertical.png");
+	cursor_hasi = LoadGraph("Resorce/Images/Log.png");
+	cursor_se = LoadSoundMem("Resource/Sounds/");
 }
 
 //カーソルの更新
@@ -95,6 +100,21 @@ void CursorUpdate(void)
 					is_animating_ax = false;
 					ax_anim_num = 0;
 					ax_anim_count = 0;
+				}
+			}
+		}
+		// ハンマーのアニメーション
+		if (is_animating_Hammer)
+		{
+			hammer_anim_count++;
+			if (hammer_anim_count % 15 == 0)
+			{
+				hammer_anim_num++;
+				if (hammer_anim_num > 1)
+				{
+					is_animating_Hammer = false;
+					hammer_anim_num = 0;
+					hammer_anim_count = 0;
 				}
 			}
 		}
@@ -158,9 +178,31 @@ void CursorDraw(const Tool*tool)
 	// もしitem_numberがeDrillなら
 	else if(tool->item_number==eHammer)
 	{
-		// cursor_drillを描画する
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
-
+		// ハンマーのアニメーションを動かす
+		if (is_animating_Hammer)
+		{
+			if (hammer_anim_num == 0)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
+			}
+			else if (hammer_anim_num == 1)
+			{
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5,-90.0, cursor_drill, TRUE);
+			}
+		}
+		// アニメーションが動いていなければこれにする
+		else
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
+		}
+	}
+	else if (tool->item_number == eRoad)
+	{
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 1.0, 0.0, cursor_road, TRUE);
+	}
+	else if (tool->item_number == eWoodRoad)
+	{
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 1.0, 0.0, cursor_hasi, TRUE);
 	}
 
 }
@@ -277,6 +319,16 @@ void CursolButtonMovement(const Tool* tool)
 				is_animating_ax = true;
 			}
 		}
+		if (tool->item_number == eHammer)
+		{
+			if (!is_animating_Hammer && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+			{
+				// アニメーション開始
+				hammer_anim_num = 0;
+				hammer_anim_count = 0;
+				is_animating_Hammer = true;
+			}
+		}
 	}
 }
 
@@ -295,6 +347,7 @@ void CursorReset(void)
 	
 	static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
 	static bool is_animating_ax = false;       // 斧のアニメーションフラグ
+	static bool is_animating_Hammer = false;   // ハンマーのアニメーションフラグ
 }
 
 
