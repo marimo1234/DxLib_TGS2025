@@ -107,8 +107,8 @@ void StageLoad(void)
 
 
 	char file_name[256];
-		int number = 0;
-		snprintf(file_name,sizeof(file_name), "Resource/stage/stage_%d.csv", number);
+	int number = 0;
+	snprintf(file_name, sizeof(file_name), "Resource/stage/stage_%d.csv", number);
 
 	FILE* fp;
 	errno_t err;
