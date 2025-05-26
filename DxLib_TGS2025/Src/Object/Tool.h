@@ -85,6 +85,7 @@ struct Tool_Img
 	int road_Topright;		//上右への道の画像ハンドル
 	int road_Rbottom;		//右下への道の画像ハンドル
 	int road_Rtop;			//右上への道の画像ハンドル
+	int road_se;            //道のサウンドハンドル
 	
 	int wood_road_beside;	//左右への木の道の画像ハンドル
 	int wood_road_vertical;	//上下への木の道の画像ハンドル
@@ -92,12 +93,14 @@ struct Tool_Img
 	int wood_road_Topright;	//上右への木の道の画像ハンドル
 	int wood_road_Rbottom;	//右下への木の道の画像ハンドル
 	int wood_road_Rtop;		//右上への木の道の画像ハンドル
+	int wood_road_se;       //木の道のサウンドハンドル
 
 	int possible_roadB;			//設置可能位置の道の画像ハンドル(横
 	int possible_roadV;			//設置可能位置の道の画像ハンドル(縦
 	int possible_wood_roadB;	//設置可能位置の木の道の画像ハンドル(横
 	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
 	int possible_break;			//破壊可能位置の画像ハンドル
+	int break_se;               //破壊時のSEハンドル
 
 	int put_road[3];
 	int put_woodroad[2];
