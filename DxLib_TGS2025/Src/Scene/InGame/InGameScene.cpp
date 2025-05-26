@@ -55,8 +55,8 @@ void InGameSceneInit(void)
 
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
-	ingame.menu_cursor_x=240.0f;
-	ingame.menu_cursor_y = 320.0f;
+	ingame.menu_cursor_x=450.0f;
+	ingame.menu_cursor_y = 350.0f;
 
 	//確認用変数　後々消します
 	atr = 0;
@@ -117,7 +117,17 @@ eSceneType InGameSceneUpdate()
 
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-
+	if (ingame.menu_num == 0 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		ingame.menu_flag = false;
+	}
+	if (ingame.menu_num == 1 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		ingame.start = false;
+		ingame.menu_flag = false;
+	}
 	if (ingame.menu_num==2&&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
@@ -173,7 +183,7 @@ void InGameSceneDraw(void)
 	if (ingame.menu_flag == true)
 	{
 		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
-		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_cursor, TRUE);
+		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 	}
 }
 const InGame* GetInGame(void)
@@ -303,15 +313,15 @@ void InGameMenu(void)
 			{
 				ingame.menu_num = 2;
 			}
-			ingame.menu_cursor_x = 320.0f + ingame.menu_num * 50.0f;
-			ingame.menu_cursor_y = 320.0f + ingame.menu_num * 50.0f;
+			
+			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
 			ingame.menu_num++;
 			ingame.menu_num = ingame.menu_num % 3;
-			ingame.menu_cursor_x = 320.0f + ingame.menu_num * 50.0f;
-			ingame.menu_cursor_y = 320.0f + ingame.menu_num * 50.0f;
+			
+			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
 		}
 	}
 }
