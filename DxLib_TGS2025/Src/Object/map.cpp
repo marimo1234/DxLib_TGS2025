@@ -189,13 +189,13 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 void Stage_Start(const InGame* ingame)
 {
 	//TRUEならstageもTRUEに
-	if (ingame->start == true)
+	if (ingame->start == true && ingame->menu_flag == false)
 	{
 		stage.start = true;
 	}
 
 	//そうでなければFALSEに
-	else
+	else if(ingame->start == false)
 	{
 		stage.start = false;
 	}

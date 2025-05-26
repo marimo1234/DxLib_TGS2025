@@ -320,11 +320,11 @@ const Rock* GetRock(void)
 //処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame)
 {
-	if (ingame->start == true)
+	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		woodrock_start = true;
 	}
-	else
+	else if(ingame->start == false)
 	{
 		woodrock_start = false;
 	}

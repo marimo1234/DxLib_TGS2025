@@ -102,11 +102,11 @@ void ObstacleAnimationControl(const Cursor* cursor)
 //処理をスタートするフラグ
 void MoleStart(const InGame* ingame)
 {
-	if (ingame->start == true)
+	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		mole.start = true;
 	}
-	else
+	else if(ingame->start == false)
 	{
 		mole.start = false;
 	}

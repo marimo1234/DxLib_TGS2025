@@ -571,13 +571,13 @@ void Road_FLAG_OFF(void)
 void Tool_Start(const InGame* ingame)
 {
 	//TRUEならtoolもTRUEに
-	if (ingame->start == true)
+	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		tool_start = true;
 	}
 
 	//そうでなければFALSEに
-	else
+	else if(ingame->start == false)
 	{
 		tool_start = false;
 	}

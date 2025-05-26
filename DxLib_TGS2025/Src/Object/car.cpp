@@ -107,11 +107,11 @@ void CarDraw(void)
 //車の処理をスタートするフラグ
 void CarStart(const InGame* ingame)
 {
-	if (ingame->start == true)
+	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		car.start = true;
 	}
-	else
+	else if (ingame->start == false)
 	{
 		car.start = false;
 	}

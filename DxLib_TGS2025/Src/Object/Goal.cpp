@@ -67,11 +67,11 @@ void GoalDraw(void)
 //ゴール処理スタート
 void GoalStart(const InGame* ingame)
 {
-	if(ingame->start == true)
+	if(ingame->start == true && ingame->menu_flag == false)
 	{
 		goal.start = true;
 	}
-	else
+	else if (ingame->start == false)
 	{
 		goal.start = false;
 	}
