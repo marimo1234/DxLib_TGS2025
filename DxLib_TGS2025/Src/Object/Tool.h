@@ -62,11 +62,14 @@ struct Tool
 	bool wood_add_flag;				//木の所持数を足すフラグ
 	bool road_break_flag[12][7];	//道を壊したことを伝えるフラグ
 
-	int put_fps;
+	int put_road_fps;
 	int put_woodroad_fps;
+	int break_road_fps;
 
-	int put_flag;
-	int put_woodroad_flag;
+	bool put_road_flag;
+	bool put_woodroad_flag;
+	bool break_road_flag;
+	
 	
 };
 
@@ -78,6 +81,8 @@ struct Tool_Img
 	int drill;				//ドリルの画像ハンドル
 	int item_select;		//選択枠（アイテム）の画像ハンドル
 	int wood_road_img;		//木の道の画像ハンドル
+	int rb;					//Rトリガー
+	int lb;					//Lトリガー
 	
 	int road_beside;		//左右への道の画像ハンドル
 	int road_vertical;		//上下への道の画像ハンドル
@@ -103,7 +108,8 @@ struct Tool_Img
 	int break_se;               //破壊時のSEハンドル
 
 	int put_road[3];
-	int put_woodroad[2];
+	int put_woodroad[3];
+	int break_road[3];
 
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
