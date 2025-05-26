@@ -183,17 +183,17 @@ void CursorDraw(const Tool*tool)
 		{
 			if (hammer_anim_num == 0)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_drill, TRUE);
 			}
 			else if (hammer_anim_num == 1)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5,-90.0, cursor_drill, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7,-90.0, cursor_drill, TRUE);
 			}
 		}
 		// アニメーションが動いていなければこれにする
 		else
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_drill, TRUE);
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_drill, TRUE);
 		}
 	}
 	else if (tool->item_number == eRoad)
@@ -319,6 +319,7 @@ void CursolButtonMovement(const Tool* tool)
 				is_animating_ax = true;
 			}
 		}
+		// もしハンマー
 		if (tool->item_number == eHammer)
 		{
 			if (!is_animating_Hammer && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
