@@ -58,8 +58,8 @@ void CursorInit(void)
 	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
-	cursor_road = LoadGraph("Resorce/Images/RoadVertical.png");
-	cursor_hasi = LoadGraph("Resorce/Images/Log.png");
+	cursor_road = LoadGraph("Resource/Images/RoadVertical.png");
+	cursor_hasi = LoadGraph("Resource/Images/Log.png");
 	cursor_se = LoadSoundMem("Resource/Sounds/");
 }
 
@@ -198,11 +198,11 @@ void CursorDraw(const Tool*tool)
 	}
 	else if (tool->item_number == eRoad)
 	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 1.0, 0.0, cursor_road, TRUE);
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_road, TRUE);
 	}
 	else if (tool->item_number == eWoodRoad)
 	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 1.0, 0.0, cursor_hasi, TRUE);
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_hasi, TRUE);
 	}
 
 }

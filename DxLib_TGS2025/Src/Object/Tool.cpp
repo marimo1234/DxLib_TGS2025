@@ -102,7 +102,7 @@ void ToolInit(void)
 	}
 	Stage_Init(GetStage());
 
-	//******画像読み込み******//
+	//******画像読み込み&サウンドも******//
 	//アイテム枠
 	tool_img.itemframe= LoadGraph("Resource/images/item_frame.png");
 	//ピッケル
@@ -115,6 +115,7 @@ void ToolInit(void)
 	tool_img.wood_road_Btmright = LoadGraph("Resource/images/woodroad_BR.png");
 	tool_img.wood_road_Rbottom = LoadGraph("Resource/images/woodroad_RB.png");
 	tool_img.wood_road_Rtop = LoadGraph("Resource/images/woodroad_RTop.png");
+	tool_img.wood_road_se = LoadSoundMem("Resource/Sounds/wood_road.mp3");
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
 	//ハンマー
@@ -128,6 +129,7 @@ void ToolInit(void)
 	tool_img.road_Btmright = LoadGraph("Resource/images/RoadBottomRight.png");
 	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
 	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
+	tool_img.road_se = LoadSoundMem("Resource/Sounds/put_road.mp3");
 	//透過させた道
 	tool_img.possible_roadB = LoadGraph("Resource/images/Possible_Beside.png");
 	tool_img.possible_roadV= LoadGraph("Resource/images/Possible_Vertical.png");
@@ -144,6 +146,8 @@ void ToolInit(void)
 	tool_img.put_woodroad[1] = LoadGraph("Resource/images/put2.png");
 	//道を壊したときのエフェクト
 	
+	//道を壊したときの音
+	tool_img.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
 	//配置済み道
 	Road_Imghandle_Init(GetStage());
 }
@@ -357,6 +361,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						Base_Chenge();
 						tool.base_x += 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
@@ -369,6 +374,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						Base_Chenge();
 						tool.base_x -= 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
@@ -381,6 +387,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						Base_Chenge();
 						tool.base_y -= 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
@@ -393,6 +400,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						Base_Chenge();
 						tool.base_y += 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
 					}
 				}
 			}
@@ -430,6 +438,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 						Base_Chenge();
 						tool.base_x += 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.wood_road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
@@ -442,6 +451,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 						Base_Chenge();
 						tool.base_x -= 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.wood_road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
@@ -454,6 +464,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 						Base_Chenge();
 						tool.base_y -= 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.wood_road_se, DX_PLAYTYPE_BACK);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
@@ -466,6 +477,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 						Base_Chenge();
 						tool.base_y += 1;
 						Road_Imghandle_Update(GetStage());
+						PlaySoundMem(tool_img.wood_road_se, DX_PLAYTYPE_BACK);
 					}
 				}
 			}
@@ -498,11 +510,14 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 					if (stage->array[tool.base_x][tool.base_y] == 4)
 					{
 						tool.rock_add_flag = true;
+						PlaySoundMem(tool_img.break_se, DX_PLAYTYPE_BACK);
 					}
 					//木の道だったら木を+1
 					else if (stage->array[tool.base_x][tool.base_y] == 5)
 					{
 						tool.wood_add_flag = true;
+						PlaySoundMem(tool_img.break_se, DX_PLAYTYPE_BACK);
+
 					}
 				
 					tool.road_break_flag[tool.base_x][tool.base_y] = true;
