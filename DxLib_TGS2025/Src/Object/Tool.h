@@ -62,6 +62,9 @@ struct Tool
 	bool wood_add_flag;				//木の所持数を足すフラグ
 	bool road_break_flag[12][7];	//道を壊したことを伝えるフラグ
 
+
+	int break_x;
+	int break_y;
 	int put_road_fps;
 	int put_woodroad_fps;
 	int break_road_fps;

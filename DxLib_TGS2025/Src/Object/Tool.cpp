@@ -86,6 +86,8 @@ void ToolInit(void)
 	tool_img.woodroad_num_ex_rate = 1.0;
 
 	//エフェクト
+	tool.break_x=0;
+	tool.break_y = 0;
 	tool.put_road_fps = 0;
 	tool.put_road_flag = false;
 
@@ -213,10 +215,22 @@ void ToolDraw(void)
 	{
 		Put_WoodRoad_Effect(tool.base_x, tool.base_y);
 	}
-	/*for (int j = 0; j < 7; j++)
-	{
-		for(int j=0;)
-	}*/
+
+		for (int j = 0; j < 7; j++)
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				if (tool.road_break_flag[i][j] == true)
+				{
+					tool.break_x = i;
+					tool.break_y = j;
+				}
+			}
+		}
+		if (tool.break_road_flag == true)
+		{
+			Break_Road_Effect(tool.break_x, tool.break_y);
+		}
 	
 	//設置可能位置表示
 	Possible_Prace(GetStage());
@@ -531,6 +545,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 					//道だったら
 					if (stage->array[tool.base_x][tool.base_y] == 4)
 					{
+						tool.break_road_flag = true;
 						tool.rock_add_flag = true;
 						PlaySoundMem(tool_img.break_se, DX_PLAYTYPE_BACK);
 					}
@@ -1638,15 +1653,15 @@ void Break_Road_Effect(int x, int y)
 	tool.break_road_fps++;
 	if (tool.break_road_fps < 6)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.break_road[0], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, tool_img.break_road[0], TRUE);
 	}
 	else if (tool.break_road_fps < 12)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.break_road[1], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.1, 0.0, tool_img.break_road[1], TRUE);
 	}
 	else if (tool.break_road_fps < 18)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.break_road[2], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, tool_img.break_road[2], TRUE);
 	}
 	else
 	{
