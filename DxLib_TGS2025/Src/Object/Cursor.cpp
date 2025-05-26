@@ -46,6 +46,7 @@ void CursorInit(void)
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 	cursorstart = false;
+	cursor.menu_flag = false;
 
 	//カーソルの配列番号
 	GetCarInitPosition(GetCar());
@@ -67,11 +68,11 @@ void CursorInit(void)
 void CursorUpdate(void)
 {
 	CursorStart(GetInGame());
-	CursolButtonMovement(Get_Tool());
 	
-	if (cursorstart == true)
+	
+	if (cursorstart == true&& cursor.menu_flag == false)
 	{
-
+        CursolButtonMovement(Get_Tool());
 		// ツルハシのアニメーション
 		if (is_animating_pickaxe)
 		{
@@ -119,7 +120,7 @@ void CursorUpdate(void)
 			}
 		}
 	}
-	else
+	else if(cursorstart == false && cursor.menu_flag == false)
 	{
 		CursorReset();
 	}
@@ -130,8 +131,7 @@ void CursorDraw(const Tool*tool)
 {
 
 	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
-	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "%d %d ",numx,numy );
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d ",cursor.array_x, cursor.array_y);*/
+	
 	
 	// もしitem_numberがePickaxeなら
 	if (tool->item_number == ePickaxe)
@@ -213,10 +213,12 @@ void CursorStart(const InGame* ingame)
 	{
 		cursorstart = true;
 	}
-	else if (ingame->start == false)
+	else if (ingame->start == false && ingame->menu_flag == false)
 	{
 		cursorstart = false;
 	}
+
+	cursor.menu_flag = ingame->menu_flag;
 }
 
 //構造体Cursor
@@ -227,8 +229,7 @@ const Cursor* GetCursor1(void)
 
 void CursolButtonMovement(const Tool* tool)
 {
-	if (cursorstart == TRUE)
-	{
+	
 		PadInputManager* pad_input = PadInputManager::GetInstance();
 
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
@@ -330,7 +331,6 @@ void CursolButtonMovement(const Tool* tool)
 				is_animating_Hammer = true;
 			}
 		}
-	}
 }
 
 void CursorReset(void)
@@ -344,6 +344,7 @@ void CursorReset(void)
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 	cursorstart = false;
+	cursor.menu_flag = false;
 	
 	
 	static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ

@@ -50,6 +50,7 @@ void CarInit(void)
 	
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
+	car.animation = car.image[0];
 
 	//次の目的地の初期化
 	for (int i = 0; i < 84; i++)
@@ -147,6 +148,7 @@ void CarReset(void)
 	car.start = false;//車の処理フラグ
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
+	car.animation = car.image[0];
 
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
@@ -358,6 +360,7 @@ void CarGoalCheck(const CreateStage* stage)
 {
 	//右または上または下にゴールがあるなら
 	if (stage->array[car.next_x[car.road_count] + 1][car.next_y[car.road_count]] == 7 ||
+		stage->array[car.next_x[car.road_count] - 1][car.next_y[car.road_count]] == 7 ||
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] - 1] == 7 ||
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7)
 	{
