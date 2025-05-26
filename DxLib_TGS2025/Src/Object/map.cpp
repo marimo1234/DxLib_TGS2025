@@ -28,7 +28,7 @@ void MolePutRock(const Mole* mole);
 void MapInit(void)
 {
 	//画像の取得
-	groundreef = LoadGraph("Resource/images/MapOriginal4.png");
+	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
 	stage.trout_image= LoadGraph("Resource/images/trout.png");
 	ikl= LoadGraph("Resource/images/Back_Wood.png");
 	//csvファイルから値を取得
