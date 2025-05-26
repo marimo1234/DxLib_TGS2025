@@ -16,6 +16,7 @@ int stage_start;
 int ikl;
 
 void Stage_Start(const InGame* ingame);
+void StageLoad();
 void Put_Road(const Tool* tool, const Cursor* cursor);
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
@@ -79,11 +80,7 @@ void MapDraw(void)
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
 
-	/*for (int i = 0; i < 21; i++)
-	{
-		DrawRotaGraphF(i*60+40, GetRand(30)+20, 1.0, 0.0, ikl, TRUE);
-	}*/
-
+	
 }
 
 const CreateStage* GetStage(void)
@@ -108,9 +105,14 @@ void StageLoad(void)
 	stage.stage_x = 100;
 	stage.stage_y = 400;
 
+
+	char file_name[256];
+		int number = 0;
+		snprintf(file_name,sizeof(file_name), "Resource/stage/stage_%d.csv", number);
+
 	FILE* fp;
 	errno_t err;
-	err = fopen_s(&fp, "Resource/stage/stage.csv", "r");
+	err = fopen_s(&fp, file_name, "r");
 
 	while (err == 0)
 	{
