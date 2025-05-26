@@ -5,6 +5,7 @@
 //ステージ生成の構造体
 struct CreateStage
 {
+	int number;
 	int array[12][7];		//ステージ配列
 	int beside;		//横
 	int vertical;		//縦

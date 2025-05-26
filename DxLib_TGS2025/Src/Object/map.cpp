@@ -24,6 +24,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 	const Lake* lake, const Goal* goal);
 void Break_Road(const Tool* tool, const Cursor* cursor);
 void MolePutRock(const Mole* mole);
+void GetStageNum(const InGame* ingame);
 
 //初期化
 void MapInit(void)
@@ -39,6 +40,9 @@ void MapInit(void)
 
 	
 	stage.start = false;
+	stage.number = 1;
+
+	GetStageNum(GetInGame());
 
 	
 }
@@ -108,7 +112,7 @@ void StageLoad(void)
 
 	char file_name[256];
 	int number = 0;
-	snprintf(file_name, sizeof(file_name), "Resource/stage/stage_%d.csv", number);
+	snprintf(file_name, sizeof(file_name), "Resource/stage/stage_%d.csv", stage.number);
 
 	FILE* fp;
 	errno_t err;
@@ -314,7 +318,7 @@ void MapValueInit(void)
 {
 	int i = 0;	//木
 	stage.rock_count = 0;	//岩
-	stage.rock_count_flag = 0;;
+	stage.rock_count_flag = 0;
 	stage.mole_count = 0;	//穴
 	int g = 0;		//道
 	int h = 0;		//丸太の道
@@ -380,11 +384,36 @@ void MapTroutDraw(void)
 	}
 }
 
+
+void GetStageNum(const InGame* ingame)
+{
+	switch (ingame->stage_num)
+	{
+	case eOne:
+		stage.number = 1;
+		break;
+	case eTwo:
+		stage.number = 2;
+		break;
+	case eThree:
+		stage.number = 3;
+		break;
+	case eFour:
+		stage.number = 4;
+		break;
+	eFive:
+		stage.number = 5;
+		break;
+
+	}
+}
+
 void MapReset(void)
 {
 	//スタートフラグの初期化
 	stage.start = false;
 
+	GetStageNum(GetInGame());
 	StageLoad();
 	MapValueInit();
 	MapTroutDraw();
