@@ -100,6 +100,10 @@ void WoodRockInit(void)
 	rock.effect_image[2]= LoadGraph("Resource/images/rock_fragment3.png");
 	rock.effect_image[3]= LoadGraph("Resource/images/rock_fragment4.png");
 
+	//サウンド読み込み
+	wood.wood_clap = LoadSoundMem("Resource/Sounds/◯◯.mp3");
+	rock.rock_clap = LoadSoundMem("Resource/Sounds/◯◯.mp3");
+
 	rock.position.x = 600.0f;
 	rock.position.y = 360.0f;
 }
@@ -377,6 +381,8 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						wood.count_y = stage->wood_y[i];
 						//Hitフラグをtrueにする
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
+						//hit時の斧が木を叩くSEを追加
+						PlaySoundMem(wood.wood_clap, DX_PLAYTYPE_BACK);
 					}
 				}
 			}
@@ -411,6 +417,8 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						rock.count_y = stage->rock_y[i];
 						//Hitフラグをtrueにする
 						rock.hit_flag[rock.count_x][rock.count_y] = true;
+						//hit時のツルハシが岩を叩くSEを追加
+						PlaySoundMem(rock.rock_clap, DX_PLAYTYPE_BACK);
 					}
 				}
 			}
