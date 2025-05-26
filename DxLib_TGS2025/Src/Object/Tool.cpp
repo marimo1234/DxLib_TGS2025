@@ -65,6 +65,7 @@ void ToolInit(void)
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
+	tool.menu_flag = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
 	tool.rock_add_flag = false;
@@ -172,7 +173,7 @@ void ToolManagerUpdate(void)
 	Tool_Start(GetInGame());
 
 	//ゲームスタートがtrueなら
-	if (tool_start == true)
+	if (tool_start == true&& tool.menu_flag == false)
 	{
 		Move_ItemSelect();
 		Road_FLAG_OFF();
@@ -181,9 +182,9 @@ void ToolManagerUpdate(void)
 		Put_Road_FLAG(GetCursor1(),GetStage());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
 	}
-	else
+	else if (tool_start == false && tool.menu_flag == false)
 	{
-		Tool_Reset(GetStage(),GetInGame());
+		Tool_Reset(GetStage(), GetInGame());
 	}
 	
 	Road_Add_Num(GetRock());
@@ -598,11 +599,12 @@ void Tool_Start(const InGame* ingame)
 	}
 
 	//そうでなければFALSEに
-	else if(ingame->start == false)
+	else if(ingame->start == false && ingame->menu_flag == false)
 	{
 		tool_start = false;
 	}
 
+	tool.menu_flag = ingame->menu_flag;
 	//なんステージ目か
 	/*tool.stage_number = ingame->stage_num;*/
 }
@@ -695,6 +697,7 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
+	tool.menu_flag == false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
 	tool.rock_add_flag = false;

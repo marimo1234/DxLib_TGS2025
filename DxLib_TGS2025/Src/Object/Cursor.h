@@ -14,6 +14,7 @@ struct Cursor
 	int array_y;
 	int image;
 	int is_jump;
+	int menu_flag;
 };
 
 void CursorInit(void);

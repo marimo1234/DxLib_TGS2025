@@ -121,17 +121,20 @@ eSceneType InGameSceneUpdate()
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		ingame.menu_flag = false;
+		ingame.menu_num = 0;
 	}
 	if (ingame.menu_num == 1 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		ingame.start = false;
 		ingame.menu_flag = false;
+		ingame.menu_num = 0;
 	}
 	if (ingame.menu_num==2&&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		return eTitle;	//タイトルに戻る
+		ingame.menu_num = 0;
 	}
 
 	return eInGame;
@@ -182,6 +185,7 @@ void InGameSceneDraw(void)
 	
 	if (ingame.menu_flag == true)
 	{
+		ingame.menu_cursor_y= 350.0f + ingame.menu_num * 50.0f;
 		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 	}

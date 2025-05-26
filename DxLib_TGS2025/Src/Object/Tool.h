@@ -69,6 +69,8 @@ struct Tool
 	bool put_road_flag;
 	bool put_woodroad_flag;
 	bool break_road_flag;
+
+	int menu_flag;
 	
 	
 };
