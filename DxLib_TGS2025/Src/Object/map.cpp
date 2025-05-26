@@ -404,7 +404,7 @@ void GetStageNum(const InGame* ingame)
 	case eFour:
 		stage.number = 4;
 		break;
-	eFive:
+	case eFive:
 		stage.number = 5;
 		break;
 
