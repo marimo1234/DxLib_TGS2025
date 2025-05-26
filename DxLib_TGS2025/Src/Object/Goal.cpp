@@ -27,6 +27,7 @@ void GoalInit(void)
 
 	//ゲームがスタートしたかの判定フラグ
 	goal.start = false;
+	goal.menu_flag = false;
 	goal.count = 0;
 
 	goal.print_flag = false;
@@ -45,7 +46,7 @@ void GoalUpdate(void)
 	//ゴールしたかどうか
 	GoalFlag(GetInGame(), GetCar(), GetStage());
 
-	if (goal.start = false)
+	if (goal.start == false && goal.menu_flag == false)
 	{
 		GoalReset();
 	}
@@ -71,10 +72,11 @@ void GoalStart(const InGame* ingame)
 	{
 		goal.start = true;
 	}
-	else if (ingame->start == false)
+	else if (ingame->start == false&& ingame->menu_flag == false)
 	{
 		goal.start = false;
 	}
+	goal.menu_flag = ingame->menu_flag;
 }
 
 
@@ -115,6 +117,7 @@ void GoalReset(void)
 
 	//ゲームがスタートしたかの判定フラグ
 	goal.start = false;
+	goal.menu_flag = false;
 	goal.count = 0;
 }
 

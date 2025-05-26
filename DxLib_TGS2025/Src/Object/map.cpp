@@ -40,6 +40,7 @@ void MapInit(void)
 
 	
 	stage.start = false;
+	stage.menu_flag = false;
 	stage.number = 1;
 
 	GetStageNum(GetInGame());
@@ -54,7 +55,7 @@ void MapUpdate(void)
 	Stage_Start(GetInGame());
 	
 
-	if (stage.start == true)
+	if (stage.start == true&&stage.menu_flag==false)
 	{
 		//採取した後に描画を消す
 		Delete_WoodRock(GetWood(), GetRock());
@@ -68,7 +69,7 @@ void MapUpdate(void)
 		MolePutRock(GetMole());
 		
 	}
-	else
+	else if(stage.start == false && stage.menu_flag == false)
 	{
 		MapReset();
 	}
@@ -195,10 +196,12 @@ void Stage_Start(const InGame* ingame)
 	}
 
 	//そうでなければFALSEに
-	else if(ingame->start == false)
+	else if(ingame->start == false&&ingame->menu_flag == false)
 	{
 		stage.start = false;
 	}
+
+	stage.menu_flag = ingame->menu_flag;
 }
 
 
@@ -412,6 +415,8 @@ void MapReset(void)
 {
 	//スタートフラグの初期化
 	stage.start = false;
+	stage.menu_flag = false;
+
 
 	GetStageNum(GetInGame());
 	StageLoad();

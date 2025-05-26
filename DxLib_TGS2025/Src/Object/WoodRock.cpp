@@ -20,7 +20,8 @@
 #define HIT_COOLTIME (30)
 
 
-int woodrock_start;
+bool woodrock_start;
+bool woodrock_menu_flag;
 
 Wood wood;
 Rock rock;
@@ -39,10 +40,12 @@ void GetMoleRockPosition(const Mole* mole);
 //初期化
 void WoodRockInit(void)
 {
+	woodrock_start = false;
+	woodrock_menu_flag = false;
 	//ヒットフラグ、ヒット数、アニメーション、削除フラグの初期化
 	WoodRockHitInit(GetStage());
 
-	//ムーブフラグの初期化
+	//ムーブフラグの初期化00
 	wood.move_flag = false;
 	rock.move_flag = false;
 
@@ -115,7 +118,7 @@ void WoodRockUpdate(void)
 	WoodRockStart(GetInGame());
 
 	//スタートがtrueになったなら
-	if (woodrock_start == true)
+	if (woodrock_start == true&&woodrock_menu_flag==false)
 	{  
 		//木,岩のアニメーション
 		WoodAnimation();
@@ -132,7 +135,7 @@ void WoodRockUpdate(void)
 		//モグラが岩を置く場所を取得
 		GetMoleRockPosition(GetMole());
 	}
-	else
+	else if(woodrock_start == false && woodrock_menu_flag == false)
 	{
 		//初期化
 		WoodRockReset();
@@ -324,11 +327,12 @@ void WoodRockStart(const InGame* ingame)
 	{
 		woodrock_start = true;
 	}
-	else if(ingame->start == false)
+	else if(ingame->start == false && ingame->menu_flag == false)
 	{
 		woodrock_start = false;
 	}
 
+	woodrock_menu_flag = ingame->menu_flag;
 }
 
 //木、石が使われたときに所有数を減らす
@@ -439,7 +443,8 @@ void WoodRockItemCount(void)
 //リセット
 void WoodRockReset(void)
 {
-
+	woodrock_start = false;
+	woodrock_menu_flag = false;
 	//アイテム数の初期化
 	wood.item_num = 0;
 	rock.item_num = 0;

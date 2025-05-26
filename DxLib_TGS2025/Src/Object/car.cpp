@@ -32,9 +32,12 @@ void CarInit(void)
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
+
+
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
+
 
 	//画像の読み込み
 	car.image[0] = LoadGraph("Resource/images/car_right.png");
@@ -47,6 +50,7 @@ void CarInit(void)
 	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
 
 	car.start = false;//車の処理フラグ
+	car.menu_flag == false;
 	
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
@@ -72,14 +76,14 @@ void CarManagerUpdate(void)
 	GetNextDestination(Get_Tool());
 	GetBreakRoadPosition(Get_Tool());
 	//処理開始がtrueなら
-	if (car.start == true)
+	if (car.start == true && car.menu_flag == false)
 	{
 		//車の移動処理
 		CarGoalCheck(GetStage());
 		CarMovePosition();
 
 	}
-	else
+	else if (car.start == false && car.menu_flag == false)
 	{
 		//ステージ切り替えの時リセットする
 		CarReset();
@@ -112,11 +116,11 @@ void CarStart(const InGame* ingame)
 	{
 		car.start = true;
 	}
-	else if (ingame->start == false)
+	else if (ingame->start == false && ingame->menu_flag == false)
 	{
 		car.start = false;
 	}
-
+	car.menu_flag = ingame->menu_flag;
 }
 
 //車の情報を取得
@@ -146,6 +150,7 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
+	car.menu_flag == false;//車のメニュー処理フラグ
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
 	car.animation = car.image[0];

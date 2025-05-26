@@ -49,6 +49,7 @@ void ObstacleManagerInit(void)
 	lake.image = LoadGraph("Resource/images/lake.png");
 
 	mole.start = false;
+	mole.menu_flag = false;
 }
 
 //障害物の更新
@@ -57,7 +58,7 @@ void ObstacleManagerUpdate(void)
 
 	MoleStart(GetInGame());
 	
-	if (mole.start == true)
+	if (mole.start == true&&mole.menu_flag==false)
 	{
 		//石を置くフラグ
 		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
@@ -65,7 +66,7 @@ void ObstacleManagerUpdate(void)
 		MoleRandomDirection(GetStage());
 		
 	}
-	else
+	else if(mole.start == false && mole.menu_flag == false)
 	{
 		MoleReset();
 	}
@@ -106,10 +107,11 @@ void MoleStart(const InGame* ingame)
 	{
 		mole.start = true;
 	}
-	else if(ingame->start == false)
+	else if(ingame->start == false && ingame->menu_flag == false)
 	{
 		mole.start = false;
 	}
+	mole.menu_flag = ingame->menu_flag;
 
 }
 
@@ -138,6 +140,7 @@ void MoleRandomDirection(const CreateStage* stage)
 void MoleReset(void)
 {
 	mole.start = false;
+	mole.menu_flag = false;
 	mole.image_count = 0;
 
 	MoleInit(GetStage());

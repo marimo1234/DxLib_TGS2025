@@ -13,7 +13,8 @@ struct CreateStage
 	int stage_x;
 	int stage_y;
 	int trout_image;
-	int start;
+	bool start;
+	bool menu_flag;
 
 	int wood_x[80];
 	int wood_y[80];

@@ -31,7 +31,7 @@ struct Car
     int next_count;
     int old_direction;
     bool goal_flag;
-   
+    bool menu_flag;
     
    
 
