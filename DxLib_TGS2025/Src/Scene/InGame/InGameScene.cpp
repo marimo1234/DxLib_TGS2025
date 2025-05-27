@@ -42,7 +42,7 @@ void InGameSceneInit(void)
 	//操作説明の表示
 	ingame.manual_open = false;
 	//操作説明の画像
-	ingame.manual_image= LoadGraph("Resource/images/manual.png");
+	ingame.manual_image= LoadGraph("Resource/images/manual_menu.png");
 
 	ingame.menu_image = LoadGraph("Resource/images/menu1.png");
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
@@ -204,6 +204,10 @@ void GameStart(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
+			ingame.space = LoadGraph("Resource/images/aidaX.png");
+		}
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::eRelease)
+		{
 			ingame.start = true;
 		}
 	}
@@ -211,12 +215,16 @@ void GameStart(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
 		{
+			ingame.space = LoadGraph("Resource/images/aidaY.png");
+		}
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+		{
 			ingame.manual_open = true;
 		}
 	}
 	else if (ingame.manual_open == true)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
 		{
 			ingame.manual_open = false;
 		}
