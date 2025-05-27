@@ -10,7 +10,7 @@ struct StageSelect
 	int car_image;
 	int trout_image[2];
 	int number_image[5];
-	int trout_array[3][2];
+	int trout_array[3][3];
 	Vector2D position;
 	int number;
 	int array_number;
