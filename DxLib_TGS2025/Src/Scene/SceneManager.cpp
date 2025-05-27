@@ -5,7 +5,7 @@
 
 #include "Title/TitleScene.h"
 #include "InGame/InGameScene.h"
-#include "Result/ResultScene.h"
+#include "StageSelect/StageSelectScene.h"
 #include "Help/HelpScene.h"
 
 eSceneType current_scene_type;
@@ -36,11 +36,11 @@ void SceneManagerUpdate(void)
 	case eTitle:
 		next_scene_type = TitleSceneUpdate();
 		break;
+	case eStageSelect:
+		next_scene_type = StageSelectSceneUpdate();
+		break;
 	case eInGame:
 		next_scene_type = InGameSceneUpdate();
-		break;
-	case eResult:
-		next_scene_type = ResultSceneUpdate();
 		break;
 	case eHelp:
 		next_scene_type = HelpSceneUpdate();
@@ -73,11 +73,11 @@ void SceneManagerDraw(void)
 	case eTitle:
 		TitleSceneDraw();
 		break;
+	case eStageSelect:
+		StageSelectSceneDraw();
+		break;
 	case eInGame:
 		InGameSceneDraw();
-		break;
-	case eResult:
-		ResultSceneDraw();
 		break;
 	case eHelp:
 		HelpSceneDraw();
@@ -126,11 +126,11 @@ void SceneInit(eSceneType new_scene_type)
 	case eTitle:
 		TitleSceneInit();
 		break;
+	case eStageSelect:
+		StageSelectSceneInit();
+		break;
 	case eInGame:
 		InGameSceneInit();
-		break;
-	case eResult:
-		ResultSceneInit();
 		break;
 	case eHelp:
 		HelpSceneInit();

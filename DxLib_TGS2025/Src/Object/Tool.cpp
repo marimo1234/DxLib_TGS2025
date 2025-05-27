@@ -32,11 +32,11 @@ Tool_Img tool_img;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage);
-void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage);
+void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const GameOver*gameover, const Car* car);
+void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car *car);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
-void Possible_Prace(const CreateStage* stage);
+void Possible_Prace(const CreateStage* stage,const Car*car);
 void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage, const Car* car);
 void Stage_Init(const CreateStage*stage);
 void Possible_Break(const CreateStage*stage,const Cursor*cursor,const Car*car);
@@ -181,8 +181,8 @@ void ToolManagerUpdate(void)
 		Road_FLAG_OFF();
 		
 		Break_Road_FLAG(GetCursor1(), GetStage(), GetCar());			//道を壊す
-		Put_Road_FLAG(GetCursor1(),GetStage());
-		Put_Wood_Road_FLAG(GetCursor1(), GetStage());
+		Put_Road_FLAG(GetCursor1(),GetStage(),GetGameOver(),GetCar());
+		Put_Wood_Road_FLAG(GetCursor1(), GetStage(),GetCar());
 	}
 	else if (tool_start == false && tool.menu_flag == false)
 	{
@@ -233,7 +233,7 @@ void ToolDraw(void)
 		}
 	
 	//設置可能位置表示
-	Possible_Prace(GetStage());
+	Possible_Prace(GetStage(),GetCar());
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
@@ -366,7 +366,7 @@ void Item_Frame_Draw(void)
 }
 
 //道を置く
-void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
+void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*gameover,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -379,7 +379,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 		{
 
 			//道路の数が0より多いなら
-			if (tool.road_num > 0)
+			if (tool.road_num > 0 && car->direction != eStop)
 			{
 
 				//ゴールとつながっていないなら
@@ -449,7 +449,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 }
 
 //木の道を置く
-void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
+void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタンが押されたら
@@ -461,7 +461,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage)
 		{
 
 			//木の道路の数が0より多いなら
-			if (tool.wood_road_num > 0)
+			if (tool.wood_road_num > 0 && car->direction != eStop)
 			{
 
 				//ゴールにつながっていないか
@@ -1546,7 +1546,7 @@ void Old_Position_Bottom(const CreateStage* stage)
 }
 
 //道の設置可能位置
-void Possible_Prace(const CreateStage* stage)
+void Possible_Prace(const CreateStage* stage,const Car*car)
 
 {
 	//ゴールではないなら
@@ -1557,7 +1557,7 @@ void Possible_Prace(const CreateStage* stage)
 		if (tool.item_number == 0)
 		{
 			//道を一個以上持っているなら
-			if (tool.road_num > 0)
+			if (tool.road_num > 0&&car->direction!=eStop)
 			{
 
 				//右が空

@@ -1,4 +1,4 @@
-﻿#include "ResultScene.h"
+﻿#include "StageSelectScene.h"
 #include "../../Utility/InputManager.h"
 #include "DxLib.h"
 #include <stdlib.h>
@@ -6,13 +6,13 @@
 int result_score;		//表示するスコアの値
 
 //リザルト画面初期化
-void ResultSceneInit(void)
+void StageSelectSceneInit(void)
 {
 
 }
 
 //リザルトシーンの更新
-eSceneType ResultSceneUpdate(void)
+eSceneType StageSelectSceneUpdate(void)
 {
 	//zキーが押されると
 	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
@@ -20,11 +20,11 @@ eSceneType ResultSceneUpdate(void)
 		//タイトル画面へ
 		return eTitle;
 	}
-	return eResult;
+	return eStageSelect;
 }
 
 //リザルトシーンの描画
-void ResultSceneDraw(void)
+void StageSelectSceneDraw(void)
 {
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");
 }

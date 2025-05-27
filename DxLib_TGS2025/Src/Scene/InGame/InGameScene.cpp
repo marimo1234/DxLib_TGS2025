@@ -2,7 +2,7 @@
 #include "../../Utility/InputManager.h"
 #include "../../Object/Cursor.h"
 #include "../../Object/Obstacle.h"
-#include "../Result/ResultScene.h"
+#include "../StageSelect/StageSelectScene.h"
 #include "../../Utility/PadInputManager.h"
 #include "../../Object/car.h"
 #include "../../Object/WoodRock.h"
@@ -209,6 +209,7 @@ void GameStart(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
 			ingame.start = true;
+			ingame.manual_open = false;
 		}
 	}
 	if (ingame.manual_open == false&& ingame.start == false)

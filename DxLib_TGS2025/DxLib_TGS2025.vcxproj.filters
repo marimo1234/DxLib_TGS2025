@@ -12,7 +12,7 @@
     <ClCompile Include="Src\Utility\InputManager.cpp" />
     <ClCompile Include="Src\Object\Obstacle.cpp" />
     <ClCompile Include="Src\Object\Cursor.cpp" />
-    <ClCompile Include="Src\Scene\Result\ResultScene.cpp" />
+    <ClCompile Include="Src\Scene\StageSelect\StageSelectScene.cpp" />
     <ClCompile Include="Src\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\System\System.cpp" />
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
@@ -31,7 +31,7 @@
     <ClInclude Include="Src\Object\Obstacle.h" />
     <ClInclude Include="Src\Object\Cursor.h" />
     <ClInclude Include="Src\System\ProjectConfig.h" />
-    <ClInclude Include="Src\Scene\Result\ResultScene.h" />
+    <ClInclude Include="Src\Scene\StageSelect\StageSelectScene.h" />
     <ClInclude Include="Src\Scene\SceneManager.h" />
     <ClInclude Include="Src\Scene\SceneType.h" />
     <ClInclude Include="Src\System\System.h" />
