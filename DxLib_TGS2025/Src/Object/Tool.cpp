@@ -168,9 +168,9 @@ void ToolInit(void)
 	tool_img.break_road[1]= LoadGraph("Resource/images/break2.png");
 	tool_img.break_road[2]= LoadGraph("Resource/images/break3.png");
 	//木の道を壊したときのアニメーション
-	tool_img.break_road[0]= LoadGraph("Resource/images/woodbreak1.png");
-	tool_img.break_road[1]= LoadGraph("Resource/images/woodbreak2.png");
-	tool_img.break_road[2]= LoadGraph("Resource/images/woodbreak3.png");
+	tool_img.break_woodroad[0]= LoadGraph("Resource/images/woodbreak1.png");
+	tool_img.break_woodroad[1]= LoadGraph("Resource/images/woodbreak2.png");
+	tool_img.break_woodroad[2]= LoadGraph("Resource/images/woodbreak3.png");
 
 	//道を壊したときの音
 	tool_img.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
@@ -582,9 +582,9 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 					//木の道だったら
 					else if (stage->array[tool.base_x][tool.base_y] == 5)
 					{
+						tool.break_woodroad_flag = true;
 						tool.wood_add_flag = true;
 						PlaySoundMem(tool_img.break_se, DX_PLAYTYPE_BACK);
-
 					}
 				
 					tool.road_break_flag[tool.base_x][tool.base_y] = true;
