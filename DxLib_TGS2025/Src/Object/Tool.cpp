@@ -117,6 +117,10 @@ void ToolInit(void)
 	//R,Lトリガー
 	tool_img.rb = LoadGraph("Resource/images/RB.png");
 	tool_img.lb = LoadGraph("Resource/images/LB.png");
+	//アイテムセレクトSE
+	tool_img.select_se = LoadSoundMem("Resource/Sounds/item_select_se.mp3");
+	//道や木の橋等を増やすときのSE
+	tool_img.craft_item_se = LoadSoundMem("Resource/Sounds/item_craft.mp3");
 	//ピッケル
 	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
 	//木の道
@@ -253,18 +257,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = eWoodRoad;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eWoodRoad:
 			tool.item_number = eHammer;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eHammer:
 			tool.item_number = eAx;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eAx:
 			tool.item_number = ePickaxe;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case ePickaxe:
 			tool.item_number = eRoad;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		}
 	}
@@ -276,18 +285,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = ePickaxe;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eWoodRoad:
 			tool.item_number = eRoad;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eHammer:
 			tool.item_number = eWoodRoad;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case eAx:
 			tool.item_number = eHammer;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
+			PlaySoundMem(tool_img.select_se, DX_PLAYTYPE_BACK);
 			break;
 		}
 	}
@@ -652,6 +666,7 @@ void const Road_Add_Num(const Rock* rock)
 			{
 				tool.road_num++;
 				tool.rock_sub_flag = true;
+				PlaySoundMem(tool_img.craft_item_se, DX_PLAYTYPE_BACK); // 道路を作ったときの音 
 			}
 		}
 	}
@@ -675,6 +690,7 @@ void const WoodRoad_Add_Num(const Wood* wood)
 			{
 				tool.wood_road_num++;
 				tool.wood_sub_flag = true;
+				PlaySoundMem(tool_img.craft_item_se, DX_PLAYTYPE_BACK); // 木の道を作ったときの音
 			}
 		}
 	}

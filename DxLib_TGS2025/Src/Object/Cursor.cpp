@@ -61,7 +61,7 @@ void CursorInit(void)
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
 	cursor_road = LoadGraph("Resource/Images/RoadVertical.png");
 	cursor_hasi = LoadGraph("Resource/Images/Log.png");
-	cursor_se = LoadSoundMem("Resource/Sounds/");
+	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
 }
 
 //カーソルの更新
@@ -239,7 +239,7 @@ void CursolButtonMovement(const Tool* tool)
 			if (cursor.array_x > CURSOR_ARRAY_X_MIN)
 			{
 				cursor.array_x--;
-				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
+				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
 				
 			}
 			else if (cursor.array_x == CURSOR_ARRAY_X_MIN)
@@ -249,6 +249,7 @@ void CursolButtonMovement(const Tool* tool)
 			}
 
 			// 移動のSE（もし使うならここに入れてね）
+			PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 		{
@@ -265,6 +266,7 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
+			PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
@@ -281,6 +283,7 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
+			PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
@@ -297,6 +300,7 @@ void CursolButtonMovement(const Tool* tool)
 				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
+			PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);
 		}
 		// もしツルハシなら
 		if (tool->item_number == ePickaxe)

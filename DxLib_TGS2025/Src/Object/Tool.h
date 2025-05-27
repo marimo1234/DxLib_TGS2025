@@ -88,6 +88,8 @@ struct Tool_Img
 	int wood_road_img;		//木の道の画像ハンドル
 	int rb;					//Rトリガー
 	int lb;					//Lトリガー
+	int select_se;          //アイテムセレクト欄サウンドハンドル
+	int craft_item_se;      //アイテム数を増やすときのサウンドハンドル
 	
 	int road_beside;		//左右への道の画像ハンドル
 	int road_vertical;		//上下への道の画像ハンドル
