@@ -2,7 +2,7 @@
 #include "../../Utility/InputManager.h"
 #include "../../Object/Cursor.h"
 #include "../../Object/Obstacle.h"
-#include "../Result/ResultScene.h"
+#include "../StageSelect/StageSelectScene.h"
 #include "../../Utility/PadInputManager.h"
 #include "../../Object/car.h"
 #include "../../Object/WoodRock.h"

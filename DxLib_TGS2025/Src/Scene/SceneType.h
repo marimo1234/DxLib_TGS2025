@@ -3,8 +3,8 @@
 enum eSceneType
 {
 	eTitle,
+	eStageSelect,
 	eInGame,
-	eResult,
 	eHelp,
 	eEnd,
 };
