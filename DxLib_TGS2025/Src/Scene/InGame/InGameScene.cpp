@@ -31,6 +31,7 @@ InGame ingame;
 
 void NextStageFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover);
+void GetStageNumber(const StageSelect* stageselect);
 
 //初期化
 void InGameSceneInit(void)
@@ -48,8 +49,9 @@ void InGameSceneInit(void)
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
-	//ステージを1ステージ目に設定
-	ingame.stage_num = eOne;
+	//ステージ番号を取得
+	GetStageNumber(GetStageSelect());
+	/*ingame.stage_num = eOne;*/
 	//ステージ次のステージに変更するフラグ
 	ingame.next_stage_flag = false;
 
@@ -232,6 +234,11 @@ void GameStart(void)
 	}
 }
 
+//ステージの番号を取得
+void GetStageNumber(const StageSelect* stageselect)
+{
+	ingame.stage_num = stageselect->number;
+}
 
 //インゲームBGM再生
 void PlayBgm(void)
@@ -338,4 +345,5 @@ void InGameMenu(void)
 		}
 	}
 }
+
 
