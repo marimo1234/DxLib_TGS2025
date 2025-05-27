@@ -114,16 +114,21 @@ void ToolInit(void)
 	}
 	Stage_Init(GetStage());
 
+	//アイテムセレクトSE
+	tool_img.select_se = LoadSoundMem("Resource/Sounds/item_select_se2.mp3");
+	//道を壊したときの音
+	tool_img.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
+	//道や木の橋等を増やすときのSE
+	tool_img.craft_item_se = LoadSoundMem("Resource/Sounds/item_craft.mp3");
+
 	//******画像読み込み&サウンドも******//
 	//アイテム枠
 	tool_img.itemframe= LoadGraph("Resource/images/item_frame.png");
 	//R,Lトリガー
 	tool_img.rb = LoadGraph("Resource/images/RB.png");
 	tool_img.lb = LoadGraph("Resource/images/LB.png");
-	//アイテムセレクトSE
-	tool_img.select_se = LoadSoundMem("Resource/Sounds/item_select_se.mp3");
-	//道や木の橋等を増やすときのSE
-	tool_img.craft_item_se = LoadSoundMem("Resource/Sounds/item_craft.mp3");
+	
+	
 	//ピッケル
 	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
 	//木の道
@@ -172,8 +177,7 @@ void ToolInit(void)
 	tool_img.break_woodroad[1]= LoadGraph("Resource/images/woodbreak2.png");
 	tool_img.break_woodroad[2]= LoadGraph("Resource/images/woodbreak3.png");
 
-	//道を壊したときの音
-	tool_img.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
+	
 	
 	//配置済み道
 	Road_Imghandle_Init(GetStage());
