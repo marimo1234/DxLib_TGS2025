@@ -40,10 +40,10 @@ void CarInit(void)
 
 
 	//画像の読み込み
-	car.image[0] = LoadGraph("Resource/images/car_right.png");
-	car.image[1] = LoadGraph("Resource/images/car_left.png");
-	car.image[2] = LoadGraph("Resource/images/car_up.png");
-	car.image[3] = LoadGraph("Resource/images/car_down.png");
+	car.image[0] = LoadGraph("Resource/images/car2_right.png");
+	car.image[1] = LoadGraph("Resource/images/car2_left.png");
+	car.image[2] = LoadGraph("Resource/images/car2_up.png");
+	car.image[3] = LoadGraph("Resource/images/car2_down.png");
 
 	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
 	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
