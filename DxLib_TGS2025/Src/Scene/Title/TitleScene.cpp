@@ -26,7 +26,7 @@ eSceneType TitleSceneUpdate(void)
 	{
 		return eInGame;	//インゲーム画面へ
 	}
-	if (GetKeyInputState(KEY_INPUT_X) == ePress)
+	if (GetKeyInputState(KEY_INPUT_X) == eRelease)
 	{
 		return eHelp;	//インゲーム画面へ
 	}

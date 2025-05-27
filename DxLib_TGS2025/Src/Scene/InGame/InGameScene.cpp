@@ -206,7 +206,7 @@ void GameStart(void)
 		{
 			ingame.space = LoadGraph("Resource/images/aidaX.png");
 		}
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::eRelease)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
 			ingame.start = true;
 		}
