@@ -209,6 +209,7 @@ void GameStart(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
 			ingame.start = true;
+			ingame.manual_open = false;
 		}
 	}
 	if (ingame.manual_open == false&& ingame.start == false)
