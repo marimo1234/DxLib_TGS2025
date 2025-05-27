@@ -141,7 +141,7 @@ void ToolInit(void)
 	tool_img.road_Btmright = LoadGraph("Resource/images/RoadBottomRight.png");
 	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
 	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
-	tool_img.road_se = LoadSoundMem("Resource/Sounds/put_road.mp3");
+	tool_img.road_se = LoadSoundMem("Resource/Sounds/put_road_se.mp3");
 	//透過させた道
 	tool_img.possible_roadB = LoadGraph("Resource/images/Possible_Beside.png");
 	tool_img.possible_roadV= LoadGraph("Resource/images/Possible_Vertical.png");
@@ -398,6 +398,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						tool.base_x += 1;
 						Road_Imghandle_Update(GetStage());
 						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
+						ChangeVolumeSoundMem(150, tool_img.road_se);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
@@ -411,6 +412,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						tool.base_x -= 1;
 						Road_Imghandle_Update(GetStage());
 						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
+						ChangeVolumeSoundMem(150, tool_img.road_se);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
@@ -424,6 +426,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						tool.base_y -= 1;
 						Road_Imghandle_Update(GetStage());
 						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
+						ChangeVolumeSoundMem(150, tool_img.road_se);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
@@ -437,6 +440,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage)
 						tool.base_y += 1;
 						Road_Imghandle_Update(GetStage());
 						PlaySoundMem(tool_img.road_se, DX_PLAYTYPE_BACK);
+						ChangeVolumeSoundMem(150, tool_img.road_se);
 					}
 				}
 			}
