@@ -12,6 +12,7 @@ struct StageSelect
 	int torut_array[3][2];
 	Vector2D position;
 	int number;
+	int array_number;
 };
 
 void StageSelectSceneInit(void);

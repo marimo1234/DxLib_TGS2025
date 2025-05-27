@@ -16,6 +16,8 @@ void StageSelectSceneInit(void)
 	stageselect.position.x = 0.0f;
 	stageselect.position.y = 0.0f;
 	stageselect.number = 0;
+	stageselect.array_number = 0;
+
 
 	for (int j = 0; j < 2; j++)
 	{
@@ -55,12 +57,24 @@ eSceneType StageSelectSceneUpdate(void)
 void StageSelectSceneDraw(void)
 {
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, stageselect.background_image, TRUE);
-	for (int i = 0; i < 6; i++)
+
+	stageselect.array_number = 0;
+	for (int j = 0; j < 2; j++)
 	{
-		DrawRotaGraphF(400.0f, 360.0f, 0.3, 0.0, stageselect.trout_image[0], TRUE);
+		for (int i = 0; i < 3; i++)
+		{
+			//X座標が280.0ｆ（余白）+端から中心までの120.0ｆ
+			//Y座標が135.0ｆ（余白）+端から中心までの100.0f
+			DrawRotaGraphF(400.0f + i * 240.0f, 235.0f + j * 200.0f, 0.4, 0.0, stageselect.trout_image[0], TRUE);
+			if (!(i == 0 && j == 1))
+			{
+				DrawRotaGraphF(400.0f + i * 240.0f, 235.0f + j * 200.0f, 0.4, 0.0, stageselect.number_image[stageselect.array_number], TRUE);
+				stageselect.array_number++;
+			}
+			
+		}
 	}
 	
-	DrawRotaGraphF(640.0f, 360.0f, 0.3, 0.0, stageselect.number_image[0], TRUE);
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでインゲーム画面へ");
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 }
