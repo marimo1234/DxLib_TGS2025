@@ -68,10 +68,12 @@ struct Tool
 	int put_road_fps;
 	int put_woodroad_fps;
 	int break_road_fps;
+	int break_woodroad_fps;
 
 	bool put_road_flag;
 	bool put_woodroad_flag;
 	bool break_road_flag;
+	bool break_woodroad_flag;
 
 	int menu_flag;
 	
@@ -88,6 +90,8 @@ struct Tool_Img
 	int wood_road_img;		//木の道の画像ハンドル
 	int rb;					//Rトリガー
 	int lb;					//Lトリガー
+	int select_se;          //アイテムセレクト欄サウンドハンドル
+	int craft_item_se;      //アイテム数を増やすときのサウンドハンドル
 	
 	int road_beside;		//左右への道の画像ハンドル
 	int road_vertical;		//上下への道の画像ハンドル
@@ -115,6 +119,7 @@ struct Tool_Img
 	int put_road[3];
 	int put_woodroad[3];
 	int break_road[3];
+	int break_woodroad[3];
 
 	float item_frame_ex_rate;		//アイテム枠の拡大率
 	float pickaxe_ex_rate;			//つるはしの拡大率
