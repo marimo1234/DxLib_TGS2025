@@ -39,7 +39,7 @@ eSceneType TitleSceneUpdate(void)
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 	{
-		return eInGame;	//インゲーム画面へ
+		return eStageSelect;	//ステージセレクト画面へ
 	}
 
 	return eTitle;
@@ -53,6 +53,6 @@ void TitleSceneDraw(void)
 	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xでヘルプ画面へ");
 	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");*/
 
-	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでインゲーム画面へ");
+	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでステージセレクト画面へ");
 
 }

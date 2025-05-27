@@ -75,7 +75,7 @@ void ObstacleManagerUpdate(void)
 //障害物の描画
 void ObstacleManagerDraw(void)
 {
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", mole.image_count/60, mole.image_num[1][1]);
+	
 }
 
 //構造体Obstacle

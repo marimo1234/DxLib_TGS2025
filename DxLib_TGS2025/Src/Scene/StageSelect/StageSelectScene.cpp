@@ -1,5 +1,6 @@
 ﻿#include "StageSelectScene.h"
 #include "../../Utility/InputManager.h"
+#include "../../Utility/PadInputManager.h"
 #include "DxLib.h"
 #include <stdlib.h>
 
@@ -14,11 +15,12 @@ void StageSelectSceneInit(void)
 //リザルトシーンの更新
 eSceneType StageSelectSceneUpdate(void)
 {
-	//zキーが押されると
-	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
+
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 	{
-		//タイトル画面へ
-		return eTitle;
+		return eInGame;	//インゲーム画面へ
 	}
 	return eStageSelect;
 }
@@ -26,6 +28,7 @@ eSceneType StageSelectSceneUpdate(void)
 //リザルトシーンの描画
 void StageSelectSceneDraw(void)
 {
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");
+	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでインゲーム画面へ");
+	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 }
 
