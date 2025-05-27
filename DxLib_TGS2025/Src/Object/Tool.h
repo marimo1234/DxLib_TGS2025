@@ -68,10 +68,12 @@ struct Tool
 	int put_road_fps;
 	int put_woodroad_fps;
 	int break_road_fps;
+	int break_woodroad_fps;
 
 	bool put_road_flag;
 	bool put_woodroad_flag;
 	bool break_road_flag;
+	bool break_woodroad_flag;
 
 	int menu_flag;
 	
@@ -80,52 +82,57 @@ struct Tool
 
 struct Tool_Img
 {
-	int pickaxe;			//つるはしの画像ハンドル
-	int itemframe;			//枠の画像ハンドル
-	int ax;					//斧の画像ハンドル
-	int drill;				//ドリルの画像ハンドル
-	int item_select;		//選択枠（アイテム）の画像ハンドル
-	int wood_road_img;		//木の道の画像ハンドル
-	int rb;					//Rトリガー
-	int lb;					//Lトリガー
-	int select_se;          //アイテムセレクト欄サウンドハンドル
-	int craft_item_se;      //アイテム数を増やすときのサウンドハンドル
+	int pickaxe;				//つるはしの画像ハンドル
+	int itemframe;				//枠の画像ハンドル
+	int ax;						//斧の画像ハンドル
+	int drill;					//ドリルの画像ハンドル
+	int item_select;			//選択枠（アイテム）の画像ハンドル
+	int wood_road_img;			//木の道の画像ハンドル
+	int rb;						//Rトリガー
+	int lb;						//Lトリガー
 	
-	int road_beside;		//左右への道の画像ハンドル
-	int road_vertical;		//上下への道の画像ハンドル
-	int road_Btmright;		//下右への道の画像ハンドル
-	int road_Topright;		//上右への道の画像ハンドル
-	int road_Rbottom;		//右下への道の画像ハンドル
-	int road_Rtop;			//右上への道の画像ハンドル
-	int road_se;            //道のサウンドハンドル
+	int road_beside;			//左右への道の画像ハンドル
+	int road_vertical;			//上下への道の画像ハンドル
+	int road_Btmright;			//下右への道の画像ハンドル
+	int road_Topright;			//上右への道の画像ハンドル
+	int road_Rbottom;			//右下への道の画像ハンドル
+	int road_Rtop;				//右上への道の画像ハンドル
 	
-	int wood_road_beside;	//左右への木の道の画像ハンドル
-	int wood_road_vertical;	//上下への木の道の画像ハンドル
-	int wood_road_Btmright;	//下右への木の道の画像ハンドル
-	int wood_road_Topright;	//上右への木の道の画像ハンドル
-	int wood_road_Rbottom;	//右下への木の道の画像ハンドル
-	int wood_road_Rtop;		//右上への木の道の画像ハンドル
-	int wood_road_se;       //木の道のサウンドハンドル
-
+	int wood_road_beside;		//左右への木の道の画像ハンドル
+	int wood_road_vertical;		//上下への木の道の画像ハンドル
+	int wood_road_Btmright;		//下右への木の道の画像ハンドル
+	int wood_road_Topright;		//上右への木の道の画像ハンドル
+	int wood_road_Rbottom;		//右下への木の道の画像ハンドル
+	int wood_road_Rtop;			//右上への木の道の画像ハンドル
+	
 	int possible_roadB;			//設置可能位置の道の画像ハンドル(横
 	int possible_roadV;			//設置可能位置の道の画像ハンドル(縦
 	int possible_wood_roadB;	//設置可能位置の木の道の画像ハンドル(横
 	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
 	int possible_break;			//破壊可能位置の画像ハンドル
-	int break_se;               //破壊時のSEハンドル
-
+	
 	int put_road[3];
 	int put_woodroad[3];
 	int break_road[3];
+	int break_woodroad[3];
 
-	float item_frame_ex_rate;		//アイテム枠の拡大率
-	float pickaxe_ex_rate;			//つるはしの拡大率
-	float ax_ex_rate;				//斧の拡大率
-	float drill_ex_rate;			//ドリルの拡大率
-	float woodroad_ex_rate;			//木の道の拡大率
-	float road_ex_rate;				//道の拡大率
-	float road_num_ex_rate;			//道の所持数の拡大率
-	float woodroad_num_ex_rate;		//木の道の所持数の拡大率
+	float item_frame_ex_rate;	//アイテム枠の拡大率
+	float pickaxe_ex_rate;		//つるはしの拡大率
+	float ax_ex_rate;			//斧の拡大率
+	float drill_ex_rate;		//ドリルの拡大率
+	float woodroad_ex_rate;		//木の道の拡大率
+	float road_ex_rate;			//道の拡大率
+	float road_num_ex_rate;		//道の所持数の拡大率
+	float woodroad_num_ex_rate;	//木の道の所持数の拡大率
+};
+
+struct Tool_SE
+{
+	int break_se;               //破壊時のSEハンドル
+	int wood_road_se;			//木の道のサウンドハンドル
+	int road_se;				//道のサウンドハンドル
+	int craft_item_se;			//アイテム数を増やすときのサウンドハンドル
+	int select_se;				//アイテムセレクト欄サウンドハンドル
 };
 
 void ToolInit(void);
