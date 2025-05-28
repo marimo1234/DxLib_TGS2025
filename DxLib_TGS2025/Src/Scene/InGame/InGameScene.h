@@ -30,6 +30,14 @@ struct InGame
 	float menu_cursor_x;
     float menu_cursor_y;
 	float char_extrate[5];
+
+	bool goalmenu_flag;
+	int goalmenu_num;
+	int goalmenu_image;
+	float goalmenu_cursor_x;
+	float goalmenu_cursor_y;
+
+	bool goalselect_flag;
 };
 
 
@@ -43,5 +51,6 @@ void GameStart();
 void StageChange(void);
 void InGameMenu(void);
 void ChangeCharExtrate(void);
+void GoalSelectFlagReset(void);
 
 //void StageChange(const Goal* goal);

@@ -30,8 +30,10 @@ InGame ingame;
 
 
 void NextStageFlag(const Goal* goal);
+void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover);
 void GetStageNumber(const StageSelect* stageselect);
+
 
 //初期化
 void InGameSceneInit(void)
@@ -50,6 +52,8 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
 	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
 	ingame.menu_char_image[2] = LoadGraph("Resource/images/title.png");
+	ingame.menu_char_image[3] = LoadGraph("Resource/images/title.png");
+	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -62,6 +66,14 @@ void InGameSceneInit(void)
 	ingame.menu_num = 0;
 	ingame.menu_cursor_x=300.0f;
 	ingame.menu_cursor_y = 200.0f;
+
+	ingame.goalmenu_flag = false;
+	ingame.goalmenu_num = 0;
+	ingame.goalmenu_cursor_x = 300.0f;
+	ingame.goalmenu_cursor_y = 200.0f;
+
+	ingame.goalselect_flag = false;
+
 	for (int i = 0; i < 5; i++)
 	{
 		ingame.char_extrate[i] = 0.8f;
@@ -123,8 +135,15 @@ eSceneType InGameSceneUpdate()
 
 	InGameMenu();
 
+	NextSelectFlag(GetGoal());
+
 	ChangeCharExtrate();
 
+	//ゴールを受け取ったらステージを変えることを可能にする
+	NextStageFlag(GetGoal());
+
+	
+	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.menu_num == 0 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
@@ -145,6 +164,27 @@ eSceneType InGameSceneUpdate()
 		return eTitle;	//タイトルに戻る
 		ingame.menu_num = 0;
 	}
+
+
+	GoalSelectFlagReset();
+
+	//ゴールメニューセレクトの分岐
+	/*if (ingame.goalmenu_num == 0 && ingame.goalmenu_flag == true &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		ingame.goalselect_flag = true;
+		ingame.menu_flag = false;
+		ingame.goalmenu_flag = false;
+		ingame.goalmenu_num = 0;
+	}*/
+	if (ingame.goalmenu_num == 1 && ingame.goalmenu_flag == true &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		return eStageSelect;	//タイトルに戻る
+		ingame.menu_flag = false;
+		ingame.goalmenu_num = 0;
+	}
+
 
 	return eInGame;
 }
@@ -192,9 +232,9 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640, 360, 1.0, 0.0, ingame.space, TRUE);
 	}
 	
-	if (ingame.menu_flag == true)
+	//Startボタンが押されたときにだすセレクト画面
+	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false)
 	{
-		/*ingame.menu_cursor_y= 350.0f + ingame.menu_num * 50.0f;*/
 		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 0; i < 3; i++)
@@ -202,6 +242,19 @@ void InGameSceneDraw(void)
 			DrawRotaGraph(640, i*130+200, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
+
+	//goalしたときに出すセレクト画面
+	if (ingame.goalmenu_flag == true)
+	{
+		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
+		DrawRotaGraph(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
+		for (int i = 3; i < 5; i++)
+		{
+			DrawRotaGraph(640, (i-3) * 130 + 200, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+		}
+	}
+
+	DrawFormatString(400, 400, GetColor(255, 255, 255), "%d", ingame.goalmenu_num);
 }
 const InGame* GetInGame(void)
 {
@@ -257,13 +310,44 @@ void PlayBgm(void)
 	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/
 }
 
+//Goalした後のセレクト画面を出すフラグ
+void NextSelectFlag(const Goal* goal)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	if (goal->flag == true)
+	{
+		ingame.menu_flag = true;
+		ingame.goalmenu_flag = true;
+	}
+
+	if (ingame.goalmenu_flag == true)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+		{
+			ingame.goalmenu_num--;
+			if (ingame.goalmenu_num < 0)
+			{
+				ingame.goalmenu_num = 1;
+			}
+
+			ingame.goalmenu_cursor_y = 200.0f + ingame.goalmenu_num * 130.0f;
+		}
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+		{
+			ingame.goalmenu_num++;
+			ingame.goalmenu_num = ingame.goalmenu_num % 2;
+
+			ingame.goalmenu_cursor_y = 200.0f + ingame.goalmenu_num * 130.0f;
+		}
+	}
+}
 //ステージチェンジを可能にするフラグ
 void NextStageFlag(const Goal* goal)
 {
 	ingame.next_stage_flag = false;
 
-	if (goal->flag == true)
+	if (ingame.goalselect_flag == true)
 	{
 		ingame.next_stage_flag = true;
 		atr ++;
@@ -335,7 +419,7 @@ void InGameMenu(void)
 		ingame.menu_flag = true;
 	}
 
-	if (ingame.menu_flag == true)
+	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
@@ -365,4 +449,13 @@ void ChangeCharExtrate(void)
 		ingame.char_extrate[i] = 0.8f;
 	}
 	ingame.char_extrate[ingame.menu_num] = 0.9f;
+	ingame.char_extrate[ingame.goalmenu_num] = 0.9f;
+}
+
+void GoalSelectFlagReset(void)
+{
+	if (ingame.goalselect_flag == true)
+	{
+		ingame.goalselect_flag == false;
+	}
 }
