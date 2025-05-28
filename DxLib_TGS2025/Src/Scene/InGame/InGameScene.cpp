@@ -47,6 +47,9 @@ void InGameSceneInit(void)
 
 	ingame.menu_image = LoadGraph("Resource/images/menu1.png");
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
+	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
+	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
+	ingame.menu_char_image[2] = LoadGraph("Resource/images/title.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -188,8 +191,12 @@ void InGameSceneDraw(void)
 	if (ingame.menu_flag == true)
 	{
 		ingame.menu_cursor_y= 350.0f + ingame.menu_num * 50.0f;
-		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
+		/*DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);*/
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
+		for (int i = 0; i < 3; i++)
+		{
+			DrawRotaGraph(640, i*130+200, 0.8 ,0.0, ingame.menu_char_image[i], TRUE);
+		}
 	}
 }
 const InGame* GetInGame(void)

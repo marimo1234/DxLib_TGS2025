@@ -25,6 +25,7 @@ struct InGame
 	bool menu_flag;
 	int menu_num;
 	int menu_image;
+	int menu_char_image[5];
 	int menu_cursor;
 	float menu_cursor_x;
     float menu_cursor_y;
