@@ -53,16 +53,6 @@ eSceneType StageSelectSceneUpdate(void)
 	//ステージセレクト画面の車のムーブ
 	StageSelectCarMove();
 
-	//現在の車の位置の枠を変える
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			stageselect.trout_array[i][j] = stageselect.trout_image[0];
-		}
-	}
-	stageselect.trout_array[stageselect.array_x][stageselect.array_y] = stageselect.trout_image[1];
-
 	//車がいる場所の配列番号でステージ番号を取得
 	StageSelectGetNumber();
 
@@ -108,7 +98,9 @@ void StageSelectSceneDraw(void)
 			}
 		}
 	}
-
+	//車のいる枠が葉っぱつきになる描画
+	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
+	//択んでいる位置に車を描画
 	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.15, 0.0, stageselect.car_image, TRUE);
 	
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");
