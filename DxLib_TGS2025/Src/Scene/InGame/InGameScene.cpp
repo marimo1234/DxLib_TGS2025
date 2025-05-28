@@ -139,8 +139,7 @@ eSceneType InGameSceneUpdate()
 
 	ChangeCharExtrate();
 
-	//ゴールを受け取ったらステージを変えることを可能にする
-	NextStageFlag(GetGoal());
+	
 
 	
 	//メニューセレクトの分岐
@@ -169,14 +168,15 @@ eSceneType InGameSceneUpdate()
 	GoalSelectFlagReset();
 
 	//ゴールメニューセレクトの分岐
-	/*if (ingame.goalmenu_num == 0 && ingame.goalmenu_flag == true &&
+	if (ingame.goalmenu_num == 0 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		ingame.goalselect_flag = true;
+		ingame.start = false;
 		ingame.menu_flag = false;
 		ingame.goalmenu_flag = false;
 		ingame.goalmenu_num = 0;
-	}*/
+	}
 	if (ingame.goalmenu_num == 1 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
@@ -224,33 +224,33 @@ void InGameSceneDraw(void)
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
 	if (ingame.start==false&&ingame.manual_open==true)
 	{
-		DrawRotaGraphF(640, 360,1.0,0.0,ingame.manual_image, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f,1.0,0.0,ingame.manual_image, TRUE);
 	}
 	if (ingame.start == false && ingame.manual_open == false)
 	{
-		DrawRotaGraphF(640, 360, 3.0, 0.0, ingame.back, TRUE);
-		DrawRotaGraphF(640, 360, 1.0, 0.0, ingame.space, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
 	}
 	
 	//Startボタンが押されたときにだすセレクト画面
 	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false)
 	{
-		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 0; i < 3; i++)
 		{
-			DrawRotaGraph(640, i*130+200, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f, i*130.0f+200.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
 
 	//goalしたときに出すセレクト画面
 	if (ingame.goalmenu_flag == true)
 	{
-		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
-		DrawRotaGraph(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
+		DrawRotaGraphF(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 3; i < 5; i++)
 		{
-			DrawRotaGraph(640, (i-3) * 130 + 200, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f, (i-3) * 130.0f + 200.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
 
@@ -449,13 +449,13 @@ void ChangeCharExtrate(void)
 		ingame.char_extrate[i] = 0.8f;
 	}
 	ingame.char_extrate[ingame.menu_num] = 0.9f;
-	ingame.char_extrate[ingame.goalmenu_num] = 0.9f;
+	ingame.char_extrate[ingame.goalmenu_num+3] = 0.9f;
 }
 
 void GoalSelectFlagReset(void)
 {
-	if (ingame.goalselect_flag == true)
+	if (ingame.next_stage_flag == true)
 	{
-		ingame.goalselect_flag == false;
+		ingame.goalselect_flag = false;
 	}
 }
