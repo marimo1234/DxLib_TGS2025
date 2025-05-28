@@ -52,8 +52,8 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
 	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
 	ingame.menu_char_image[2] = LoadGraph("Resource/images/title.png");
-	ingame.menu_char_image[3] = LoadGraph("Resource/images/title.png");
-	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
+	ingame.menu_char_image[3] = LoadGraph("Resource/images/next_stage.png");
+	ingame.menu_char_image[4] = LoadGraph("Resource/images/stage_select.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
