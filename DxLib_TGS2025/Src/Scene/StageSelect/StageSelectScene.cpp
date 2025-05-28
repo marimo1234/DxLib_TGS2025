@@ -28,6 +28,7 @@ void StageSelectSceneInit(void)
 	stageselect.background_image = LoadGraph("Resource/images/StageSelect.png");
 	stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
 	stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
+	stageselect.trout_image[2] = LoadGraph("Resource/images/BackTrout2.png");
 
 	stageselect.number_image[0] = LoadGraph("Resource/images/1.png");
 	stageselect.number_image[1] = LoadGraph("Resource/images/2.png");
@@ -99,9 +100,20 @@ void StageSelectSceneDraw(void)
 		}
 	}
 	//車のいる枠が葉っぱつきになる描画
-	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
+	if (stageselect.array_y != 2)
+	{
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
+	}
+	else if (stageselect.array_y == 2)
+	{
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 1.0, 0.0, stageselect.trout_image[2], TRUE);
+	}
+
+	
 	//択んでいる位置に車を描画
 	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.15, 0.0, stageselect.car_image, TRUE);
+
+	
 	
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
@@ -173,8 +185,8 @@ void StageSelectCarMove(void)
 		else if (stageselect.array_y == 0)
 		{
 			stageselect.array_y = 2;
-			stageselect.position.x = 930.0f;
-			stageselect.position.y = 600.0f;
+			stageselect.position.x = 920.0f;
+			stageselect.position.y = 605.0f;
 		}
 		else if (stageselect.array_y == 2)
 		{
@@ -199,8 +211,8 @@ void StageSelectCarMove(void)
 		else if (stageselect.array_y == 1)
 		{
 			stageselect.array_y = 2;
-			stageselect.position.x = 930.0f;
-			stageselect.position.y = 600.0f;
+			stageselect.position.x = 920.0f;
+			stageselect.position.y = 605.0f;
 			
 		}
 		else if (stageselect.array_y == 2)

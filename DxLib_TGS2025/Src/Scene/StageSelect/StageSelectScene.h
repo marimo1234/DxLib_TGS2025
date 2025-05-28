@@ -8,7 +8,7 @@ struct StageSelect
 {
 	int background_image;
 	int car_image;
-	int trout_image[2];
+	int trout_image[3];
 	int number_image[5];
 	int trout_array[3][3];
 	Vector2D position;
