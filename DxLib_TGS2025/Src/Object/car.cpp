@@ -221,13 +221,14 @@ void CarMovePosition(void)
 			if (overroad < 400)
 			{
 				OverRoad();
+				gameover.image_flag = true;
 			}
 			if (overroad > 399)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
 				car.position.y += 0.0f;
-				gameover.image_flag = true;
+				/*gameover.image_flag = true;*/
 
 				if (gameover.image_count > 120)
 				{
@@ -246,15 +247,17 @@ void CarMovePosition(void)
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
+			
 		}
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
 		car.position.y += car.velocity.y;
-		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
+		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) +119.8f)//微調整で120から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
+			
 		}
 		break;
 	case eRight://右に
@@ -264,16 +267,18 @@ void CarMovePosition(void)
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
+			
 		}
 		break;
 
 	case eLeft:
 		car.animation = car.image[1];
 		car.position.x -= car.velocity.x;
-		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
+		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) +200.2f)//微調整で200から0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
+			
 		}
 		break;
 
