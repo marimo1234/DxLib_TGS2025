@@ -174,7 +174,6 @@ void WoodRockDraw(void)
 	WoodRockEffectDraw();
 	
 	
-	DrawFormatString(200, 250, GetColor(255, 255, 255), "%d", rock.move_count);
 }
 
 //木のアニメーション

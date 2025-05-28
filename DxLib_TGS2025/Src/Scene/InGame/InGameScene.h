@@ -18,7 +18,7 @@ struct InGame
 	bool start;
 	int stage_num;
 	bool next_stage_flag;
-	int manual_open;
+	bool manual_open;
 	int manual_image;
 	int space;
 	int back;
@@ -49,8 +49,10 @@ const InGame* GetInGame(void);
 
 void GameStart();
 void StageChange(void);
-void InGameMenu(void);
+void InGameMenuUpdate(void);
 void ChangeCharExtrate(void);
 void GoalSelectFlagReset(void);
+void MenuDraw(void);
+void GoalSelectMenuDraw(void);
 
 //void StageChange(const Goal* goal);

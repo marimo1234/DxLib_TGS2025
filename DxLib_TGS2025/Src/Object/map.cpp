@@ -83,8 +83,7 @@ void MapDraw(void)
 	MapTroutDraw();
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", stage.rock_count);
-
+	
 	
 }
 
