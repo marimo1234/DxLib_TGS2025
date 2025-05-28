@@ -7,6 +7,7 @@
 #include "../Object/Cursor.h"
 #include "../Object/map.h"
 #include "../Object/car.h"
+#include "../Object/Obstacle.h"
 
 #define LB_X					(720)
 #define RB_X					(1200)
@@ -33,7 +34,7 @@ Tool_SE tool_se;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const GameOver*gameover, const Car* car);
+void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const Mole*mole, const Car* car);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car *car);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
@@ -199,7 +200,7 @@ void ToolManagerUpdate(void)
 		Road_FLAG_OFF();
 		
 		Break_Road_FLAG(GetCursor1(), GetStage(), GetCar());			//道を壊す
-		Put_Road_FLAG(GetCursor1(),GetStage(),GetGameOver(),GetCar());
+		Put_Road_FLAG(GetCursor1(),GetStage(),GetMole(), GetCar());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage(),GetCar());
 	}
 	else if (tool_start == false && tool.menu_flag == false)
@@ -398,7 +399,7 @@ void Item_Frame_Draw(void)
 }
 
 //道を置く
-void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*gameover,const Car*car)
+void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -407,11 +408,11 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*g
 	{
 
 		//アイテムが道路なら
-		if (tool.item_number == eRoad)
+		if (tool.item_number == eRoad&& car->direction != eStop)
 		{
 
 			//道路の数が0より多いなら
-			if (tool.road_num > 0 && car->direction != eStop)
+			if (tool.road_num > 0 && mole->put_rock_flag[cursor->array_x][cursor->array_y]==false)
 			{
 
 				//ゴールとつながっていないなら
