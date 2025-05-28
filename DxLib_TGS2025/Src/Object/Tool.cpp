@@ -7,10 +7,11 @@
 #include "../Object/Cursor.h"
 #include "../Object/map.h"
 #include "../Object/car.h"
+#include "../Object/Obstacle.h"
 
 #define LB_X					(720)
 #define RB_X					(1200)
-#define	RLB_Y					(670)
+#define	RLB_Y					(680)
 #define ROAD_NUM_X				(790)		//道路の所持数(x)
 #define ROAD_NUM_Y				(690)		//道路の所持数(y)
 #define WOODROAD_NUM_X			(870)		//木の道路の所持数(x)
@@ -33,7 +34,7 @@ Tool_SE tool_se;
 void Tool_Start(const InGame* ingame);
 void const Road_Add_Num(const Rock* rock);
 void const WoodRoad_Add_Num(const Wood* wood);
-void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const GameOver*gameover, const Car* car);
+void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const Mole*mole, const Car* car);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car *car);
 void Road_Imghandle_Init(const CreateStage* stage);
 void Road_Imghandle_Update(const CreateStage* stage);
@@ -51,6 +52,8 @@ void Put_Road_Animation(int x, int y);
 void Put_WoodRoad_Animation(int x, int y);
 void Break_Road_Animation(int x, int y);
 void Break_WoodRoad_Animation(int x, int y);
+
+void Play_Sound(int sound);
 
 
 //初期化
@@ -121,7 +124,7 @@ void ToolInit(void)
 	//道を壊したときの音
 	tool_se.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
 	//道や木の橋等を増やすときのSE
-	tool_se.craft_item_se = LoadSoundMem("Resource/Sounds/item_craft.mp3");
+	tool_se.craft_item_se = LoadSoundMem("Resource/Sounds/make_item.mp3");
 
 
 
@@ -129,8 +132,10 @@ void ToolInit(void)
 	//アイテム枠
 	tool_img.itemframe= LoadGraph("Resource/images/item_frame.png");
 	//R,Lトリガー
-	tool_img.rb = LoadGraph("Resource/images/RB.png");
-	tool_img.lb = LoadGraph("Resource/images/LB.png");
+	tool_img.rb[0] = LoadGraph("Resource/images/RB.png");
+	tool_img.rb[1] = LoadGraph("Resource/images/RB_right.png");
+	tool_img.lb[0] = LoadGraph("Resource/images/LB.png");
+	tool_img.lb[1] = LoadGraph("Resource/images/LB_right.png");
 	
 	
 	//ピッケル
@@ -199,7 +204,7 @@ void ToolManagerUpdate(void)
 		Road_FLAG_OFF();
 		
 		Break_Road_FLAG(GetCursor1(), GetStage(), GetCar());			//道を壊す
-		Put_Road_FLAG(GetCursor1(),GetStage(),GetGameOver(),GetCar());
+		Put_Road_FLAG(GetCursor1(),GetStage(),GetMole(), GetCar());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage(),GetCar());
 	}
 	else if (tool_start == false && tool.menu_flag == false)
@@ -218,8 +223,8 @@ void ToolDraw(void)
 	Item_Frame_Draw();
 
 	//R,Lトリガー
-	DrawRotaGraph(RB_X, RLB_Y, 0.7, 0.0, tool_img.rb, TRUE);
-	DrawRotaGraph(LB_X, RLB_Y, 0.7, 0.0, tool_img.lb, TRUE);
+	RB_Draw();
+	LB_Draw();
 
 	//枠選択の描画（アイテム枠）
 	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
@@ -275,23 +280,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = eWoodRoad;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eWoodRoad:
 			tool.item_number = eHammer;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eHammer:
 			tool.item_number = eAx;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eAx:
 			tool.item_number = ePickaxe;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case ePickaxe:
 			tool.item_number = eRoad;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		}
 	}
@@ -303,23 +308,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = ePickaxe;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eWoodRoad:
 			tool.item_number = eRoad;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eHammer:
 			tool.item_number = eWoodRoad;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case eAx:
 			tool.item_number = eHammer;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
-			PlaySoundMem(tool_se.select_se, DX_PLAYTYPE_BACK);
+			Play_Sound(tool_se.select_se);
 			break;
 		}
 	}
@@ -397,8 +402,42 @@ void Item_Frame_Draw(void)
 	}
 }
 
+//RB描画
+void RB_Draw(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (tool_start == true && tool.menu_flag == false)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold)
+		{
+			DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
+		}
+		else
+		{
+			DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[0], TRUE);
+		}
+	}
+}
+
+//LB描画
+void LB_Draw(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (tool_start == true && tool.menu_flag == false)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold)
+		{
+			DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
+		}
+		else
+		{
+			DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[0], TRUE);
+		}
+	}
+}
+
 //道を置く
-void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*gameover,const Car*car)
+void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
@@ -407,11 +446,11 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*g
 	{
 
 		//アイテムが道路なら
-		if (tool.item_number == eRoad)
+		if (tool.item_number == eRoad&& car->direction != eStop)
 		{
 
 			//道路の数が0より多いなら
-			if (tool.road_num > 0 && car->direction != eStop)
+			if (tool.road_num > 0 && mole->put_rock_flag[cursor->array_x][cursor->array_y]==false)
 			{
 
 				//ゴールとつながっていないなら
@@ -431,6 +470,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const GameOver*g
 						Road_Imghandle_Update(GetStage());
 						PlaySoundMem(tool_se.road_se, DX_PLAYTYPE_BACK);
 						ChangeVolumeSoundMem(150, tool_se.road_se);
+						
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
@@ -684,7 +724,10 @@ void const Road_Add_Num(const Rock* rock)
 			{
 				tool.road_num++;
 				tool.rock_sub_flag = true;
-				PlaySoundMem(tool_se.craft_item_se, DX_PLAYTYPE_BACK); // 道路を作ったときの音 
+				if (CheckSoundMem(tool_se.craft_item_se) == 0)
+				{
+					PlaySoundMem(tool_se.craft_item_se, DX_PLAYTYPE_BACK); // 道路を作ったときの音 
+				}
 			}
 		}
 	}
@@ -1588,10 +1631,10 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 		(stage->array[tool.base_x][tool.base_y + 1] != 7 && stage->array[tool.base_x][tool.base_y - 1] != 7))
 	{
 		//アイテムが道なら
-		if (tool.item_number == 0)
+		if (tool.item_number == 0 && car->direction != eStop)
 		{
 			//道を一個以上持っているなら
-			if (tool.road_num > 0&&car->direction!=eStop)
+			if (tool.road_num > 0)
 			{
 
 				//右が空
@@ -1621,7 +1664,7 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 			}
 		}
 		//アイテムが木の道なら
-		else if (tool.item_number == 1)
+		else if (tool.item_number == 1 && car->direction != eStop)
 		{
 			//木の道を一個以上持っているなら
 			if (tool.wood_road_num > 0)
@@ -1759,4 +1802,10 @@ void Break_WoodRoad_Animation(int x, int y)
 		tool.break_woodroad_fps = 0;
 		tool.break_woodroad_flag = false;
 	}
+}
+
+//SE再生(音の重なりあり
+void Play_Sound(int sound)
+{
+	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 }

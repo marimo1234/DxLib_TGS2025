@@ -88,8 +88,8 @@ struct Tool_Img
 	int drill;					//ドリルの画像ハンドル
 	int item_select;			//選択枠（アイテム）の画像ハンドル
 	int wood_road_img;			//木の道の画像ハンドル
-	int rb;						//Rトリガー
-	int lb;						//Lトリガー
+	int rb[2];						//Rトリガー
+	int lb[2];						//Lトリガー
 	
 	int road_beside;			//左右への道の画像ハンドル
 	int road_vertical;			//上下への道の画像ハンドル
@@ -140,6 +140,8 @@ void ToolManagerUpdate(void);
 void ToolDraw(void);
 void Move_ItemSelect(void);
 void Sub_Num(void);
+void RB_Draw(void);
+void LB_Draw(void);
 
 void Base_Chenge(void);
 void Road_FLAG_OFF(void);
