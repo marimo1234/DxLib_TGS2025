@@ -45,7 +45,7 @@ void InGameSceneInit(void)
 	//操作説明の画像
 	ingame.manual_image= LoadGraph("Resource/images/manual_menu.png");
 
-	ingame.menu_image = LoadGraph("Resource/images/menu1.png");
+	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
 	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
@@ -60,8 +60,8 @@ void InGameSceneInit(void)
 
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
-	ingame.menu_cursor_x=450.0f;
-	ingame.menu_cursor_y = 350.0f;
+	ingame.menu_cursor_x=350.0f;
+	ingame.menu_cursor_y = 200.0f;
 
 	//確認用変数　後々消します
 	atr = 0;
@@ -190,8 +190,8 @@ void InGameSceneDraw(void)
 	
 	if (ingame.menu_flag == true)
 	{
-		ingame.menu_cursor_y= 350.0f + ingame.menu_num * 50.0f;
-		/*DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);*/
+		/*ingame.menu_cursor_y= 350.0f + ingame.menu_num * 50.0f;*/
+		DrawRotaGraph(640, 360, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 0; i < 3; i++)
 		{
@@ -341,14 +341,14 @@ void InGameMenu(void)
 				ingame.menu_num = 2;
 			}
 			
-			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
+			ingame.menu_cursor_y = 200.0f + ingame.menu_num * 130.0f;
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
 			ingame.menu_num++;
 			ingame.menu_num = ingame.menu_num % 3;
 			
-			ingame.menu_cursor_y = 350.0f + ingame.menu_num * 50.0f;
+			ingame.menu_cursor_y = 200.0f + ingame.menu_num * 130.0f;
 		}
 	}
 }
