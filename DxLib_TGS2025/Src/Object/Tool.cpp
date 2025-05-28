@@ -404,9 +404,12 @@ void Item_Frame_Draw(void)
 void RB_Draw(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold)
+	if (tool_start == true && tool.menu_flag == false)
 	{
-		DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold)
+		{
+			DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
+		}
 	}
 	else
 	{
@@ -418,9 +421,12 @@ void RB_Draw(void)
 void LB_Draw(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold)
+	if (tool_start == true && tool.menu_flag == false)
 	{
-		DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold)
+		{
+			DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
+		}
 	}
 	else
 	{
