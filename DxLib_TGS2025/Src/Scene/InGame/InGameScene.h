@@ -29,6 +29,7 @@ struct InGame
 	int menu_cursor;
 	float menu_cursor_x;
     float menu_cursor_y;
+	float char_extrate[5];
 };
 
 
@@ -41,4 +42,6 @@ const InGame* GetInGame(void);
 void GameStart();
 void StageChange(void);
 void InGameMenu(void);
+void ChangeCharExtrate(void);
+
 //void StageChange(const Goal* goal);

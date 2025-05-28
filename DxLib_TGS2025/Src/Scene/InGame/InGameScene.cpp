@@ -60,9 +60,12 @@ void InGameSceneInit(void)
 
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
-	ingame.menu_cursor_x=350.0f;
+	ingame.menu_cursor_x=300.0f;
 	ingame.menu_cursor_y = 200.0f;
-
+	for (int i = 0; i < 5; i++)
+	{
+		ingame.char_extrate[i] = 0.8f;
+	}
 	//確認用変数　後々消します
 	atr = 0;
 	btr = 1;
@@ -120,6 +123,7 @@ eSceneType InGameSceneUpdate()
 
 	InGameMenu();
 
+	ChangeCharExtrate();
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.menu_num == 0 &&
@@ -195,7 +199,7 @@ void InGameSceneDraw(void)
 		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 0; i < 3; i++)
 		{
-			DrawRotaGraph(640, i*130+200, 0.8 ,0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraph(640, i*130+200, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
 }
@@ -354,3 +358,11 @@ void InGameMenu(void)
 }
 
 
+void ChangeCharExtrate(void)
+{
+	for (int i = 0; i < 5; i++)
+	{
+		ingame.char_extrate[i] = 0.8f;
+	}
+	ingame.char_extrate[ingame.menu_num] = 0.9f;
+}
