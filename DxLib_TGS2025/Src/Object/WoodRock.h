@@ -60,6 +60,10 @@ struct Rock
 	int break_rock;
 };
 
+struct WoodRock_SE
+{
+	int swing;
+};
 
 void WoodRockInit(void);
 void WoodRockUpdate(void);

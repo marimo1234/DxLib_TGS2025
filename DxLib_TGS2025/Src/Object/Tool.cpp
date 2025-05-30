@@ -125,16 +125,15 @@ void ToolInit(void)
 	tool_se.select_se = LoadSoundMem("Resource/Sounds/item_select_se2.mp3");
 	//道を壊したときの音
 	tool_se.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
-	//音量調整
-	ChangeVolumeSoundMem(125, tool_se.break_se);
 	//道や木の橋等を増やすときのSE
 	tool_se.make_road = LoadSoundMem("Resource/Sounds/make_road.mp3");
 	tool_se.make_woodroad= LoadSoundMem("Resource/Sounds/make_woodroad.mp3");
 
 	tool_se.wood_road = LoadSoundMem("Resource/Sounds/wood_road.mp3");
-	//音量調整
-	ChangeVolumeSoundMem(110, tool_se.road);
+	
 	tool_se.road = LoadSoundMem("Resource/Sounds/put_road_se.mp3");
+
+	tool_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
 
 	//******画像読み込み******//
 	//アイテム枠
@@ -476,8 +475,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 						Base_Chenge();
 						tool.base_x += 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.road, DX_PLAYTYPE_BACK);
-						ChangeVolumeSoundMem(150, tool_se.road);
+						Play_Sound_Tool(tool_se.road, 110);
 						
 					}
 
@@ -491,8 +489,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 						Base_Chenge();
 						tool.base_x -= 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.road, DX_PLAYTYPE_BACK);
-						ChangeVolumeSoundMem(150, tool_se.road);
+						Play_Sound_Tool(tool_se.road, 110);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
@@ -505,8 +502,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 						Base_Chenge();
 						tool.base_y -= 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.road, DX_PLAYTYPE_BACK);
-						ChangeVolumeSoundMem(150, tool_se.road);
+						Play_Sound_Tool(tool_se.road, 110);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
@@ -519,8 +515,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 						Base_Chenge();
 						tool.base_y += 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.road, DX_PLAYTYPE_BACK);
-						ChangeVolumeSoundMem(150, tool_se.road);
+						Play_Sound_Tool(tool_se.road, 110);
 					}
 				}
 			}
@@ -558,7 +553,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 						Base_Chenge();
 						tool.base_x += 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.wood_road, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.wood_road, 100);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
@@ -571,7 +566,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 						Base_Chenge();
 						tool.base_x -= 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.wood_road, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.wood_road, 100);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
@@ -584,7 +579,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 						Base_Chenge();
 						tool.base_y -= 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.wood_road, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.wood_road, 100);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
@@ -597,7 +592,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 						Base_Chenge();
 						tool.base_y += 1;
 						Road_Imghandle_Update(GetStage());
-						PlaySoundMem(tool_se.wood_road, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.wood_road, 100);
 					}
 				}
 			}
@@ -616,38 +611,37 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 		//アイテムがハンマーなら
 		if (tool.item_number == eHammer)
 		{
-
 			//ゴールとつながっていないなら
 			if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7) &&
 				stage->array[tool.base_x][tool.base_y - 1] != 7)
 			{
 				//カーソルの位置がベースでcarのnextではなければ
 				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
-					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count])&&
-					(cursor->array_x!=car->current_x||cursor->array_y!=car->current_y))
+					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count]) &&
+					(cursor->array_x != car->current_x || cursor->array_y != car->current_y))
 				{
 					//道だったら
 					if (stage->array[tool.base_x][tool.base_y] == 4)
 					{
 						tool.break_road_flag = true;
 						tool.rock_add_flag = true;
-						PlaySoundMem(tool_se.break_se, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.break_se, 125);
 					}
 					//木の道だったら
 					else if (stage->array[tool.base_x][tool.base_y] == 5)
 					{
 						tool.break_woodroad_flag = true;
 						tool.wood_add_flag = true;
-						PlaySoundMem(tool_se.break_se, DX_PLAYTYPE_BACK);
+						Play_Sound_Tool(tool_se.break_se, 125);
 					}
-				
+
 					tool.road_break_flag[tool.base_x][tool.base_y] = true;
 					tool.road_img_array[tool.base_x][tool.base_y] = -1;
 					for (int j = 0; j < 7; j++)
 					{
 						for (int i = 0; i < 12; i++)
 						{
-							
+
 							if (tool.old_base_array[i][j] == 1)
 							{
 								tool.base_x = i;
@@ -660,6 +654,10 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 						}
 					}
 				}
+			}
+			if (tool.road_break_flag[cursor->array_x][cursor->array_y] == false)
+			{
+				Play_Sound_Tool2(tool_se.swing, 150);
 			}
 		}
 	}
@@ -1812,8 +1810,8 @@ void Break_WoodRoad_Animation(int x, int y)
 //SE再生(音の重なりあり
 void Play_Sound_Tool(int sound,int volume)
 {
-	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 	ChangeVolumeSoundMem(volume, sound);
+	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 }
 
 //SE再生(音の重なりなし

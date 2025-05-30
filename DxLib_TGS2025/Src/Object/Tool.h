@@ -134,6 +134,7 @@ struct Tool_SE
 	int make_road;				//道の数を増やすときのサウンドハンドル
 	int make_woodroad;			//木の道の数を増やすときのサウンドハンドル
 	int select_se;				//アイテムセレクト欄サウンドハンドル
+	int swing;
 };
 
 void ToolInit(void);

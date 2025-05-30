@@ -25,6 +25,7 @@ bool woodrock_menu_flag;
 
 Wood wood;
 Rock rock;
+WoodRock_SE woodrock_se;
 
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
@@ -107,6 +108,7 @@ void WoodRockInit(void)
 	//サウンド読み込み
 	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood.mp3");
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock.mp3");
+	woodrock_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
 
 	rock.position.x = 600.0f;
 	rock.position.y = 360.0f;
@@ -365,20 +367,20 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//カーソルの配列番号が木だったら
-	if (stage->array[cursor->array_x][cursor->array_y] == 1);
+	//Aボタンが押されたなら
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-
-		for (int i = 0; i < WOODROCK_MAX; i++)
+		//ツールがオノになっていたら
+		if (tool->item_number == eAx)
 		{
-			//カーソルと木の配列番号が一致したら
-			if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
+			//カーソルの配列番号が木だったら
+			if (stage->array[cursor->array_x][cursor->array_y] == 1);
 			{
-				//ツールがオノになっていたら
-				if (tool->item_number == eAx)
+
+				for (int i = 0; i < WOODROCK_MAX; i++)
 				{
-					//Aボタンが押されたなら
-					if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+					//カーソルと木の配列番号が一致したら
+					if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
 					{
 						//変更する配列番号を記憶
 						wood.count_x = stage->wood_x[i];
@@ -391,11 +393,13 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 							Play_Sound_WoodRock(wood.break_wood, 90);
 						}
 					}
+					else if (stage->array[cursor->array_x][cursor->array_y] != 1)
+					{
+						Play_Sound_WoodRock(woodrock_se.swing, 120);
+					}
 				}
 			}
 		}
-
-
 	}
 }
 
@@ -404,20 +408,20 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//カーソルの配列番号が岩だったら
-	if (stage->array[cursor->array_x][cursor->array_y] == 2);
+	//Aボタンが押されたなら
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		for (int i = 0; i < WOODROCK_MAX; i++)
+		//ツールがつるはしになっていたら
+		if (tool->item_number == ePickaxe)
 		{
-			//カーソルと石の配列番号が一致したら
-			if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
+			/*カーソルの配列番号が岩だったら*/
+			if (stage->array[cursor->array_x][cursor->array_y] == 2);
 			{
-				
-				//ツールがつるはしになっていたら
-				if (tool->item_number == ePickaxe)
+
+				for (int i = 0; i < WOODROCK_MAX; i++)
 				{
-					//Aボタンが押されたなら
-					if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+					//カーソルと石の配列番号が一致したら
+					if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
 					{
 						//変更する配列番号を記憶
 						rock.count_x = stage->rock_x[i];
@@ -425,13 +429,18 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						//Hitフラグをtrueにする
 						rock.hit_flag[rock.count_x][rock.count_y] = true;
 						if (stage->array[cursor->array_x][cursor->array_y] == 2)
-						{						
+						{
 							//hit時のツルハシが岩を叩くSEを追加
 							Play_Sound_WoodRock(rock.break_rock, 120);
 						}
 					}
+					else if (stage->array[cursor->array_x][cursor->array_y] != 2)
+					{
+						Play_Sound_WoodRock(woodrock_se.swing, 120);
+					}
 				}
 			}
+			
 		}
 	}
 }
