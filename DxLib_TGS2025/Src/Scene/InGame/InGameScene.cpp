@@ -33,6 +33,7 @@ void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover,const Car*car);
 void GetStageNumber(const StageSelect* stageselect);
+void Play_Sound_Ingame(int sound, int volume);
 
 
 //初期化
@@ -57,6 +58,9 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[5] = LoadGraph("Resource/images/stage_select.png");
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 
+	
+	sound.gameover = LoadSoundMem("Resource/Sounds/GameOver.mp3");
+
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -79,7 +83,7 @@ void InGameSceneInit(void)
 
 	ingame.menu_manual_flag = false;
 
-	ingame.bgm_flag = false;
+	ingame.gameover_se_flag = false;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -274,6 +278,7 @@ void GameStart(void)
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
+			ingame.gameover_se_flag = false;
 			ingame.start = true;
 			ingame.manual_open = false;
 			Play_InGameBgm();
@@ -367,6 +372,7 @@ void GoalSelectFlagReset(void)
 	}
 }
 
+//GameOverの時の処理
 void GameOverReset(const GameOver* gameover,const Car* car)
 {
 	if (gameover->flag == true)
@@ -375,6 +381,11 @@ void GameOverReset(const GameOver* gameover,const Car* car)
 	}
 	if (car->direction == eStop)
 	{
+		if (ingame.gameover_se_flag == false)
+		{
+			Play_Sound_Ingame(sound.gameover, 60);
+			ingame.gameover_se_flag = true;
+		}
 		if (CheckSoundMem(sound.bgm) == 1)
 		{
 			Stop_InGameBgm();
@@ -510,7 +521,17 @@ void GoalSelectMenuDraw(void)
 void Play_InGameBgm(void)
 {
 	PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
-	ChangeVolumeSoundMem(90, sound.bgm);
+	ChangeVolumeSoundMem(70, sound.bgm);
+}
+
+//SE再生(音の重なりなし
+void Play_Sound_Ingame(int sound, int volume)
+{
+	if (CheckSoundMem(sound) == 0)
+	{
+		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+		ChangeVolumeSoundMem(volume, sound);
+	}
 }
 
 //BGMをストップ

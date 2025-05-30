@@ -42,12 +42,13 @@ struct InGame
 	bool menu_manual_flag;
     int  menu_manual_image;
 
-	bool bgm_flag;
+	bool gameover_se_flag;
 };
 
 struct InGame_Sound
 {
 	int bgm;
+	int gameover;
 };
 
 void InGameSceneInit(void);

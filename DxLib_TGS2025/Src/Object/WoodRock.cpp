@@ -385,8 +385,11 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						wood.count_y = stage->wood_y[i];
 						//Hitフラグをtrueにする
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
-						//hit時の斧が木を叩くSEを追加
-						Play_Sound_WoodRock(wood.break_wood, 90);
+						if (stage->array[cursor->array_x][cursor->array_y] == 1)
+						{
+							//hit時の斧が木を叩くSEを追加
+							Play_Sound_WoodRock(wood.break_wood, 90);
+						}
 					}
 				}
 			}
@@ -421,8 +424,11 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						rock.count_y = stage->rock_y[i];
 						//Hitフラグをtrueにする
 						rock.hit_flag[rock.count_x][rock.count_y] = true;
-						//hit時のツルハシが岩を叩くSEを追加
-						Play_Sound_WoodRock(rock.break_rock, 120);
+						if (stage->array[cursor->array_x][cursor->array_y] == 2)
+						{						
+							//hit時のツルハシが岩を叩くSEを追加
+							Play_Sound_WoodRock(rock.break_rock, 120);
+						}
 					}
 				}
 			}
