@@ -261,7 +261,7 @@ void CarMovePosition(const CreateStage* stage)
 			
 		}
 		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 150.0f&&
-			car.current_y != stage->goal_y[0])
+			car.current_x != stage->goal_x[0] && car.current_y != stage->goal_y[0])
 		{
 			CarWarnSE();
 		}
@@ -276,7 +276,7 @@ void CarMovePosition(const CreateStage* stage)
 			
 		}
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 90.0f&&
-			car.current_y != stage->goal_y[0])
+			car.current_x != stage->goal_x[0] && car.current_y != stage->goal_y[0])
 		{
 			CarWarnSE();
 		}
@@ -291,7 +291,7 @@ void CarMovePosition(const CreateStage* stage)
 			
 		}
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 170.0f &&
-			car.current_x != stage->goal_x[0])
+			car.current_x != stage->goal_x[0] && car.current_y != stage->goal_y[0])
 		{
 			CarWarnSE();
 		}
@@ -307,7 +307,7 @@ void CarMovePosition(const CreateStage* stage)
 			
 		}
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 230.0f&&
-			car.current_x != stage->goal_x[0])
+			car.current_x != stage->goal_x[0]&& car.current_y != stage->goal_y[0])
 		{
 			CarWarnSE();
 		}
