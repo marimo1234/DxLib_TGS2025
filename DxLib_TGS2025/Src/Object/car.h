@@ -34,7 +34,8 @@ struct Car
     bool goal_flag;
     bool menu_flag;
     
-   
+    int warn_se;
+    bool warn_se_flag;
 
 };
 
@@ -55,4 +56,5 @@ const GameOver* GetGameOver(void);
 
 
 void CarReset(void);
-void CarMovePosition(void);
+
+void CarWarnSE(void);

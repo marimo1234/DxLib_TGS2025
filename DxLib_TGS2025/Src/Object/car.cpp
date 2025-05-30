@@ -17,6 +17,9 @@ void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
 void GetBreakRoadPosition(const Tool* tool);
 void CutIn(const CreateStage* stage);
+void Play_Sound_Car(int sound, int volume);
+void CarMovePosition(const CreateStage*stage);
+
 
 Car car;
 GameOver gameover;
@@ -51,6 +54,9 @@ void CarInit(void)
 
 	car.ivy_image= LoadGraph("Resource/images/ivy_car_right.png");
 
+	car.warn_se = LoadSoundMem("Resource/Sounds/Warn_se.mp3");
+	car.warn_se_flag = false;
+
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
 	
@@ -82,7 +88,7 @@ void CarManagerUpdate(void)
 	{
 		//車の移動処理
 		CarGoalCheck(GetStage());
-		CarMovePosition();
+		CarMovePosition(GetStage());
 
 	}
 	else if (car.start == false && car.menu_flag == false)
@@ -152,6 +158,7 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
+	car.warn_se_flag = false;
 	car.menu_flag == false;//車のメニュー処理フラグ
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
@@ -212,7 +219,7 @@ void GetBreakRoadPosition(const Tool* tool)
 
 
 //車の移動処理
-void CarMovePosition(void)
+void CarMovePosition(const CreateStage* stage)
 {
 	switch (car.direction)
 	{
@@ -253,6 +260,11 @@ void CarMovePosition(void)
 			CarDetectPosition();
 			
 		}
+		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 150.0f&&
+			car.current_y != stage->goal_y[0])
+		{
+			CarWarnSE();
+		}
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
@@ -263,6 +275,11 @@ void CarMovePosition(void)
 			CarDetectPosition();
 			
 		}
+		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 90.0f&&
+			car.current_y != stage->goal_y[0])
+		{
+			CarWarnSE();
+		}
 		break;
 	case eRight://右に
 		car.animation = car.image[0];
@@ -272,6 +289,11 @@ void CarMovePosition(void)
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
 			
+		}
+		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 170.0f &&
+			car.current_x != stage->goal_x[0])
+		{
+			CarWarnSE();
 		}
 		break;
 
@@ -284,6 +306,11 @@ void CarMovePosition(void)
 			CarDetectPosition();
 			
 		}
+		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 230.0f&&
+			car.current_x != stage->goal_x[0])
+		{
+			CarWarnSE();
+		}
 		break;
 
 	default:
@@ -294,6 +321,8 @@ void CarMovePosition(void)
 //車の現在位置を検知して次の進行方向を決める
 void CarDetectPosition(void)
 {
+
+	car.warn_se_flag = false;
 	//現在のX位置よりも次のX位置が大きかったら
 	if (car.current_x < car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
@@ -399,5 +428,26 @@ void CarGoalCheck(const CreateStage* stage)
 
 void CutIn(const CreateStage* stage)
 {
+
+}
+
+void CarWarnSE(void) 
+{
+	if (car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1&&
+		car.warn_se_flag==false)
+	{
+		Play_Sound_Car(car.warn_se, 100);
+		/*PlaySoundMem(car.warn_se, DX_PLAYTYPE_BACK);*/
+		car.warn_se_flag = true;
+	}
+}
+
+void Play_Sound_Car(int sound, int volume)
+{
+	if (CheckSoundMem(sound) == 0)
+	{
+		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+		ChangeVolumeSoundMem(volume, sound);
+	}
 
 }

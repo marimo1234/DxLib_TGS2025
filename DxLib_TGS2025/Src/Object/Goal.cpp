@@ -101,7 +101,7 @@ void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage)
 			goal.count++;
 		}
 		
-		if (goal.count > 120)
+		if (goal.count > 240)
 		{
 			goal.flag = true;
 			goal.print_flag = false;
