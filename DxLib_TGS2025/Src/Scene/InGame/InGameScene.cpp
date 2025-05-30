@@ -31,7 +31,7 @@ InGame_Sound sound;
 
 void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
-void GameOverReset(const GameOver* gameover);
+void GameOverReset(const GameOver* gameover,const Car*car);
 void GetStageNumber(const StageSelect* stageselect);
 
 
@@ -138,7 +138,7 @@ eSceneType InGameSceneUpdate()
 	//ゴールしたなら次のステージへ
 	StageChange();
 	//ゲームオーバーになったらリセットします
-	GameOverReset(GetGameOver());
+	GameOverReset(GetGameOver(),GetCar());
 
 	InGameMenuUpdate();
 
@@ -367,12 +367,18 @@ void GoalSelectFlagReset(void)
 	}
 }
 
-void GameOverReset(const GameOver* gameover)
+void GameOverReset(const GameOver* gameover,const Car* car)
 {
 	if (gameover->flag == true)
 	{
 		ingame.start = false;
-		Stop_InGameBgm();
+	}
+	if (car->direction == eStop)
+	{
+		if (CheckSoundMem(sound.bgm) == 1)
+		{
+			Stop_InGameBgm();
+		}
 	}
 }
 
