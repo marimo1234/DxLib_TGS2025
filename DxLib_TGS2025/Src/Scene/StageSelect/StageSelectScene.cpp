@@ -11,6 +11,9 @@ int result_score;		//表示するスコアの値
 
 void Play_Sound_StageSelect(int sound, int volume);
 
+void Play_Sound_StageSelect_NC(int sound, int volume);
+
+
 
 StageSelect stageselect;
 //リザルト画面初期化
@@ -172,7 +175,7 @@ void StageSelectCarMove(void)
 		}
 
 		// 移動のSE（もし使うならここに入れてね）
-		Play_Sound_StageSelect(stageselect.cursor_se, 80);
+		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
@@ -193,7 +196,7 @@ void StageSelectCarMove(void)
 			}
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-		Play_Sound_StageSelect(stageselect.cursor_se, 80);
+		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
@@ -220,7 +223,7 @@ void StageSelectCarMove(void)
 		}
 
 		// 移動のSE（左とおんなじ音入れてね）
-		Play_Sound_StageSelect(stageselect.cursor_se, 80);
+		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
@@ -247,7 +250,7 @@ void StageSelectCarMove(void)
 			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-		Play_Sound_StageSelect(stageselect.cursor_se, 80);
+		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 	}
 }
 //ステージ番号の分岐
@@ -302,4 +305,10 @@ void Play_Sound_StageSelect(int sound, int volume)
 		ChangeVolumeSoundMem(volume, sound);
 	}
 
+}
+
+void Play_Sound_StageSelect_NC(int sound, int volume)
+{
+	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+	ChangeVolumeSoundMem(volume, sound);
 }
