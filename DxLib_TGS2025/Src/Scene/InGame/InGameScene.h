@@ -49,6 +49,7 @@ struct InGame_Sound
 {
 	int bgm;
 	int gameover;
+	int clear;
 };
 
 void InGameSceneInit(void);
