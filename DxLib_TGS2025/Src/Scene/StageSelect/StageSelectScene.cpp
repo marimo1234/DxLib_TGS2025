@@ -9,6 +9,9 @@
 int result_score;		//表示するスコアの値
 
 
+void Play_Sound_StageSelect(int sound, int volume);
+
+
 StageSelect stageselect;
 //リザルト画面初期化
 void StageSelectSceneInit(void)
@@ -74,13 +77,13 @@ eSceneType StageSelectSceneUpdate(void)
 		//ステージ番号が-1じゃなければ
 		if (stageselect.number != -1 && stageselect.number != 5)
 		{
-			PlaySoundMem(stageselect.button_se, DX_PLAYTYPE_BACK);
+			Play_Sound_StageSelect(stageselect.button_se, 80);
 			StageSelectNumber();
 			return eInGame;	//インゲーム画面へ
 		}
 		else if (stageselect.number == 5)
 		{
-			PlaySoundMem(stageselect.button_se, DX_PLAYTYPE_BACK);
+			Play_Sound_StageSelect(stageselect.button_se, 80);
 			return eTitle;
 		}
 	}
@@ -169,7 +172,7 @@ void StageSelectCarMove(void)
 		}
 
 		// 移動のSE（もし使うならここに入れてね）
-		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
+		Play_Sound_StageSelect(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
@@ -190,7 +193,7 @@ void StageSelectCarMove(void)
 			}
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
+		Play_Sound_StageSelect(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
@@ -217,7 +220,7 @@ void StageSelectCarMove(void)
 		}
 
 		// 移動のSE（左とおんなじ音入れてね）
-		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
+		Play_Sound_StageSelect(stageselect.cursor_se, 80);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
@@ -244,7 +247,7 @@ void StageSelectCarMove(void)
 			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
+		Play_Sound_StageSelect(stageselect.cursor_se, 80);
 	}
 }
 //ステージ番号の分岐
@@ -289,4 +292,14 @@ void StageSelectGetNumber(void)
 	{
 		stageselect.number = -1;
 	}
+}
+
+void Play_Sound_StageSelect(int sound, int volume)
+{
+	if (CheckSoundMem(sound) == 0)
+	{
+		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+		ChangeVolumeSoundMem(volume, sound);
+	}
+
 }
