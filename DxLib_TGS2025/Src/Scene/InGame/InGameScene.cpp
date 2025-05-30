@@ -59,7 +59,7 @@ void InGameSceneInit(void)
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 
 	
-	sound.gameover = LoadSoundMem("Resource/Sounds/GameOver.mp3");
+	
 
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
@@ -310,10 +310,12 @@ void GetStageNumber(const StageSelect* stageselect)
 	ingame.stage_num = stageselect->number;
 }
 
-//インゲームBGM初期化
+//インゲームsound初期化
 void PlayBgm(void)
 {
 	sound.bgm = LoadSoundMem("Resource/Sounds/main.mp3");
+	sound.gameover = LoadSoundMem("Resource/Sounds/GameOver.mp3");
+	sound.clear = LoadSoundMem("Resource/Sounds/clear.mp3");
 }
 
 //Goalした後のセレクト画面を出すフラグ
@@ -383,8 +385,16 @@ void GameOverReset(const GameOver* gameover,const Car* car)
 	{
 		if (ingame.gameover_se_flag == false)
 		{
-			Play_Sound_Ingame(sound.gameover, 60);
-			ingame.gameover_se_flag = true;
+			if (car->goal_flag == true)
+			{
+				Play_Sound_Ingame(sound.clear, 60);
+				ingame.gameover_se_flag = true;
+			}
+			else
+			{
+				Play_Sound_Ingame(sound.gameover, 60);
+				ingame.gameover_se_flag = true;
+			}
 		}
 		if (CheckSoundMem(sound.bgm) == 1)
 		{
