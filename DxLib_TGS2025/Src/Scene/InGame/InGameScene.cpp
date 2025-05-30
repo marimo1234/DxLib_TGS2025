@@ -23,11 +23,11 @@ int atr ;
 int btr ;
 
 //この辺まだ使っていない
-void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
+//void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
 
 InGame ingame;
-
+InGame_Sound sound;
 
 void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
@@ -54,6 +54,8 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[2] = LoadGraph("Resource/images/title.png");
 	ingame.menu_char_image[3] = LoadGraph("Resource/images/next_stage.png");
 	ingame.menu_char_image[4] = LoadGraph("Resource/images/stage_select.png");
+	
+
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -286,7 +288,9 @@ void GetStageNumber(const StageSelect* stageselect)
 //インゲームBGM再生
 void PlayBgm(void)
 {
-	/*PlaySoundMem(, DX_PLAYTYPE_LOOP);*/
+	sound.bgm = LoadSoundMem("Resource/Sounds/main.mp3");
+	PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
+	ChangeVolumeSoundMem(90, sound.bgm);
 }
 
 //Goalした後のセレクト画面を出すフラグ

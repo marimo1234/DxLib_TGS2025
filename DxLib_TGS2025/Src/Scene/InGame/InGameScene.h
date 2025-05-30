@@ -40,6 +40,10 @@ struct InGame
 	bool goalselect_flag;
 };
 
+struct InGame_Sound
+{
+	int bgm;
+};
 
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);

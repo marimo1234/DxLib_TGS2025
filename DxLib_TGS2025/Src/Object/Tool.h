@@ -129,9 +129,10 @@ struct Tool_Img
 struct Tool_SE
 {
 	int break_se;               //破壊時のSEハンドル
-	int wood_road_se;			//木の道のサウンドハンドル
-	int road_se;				//道のサウンドハンドル
-	int craft_item_se;			//アイテム数を増やすときのサウンドハンドル
+	int wood_road;				//木の道のサウンドハンドル
+	int road;					//道のサウンドハンドル
+	int make_road;				//道の数を増やすときのサウンドハンドル
+	int make_woodroad;			//木の道の数を増やすときのサウンドハンドル
 	int select_se;				//アイテムセレクト欄サウンドハンドル
 };
 
