@@ -125,12 +125,14 @@ void ToolInit(void)
 	tool_se.select_se = LoadSoundMem("Resource/Sounds/item_select_se2.mp3");
 	//道を壊したときの音
 	tool_se.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
+	//音量調整
 	ChangeVolumeSoundMem(125, tool_se.break_se);
 	//道や木の橋等を増やすときのSE
 	tool_se.make_road = LoadSoundMem("Resource/Sounds/make_road.mp3");
 	tool_se.make_woodroad= LoadSoundMem("Resource/Sounds/make_woodroad.mp3");
 
 	tool_se.wood_road = LoadSoundMem("Resource/Sounds/wood_road.mp3");
+	//音量調整
 	ChangeVolumeSoundMem(110, tool_se.road);
 	tool_se.road = LoadSoundMem("Resource/Sounds/put_road_se.mp3");
 
