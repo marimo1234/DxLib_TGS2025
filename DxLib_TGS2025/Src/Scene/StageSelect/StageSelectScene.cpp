@@ -24,6 +24,9 @@ void StageSelectSceneInit(void)
 	stageselect.array_x = 0;
 	stageselect.array_y = 1;
 
+	stageselect.Abottom_rate = 1.0f;
+	stageselect.rate_num = 0.1;
+
 	//画像の取得
 	stageselect.background_image = LoadGraph("Resource/images/StageSelect.png");
 	stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
@@ -37,6 +40,8 @@ void StageSelectSceneInit(void)
 	stageselect.number_image[4] = LoadGraph("Resource/images/5.png");
 
 	stageselect.car_image = LoadGraph("Resource/images/car2_right.png");
+
+	stageselect.Abottom = LoadGraph("Resource/images/Abottom.png");
 
 	//配列にデフォルトの枠を入れる
 	for (int j = 0; j < 2; j++)
@@ -113,9 +118,17 @@ void StageSelectSceneDraw(void)
 	//択んでいる位置に車を描画
 	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.15, 0.0, stageselect.car_image, TRUE);
 
-	
-	
-	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");
+	if (stageselect.Abottom_rate > 1.3)
+	{
+		stageselect.rate_num = -0.005f;
+	}
+	else if (stageselect.Abottom_rate < 1.0)
+	{
+		stageselect.rate_num = 0.005f;
+	}
+	stageselect.Abottom_rate += stageselect.rate_num;
+	DrawRotaGraph(640, 340, stageselect.Abottom_rate, 0.0, stageselect.Abottom, TRUE);
+	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 }
 

@@ -7,6 +7,9 @@
 struct StageSelect
 {
 	int background_image;
+	int Abottom;
+	float Abottom_rate;
+	float rate_num;
 	int car_image;
 	int trout_image[3];
 	int number_image[5];
