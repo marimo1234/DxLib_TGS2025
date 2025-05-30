@@ -49,6 +49,8 @@ void CarInit(void)
 	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
 	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
 
+	car.ivy_image= LoadGraph("Resource/images/ivy_car_right.png");
+
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
 	
@@ -218,10 +220,12 @@ void CarMovePosition(void)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
+			/*car.animation = car.ivy_image;*/
 			if (overroad < 400)
 			{
 				OverRoad();
 				gameover.image_flag = true;
+				car.animation = car.ivy_image;
 			}
 			if (overroad > 399)
 			{
