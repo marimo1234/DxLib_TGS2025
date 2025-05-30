@@ -174,6 +174,8 @@ void WoodRockDraw(void)
 	WoodRockEffectDraw();
 	
 	
+	
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", rock.fps);
 }
 
 //木のアニメーション
@@ -284,13 +286,11 @@ void RockAnimation(void)
 		
 		if (rock.hit_flag[rock.count_x][rock.count_y] == true)
 		{
-		
-			rock.effect_flag = true;
-			rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
-			rock.hit_count[rock.count_x][rock.count_y] = eHit3;
-			rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
-			rock.fps = 0;
-
+				rock.effect_flag = true;
+				rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
+				rock.hit_count[rock.count_x][rock.count_y] = eHit3;
+				rock.hit_flag[rock.count_x][rock.count_y] = false;//hitフラグをfalseにする
+				rock.fps = 0;
 		}
 		break;
 
@@ -594,8 +594,10 @@ void GetMoleRockPosition(const Mole* mole)
 		{
 			if (mole->put_rock_flag[i][j] == true)
 			{
+				rock.hit_flag[i][j] = false;
 				rock.hit_count[i][j] = eHit0;
 				rock.animation[i][j] = rock.image[0];
+				
 			}
 		}
 	}
