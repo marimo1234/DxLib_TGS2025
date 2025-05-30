@@ -163,7 +163,7 @@ eSceneType InGameSceneUpdate()
 		ingame.menu_num = 0;
 		ingame.start = false;
 		ingame.menu_flag = false;
-		
+		Stop_InGameBgm();
 	}
 	if (ingame.menu_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
@@ -173,6 +173,7 @@ eSceneType InGameSceneUpdate()
 	if (ingame.menu_num == 3 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		Stop_InGameBgm();
 		return eTitle;	//タイトルに戻る
 		ingame.menu_num = 0;
 	}
@@ -187,10 +188,12 @@ eSceneType InGameSceneUpdate()
 		ingame.menu_flag = false;
 		ingame.goalmenu_flag = false;
 		ingame.goalmenu_num = 0;
+		Stop_InGameBgm();
 	}
 	if (ingame.goalmenu_num == 1 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		Stop_InGameBgm();
 		return eStageSelect;	//タイトルに戻る
 		ingame.menu_flag = false;
 		ingame.goalmenu_num = 0;
@@ -273,6 +276,7 @@ void GameStart(void)
 		{
 			ingame.start = true;
 			ingame.manual_open = false;
+			Play_InGameBgm();
 		}
 	}
 	if (ingame.manual_open == false&& ingame.start == false&&ingame.menu_flag == false)
@@ -349,6 +353,7 @@ void NextStageFlag(const Goal* goal)
 		ingame.next_stage_flag = true;
 		atr ++;
 		ingame.start = false;
+		Stop_InGameBgm();
 	}
 
 	
@@ -367,6 +372,7 @@ void GameOverReset(const GameOver* gameover)
 	if (gameover->flag == true)
 	{
 		ingame.start = false;
+		Stop_InGameBgm();
 	}
 }
 
@@ -494,16 +500,15 @@ void GoalSelectMenuDraw(void)
 	}
 }
 
+//BGMを再生
 void Play_InGameBgm(void)
 {
-	if (ingame.start == true)
-	{
-		PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
-	}
-	
+	PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
+	ChangeVolumeSoundMem(90, sound.bgm);
 }
 
+//BGMをストップ
 void Stop_InGameBgm(void)
 {
-
+	StopSoundMem(sound.bgm);
 }
