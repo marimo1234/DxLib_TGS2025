@@ -42,6 +42,7 @@ struct InGame
 	bool menu_manual_flag;
     int  menu_manual_image;
 
+	bool bgm_flag;
 };
 
 struct InGame_Sound
@@ -62,5 +63,7 @@ void ChangeCharExtrate(void);
 void GoalSelectFlagReset(void);
 void MenuDraw(void);
 void GoalSelectMenuDraw(void);
+void Play_InGameBgm(void);
+void Stop_InGameBgm(void);
 
 //void StageChange(const Goal* goal);

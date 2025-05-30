@@ -54,8 +54,8 @@ void Break_Road_Animation(int x, int y);
 void Break_WoodRoad_Animation(int x, int y);
 
 
-void Play_Sound(int sound,int volume);
-void Play_Sound2(int sound,int volume);
+void Play_Sound_Tool(int sound,int volume);
+void Play_Sound_Tool2(int sound,int volume);
 
 
 //初期化
@@ -284,23 +284,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = eWoodRoad;
-			Play_Sound(tool_se.select_se,100);
+			Play_Sound_Tool(tool_se.select_se,100);
 			break;
 		case eWoodRoad:
 			tool.item_number = eHammer;
-			Play_Sound(tool_se.select_se,100);
+			Play_Sound_Tool(tool_se.select_se,100);
 			break;
 		case eHammer:
 			tool.item_number = eAx;
-			Play_Sound(tool_se.select_se,100);
+			Play_Sound_Tool(tool_se.select_se,100);
 			break;
 		case eAx:
 			tool.item_number = ePickaxe;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		case ePickaxe:
 			tool.item_number = eRoad;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		}
 	}
@@ -312,23 +312,23 @@ void Move_ItemSelect(void)
 		{
 		case eRoad:
 			tool.item_number = ePickaxe;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		case eWoodRoad:
 			tool.item_number = eRoad;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		case eHammer:
 			tool.item_number = eWoodRoad;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		case eAx:
 			tool.item_number = eHammer;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		case ePickaxe:
 			tool.item_number = eAx;
-			Play_Sound(tool_se.select_se, 100);
+			Play_Sound_Tool(tool_se.select_se, 100);
 			break;
 		}
 	}
@@ -728,7 +728,7 @@ void const Road_Add_Num(const Rock* rock)
 			{
 				tool.road_num++;
 				tool.rock_sub_flag = true;
-				Play_Sound2(tool_se.make_road,100);
+				Play_Sound_Tool2(tool_se.make_road,100);
 			}
 		}
 	}
@@ -752,7 +752,7 @@ void const WoodRoad_Add_Num(const Wood* wood)
 			{
 				tool.wood_road_num++;
 				tool.wood_sub_flag = true;
-				Play_Sound2(tool_se.make_woodroad,100); // 木の道を作ったときの音
+				Play_Sound_Tool2(tool_se.make_woodroad,100); // 木の道を作ったときの音
 			}
 		}
 	}
@@ -1806,14 +1806,14 @@ void Break_WoodRoad_Animation(int x, int y)
 }
 
 //SE再生(音の重なりあり
-void Play_Sound(int sound,int volume)
+void Play_Sound_Tool(int sound,int volume)
 {
 	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 	ChangeVolumeSoundMem(volume, sound);
 }
 
 //SE再生(音の重なりなし
-void Play_Sound2(int sound,int volume)
+void Play_Sound_Tool2(int sound,int volume)
 {
 	if (CheckSoundMem(sound) == 0)
 	{

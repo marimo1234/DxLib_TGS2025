@@ -79,6 +79,8 @@ void InGameSceneInit(void)
 
 	ingame.menu_manual_flag = false;
 
+	ingame.bgm_flag = false;
+
 	for (int i = 0; i < 5; i++)
 	{
 		ingame.char_extrate[i] = 0.8f;
@@ -87,7 +89,7 @@ void InGameSceneInit(void)
 	atr = 0;
 	btr = 1;
 
-	//BGMの初期化
+		//BGMの初期化
 		PlayBgm();
 		//ステージ生成の初期化
 		
@@ -299,12 +301,10 @@ void GetStageNumber(const StageSelect* stageselect)
 	ingame.stage_num = stageselect->number;
 }
 
-//インゲームBGM再生
+//インゲームBGM初期化
 void PlayBgm(void)
 {
 	sound.bgm = LoadSoundMem("Resource/Sounds/main.mp3");
-	PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
-	ChangeVolumeSoundMem(90, sound.bgm);
 }
 
 //Goalした後のセレクト画面を出すフラグ
@@ -492,4 +492,18 @@ void GoalSelectMenuDraw(void)
 			DrawRotaGraphF(640.0f, (i - 4) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
+}
+
+void Play_InGameBgm(void)
+{
+	if (ingame.start == true)
+	{
+		PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
+	}
+	
+}
+
+void Stop_InGameBgm(void)
+{
+
 }
