@@ -34,7 +34,7 @@ struct Wood
 	bool effect_flag;
 	int effect_num;
 	int effect_count;
-	int wood_clap;
+	int break_wood;
 };
 
 struct Rock
@@ -57,7 +57,7 @@ struct Rock
 	bool effect_flag;
 	int effect_num;
 	int effect_count;
-	int rock_clap;
+	int break_rock;
 };
 
 

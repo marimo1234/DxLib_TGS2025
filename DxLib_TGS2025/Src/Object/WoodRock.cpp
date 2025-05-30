@@ -35,6 +35,7 @@ void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
 void WoodRockSub(const Tool* tool);
 void GetMoleRockPosition(const Mole* mole);
+void Play_Sound_WoodRock(int sound, int volume);
 
 
 //初期化
@@ -104,8 +105,8 @@ void WoodRockInit(void)
 	rock.effect_image[3]= LoadGraph("Resource/images/rock_fragment4.png");
 
 	//サウンド読み込み
-	wood.wood_clap = LoadSoundMem("Resource/Sounds/◯◯.mp3");
-	rock.rock_clap = LoadSoundMem("Resource/Sounds/◯◯.mp3");
+	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood.mp3");
+	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock.mp3");
 
 	rock.position.x = 600.0f;
 	rock.position.y = 360.0f;
@@ -385,7 +386,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						//Hitフラグをtrueにする
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
 						//hit時の斧が木を叩くSEを追加
-						PlaySoundMem(wood.wood_clap, DX_PLAYTYPE_BACK);
+						Play_Sound_WoodRock(wood.break_wood, 90);
 					}
 				}
 			}
@@ -421,13 +422,11 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						//Hitフラグをtrueにする
 						rock.hit_flag[rock.count_x][rock.count_y] = true;
 						//hit時のツルハシが岩を叩くSEを追加
-						PlaySoundMem(rock.rock_clap, DX_PLAYTYPE_BACK);
+						Play_Sound_WoodRock(rock.break_rock, 120);
 					}
 				}
 			}
 		}
-
-
 	}
 }
 
@@ -667,4 +666,14 @@ void WoodRockEffectDraw(void)
 	{
 		rock.effect_num = 0;
 	}
+}
+
+void Play_Sound_WoodRock(int sound, int volume)
+{
+	if (CheckSoundMem(sound) == 0)
+	{
+		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+		ChangeVolumeSoundMem(volume, sound);
+	}
+
 }
