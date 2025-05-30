@@ -19,6 +19,8 @@ struct StageSelect
 	int array_number;
 	int array_x;
 	int array_y;
+	int cursor_se;
+	int button_se;
 	
 };
 

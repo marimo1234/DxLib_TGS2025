@@ -43,6 +43,9 @@ void StageSelectSceneInit(void)
 
 	stageselect.Abottom = LoadGraph("Resource/images/Abottom.png");
 
+	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
+	stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+
 	//配列にデフォルトの枠を入れる
 	for (int j = 0; j < 2; j++)
 	{
@@ -71,11 +74,13 @@ eSceneType StageSelectSceneUpdate(void)
 		//ステージ番号が-1じゃなければ
 		if (stageselect.number != -1 && stageselect.number != 5)
 		{
+			PlaySoundMem(stageselect.button_se, DX_PLAYTYPE_BACK);
 			StageSelectNumber();
 			return eInGame;	//インゲーム画面へ
 		}
 		else if (stageselect.number == 5)
 		{
+			PlaySoundMem(stageselect.button_se, DX_PLAYTYPE_BACK);
 			return eTitle;
 		}
 	}
@@ -164,10 +169,11 @@ void StageSelectCarMove(void)
 		}
 
 		// 移動のSE（もし使うならここに入れてね）
-
+		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
+
 		if (stageselect.array_y != 2)
 		{
 			// 十字ボタンの右を押したとき
@@ -184,10 +190,11 @@ void StageSelectCarMove(void)
 			}
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-
+		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
+
 		// 十字ボタンの上を押したとき
 		if (stageselect.array_y > 0 && stageselect.array_y != 2)
 		{
@@ -208,12 +215,13 @@ void StageSelectCarMove(void)
 			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
 			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
 		}
-		
-		// 移動のSE（左とおんなじ音入れてね）
 
+		// 移動のSE（左とおんなじ音入れてね）
+		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
+
 		// 十字ボタンの下を押したとき
 		if (stageselect.array_y < 1)
 		{
@@ -226,7 +234,7 @@ void StageSelectCarMove(void)
 			stageselect.array_y = 2;
 			stageselect.position.x = 920.0f;
 			stageselect.position.y = 605.0f;
-			
+
 		}
 		else if (stageselect.array_y == 2)
 		{
@@ -236,7 +244,7 @@ void StageSelectCarMove(void)
 			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
 		}
 		// 移動のSE（左とおんなじ音入れてね）
-
+		PlaySoundMem(stageselect.cursor_se, DX_PLAYTYPE_BACK);
 	}
 }
 //ステージ番号の分岐
