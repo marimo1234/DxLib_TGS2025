@@ -38,7 +38,7 @@ struct Car
     int warn_se;
     bool warn_image_flag;
     bool warn_se_flag;
-    bool warn_count;
+    int warn_count;
 
 };
 

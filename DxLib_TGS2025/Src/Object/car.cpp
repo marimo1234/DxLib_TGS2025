@@ -101,7 +101,6 @@ void CarManagerUpdate(void)
 		CarReset();
 	}
 
-	car.warn_count++;
 
 }
 
@@ -472,8 +471,8 @@ void CarWarnDraw(void)
 	
 	if (car.warn_image_flag == true&& car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
 	{
-
-		if (car.warn_count % 20 < 10)
+		car.warn_count++;
+		if (car.warn_count % 40 < 20)
 		{
 			switch (car.direction)
 			{
