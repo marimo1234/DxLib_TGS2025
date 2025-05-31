@@ -53,9 +53,13 @@ void CarInit(void)
 	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
 
 	car.ivy_image= LoadGraph("Resource/images/ivy_car_right.png");
+	car.warn_image= LoadGraph("Resource/images/Warn_image.png");
+	car.warn_image_flag = false;
 
-	car.warn_se = LoadSoundMem("Resource/Sounds/Warn_se.mp3");
+	car.warn_se = LoadSoundMem("Resource/Sounds/Warn2_se.mp3");
 	car.warn_se_flag = false;
+	car.warn_count = 0;
+
 
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
@@ -97,13 +101,18 @@ void CarManagerUpdate(void)
 		CarReset();
 	}
 
+	car.warn_count++;
 
 }
 
 void CarDraw(void)
 {
+	//車の描画
 	DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 
+	//警告マークの描画
+	CarWarnDraw(); 
+		DrawFormatString(930, 300, GetColor(255, 255, 255), "%d", car.warn_count);
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -158,11 +167,15 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
-	car.warn_se_flag = false;
+	car.warn_se_flag = false;//警告音のフラグ
+	car.warn_image_flag = false;//警告マークのフラグ
+	car.warn_count = 0;//警告マークを表示する時間
 	car.menu_flag == false;//車のメニュー処理フラグ
 	car.current_x = 2;//ステージ①の初期位置
 	car.current_y = 3;
 	car.animation = car.image[0];
+	
+
 
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
@@ -248,8 +261,6 @@ void CarMovePosition(const CreateStage* stage)
 				}
 			}
 		}
-		
-
 		break;
 	case eUp://上に
 		car.animation = car.image[2];
@@ -258,27 +269,29 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
-			
+
 		}
-		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 150.0f&&
-			car.goal_flag==false)
+		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 150.0f &&
+			car.goal_flag == false)
 		{
 			CarWarnSE();
+			car.warn_image_flag = true;
 		}
 		break;
 	case eDown://下に
 		car.animation = car.image[3];
 		car.position.y += car.velocity.y;
-		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) +119.8f)//微調整で120から0.2引いている
+		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
-			
+
 		}
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 90.0f &&
 			car.goal_flag == false)
 		{
 			CarWarnSE();
+			car.warn_image_flag = true;
 		}
 		break;
 	case eRight://右に
@@ -288,28 +301,30 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
-			
+
 		}
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 170.0f &&
 			car.goal_flag == false)
 		{
 			CarWarnSE();
+			car.warn_image_flag = true;
 		}
 		break;
 
 	case eLeft:
 		car.animation = car.image[1];
 		car.position.x -= car.velocity.x;
-		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) +200.2f)//微調整で200から0.2足している
+		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
 			CarDetectPosition();
-			
+
 		}
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 230.0f &&
 			car.goal_flag == false)
 		{
 			CarWarnSE();
+			car.warn_image_flag = true;
 		}
 		break;
 
@@ -450,4 +465,31 @@ void Play_Sound_Car(int sound, int volume)
 		ChangeVolumeSoundMem(volume, sound);
 	}
 
+}
+
+void CarWarnDraw(void)
+{
+	
+	if (car.warn_image_flag == true&& car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
+	{
+
+		if (car.warn_count % 20 < 10)
+		{
+			switch (car.direction)
+			{
+			case eUp: case eDown:
+				DrawRotaGraphF(car.position.x - 80.0f, car.position.y, 1.0, 0.0, car.warn_image, TRUE);
+				break;
+			case eRight: case eLeft:
+				DrawRotaGraphF(car.position.x, car.position.y - 80.0f, 1.0, 0.0, car.warn_image, TRUE);
+				break;
+			}
+		}
+	}
+
+	if (car.next_x[car.next_count] != -1 && car.next_y[car.next_count] != -1)
+	{
+		car.warn_image_flag = false;
+		car.warn_count = 0;
+	}
 }
