@@ -6,6 +6,7 @@
 #include "../Object/Map.h"
 #include"../Object/Tool.h"
 #include"../Object/Car.h"
+#include"../Object/Goal.h"
 #include "DxLib.h"
 
 #define CURSOR_ARRAY_X_MAX (11)
@@ -30,7 +31,7 @@ static bool is_animating_ax = false;       // 斧のアニメーションフラ�
 static bool is_animating_drill = false;    // ドリルのアニメーションフラグ
 static bool is_animating_Hammer = false;    // ハンマーのアニメーションフラグ
 
-void CursorStart(const InGame* ingame);
+void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover);
 void GetCarInitPosition(const Car* car);
 
 
@@ -47,6 +48,7 @@ void CursorInit(void)
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 	cursorstart = false;
 	cursor.menu_flag = false;
+	cursor.operable_flag = false;
 
 	//カーソルの配列番号
 	GetCarInitPosition(GetCar());
@@ -67,10 +69,10 @@ void CursorInit(void)
 //カーソルの更新
 void CursorUpdate(void)
 {
-	CursorStart(GetInGame());
+	CursorStart(GetInGame(),GetGoal(),GetGameOver());
 	
 	
-	if (cursorstart == true&& cursor.menu_flag == false)
+	if (cursorstart == true&& cursor.menu_flag == false&& cursor.operable_flag == true)
 	{
         CursolButtonMovement(Get_Tool());
 		// ツルハシのアニメーション
@@ -207,17 +209,22 @@ void CursorDraw(const Tool*tool)
 
 }
 
-void CursorStart(const InGame* ingame)
+void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover)
 {
 	if (ingame->start == true && ingame->menu_flag == false)
 	{
 		cursorstart = true;
+		cursor.operable_flag = true;
 	}
 	else if (ingame->start == false && ingame->menu_flag == false)
 	{
 		cursorstart = false;
 	}
 
+	if (goal->print_flag == true || gameover->image_flag == true)
+	{
+		cursor.operable_flag = false;
+	}
 	cursor.menu_flag = ingame->menu_flag;
 }
 
@@ -349,6 +356,7 @@ void CursorReset(void)
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
 	cursorstart = false;
 	cursor.menu_flag = false;
+	cursor.operable_flag = false;
 	
 	
 	static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ

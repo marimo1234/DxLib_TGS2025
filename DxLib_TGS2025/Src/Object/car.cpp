@@ -111,7 +111,7 @@ void CarDraw(void)
 
 	//警告マークの描画
 	CarWarnDraw(); 
-		DrawFormatString(930, 300, GetColor(255, 255, 255), "%d", car.warn_count);
+		
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);

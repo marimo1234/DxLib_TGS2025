@@ -6,6 +6,8 @@
 #include "../Object/Cursor.h"
 #include "../Object/Map.h"
 #include "../Object/Obstacle.h"
+#include "../Object/Goal.h"
+#include "../Object/Car.h"
 #include"../Scene/InGame/InGameScene.h"
 
 #include <math.h>
@@ -22,6 +24,7 @@
 
 bool woodrock_start;
 bool woodrock_menu_flag;
+bool woodrock_operable_flag;
 
 Wood wood;
 Rock rock;
@@ -30,7 +33,7 @@ WoodRock_SE woodrock_se;
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 
-void WoodRockStart(const InGame* ingame);
+void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameover);
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
@@ -118,18 +121,18 @@ void WoodRockInit(void)
 void WoodRockUpdate(void)
 {
 	//ゲームのスタートを受け取る
-	WoodRockStart(GetInGame());
+	WoodRockStart(GetInGame(),GetGoal(),GetGameOver());
 
 	//スタートがtrueになったなら
-	if (woodrock_start == true&&woodrock_menu_flag==false)
-	{  
+	if (woodrock_start == true && woodrock_menu_flag == false && woodrock_operable_flag == true)
+	{
 		//木,岩のアニメーション
 		WoodAnimation();
 		RockAnimation();
 
 		//ツールとカーソルとのHitチェック
-		WoodHitCheck(Get_Tool(), GetCursor1(),GetStage());
-		RockHitCheck(Get_Tool(), GetCursor1(),GetStage());
+		WoodHitCheck(Get_Tool(), GetCursor1(), GetStage());
+		RockHitCheck(Get_Tool(), GetCursor1(), GetStage());
 
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
@@ -323,11 +326,13 @@ const Rock* GetRock(void)
 }
 
 //処理をスタートするフラグ
-void WoodRockStart(const InGame* ingame)
+void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover)
 {
 	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		woodrock_start = true;
+		woodrock_operable_flag = true;
+
 	}
 	else if(ingame->start == false && ingame->menu_flag == false)
 	{
@@ -335,6 +340,11 @@ void WoodRockStart(const InGame* ingame)
 	}
 
 	woodrock_menu_flag = ingame->menu_flag;
+
+	if (goal->print_flag == true || gameover->image_flag == true)
+	{
+		woodrock_operable_flag = false;
+	}
 }
 
 //木、石が使われたときに所有数を減らす
@@ -458,6 +468,7 @@ void WoodRockReset(void)
 {
 	woodrock_start = false;
 	woodrock_menu_flag = false;
+	woodrock_operable_flag = false;
 	//アイテム数の初期化
 	wood.item_num = 0;
 	rock.item_num = 0;
@@ -477,7 +488,7 @@ void WoodRockReset(void)
 
 	//初期化
 	WoodRockHitInit(GetStage());
-	
+
 }
 //アイテム化した時の木の挙動
 void WoodMove(void)
