@@ -12,7 +12,7 @@ struct CreateStage
 	int kinds;		//ステージの種類
 	int stage_x;
 	int stage_y;
-	int trout_image;
+	int trout_image[2];
 	bool start;
 	bool menu_flag;
 

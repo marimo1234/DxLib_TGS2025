@@ -31,7 +31,8 @@ void MapInit(void)
 {
 	//画像の取得
 	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
-	stage.trout_image= LoadGraph("Resource/images/trout.png");
+	stage.trout_image[0] = LoadGraph("Resource/images/trout.png");
+	stage.trout_image[1] = LoadGraph("Resource/images/trout2.png");
 	ikl= LoadGraph("Resource/images/Back_Wood.png");
 	//csvファイルから値を取得
 	StageLoad();
@@ -377,11 +378,31 @@ void MapValueInit(void)
 //マスの描画
 void MapTroutDraw(void)
 {
-	for (int y = 0; y < 7; y++)
-	{
-		for (int x = 0; x < 12; x++)
+	if(stage.number == 1)
+	{ 
+		for (int y = 0; y < 7; y++)
 		{
-			DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
+			for (int x = 0; x < 12; x++)
+			{
+				if (x > 1 && x < 10 && y>1 && y < 5)
+				{
+					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[0], TRUE);
+				}
+				else
+				{
+					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[1], TRUE);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int y = 0; y < 7; y++)
+		{
+			for (int x = 0; x < 12; x++)
+			{
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[0], TRUE);
+			}
 		}
 	}
 }
