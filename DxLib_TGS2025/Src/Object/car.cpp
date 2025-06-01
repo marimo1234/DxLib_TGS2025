@@ -52,7 +52,10 @@ void CarInit(void)
 	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
 	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
 
-	car.ivy_image= LoadGraph("Resource/images/ivy_car_right.png");
+	car.ivy_image[0] = LoadGraph("Resource/images/ivy_car_right.png");
+	car.ivy_image[1] = LoadGraph("Resource/images/ivy_car_left.png");
+	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
+	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 	car.warn_image= LoadGraph("Resource/images/Warn_image.png");
 	car.warn_image_flag = false;
 
@@ -239,12 +242,12 @@ void CarMovePosition(const CreateStage* stage)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
-			/*car.animation = car.ivy_image;*/
+			
 			if (overroad < 400)
 			{
 				OverRoad();
 				gameover.image_flag = true;
-				car.animation = car.ivy_image;
+				/*car.animation = car.ivy_image[0];*/
 			}
 			if (overroad > 399)
 			{
@@ -388,22 +391,22 @@ void OverRoad(void)
 	switch (car.old_direction)
 	{
 	case eUp://上に
-		car.animation = car.image[2];
+		car.animation = car.ivy_image[2];
 		car.position.y -= 0.1f;
 		overroad += 2;
 		break;
 	case eDown://下に
-		car.animation = car.image[3];
+		car.animation = car.ivy_image[3];
 		car.position.y += 0.1f;
 		overroad += 2;
 		break;
 	case eRight://右に
-		car.animation = car.image[0];
+		car.animation = car.ivy_image[0];
 		car.position.x += 0.1f;
 		overroad += 2;
 		break;
 	case eLeft:
-		car.animation = car.image[1];
+		car.animation = car.ivy_image[1];
 		car.position.x -= 0.1f;
 		overroad += 2;
 		break;
