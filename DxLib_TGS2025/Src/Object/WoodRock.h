@@ -59,11 +59,10 @@ struct Rock
 	int effect_count;
 	int break_rock;
 
-	int put_effect_image[6];
-	bool put_effect_flag;
-	bool put_flag;
-	int put_effect_num;
-	int put_effect_count;
+	int put_effect_image[7];
+	bool put_effect_flag[12][7];
+	int put_effect_num[12][7];
+	int put_effect_count[12][7];
 	int put_effect_x;
 	int put_effect_y;
 
