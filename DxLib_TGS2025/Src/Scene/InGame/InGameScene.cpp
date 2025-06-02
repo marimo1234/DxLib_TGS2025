@@ -246,7 +246,7 @@ void InGameSceneDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.manual_image, TRUE);
 	}
-	if (ingame.start == false && ingame.manual_open == false)
+	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
