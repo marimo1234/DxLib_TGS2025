@@ -58,6 +58,15 @@ struct Rock
 	int effect_num;
 	int effect_count;
 	int break_rock;
+
+	int put_effect_image[6];
+	bool put_effect_flag;
+	bool put_flag;
+	int put_effect_num;
+	int put_effect_count;
+	int put_effect_x;
+	int put_effect_y;
+
 };
 
 struct WoodRock_SE
@@ -84,6 +93,8 @@ void WR_Delete_Flag(void);
 void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
 void WoodRockEffectDraw(void);
+void PutRockEffect(int x, int y);
+
 
 
 

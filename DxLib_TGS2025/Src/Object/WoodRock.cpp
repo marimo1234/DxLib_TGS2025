@@ -85,7 +85,12 @@ void WoodRockInit(void)
 	rock.effect_num = 0;
 	rock.effect_count = 0;
 
-
+	rock.put_effect_flag = false;
+	rock.put_flag = false;
+	rock.put_effect_num = 0;
+	rock.put_effect_count = 0;
+	rock.put_effect_x = 0;
+	rock.put_effect_y = 0;
 
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
@@ -107,6 +112,12 @@ void WoodRockInit(void)
 	rock.effect_image[1]= LoadGraph("Resource/images/rock_fragment2.png");
 	rock.effect_image[2]= LoadGraph("Resource/images/rock_fragment3.png");
 	rock.effect_image[3]= LoadGraph("Resource/images/rock_fragment4.png");
+
+	rock.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
+	rock.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
+	rock.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
+	rock.put_effect_image[3] = LoadGraph("Resource/images/put_rock_3.png");
+	rock.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
 
 	//サウンド読み込み
 	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood.mp3");
@@ -140,6 +151,12 @@ void WoodRockUpdate(void)
 
 		//モグラが岩を置く場所を取得
 		GetMoleRockPosition(GetMole());
+
+		/*if (rock.put_effect_flag == false)
+		{
+			rock.hit_count[rock.put_effect_x][rock.put_effect_y] = eHit0;
+			rock.animation[rock.put_effect_x][rock.put_effect_y] = rock.image[0];
+		}*/
 	}
 	else if(woodrock_start == false && woodrock_menu_flag == false)
 	{
@@ -480,8 +497,10 @@ void WoodRockReset(void)
 	wood.effect_num = 0;
 	wood.effect_count = 0;
 
-	rock.effect_num = 0;
-	rock.effect_count = 0;
+	rock.put_effect_num = 0;
+	rock.put_effect_count = 0;
+	rock.put_flag = false;
+
 
 	wood.move_count = 0;
 	rock.move_count = 0;
@@ -619,10 +638,13 @@ void GetMoleRockPosition(const Mole* mole)
 		{
 			if (mole->put_rock_flag[i][j] == true)
 			{
+				rock.put_effect_flag = true;
+				rock.put_effect_x = i;
+				rock.put_effect_y = j;
 				rock.hit_flag[i][j] = false;
 				rock.hit_count[i][j] = eHit0;
 				rock.animation[i][j] = rock.image[0];
-				
+
 			}
 		}
 	}
@@ -692,6 +714,15 @@ void WoodRockEffectDraw(void)
 	{
 		rock.effect_num = 0;
 	}
+
+	if (rock.put_effect_flag == true)
+	{
+		PutRockEffect(rock.put_effect_x,rock.put_effect_y);
+	}
+	else
+	{
+		rock.put_effect_num = 0;
+	}
 }
 
 void Play_Sound_WoodRock(int sound, int volume)
@@ -703,3 +734,27 @@ void Play_Sound_WoodRock(int sound, int volume)
 	}
 
 }
+
+void PutRockEffect(int x, int y)
+{
+
+	if (rock.put_effect_num < 5)
+	{
+		rock.put_effect_count++;
+
+		if (rock.put_effect_count > 5)
+		{
+			rock.put_effect_num++;
+			rock.put_effect_count = 0;
+
+		}
+	}
+	else
+	{
+		rock.put_effect_count = 0;
+		rock.put_effect_flag = false;
+		rock.put_flag = true;
+	}
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.put_effect_image[rock.put_effect_num], TRUE);
+}
+

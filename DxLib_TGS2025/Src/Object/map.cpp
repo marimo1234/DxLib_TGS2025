@@ -23,7 +23,7 @@ void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
 void Break_Road(const Tool* tool, const Cursor* cursor);
-void MolePutRock(const Mole* mole);
+void MolePutRock(const Mole* mole, const Rock* rock);
 void GetStageNum(const InGame* ingame);
 
 //初期化
@@ -67,7 +67,7 @@ void MapUpdate(void)
 		//橋を置く
 		Put_Wood_Road(Get_Tool(), GetCursor1());
 		//モグラが石を置く
-		MolePutRock(GetMole());
+		MolePutRock(GetMole(),GetRock());
 		
 	}
 	else if(stage.start == false && stage.menu_flag == false)
@@ -274,14 +274,15 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 }
 
 //モグラが岩を置くフラグがtrueなら岩を置く
-void MolePutRock(const Mole* mole)
+void MolePutRock(const Mole* mole, const Rock*rock)
 {
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{
 			//置くフラグがtrueなら
-			if (mole->put_rock_flag[i][j] == true)
+			if (/*mole->put_rock_flag[i][j] == true*/
+				rock->put_effect_flag==true)
 			{
 				//岩を描画
 				stage.array[i][j] = 2;
