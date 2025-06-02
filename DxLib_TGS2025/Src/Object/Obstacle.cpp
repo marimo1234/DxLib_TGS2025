@@ -12,11 +12,6 @@
 
 #define ITEM_NUM	(9)		//アイテムの要素
 
-#define PUT_ROCK_Y_MIN (0)
-#define PUT_ROCK_Y_MAX (6)
-#define PUT_ROCK_X_MIN (0)
-#define PUT_ROCK_X_MAX (11)
-
 void ObstacleAnimationControl(const Cursor* cursor);
 
 Obstacle obstacle[D_OBSTACLE_MAX];
@@ -27,6 +22,7 @@ void MoleStart(const InGame* ingame);
 void MolePutRockFlag(const CreateStage* stage);
 void MoleRandomDirection(const CreateStage* stage);
 void MoleInit(const CreateStage* stage);
+void GetMoleStageNum(const InGame* ingame);
 
 int obstacle_images[7];
 int item_images[1];
@@ -40,8 +36,11 @@ void ObstacleManagerInit(void)
 		mole.image[i] = -1;
 	}
 
+	//モグラの初期化
 	MoleInit(GetStage());
-	
+	//ステージ番号の取得と置ける範囲の指定
+	GetMoleStageNum(GetInGame());
+
 	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
@@ -144,7 +143,7 @@ void MoleReset(void)
 	mole.image_count = 0;
 
 	MoleInit(GetStage());
-	
+	GetMoleStageNum(GetInGame());
 }
 
 //石を置くフラグのリセット
@@ -172,25 +171,25 @@ void MolePutRockFlag(const CreateStage* stage)
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 		{
 		case 0:
-			if (stage->mole_y[i] != PUT_ROCK_Y_MAX && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
+			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
 			}
 			break;
 		case 1:
-			if (stage->mole_y[i] != PUT_ROCK_Y_MIN && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
 			}
 			break;
 		case 2:
-			if (stage->mole_x[i] != PUT_ROCK_X_MIN && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
 			}
 			break;
 		case 3:
-			if (stage->mole_x[i] != PUT_ROCK_X_MAX && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] + 1][stage->mole_y[i]] = true;
 			}
@@ -224,4 +223,22 @@ void MoleInit(const CreateStage* stage)
 	}
 }
 
-
+//ステージ番号の取得と置ける範囲の指定
+void GetMoleStageNum(const InGame* ingame)
+{
+	switch (ingame->stage_num)
+	{
+	case eOne:
+		mole.rock_x_min = 2;
+		mole.rock_x_max = 9;
+		mole.rock_y_min = 3;
+		mole.rock_y_max = 4;
+		break;
+	default:
+		mole.rock_x_min = 0;
+		mole.rock_x_max = 11;
+		mole.rock_y_min = 0;
+		mole.rock_y_max = 6;
+		break;
+	}
+}

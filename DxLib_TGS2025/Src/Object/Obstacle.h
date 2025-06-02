@@ -32,6 +32,11 @@ struct Mole
 	int animation[12][7];
 	int image_count;
 	bool put_rock_flag[12][7];
+
+	int rock_x_max;
+	int rock_x_min;
+	int rock_y_min;
+	int rock_y_max;
 	
 };
 

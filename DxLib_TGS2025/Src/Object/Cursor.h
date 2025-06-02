@@ -16,6 +16,10 @@ struct Cursor
 	int is_jump;
 	bool menu_flag;
 	bool operable_flag;
+	int array_x_min;
+	int array_x_max;
+	int array_y_min;
+	int array_y_max;
 
 };
 

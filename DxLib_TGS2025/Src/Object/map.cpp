@@ -384,7 +384,7 @@ void MapTroutDraw(void)
 		{
 			for (int x = 0; x < 12; x++)
 			{
-				if (x > 1 && x < 10 && y>1 && y < 5)
+				if (x > 1 && x < 10 && y>2 && y < 5)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[0], TRUE);
 				}

@@ -9,10 +9,6 @@
 #include"../Object/Goal.h"
 #include "DxLib.h"
 
-#define CURSOR_ARRAY_X_MAX (11)
-#define CURSOR_ARRAY_X_MIN (0)
-#define CURSOR_ARRAY_Y_MAX (6)
-#define CURSOR_ARRAY_Y_MIN (0)
 #define MOVE_ONE_SPACE (80.0f)
 
 Cursor cursor;
@@ -33,6 +29,7 @@ static bool is_animating_Hammer = false;    // ハンマーのアニメーショ
 
 void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover);
 void GetCarInitPosition(const Car* car);
+void GetCursorStageNum(const InGame* ingame);
 
 
 //カーソルの初期化
@@ -50,10 +47,10 @@ void CursorInit(void)
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
 
+	//ステージごとの初期化とステージ番号の取得
+	GetCursorStageNum(GetInGame());
 	//カーソルの配列番号
 	GetCarInitPosition(GetCar());
-	/*cursor.array_x = 0;
-	cursor.array_y = 0;*/
 
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
@@ -243,15 +240,15 @@ void CursolButtonMovement(const Tool* tool)
 		{
 			
 			// 十字ボタンの左を押したとき
-			if (cursor.array_x > CURSOR_ARRAY_X_MIN)
+			if (cursor.array_x > cursor.array_x_min)
 			{
 				cursor.array_x--;
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
 				
 			}
-			else if (cursor.array_x == CURSOR_ARRAY_X_MIN)
+			else if (cursor.array_x == cursor.array_x_min)
 			{
-				cursor.array_x = CURSOR_ARRAY_X_MAX;
+				cursor.array_x = cursor.array_x_max;
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
 			}
 
@@ -261,15 +258,15 @@ void CursolButtonMovement(const Tool* tool)
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 		{
 			// 十字ボタンの右を押したとき
-			if (cursor.array_x < CURSOR_ARRAY_X_MAX)
+			if (cursor.array_x < cursor.array_x_max)
 			{
 				cursor.array_x++;
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x+200.0f;
 				
 			}
-			else if (cursor.array_x == CURSOR_ARRAY_X_MAX)
+			else if (cursor.array_x == cursor.array_x_max)
 			{
-				cursor.array_x = CURSOR_ARRAY_X_MIN;
+				cursor.array_x = cursor.array_x_min;
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
@@ -278,15 +275,15 @@ void CursolButtonMovement(const Tool* tool)
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
 			// 十字ボタンの上を押したとき
-			if (cursor.array_y > CURSOR_ARRAY_Y_MIN)
+			if (cursor.array_y > cursor.array_y_min)
 			{
 				cursor.array_y--;
 				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
 				
 			}
-			else if (cursor.array_y == CURSOR_ARRAY_Y_MIN)
+			else if (cursor.array_y == cursor.array_y_min)
 			{
-				cursor.array_y = CURSOR_ARRAY_Y_MAX;
+				cursor.array_y = cursor.array_y_max;
 				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
@@ -295,15 +292,15 @@ void CursolButtonMovement(const Tool* tool)
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
 			// 十字ボタンの下を押したとき
-			if (cursor.array_y < CURSOR_ARRAY_Y_MAX)
+			if (cursor.array_y < cursor.array_y_max)
 			{ 
 				cursor.array_y++;
 				cursor.position.y = MOVE_ONE_SPACE*cursor.array_y+120.0f;
 				
 			}
-			else if (cursor.array_y == CURSOR_ARRAY_Y_MAX)
+			else if (cursor.array_y == cursor.array_y_max)
 			{
-				cursor.array_y = CURSOR_ARRAY_Y_MIN;
+				cursor.array_y = cursor.array_y_min;
 				cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;
 			}
 			// 移動のSE（左とおんなじ音入れてね）
@@ -357,6 +354,8 @@ void CursorReset(void)
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
+
+	GetCursorStageNum(GetInGame());
 	
 	
 	static bool is_animating_pickaxe = false;  // ピッケルのアニメーションフラグ
@@ -369,4 +368,23 @@ void GetCarInitPosition(const Car* car)
 {
 	cursor.array_x = car->current_x;
 	cursor.array_y = car->current_y;
+}
+
+void GetCursorStageNum(const InGame* ingame)
+{
+	switch (ingame->stage_num)
+	{
+	case eOne:
+		cursor.array_x_min = 2;
+		cursor.array_x_max = 9;
+		cursor.array_y_min = 3;
+		cursor.array_y_max = 4;
+		break;
+	default:
+		cursor.array_x_min = 0;
+		cursor.array_x_max = 11;
+		cursor.array_y_min = 0;
+		cursor.array_y_max = 6;
+		break;
+	}
 }
