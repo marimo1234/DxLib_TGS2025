@@ -497,6 +497,9 @@ void WoodRockReset(void)
 	wood.effect_num = 0;
 	wood.effect_count = 0;
 
+	wood.effect_flag = false;
+	rock.effect_flag = false;
+
 	rock.put_effect_num = 0;
 	rock.put_effect_count = 0;
 	rock.put_flag = false;

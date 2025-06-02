@@ -281,8 +281,7 @@ void MolePutRock(const Mole* mole, const Rock*rock)
 		for (int i = 0; i < 12; i++)
 		{
 			//置くフラグがtrueなら
-			if (/*mole->put_rock_flag[i][j] == true*/
-				rock->put_effect_flag==true)
+			if (mole->put_rock_flag[i][j] == true)
 			{
 				//岩を描画
 				stage.array[i][j] = 2;
