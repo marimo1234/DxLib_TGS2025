@@ -419,10 +419,10 @@ void OverRoad(void)
 void CarGoalCheck(const CreateStage* stage)
 {
 	//右または上または下にゴールがあるなら
-	if (stage->array[car.next_x[car.road_count] + 1][car.next_y[car.road_count]] == 7 ||
-		stage->array[car.next_x[car.road_count] - 1][car.next_y[car.road_count]] == 7 ||
-		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] - 1] == 7 ||
-		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7)
+	if (stage->array[car.next_x[car.road_count] + 1][car.next_y[car.road_count]] == 7 && car.next_x[car.road_count] != 11 ||
+		stage->array[car.next_x[car.road_count] - 1][car.next_y[car.road_count]] == 7 && car.next_x[car.road_count] != 0 ||
+		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] - 1] == 7 && car.next_y[car.road_count] != 0 ||
+		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7 && car.next_y[car.road_count] != 6)
 	{
 		//車の速度を上げる
 		car.velocity.x = 4.0f;
