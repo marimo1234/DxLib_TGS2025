@@ -33,6 +33,7 @@ void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover,const Car*car);
 void GetStageNumber(const StageSelect* stageselect);
+void InGameMenuUpdate(const Goal*goal,const GameOver* gameover);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 
@@ -145,7 +146,7 @@ eSceneType InGameSceneUpdate()
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
 
-	InGameMenuUpdate();
+	InGameMenuUpdate(GetGoal(),GetGameOver());
 
 	NextSelectFlag(GetGoal());
 
@@ -465,14 +466,15 @@ void StageChange(void)
 	}
 }
 
-void InGameMenuUpdate(void)
+void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 {
 
 	ingame.menu_cursor_y = 200.0f + ingame.menu_num * 130.0f;
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+	if (goal->print_flag == false && gameover->image_flag == false &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		ingame.menu_flag = true;
 	}

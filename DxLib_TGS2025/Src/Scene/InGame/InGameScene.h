@@ -63,7 +63,7 @@ const InGame* GetInGame(void);
 
 void GameStart();
 void StageChange(void);
-void InGameMenuUpdate(void);
+
 void ChangeCharExtrate(void);
 void GoalSelectFlagReset(void);
 void MenuDraw(void);
