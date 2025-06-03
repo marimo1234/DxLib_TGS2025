@@ -404,7 +404,7 @@ void GameOverReset(const GameOver* gameover,const Car* car)
 		{
 			if (car->goal_flag == true)
 			{
-				Play_Sound_Ingame(sound.clear, 60);
+				Play_Sound_Ingame(sound.clear, 90);
 				ingame.gameover_se_flag = true;
 			}
 			else
@@ -550,7 +550,7 @@ void GoalSelectMenuDraw(void)
 void Play_InGameBgm(void)
 {
 	PlaySoundMem(sound.bgm, DX_PLAYTYPE_LOOP);
-	ChangeVolumeSoundMem(70, sound.bgm);
+	ChangeVolumeSoundMem(90, sound.bgm);
 }
 
 //SE再生(音の重なりなし
