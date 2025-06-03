@@ -696,6 +696,29 @@ void RockEffect(int x, int y)
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.effect_image[rock.effect_num],TRUE);
 }
 
+void PutRockEffect(int x, int y)
+{
+
+	if (rock.put_effect_num[x][y] < 5)
+	{
+		rock.put_effect_count[x][y]++;
+
+		if (rock.put_effect_count[x][y] > 3)
+		{
+			rock.put_effect_num[x][y]++;
+			rock.put_effect_count[x][y] = 0;
+		}
+	}
+	else
+	{
+		rock.put_effect_count[x][y] = 0;
+		rock.put_effect_flag[x][y] = false;
+	}
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.put_effect_image[rock.put_effect_num[x][y]], TRUE);
+
+
+}
+
 void WoodRockEffectDraw(void) 
 {
 	if (wood.effect_flag == true)
@@ -743,26 +766,4 @@ void Play_Sound_WoodRock(int sound, int volume)
 
 }
 
-void PutRockEffect(int x, int y)
-{
-
-	if (rock.put_effect_num[x][y] < 6)
-	{
-		rock.put_effect_count[x][y]++;
-
-		if (rock.put_effect_count[x][y] > 3)
-		{
-			rock.put_effect_num[x][y]++;
-			rock.put_effect_count[x][y] = 0;
-		}
-	}
-	else
-	{
-		rock.put_effect_count[x][y] = 0;
-		rock.put_effect_flag[x][y] = false;
-	}
-	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.put_effect_image[rock.put_effect_num[x][y]], TRUE);
-	
-	
-}
 

@@ -69,13 +69,6 @@ void MapUpdate(void)
 		Put_Wood_Road(Get_Tool(), GetCursor1());
 		//モグラが石を置く
 		MolePutRock(GetMole(),GetRock());
-
-		MapPutRock();
-		
-		if (stage.put_rock_num > 29)
-		{
-			stage.put_rock_num = 0;
-		}
 	}
 	else if(stage.start == false && stage.menu_flag == false)
 	{
@@ -92,7 +85,6 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d\n%d\n%d\n%d\n%d\n%d\n%d", stage.put_rock_count[5][3], stage.put_rock_count[7][3], stage.put_rock_count[9][3], stage.put_rock_count[6][4], stage.put_rock_count[8][4], stage.put_rock_count[10][4], stage.put_rock_count[8][2]);
 }
 
 const CreateStage* GetStage(void)
@@ -169,10 +161,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);				
 				break;
 			case 2://石
-				if (stage.put_rock_flag[x][y] == false)
-				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
-				}
 				break;
 			case 3://穴
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, mole->animation[x][y], TRUE);
@@ -292,12 +281,7 @@ void MolePutRock(const Mole* mole, const Rock*rock)
 		{
 			//置くフラグがtrueなら
 			if (mole->put_rock_flag[i][j] == true)
-			{
-				stage.put_rock_flag[i][j] = true;
-				stage.put_rock_num++;
-				stage.put_rock_x[stage.put_rock_num] = i;
-				stage.put_rock_y[stage.put_rock_num] =j;
-				
+			{	
 				//岩を描画
 				stage.array[i][j] = 2;
 				//置かれた岩が何番目の岩か数えるフラグ
@@ -390,18 +374,9 @@ void MapValueInit(void)
 				l++;
 				break;
 			}
-
-			stage.put_rock_flag[x][y] = false;
-			stage.put_rock_count[x][y] = false;
 		}
 	}
 
-	stage.put_rock_num = 0;
-	for (int i = 0; i < 30; i++)
-	{
-		stage.put_rock_x[i] = 0;
-		stage.put_rock_y[i] = 0;
-	}
 }
 
 //マスの描画
@@ -474,18 +449,3 @@ void MapReset(void)
 	MapTroutDraw();
 }
 
-void MapPutRock(void)
-{
-	for (int i = 0; i < 30; i++)
-	{
-		if (stage.put_rock_flag[stage.put_rock_x[i]][stage.put_rock_y[i]] == true)
-		{
-			stage.put_rock_count[stage.put_rock_x[i]][stage.put_rock_y[i]]++;
-			if (stage.put_rock_count[stage.put_rock_x[i]][stage.put_rock_y[i]] > 25)
-			{
-				stage.put_rock_flag[stage.put_rock_x[i]][stage.put_rock_y[i]] = false;
-				stage.put_rock_count[stage.put_rock_x[i]][stage.put_rock_y[i]] = 0;
-			}
-		}
-	}
-}
