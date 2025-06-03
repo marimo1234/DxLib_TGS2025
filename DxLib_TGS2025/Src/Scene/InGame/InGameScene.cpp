@@ -121,6 +121,8 @@ void InGameSceneInit(void)
 
 eSceneType InGameSceneUpdate()
 {
+	//ゴールしたなら次のステージへ
+	StageChange();
 	//マップの更新
 	MapUpdate();
 	//障害物の更新
@@ -141,8 +143,6 @@ eSceneType InGameSceneUpdate()
 	//ゴールを受け取ったらステージを変えることを可能にする
 	NextStageFlag(GetGoal());
 
-	//ゴールしたなら次のステージへ
-	StageChange();
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
 

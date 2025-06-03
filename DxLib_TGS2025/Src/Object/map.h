@@ -46,5 +46,4 @@ void MapDraw(void);
 
 void MapValueInit(void);
 void MapReset(void);
-void MapTroutDraw(void);
 const CreateStage* GetStage(void);

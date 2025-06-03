@@ -25,6 +25,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 void Break_Road(const Tool* tool, const Cursor* cursor);
 void MolePutRock(const Mole* mole, const Rock* rock);
 void GetStageNum(const InGame* ingame);
+void MapTroutDraw(const InGame* ingame);
 
 //初期化
 void MapInit(void)
@@ -81,9 +82,10 @@ void MapDraw(void)
 	//背景の描画
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
 	//マスの描画
-	MapTroutDraw();
+	MapTroutDraw(GetInGame());
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
+
 
 }
 
@@ -380,10 +382,10 @@ void MapValueInit(void)
 }
 
 //マスの描画
-void MapTroutDraw(void)
+void MapTroutDraw(const InGame*ingame)
 {
-	if(stage.number == 1)
-	{ 
+	if (ingame->stage_num == eOne)
+	{
 		for (int y = 0; y < 7; y++)
 		{
 			for (int x = 0; x < 12; x++)
@@ -446,6 +448,6 @@ void MapReset(void)
 	GetStageNum(GetInGame());
 	StageLoad();
 	MapValueInit();
-	MapTroutDraw();
+	MapTroutDraw(GetInGame());
 }
 
