@@ -121,7 +121,7 @@ void MoleRandomDirection(const CreateStage* stage)
 
 	if (mole.image_count / 60 > 4)
 	{
-		for (int i = 0; i < stage->mole_count; i++)
+		for (int i = 0; i <= stage->mole_count; i++)
 		{
 			MolePutFlagReset();
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
@@ -165,7 +165,7 @@ void MolePutFlagReset(void)
 //最初の方向のマスがtrueになるのをどうにかしないといけない
 void MolePutRockFlag(const CreateStage* stage)
 {
-	for (int i = 0; i < stage->mole_count; i++)
+	for (int i = 0; i <= stage->mole_count; i++)
 	{
 
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
