@@ -50,6 +50,9 @@ struct InGame_Sound
 	int bgm;
 	int gameover;
 	int clear;
+	int pose;
+	int select_move;
+	int decision;
 };
 
 void InGameSceneInit(void);

@@ -34,6 +34,7 @@ void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover,const Car*car);
 void GetStageNumber(const StageSelect* stageselect);
 void Play_Sound_Ingame(int sound, int volume);
+void Play_Sound_Ingame2(int sound, int volume);
 
 
 //初期化
@@ -156,27 +157,35 @@ eSceneType InGameSceneUpdate()
 	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.menu_num == 0 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress&&
+		ingame.menu_flag==true)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_num = 0;
 		ingame.menu_flag = false;
 	}
 	if (ingame.menu_num == 1 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+		ingame.menu_flag == true)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_num = 0;
 		ingame.start = false;
 		ingame.menu_flag = false;
 		Stop_InGameBgm();
 	}
 	if (ingame.menu_num == 2 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+		ingame.menu_flag == true)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_manual_flag = true;
 	}
 	if (ingame.menu_num == 3 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+		ingame.menu_flag == true)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		Stop_InGameBgm();
 		return eTitle;	//タイトルに戻る
 		ingame.menu_num = 0;
@@ -187,6 +196,7 @@ eSceneType InGameSceneUpdate()
 	if (ingame.goalmenu_num == 0 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		ingame.goalselect_flag = true;
 		ingame.start = false;
 		ingame.menu_flag = false;
@@ -197,6 +207,7 @@ eSceneType InGameSceneUpdate()
 	if (ingame.goalmenu_num == 1 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		Stop_InGameBgm();
 		return eStageSelect;	//タイトルに戻る
 		ingame.menu_flag = false;
@@ -205,6 +216,7 @@ eSceneType InGameSceneUpdate()
 
 	if (ingame.menu_manual_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
 	{
+		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_manual_flag = false;
 	}
 
@@ -316,6 +328,9 @@ void PlayBgm(void)
 	sound.bgm = LoadSoundMem("Resource/Sounds/main.mp3");
 	sound.gameover = LoadSoundMem("Resource/Sounds/GameOver.mp3");
 	sound.clear = LoadSoundMem("Resource/Sounds/clear.mp3");
+	sound.pose = LoadSoundMem("Resource/Sounds/pose.mp3");
+	sound.select_move = LoadSoundMem("Resource/Sounds/select_move.mp3");
+	sound.decision = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
 }
 
 //Goalした後のセレクト画面を出すフラグ
@@ -333,6 +348,7 @@ void NextSelectFlag(const Goal* goal)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
+			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.goalmenu_num--;
 			if (ingame.goalmenu_num < 0)
 			{
@@ -343,6 +359,7 @@ void NextSelectFlag(const Goal* goal)
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
+			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.goalmenu_num++;
 			ingame.goalmenu_num = ingame.goalmenu_num % 2;
 
@@ -464,6 +481,7 @@ void InGameMenuUpdate(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
+			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.menu_num--;
 			if (ingame.menu_num < 0)
 			{
@@ -472,6 +490,7 @@ void InGameMenuUpdate(void)
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
+			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.menu_num++;
 			ingame.menu_num = ingame.menu_num % 4;
 			
@@ -542,6 +561,13 @@ void Play_Sound_Ingame(int sound, int volume)
 		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 		ChangeVolumeSoundMem(volume, sound);
 	}
+}
+
+//SE再生（音の重なりあり
+void Play_Sound_Ingame2(int sound, int volume)
+{
+	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+	ChangeVolumeSoundMem(volume, sound);
 }
 
 //BGMをストップ
