@@ -33,7 +33,7 @@ WoodRock_SE woodrock_se;
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 
-void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameover);
+void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,  const Car* car);
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
@@ -131,7 +131,7 @@ void WoodRockInit(void)
 void WoodRockUpdate(void)
 {
 	//ゲームのスタートを受け取る
-	WoodRockStart(GetInGame(),GetGoal(),GetGameOver());
+	WoodRockStart(GetInGame(),GetGoal(),GetGameOver(),GetCar());
 
 	//スタートがtrueになったなら
 	if (woodrock_start == true && woodrock_menu_flag == false && woodrock_operable_flag == true)
@@ -340,7 +340,7 @@ const Rock* GetRock(void)
 }
 
 //処理をスタートするフラグ
-void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover)
+void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover ,const Car*car)
 {
 	if (ingame->start == true&& ingame->menu_flag == false)
 	{
@@ -355,7 +355,7 @@ void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover
 
 	woodrock_menu_flag = ingame->menu_flag;
 
-	if (goal->print_flag == true || gameover->image_flag == true)
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true)
 	{
 		woodrock_operable_flag = false;
 	}
