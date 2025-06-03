@@ -56,6 +56,7 @@ void WoodRockInit(void)
 
 	wood.fps = 0;
 	rock.fps = 0;
+
 	//画像変数の初期化
 	for (int i = 0; i < 3; i++)
 	{
@@ -88,8 +89,6 @@ void WoodRockInit(void)
 	rock.effect_flag = false;
 
 
-	rock.put_effect_x = 0;
-	rock.put_effect_y = 0;
 
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
@@ -170,6 +169,8 @@ void WoodRockUpdate(void)
 		RockMove();
 		
 	}
+
+	
 }
 
 //描画処理
@@ -194,7 +195,7 @@ void WoodRockDraw(void)
 	
 	
 	
-	/*DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", rock.fps);*/
+	
 }
 
 //木のアニメーション
@@ -499,6 +500,8 @@ void WoodRockReset(void)
 	wood.move_count = 0;
 	rock.move_count = 0;
 
+
+
 	//初期化
 	WoodRockHitInit(GetStage());
 
@@ -621,8 +624,7 @@ void WoodRockHitInit(const CreateStage* stage)
 				rock.hit_count[i][j] = eHitEnd;
 			}
 
-			rock.put_effect_flag[i][j] = false;
-			rock.put_effect_num[i][j] = 0;
+			rock.put_effect_num[i][j] = -1;
 			rock.put_effect_count[i][j] = 0;
 
 		}
@@ -641,10 +643,12 @@ void GetMoleRockPosition(const Mole* mole)
 				rock.hit_flag[i][j] = false;
 				rock.hit_count[i][j] = eHit0;
 				rock.animation[i][j] = rock.image[0];
-
 			}
+			
 		}
 	}
+	
+	
 }
 
 void WoodEffect(int x, int y)
@@ -723,7 +727,7 @@ void WoodRockEffectDraw(void)
 			}
 			else
 			{
-				rock.put_effect_num[i][j] = 0;
+				rock.put_effect_num[i][j] = -1;
 			}
 		}
 	}
@@ -746,22 +750,19 @@ void PutRockEffect(int x, int y)
 	{
 		rock.put_effect_count[x][y]++;
 
-		if (rock.put_effect_count[x][y] > 5)
+		if (rock.put_effect_count[x][y] > 3)
 		{
 			rock.put_effect_num[x][y]++;
 			rock.put_effect_count[x][y] = 0;
-
 		}
-		
 	}
 	else
 	{
 		rock.put_effect_count[x][y] = 0;
 		rock.put_effect_flag[x][y] = false;
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.animation[x][y], TRUE);
-		return;
 	}
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.put_effect_image[rock.put_effect_num[x][y]], TRUE);
+	
 	
 }
 

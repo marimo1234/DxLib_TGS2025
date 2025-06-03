@@ -35,7 +35,11 @@ struct CreateStage
 	int rock_count;
 	int rock_count_flag;
 	int mole_count;
-
+	int put_rock_count[12][7];
+	int put_rock_flag[12][7];
+	int put_rock_x[30];
+	int put_rock_y[30];
+	int put_rock_num;
 };
 
 
@@ -48,3 +52,4 @@ void MapValueInit(void);
 void MapReset(void);
 void MapTroutDraw(void);
 const CreateStage* GetStage(void);
+void MapPutRock(void);
