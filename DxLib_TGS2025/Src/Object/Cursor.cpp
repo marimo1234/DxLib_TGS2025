@@ -27,7 +27,7 @@ static bool is_animating_ax = false;       // 斧のアニメーションフラ�
 static bool is_animating_drill = false;    // ドリルのアニメーションフラグ
 static bool is_animating_Hammer = false;    // ハンマーのアニメーションフラグ
 
-void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover);
+void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
 
@@ -66,7 +66,7 @@ void CursorInit(void)
 //カーソルの更新
 void CursorUpdate(void)
 {
-	CursorStart(GetInGame(),GetGoal(),GetGameOver());
+	CursorStart(GetInGame(),GetGoal(),GetGameOver(),GetCar());
 	
 	
 	if (cursorstart == true&& cursor.menu_flag == false&& cursor.operable_flag == true)
@@ -206,7 +206,7 @@ void CursorDraw(const Tool*tool)
 
 }
 
-void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover)
+void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)
 {
 	if (ingame->start == true && ingame->menu_flag == false)
 	{
@@ -218,7 +218,7 @@ void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover)
 		cursorstart = false;
 	}
 
-	if (goal->print_flag == true || gameover->image_flag == true)
+	if (goal->print_flag == true || gameover->image_flag == true||car->goal_flag==true)
 	{
 		cursor.operable_flag = false;
 	}
