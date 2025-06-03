@@ -74,7 +74,7 @@ void ObstacleManagerUpdate(void)
 //障害物の描画
 void ObstacleManagerDraw(void)
 {
-	
+
 }
 
 //構造体Obstacle

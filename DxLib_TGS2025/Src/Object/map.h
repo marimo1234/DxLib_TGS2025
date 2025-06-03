@@ -16,18 +16,18 @@ struct CreateStage
 	bool start;
 	bool menu_flag;
 
-	int wood_x[80];
-	int wood_y[80];
-	int rock_x[80];
-	int rock_y[80];
-	int mole_x[20];
-	int mole_y[20];
-	int road_x[80];
-	int road_y[20];
-	int wood_road_x[20];
-	int wood_road_y[20];
-	int lake_x[40];
-	int lake_y[40];
+	int wood_x[84];
+	int wood_y[84];
+	int rock_x[84];
+	int rock_y[84];
+	int mole_x[84];
+	int mole_y[84];
+	int road_x[84];
+	int road_y[84];
+	int wood_road_x[84];
+	int wood_road_y[84];
+	int lake_x[84];
+	int lake_y[84];
 	int goal_x[5];
 	int goal_y[5];
 
