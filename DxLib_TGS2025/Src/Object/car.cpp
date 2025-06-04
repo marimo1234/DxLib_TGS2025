@@ -12,11 +12,10 @@ int overroad;
 
 void CarStart(const InGame* ingame);
 void CarDetectPosition(void);
-void GetNextDestination(const Tool* tool);
+void GetNextDestination(const Tool* tool,int x,int y);
 void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
-void GetBreakRoadPosition(const Tool* tool);
-void CutIn(const CreateStage* stage);
+void GetBreakRoadPosition(const Tool* tool,int x,int y);
 void Play_Sound_Car(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
 
@@ -87,9 +86,17 @@ void CarManagerUpdate(void)
 	//車の処理をスタートするフラグ
 	CarStart(GetInGame());
 
-	//次の進行場所を取得する
-	GetNextDestination(Get_Tool());
-	GetBreakRoadPosition(Get_Tool());
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			//次の進行場所を取得する
+			GetNextDestination(Get_Tool(),i,j);
+			GetBreakRoadPosition(Get_Tool(),i,j);
+
+		}
+	}
+
 	//処理開始がtrueなら
 	if (car.start == true && car.menu_flag == false)
 	{
@@ -193,42 +200,29 @@ void CarReset(void)
 }
 
 //次の進行場所を取得する
-void GetNextDestination(const Tool* tool)
+void GetNextDestination(const Tool* tool, int x, int y)
 {
 	//道が置かれたときの座標を取得して番号をつける
 	//次の移動位置が同じでないなら
-	for (int j = 0; j < 7; j++)
+	if (tool->road_flag[x][y] == true || tool->wood_road_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
-		{
-			/*car.next_x[car.road_count] != destination->x || car.next_y[car.road_count] != destination->y*/
-			if (tool->road_flag[i][j] == true || tool->wood_road_flag[i][j] == true)
-			{
-				car.road_count++;
-				car.next_x[car.road_count] = i;
-				car.next_y[car.road_count] = j;
+		car.road_count++;
+		car.next_x[car.road_count] = x;
+		car.next_y[car.road_count] = y;
 
 
-			}
-		}
 	}
 }
 
 //壊すポジションを取得
-void GetBreakRoadPosition(const Tool* tool)
+void GetBreakRoadPosition(const Tool* tool, int x, int y)
 {
-	for (int j = 0; j < 7; j++)
+	if (tool->road_break_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
-		{
-			if (tool->road_break_flag[i][j] == true)
-			{
 
-				car.next_x[car.road_count] = -1;
-				car.next_y[car.road_count] = -1;
-				car.road_count--;
-			}
-		}
+		car.next_x[car.road_count] = -1;
+		car.next_y[car.road_count] = -1;
+		car.road_count--;
 	}
 }
 
@@ -442,12 +436,6 @@ void CarGoalCheck(const CreateStage* stage)
 	}
 
 }
-
-void CutIn(const CreateStage* stage)
-{
-
-}
-
 void CarWarnSE(void) 
 {
 	if (car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1&&

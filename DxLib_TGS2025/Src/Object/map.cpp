@@ -17,13 +17,13 @@ int ikl;
 
 void Stage_Start(const InGame* ingame);
 void StageLoad();
-void Put_Road(const Tool* tool, const Cursor* cursor);
-void Put_Wood_Road(const Tool* tool, const Cursor* cursor);
+void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y);
+void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
-void Break_Road(const Tool* tool, const Cursor* cursor);
-void MolePutRock(const Mole* mole, const Rock* rock);
+void Break_Road(const Tool* tool, const Cursor* cursor, int x, int y);
+void MolePutRock(const Mole* mole, const Rock* rock, int x, int y);
 void GetStageNum(const InGame* ingame);
 void MapTroutDraw(const InGame* ingame);
 
@@ -57,19 +57,26 @@ void MapUpdate(void)
 	Stage_Start(GetInGame());
 	
 
-	if (stage.start == true&&stage.menu_flag==false)
+	if (stage.start == true && stage.menu_flag == false)
 	{
 
 		//採取した後に描画を消す
 		Delete_WoodRock(GetWood(), GetRock());
-		//道を壊す
-		Break_Road(Get_Tool(),GetCursor1());
-		//道を置く
-		Put_Road(Get_Tool(), GetCursor1());
-		//橋を置く
-		Put_Wood_Road(Get_Tool(), GetCursor1());
-		//モグラが石を置く
-		MolePutRock(GetMole(),GetRock());
+
+		for (int j = 0; j < 7; j++)
+		{
+			for (int i = 0; i < 12; i++)
+			{
+				//道を壊す
+				Break_Road(Get_Tool(), GetCursor1(), i, j);
+				//道を置く
+				Put_Road(Get_Tool(), GetCursor1(), i, j);
+				//橋を置く
+				Put_Wood_Road(Get_Tool(), GetCursor1(), i, j);
+				//モグラが石を置く
+				MolePutRock(GetMole(), GetRock(), i, j);
+			}
+		}
 	}
 	else if(stage.start == false && stage.menu_flag == false)
 	{
@@ -207,54 +214,37 @@ void Stage_Start(const InGame* ingame)
 
 
 //カーソルの位置と対応している配列の中身を道に変更
-void Put_Road(const Tool* tool, const Cursor* cursor)
+void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 {
-	for (int j = 0; j < 7; j++)
+	if (tool->road_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
-		{
-			if (tool->road_flag[i][j] == true)
-			{
-				stage.array[i][j] = 4;
-			}
-		}
+		stage.array[x][y] = 4;
 	}
 }
 
 
 //カーソルの位置と対応している配列の中身を丸太の道に変更
-void Put_Wood_Road(const Tool* tool, const Cursor* cursor)
+void Put_Wood_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 {
-	for (int j = 0; j < 7; j++)
+
+	if (tool->wood_road_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
-		{
-			if (tool->wood_road_flag[i][j] == true)
-			{
-				stage.array[i][j] = 5;
-			}
-		}
+		stage.array[x][y] = 5;
 	}
 }
 
 //カーソルの位置と対応しているベースの道を壊す
-void Break_Road(const Tool* tool,const Cursor*cursor)
+void Break_Road(const Tool* tool, const Cursor* cursor, int x, int y)
 {
-	for (int j = 0; j < 7; j++)
+	if (tool->road_break_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
+		if (tool->stage_begin_array[x][y] == 6)
 		{
-			if (tool->road_break_flag[i][j] == true)
-			{
-				if (tool->stage_begin_array[i][j] == 6)
-				{
-					stage.array[i][j] = 6;
-				}
-				else
-				{
-					stage.array[i][j] = 0;
-				}
-			}
+			stage.array[x][y] = 6;
+		}
+		else
+		{
+			stage.array[x][y] = 0;
 		}
 	}
 }
@@ -275,50 +265,39 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 }
 
 //モグラが岩を置くフラグがtrueなら岩を置く
-void MolePutRock(const Mole* mole, const Rock*rock)
+void MolePutRock(const Mole* mole, const Rock* rock, int x, int y)
 {
-	for (int j = 0; j < 7; j++)
+	//置くフラグがtrueなら
+	if (mole->put_rock_flag[x][y] == true)
 	{
-		for (int i = 0; i < 12; i++)
+		//岩を描画
+		stage.array[x][y] = 2;
+		//置かれた岩が何番目の岩か数えるフラグ
+		stage.rock_count_flag = true;
+
+		//今まで岩があった場所と被っているか
+		for (int k = 0; k < stage.rock_count; k++)
 		{
-			//置くフラグがtrueなら
-			if (mole->put_rock_flag[i][j] == true)
-			{	
-				//岩を描画
-				stage.array[i][j] = 2;
-				//置かれた岩が何番目の岩か数えるフラグ
-				stage.rock_count_flag = true;
-
-				//今まで岩があった場所と被っているか
-				for (int k = 0; k < stage.rock_count; k++)
-				{
-					//被っていないなら新しい番目に配列番号を入れる
-					if (stage.rock_x[k] != i || stage.rock_y[k] != j)
-					{
-						stage.rock_x[stage.rock_count] = i;
-						stage.rock_y[stage.rock_count] = j;
-					}
-					//もし場所が被っているなら番号を更新しない
-					else if (stage.rock_x[k] == i && stage.rock_y[k] == j)
-					{
-						stage.rock_count_flag = false;
-					}
-				}
-				//新しい番目に入れたときに番号を更新
-				if (stage.rock_count_flag == true)
-				{
-					stage.rock_count++;
-				}
-				//フラグの初期化
-				stage.rock_count_flag = false;
-
-				
+			//被っていないなら新しい番目に配列番号を入れる
+			if (stage.rock_x[k] != x || stage.rock_y[k] != y)
+			{
+				stage.rock_x[stage.rock_count] = x;
+				stage.rock_y[stage.rock_count] = y;
 			}
-			
+			//もし場所が被っているなら番号を更新しない
+			else if (stage.rock_x[k] == x && stage.rock_y[k] == y)
+			{
+				stage.rock_count_flag = false;
+			}
 		}
+		//新しい番目に入れたときに番号を更新
+		if (stage.rock_count_flag == true)
+		{
+			stage.rock_count++;
+		}
+		//フラグの初期化
+		stage.rock_count_flag = false;
 	}
-
-	
 }
 
 
