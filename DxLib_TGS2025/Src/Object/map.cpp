@@ -32,8 +32,8 @@ void MapInit(void)
 {
 	//画像の取得
 	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
-	stage.trout_image[0] = LoadGraph("Resource/images/trout.png");
-	stage.trout_image[1] = LoadGraph("Resource/images/trout2.png");
+	stage.trout_image= LoadGraph("Resource/images/trout.png");
+	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
 	ikl= LoadGraph("Resource/images/Back_Wood.png");
 	//csvファイルから値を取得
 	StageLoad();
@@ -146,8 +146,11 @@ void StageLoad(void)
 		}
 		else
 		{
-			stage.array[stage.beside][stage.vertical] = stage.kinds - '0';
-			stage.beside++;
+			if (stage.beside < 12 && stage.vertical < 7)
+			{
+				stage.array[stage.beside][stage.vertical] = stage.kinds - '0';
+				stage.beside++;
+			}
 		}
 	}
 	if (fp != NULL)
@@ -186,6 +189,9 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				break;
 			case 7://ゴール
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, goal->flag_image, TRUE);
+				break;
+			case 8://動けないマス
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.no_admittance, TRUE);
 				break;
 			}
 
@@ -310,8 +316,9 @@ void MapValueInit(void)
 	stage.mole_count = 0;	//穴
 	int g = 0;		//道
 	int h = 0;		//丸太の道
-	int k = 0;      //湖の画像
+	//int k = 0;      //湖の画像
 	int l = 0;      //ゴールの画像  
+	int m = 0;      //動けないマスの画像
 
 	for (int y = 0; y < 7; y++)
 	{
@@ -345,9 +352,9 @@ void MapValueInit(void)
 				h++;
 				break;
 			case 6:
-				stage.lake_x[k] = x;
+				/*stage.lake_x[k] = x;
 				stage.lake_y[k] = y;
-				k++;
+				k++;*/
 				break;
 			case 7:
 				stage.goal_x[l] = x;
@@ -361,33 +368,26 @@ void MapValueInit(void)
 }
 
 //マスの描画
-void MapTroutDraw(const InGame*ingame)
+void MapTroutDraw(const InGame* ingame)
 {
-	if (stage.number == 1)
+	for (int y = 0; y < 7; y++)
 	{
-		for (int y = 0; y < 7; y++)
+		for (int x = 0; x < 12; x++)
 		{
-			for (int x = 0; x < 12; x++)
+			if (stage.number == 1)
 			{
+
 				if (x > 1 && x < 10 && y>2 && y < 5)
 				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[0], TRUE);
+					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
 				}
-				else
-				{
-					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[1], TRUE);
-					//DrawFormatString(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, GetColor(255, 255, 255), "aiueo");
-				}
+
+
 			}
-		}
-	}
-	else
-	{
-		for (int y = 0; y < 7; y++)
-		{
-			for (int x = 0; x < 12; x++)
+			else
 			{
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[0], TRUE);
+
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
 			}
 		}
 	}

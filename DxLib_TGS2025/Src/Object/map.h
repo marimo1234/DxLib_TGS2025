@@ -12,10 +12,11 @@ struct CreateStage
 	int kinds;		//ステージの種類
 	int stage_x;
 	int stage_y;
-	int trout_image[2];
 	bool start;
 	bool menu_flag;
 
+	int trout_image;
+	int no_admittance;
 	int wood_x[84];
 	int wood_y[84];
 	int rock_x[84];
@@ -26,8 +27,8 @@ struct CreateStage
 	int road_y[84];
 	int wood_road_x[84];
 	int wood_road_y[84];
-	int lake_x[84];
-	int lake_y[84];
+	/*int lake_x[84];
+	int lake_y[84];*/
 	int goal_x[5];
 	int goal_y[5];
 
