@@ -121,6 +121,8 @@ void InGameSceneInit(void)
 
 eSceneType InGameSceneUpdate()
 {
+	//ゴールを受け取ったらステージを変えることを可能にする
+	NextStageFlag(GetGoal());
 	//ゴールしたなら次のステージへ
 	StageChange();
 	//マップの更新
@@ -139,9 +141,6 @@ eSceneType InGameSceneUpdate()
 	GameStart();
 	//ゴールの更新
 	GoalUpdate();
-
-	//ゴールを受け取ったらステージを変えることを可能にする
-	NextStageFlag(GetGoal());
 
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
@@ -521,7 +520,7 @@ void MenuDraw(void)
 	if (ingame.menu_flag == true && ingame.goalmenu_flag == false&&ingame.menu_manual_flag == false)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
-		DrawRotaGraph(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
+		DrawRotaGraphF(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		for (int i = 0; i < 4; i++)
 		{
 			DrawRotaGraphF(640.0f, i * 130.0f + 200.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);

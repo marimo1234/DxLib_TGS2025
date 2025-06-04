@@ -703,7 +703,7 @@ void PutRockEffect(int x, int y)
 	{
 		rock.put_effect_count[x][y]++;
 
-		if (rock.put_effect_count[x][y] > 3)
+		if (rock.put_effect_count[x][y] > 5)
 		{
 			rock.put_effect_num[x][y]++;
 			rock.put_effect_count[x][y] = 0;

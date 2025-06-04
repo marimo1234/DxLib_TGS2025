@@ -86,7 +86,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 
-
+	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.number);
 }
 
 const CreateStage* GetStage(void)
@@ -384,7 +384,7 @@ void MapValueInit(void)
 //マスの描画
 void MapTroutDraw(const InGame*ingame)
 {
-	if (ingame->stage_num == eOne)
+	if (stage.number == 1)
 	{
 		for (int y = 0; y < 7; y++)
 		{
@@ -397,6 +397,7 @@ void MapTroutDraw(const InGame*ingame)
 				else
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image[1], TRUE);
+					//DrawFormatString(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, GetColor(255, 255, 255), "aiueo");
 				}
 			}
 		}
@@ -445,9 +446,9 @@ void MapReset(void)
 
 
 
-	GetStageNum(GetInGame());
+	
 	StageLoad();
+	GetStageNum(GetInGame());
 	MapValueInit();
-	MapTroutDraw(GetInGame());
 }
 
