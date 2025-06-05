@@ -172,10 +172,11 @@ void StageSelectCarMove(void)
 				stageselect.array_x = 2;
 				stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
 			}
+			// 移動のSE（もし使うならここに入れてね）
+			Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 		}
 
-		// 移動のSE（もし使うならここに入れてね）
-		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
+		
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
 	{
@@ -194,9 +195,10 @@ void StageSelectCarMove(void)
 				stageselect.array_x = 0;
 				stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
 			}
+			// 移動のSE（左とおんなじ音入れてね）
+			Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 		}
-		// 移動のSE（左とおんなじ音入れてね）
-		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
+		
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{

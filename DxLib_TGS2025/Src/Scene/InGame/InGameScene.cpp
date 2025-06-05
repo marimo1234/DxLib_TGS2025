@@ -471,7 +471,7 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (goal->print_flag == false && gameover->image_flag == false &&
+	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		ingame.menu_flag = true;
