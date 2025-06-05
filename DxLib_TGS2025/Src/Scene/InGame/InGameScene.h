@@ -43,6 +43,10 @@ struct InGame
     int  menu_manual_image;
 
 	bool gameover_se_flag;
+
+	int tutoria_log;
+	int tutoria_log_num;
+	int mitibikikun;
 };
 
 struct InGame_Sound
@@ -53,6 +57,7 @@ struct InGame_Sound
 	int pose;
 	int select_move;
 	int decision;
+	
 };
 
 void InGameSceneInit(void);
@@ -70,5 +75,6 @@ void MenuDraw(void);
 void GoalSelectMenuDraw(void);
 void Play_InGameBgm(void);
 void Stop_InGameBgm(void);
+void Tutorial(void);
 
 //void StageChange(const Goal* goal);

@@ -37,7 +37,6 @@ void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameo
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
-void WoodRockSub(const Tool* tool);
 void GetMoleRockPosition(const Mole* mole);
 void Play_Sound_WoodRock(int sound, int volume);
 
