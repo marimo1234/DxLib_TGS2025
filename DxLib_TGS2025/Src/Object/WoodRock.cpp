@@ -398,7 +398,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 		if (tool->item_number == eAx)
 		{
 			//カーソルの配列番号が木だったら
-			if (stage->array[cursor->array_x][cursor->array_y] == 1);
+			if (stage->array[cursor->array_x][cursor->array_y] == 1)
 			{
 
 				for (int i = 0; i < WOODROCK_MAX; i++)
@@ -439,7 +439,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 		if (tool->item_number == ePickaxe)
 		{
 			/*カーソルの配列番号が岩だったら*/
-			if (stage->array[cursor->array_x][cursor->array_y] == 2);
+			if (stage->array[cursor->array_x][cursor->array_y] == 2)
 			{
 
 				for (int i = 0; i < WOODROCK_MAX; i++)
