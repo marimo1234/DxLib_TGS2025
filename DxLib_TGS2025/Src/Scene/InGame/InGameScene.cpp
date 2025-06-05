@@ -61,7 +61,7 @@ void InGameSceneInit(void)
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 
 	ingame.tutoria_log_num = 3;
-
+	ingame.mitibikikun= LoadGraph("Resource/images/mitibikikunn.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -584,10 +584,12 @@ void Tutorial(void)
 	char tutorial_load[256];
 	snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutoria_log_num);
 	tutorial_log = LoadGraph(tutorial_load);
-	DrawRotaGraphF(150.0f, 600.0f, 0.5, 0.0, tutorial_log, TRUE);
+	DrawRotaGraphF(1000.0f, 150.0f, 0.5, 0.0, tutorial_log, TRUE);
+	DrawRotaGraphF(1190.0f, 265.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
+	
 	if (ingame.tutoria_log_num < 44)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::eHold)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && ingame.menu_flag == false)
 		{
 			ingame.tutoria_log_num++;
 		}

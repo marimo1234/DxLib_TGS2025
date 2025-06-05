@@ -46,6 +46,7 @@ struct InGame
 
 	int tutoria_log;
 	int tutoria_log_num;
+	int mitibikikun;
 };
 
 struct InGame_Sound
