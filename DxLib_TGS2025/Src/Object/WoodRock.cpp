@@ -417,11 +417,11 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 							Play_Sound_WoodRock(wood.break_wood, 90);
 						}
 					}
-					else if (stage->array[cursor->array_x][cursor->array_y] != 1)
-					{
-						Play_Sound_WoodRock(woodrock_se.swing, 120);
-					}
 				}
+			}
+			else if (stage->array[cursor->array_x][cursor->array_y] != 1)
+			{
+				Play_Sound_WoodRock(woodrock_se.swing, 120);
 			}
 		}
 	}
@@ -458,13 +458,12 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 							Play_Sound_WoodRock(rock.break_rock, 120);
 						}
 					}
-					else if (stage->array[cursor->array_x][cursor->array_y] != 2)
-					{
-						Play_Sound_WoodRock(woodrock_se.swing, 120);
-					}
 				}
 			}
-			
+			else if (stage->array[cursor->array_x][cursor->array_y] != 2)
+			{
+				Play_Sound_WoodRock(woodrock_se.swing, 120);
+			}
 		}
 	}
 }
