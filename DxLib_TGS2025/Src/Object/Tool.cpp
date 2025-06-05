@@ -48,7 +48,6 @@ void Old_Position_Right(const CreateStage* stage);
 void Old_Position_Top(const CreateStage* stage);
 void Old_Position_Bottom(const CreateStage* stage);
 bool Check_Outside_Array(int x, int y, int val);
-bool Check_Outside_Array_Goal(int x, int y, int val);
 void Tool_Reset(const CreateStage*stage, const InGame* ingame);
 void Put_Road_Animation(int x, int y);
 void Put_WoodRoad_Animation(int x, int y);
@@ -462,57 +461,61 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 			if (tool.road_num > 0 && mole->put_rock_flag[cursor->array_x][cursor->array_y] == false)
 			{
 
-				//右の時,カーソルの位置のマップの配列の中身が0なら
-				if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
-					(stage->array[tool.base_x + 1][tool.base_y] == 0) && Check_Outside_Array_Goal(tool.base_x + 1, tool.base_y, 7))
+				if (car->goal_flag == false)
 				{
-					tool.put_road_flag = true;
-					tool.road_num--;
-					tool.road_flag[tool.base_x + 1][tool.base_y] = true;
-					Base_Chenge();
-					tool.base_x += 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.road, 110);
 
-				}
+					//右の時,カーソルの位置のマップの配列の中身が0なら
+					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
+						(stage->array[tool.base_x + 1][tool.base_y] == 0))
+					{
+						tool.put_road_flag = true;
+						tool.road_num--;
+						tool.road_flag[tool.base_x + 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x += 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.road, 110);
 
-				//左の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
-					(stage->array[tool.base_x - 1][tool.base_y] == 0) && Check_Outside_Array_Goal(tool.base_x - 1, tool.base_y, 7))
-				{
-					tool.put_road_flag = true;
-					tool.road_num--;
-					tool.road_flag[tool.base_x - 1][tool.base_y] = true;
-					Base_Chenge();
-					tool.base_x -= 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.road, 110);
-				}
+					}
 
-				//上の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
-					(stage->array[tool.base_x][tool.base_y - 1] == 0) && Check_Outside_Array_Goal(tool.base_x, tool.base_y - 1, 7))
-				{
-					tool.put_road_flag = true;
-					tool.road_num--;
-					tool.road_flag[tool.base_x][tool.base_y - 1] = true;
-					Base_Chenge();
-					tool.base_y -= 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.road, 110);
-				}
+					//左の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
+						(stage->array[tool.base_x - 1][tool.base_y] == 0))
+					{
+						tool.put_road_flag = true;
+						tool.road_num--;
+						tool.road_flag[tool.base_x - 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x -= 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.road, 110);
+					}
 
-				//下の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
-					(stage->array[tool.base_x][tool.base_y + 1] == 0) && Check_Outside_Array_Goal(tool.base_x, tool.base_y + 1, 7))
-				{
-					tool.put_road_flag = true;
-					tool.road_num--;
-					tool.road_flag[tool.base_x][tool.base_y + 1] = true;
-					Base_Chenge();
-					tool.base_y += 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.road, 110);
+					//上の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
+						(stage->array[tool.base_x][tool.base_y - 1] == 0))
+					{
+						tool.put_road_flag = true;
+						tool.road_num--;
+						tool.road_flag[tool.base_x][tool.base_y - 1] = true;
+						Base_Chenge();
+						tool.base_y -= 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.road, 110);
+					}
+
+					//下の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
+						(stage->array[tool.base_x][tool.base_y + 1] == 0))
+					{
+						tool.put_road_flag = true;
+						tool.road_num--;
+						tool.road_flag[tool.base_x][tool.base_y + 1] = true;
+						Base_Chenge();
+						tool.base_y += 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.road, 110);
+					}
 				}
 			}
 		}
@@ -534,56 +537,59 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 			//木の道路の数が0より多いなら
 			if (tool.wood_road_num > 0 && car->direction != eStop)
 			{
-				//右の時,カーソルの位置のマップの配列の中身が6なら
-				if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
-					stage->array[tool.base_x + 1][tool.base_y] == 6 && Check_Outside_Array_Goal(tool.base_x + 1, tool.base_y, 7))
+				if (car->goal_flag == false)
 				{
-					tool.put_woodroad_flag = true;
-					tool.wood_road_num--;
-					tool.wood_road_flag[tool.base_x + 1][tool.base_y] = true;
-					Base_Chenge();
-					tool.base_x += 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.wood_road, 100);
-				}
+					//右の時,カーソルの位置のマップの配列の中身が6なら
+					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
+						stage->array[tool.base_x + 1][tool.base_y] == 6)
+					{
+						tool.put_woodroad_flag = true;
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x + 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x += 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.wood_road, 100);
+					}
 
-				//左の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
-					stage->array[tool.base_x - 1][tool.base_y] == 6 && Check_Outside_Array_Goal(tool.base_x - 1, tool.base_y, 7))
-				{
-					tool.put_woodroad_flag = true;
-					tool.wood_road_num--;
-					tool.wood_road_flag[tool.base_x - 1][tool.base_y] = true;
-					Base_Chenge();
-					tool.base_x -= 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.wood_road, 100);
-				}
+					//左の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
+						stage->array[tool.base_x - 1][tool.base_y] == 6)
+					{
+						tool.put_woodroad_flag = true;
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x - 1][tool.base_y] = true;
+						Base_Chenge();
+						tool.base_x -= 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.wood_road, 100);
+					}
 
-				//上の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
-					stage->array[tool.base_x][tool.base_y - 1] == 6 && Check_Outside_Array_Goal(tool.base_x, tool.base_y - 1, 7))
-				{
-					tool.put_woodroad_flag = true;
-					tool.wood_road_num--;
-					tool.wood_road_flag[tool.base_x][tool.base_y - 1] = true;
-					Base_Chenge();
-					tool.base_y -= 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.wood_road, 100);
-				}
+					//上の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
+						stage->array[tool.base_x][tool.base_y - 1] == 6)
+					{
+						tool.put_woodroad_flag = true;
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x][tool.base_y - 1] = true;
+						Base_Chenge();
+						tool.base_y -= 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.wood_road, 100);
+					}
 
-				//下の時,カーソルの位置のマップの配列の中身が0なら
-				else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
-					stage->array[tool.base_x][tool.base_y + 1] == 6 && Check_Outside_Array_Goal(tool.base_x, tool.base_y + 1, 7))
-				{
-					tool.put_woodroad_flag = true;
-					tool.wood_road_num--;
-					tool.wood_road_flag[tool.base_x][tool.base_y + 1] = true;
-					Base_Chenge();
-					tool.base_y += 1;
-					Road_Imghandle_Update(GetStage());
-					Play_Sound_Tool(tool_se.wood_road, 100);
+					//下の時,カーソルの位置のマップの配列の中身が0なら
+					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
+						stage->array[tool.base_x][tool.base_y + 1] == 6)
+					{
+						tool.put_woodroad_flag = true;
+						tool.wood_road_num--;
+						tool.wood_road_flag[tool.base_x][tool.base_y + 1] = true;
+						Base_Chenge();
+						tool.base_y += 1;
+						Road_Imghandle_Update(GetStage());
+						Play_Sound_Tool(tool_se.wood_road, 100);
+					}
 				}
 			}
 		}
@@ -602,8 +608,7 @@ void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
 		if (tool.item_number == eHammer)
 		{
 			//ゴールとつながっていないなら
-			if (((stage->array[tool.base_x + 1][tool.base_y] != 7) && (stage->array[tool.base_x][tool.base_y + 1]) != 7) &&
-				stage->array[tool.base_x][tool.base_y - 1] != 7)
+			if (car->goal_flag==false)
 			{
 				//カーソルの位置がベースでcarのnextではなければ
 				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
@@ -1607,21 +1612,12 @@ bool Check_Outside_Array(int x, int y, int val)
 		tool.old_base_array[x][y] == val;
 }
 
-//配列の外を見ないように(ゴール確認
-bool Check_Outside_Array_Goal(int x,int y,int val)
-{
-	return x < ARRAY_EXCEED_LIMIT_X && x>ARRAY_BELOW_LIMIT_X &&
-		y<ARRAY_EXCEED_LIMIT_Y && y > ARRAY_BELOW_LIMIT_Y &&
-		tool.old_base_array[x][y] != val;
-}
-
 //道の設置可能位置
 void Possible_Prace(const CreateStage* stage,const Car*car)
 
 {
 	//ゴールではないなら
-	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 && stage->array[tool.base_x - 1][tool.base_y] != 7) &&
-		(stage->array[tool.base_x][tool.base_y + 1] != 7 && stage->array[tool.base_x][tool.base_y - 1] != 7))
+	if (car->goal_flag==false)
 	{
 		//アイテムが道なら
 		if (tool.item_number == 0 && car->direction != eStop)
@@ -1691,8 +1687,7 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 void Possible_Break(const CreateStage*stage,const Cursor*cursor,const Car*car)
 {
 	//ゴールではないなら
-	if ((stage->array[tool.base_x + 1][tool.base_y] != 7 && stage->array[tool.base_x - 1][tool.base_y] != 7) &&
-		(stage->array[tool.base_x][tool.base_y + 1] != 7 && stage->array[tool.base_x][tool.base_y - 1] != 7))
+	if (car->goal_flag==false)
 	{
 		//アイテムがドリルなら
 		if (tool.item_number == 2)
