@@ -274,7 +274,7 @@ void ToolDraw(void)
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
-	DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
+	/*DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
 		abcd);
 	for (int j = 0; j < 7; j++)
 	{
@@ -282,7 +282,7 @@ void ToolDraw(void)
 		{
 			DrawFormatString(100 + i * 20, 100 + j * 20, GetColor(255, 255, 255), "%d", tool.old_base_array[i][j]);
 		}
-	}
+	}*/
 }
 
 //アイテムセレクトの動き
@@ -1020,7 +1020,6 @@ void Old_Position_Left(const CreateStage* stage)
 		else if (Check_Outside_Array2(tool.base_x, tool.base_y + 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
-			abcd++;
 			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
 			{
 				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
