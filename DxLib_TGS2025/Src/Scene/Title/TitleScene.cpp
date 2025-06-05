@@ -6,11 +6,13 @@
 
 int title_image;		//タイトル画像のハンドル
 
+Title title;
+
 //タイトルシーンの初期化
 void TitleSceneInit(void)
 {
 	//画像の読み込み
-	//title_image = LoadGraph("Resource/Images/Title.png");	//タイトル画像
+	title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
 
 	//seの読み込み
 	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
@@ -53,6 +55,13 @@ void TitleSceneDraw(void)
 	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xでヘルプ画面へ");
 	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");*/
 
+	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでステージセレクト画面へ");
 
+}
+
+//StageSelectを取得
+const Title* GetTitle(void)
+{
+	return &title;
 }
