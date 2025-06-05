@@ -26,6 +26,7 @@
 
 bool tool_start;			//ゲームスタート
 
+int abcd;
 
 Tool tool;
 Tool_Img tool_img;
@@ -48,6 +49,7 @@ void Old_Position_Right(const CreateStage* stage);
 void Old_Position_Top(const CreateStage* stage);
 void Old_Position_Bottom(const CreateStage* stage);
 bool Check_Outside_Array(int x, int y, int val);
+bool Check_Outside_Array2(int x, int y, const CreateStage* stage, int val);
 void Tool_Reset(const CreateStage*stage, const InGame* ingame);
 void Put_Road_Animation(int x, int y);
 void Put_WoodRoad_Animation(int x, int y);
@@ -272,8 +274,15 @@ void ToolDraw(void)
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
-	/*DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
-		abcd);*/
+	DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
+		abcd);
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			DrawFormatString(100 + i * 20, 100 + j * 20, GetColor(255, 255, 255), "%d", tool.old_base_array[i][j]);
+		}
+	}
 }
 
 //アイテムセレクトの動き
@@ -994,7 +1003,7 @@ void Old_Position_Left(const CreateStage* stage)
 	case eBlank:			//今の位置が空白
 
 		//ゴールが上
-		if (Check_Outside_Array(tool.base_x, tool.base_y - 1, 7))
+		if (Check_Outside_Array2(tool.base_x, tool.base_y - 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
 			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
@@ -1007,9 +1016,10 @@ void Old_Position_Left(const CreateStage* stage)
 			}
 		}
 		//ゴールが下
-		else if (Check_Outside_Array(tool.base_x, tool.base_y + 1, 7))
+		else if (Check_Outside_Array2(tool.base_x, tool.base_y + 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
+			abcd++;
 			if (stage->array[tool.base_x - 1][tool.base_y] == 4)
 			{
 				tool.road_img_array[tool.base_x - 1][tool.base_y] = tool_img.road_beside;
@@ -1070,7 +1080,7 @@ void Old_Position_Left(const CreateStage* stage)
 	case eLake:			//今の位置が湖
 		
 		//ゴールが上
-		if (Check_Outside_Array(tool.base_x, tool.base_y - 1, 7))
+		if (Check_Outside_Array2(tool.base_x, tool.base_y - 1, GetStage(), 7))
 		{
 			
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rtop;
@@ -1086,7 +1096,7 @@ void Old_Position_Left(const CreateStage* stage)
 			}
 		}
 		//ゴールが下
-		else if (Check_Outside_Array(tool.base_x, tool.base_y + 1, 7))
+		else if (Check_Outside_Array2(tool.base_x, tool.base_y + 1, GetStage(), 7))
 		{
 
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rbottom;
@@ -1161,7 +1171,7 @@ void Old_Position_Right(const CreateStage* stage)
 	case eBlank:			//今の位置が空白
 
 		//ゴールが上
-		if (Check_Outside_Array(tool.base_x, tool.base_y - 1,7))
+		if (Check_Outside_Array2(tool.base_x, tool.base_y - 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
 			if (stage->array[tool.base_x + 1][tool.base_y] == 4)
@@ -1174,7 +1184,7 @@ void Old_Position_Right(const CreateStage* stage)
 			}
 		}
 		//ゴールが下
-		else if (Check_Outside_Array(tool.base_x, tool.base_y + 1, 7))
+		else if (Check_Outside_Array2(tool.base_x, tool.base_y + 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
 			if (stage->array[tool.base_x + 1][tool.base_y] == 4)
@@ -1234,7 +1244,7 @@ void Old_Position_Right(const CreateStage* stage)
 	/***********************************************************************************************************/
 	case eLake:				//今の位置が湖
 
-		if (Check_Outside_Array(tool.base_x, tool.base_y - 1, 7))
+		if (Check_Outside_Array2(tool.base_x, tool.base_y - 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Btmright;
 			if (stage->array[tool.base_x + 1][tool.base_y] == 4)
@@ -1247,7 +1257,7 @@ void Old_Position_Right(const CreateStage* stage)
 			}
 		}
 		//ゴールが下
-		else if (Check_Outside_Array(tool.base_x, tool.base_y + 1, 7))
+		else if (Check_Outside_Array2(tool.base_x, tool.base_y + 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Topright;
 			if (stage->array[tool.base_x + 1][tool.base_y] == 4)
@@ -1312,7 +1322,7 @@ void Old_Position_Top(const CreateStage* stage)
 	/***********************************************************************************************************/
 	case eBlank:			//今の位置が空白
 
-		if (Check_Outside_Array(tool.base_x + 1, tool.base_y, 7))
+		if (Check_Outside_Array2(tool.base_x+1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Btmright;
 			if (stage->array[tool.base_x][tool.base_y - 1] == 4)
@@ -1325,7 +1335,7 @@ void Old_Position_Top(const CreateStage* stage)
 			}
 		}
 		//ゴールが左
-		else if (Check_Outside_Array(tool.base_x - 1, tool.base_y, 7))
+		else if (Check_Outside_Array2(tool.base_x-1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rtop;
 			if (stage->array[tool.base_x][tool.base_y - 1] == 4)
@@ -1384,7 +1394,7 @@ void Old_Position_Top(const CreateStage* stage)
 
 	/***********************************************************************************************************/
 	case eLake:				//今の位置が湖
-		if (Check_Outside_Array(tool.base_x + 1, tool.base_y, 7))
+		if (Check_Outside_Array2(tool.base_x + 1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Btmright;
 			if (stage->array[tool.base_x][tool.base_y - 1] == 4)
@@ -1397,7 +1407,7 @@ void Old_Position_Top(const CreateStage* stage)
 			}
 		}
 		//ゴールが左
-		else if (Check_Outside_Array(tool.base_x - 1, tool.base_y, 7))
+		else if (Check_Outside_Array2(tool.base_x-1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rtop;
 			if (stage->array[tool.base_x][tool.base_y - 1] == 4)
@@ -1463,7 +1473,7 @@ void Old_Position_Bottom(const CreateStage* stage)
 		/***********************************************************************************************************/
 	case eBlank:			//今の位置が空白
 
-		if (Check_Outside_Array(tool.base_x + 1, tool.base_y, 7))
+		if (Check_Outside_Array2(tool.base_x+1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Topright;
 			if (stage->array[tool.base_x][tool.base_y + 1] == 4)
@@ -1476,7 +1486,7 @@ void Old_Position_Bottom(const CreateStage* stage)
 			}
 		}
 		//ゴールが左
-		else if (Check_Outside_Array(tool.base_x - 1, tool.base_y, 7))
+		else if (Check_Outside_Array2(tool.base_x-1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.road_Rbottom;
 			if (stage->array[tool.base_x][tool.base_y + 1] == 4)
@@ -1534,7 +1544,7 @@ void Old_Position_Bottom(const CreateStage* stage)
 		/***********************************************************************************************************/
 	case eLake:				//今の位置が湖
 
-		if (Check_Outside_Array(tool.base_x + 1, tool.base_y, 7))
+		if (Check_Outside_Array2(tool.base_x+1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Topright;
 			if (stage->array[tool.base_x][tool.base_y + 1] == 4)
@@ -1547,7 +1557,7 @@ void Old_Position_Bottom(const CreateStage* stage)
 			}
 		}
 		//ゴールが左
-		else if (Check_Outside_Array(tool.base_x - 1, tool.base_y, 7))
+		else if (Check_Outside_Array2(tool.base_x-1, tool.base_y, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Rbottom;
 			if (stage->array[tool.base_x][tool.base_y + 1] == 4)
@@ -1604,12 +1614,20 @@ void Old_Position_Bottom(const CreateStage* stage)
 	}
 }
 
-//配列の外を見ないように(描画
+//配列の外を見ないように(二つ前描画
 bool Check_Outside_Array(int x, int y, int val)
 {
 	return x < ARRAY_EXCEED_LIMIT_X && x>ARRAY_BELOW_LIMIT_X &&
 		y<ARRAY_EXCEED_LIMIT_Y && y > ARRAY_BELOW_LIMIT_Y &&
 		tool.old_base_array[x][y] == val;
+}
+
+//配列の外を見ないように(ゴール前描画
+bool Check_Outside_Array2(int x, int y, const CreateStage*stage, int val)
+{
+	return x < ARRAY_EXCEED_LIMIT_X && x>ARRAY_BELOW_LIMIT_X &&
+		y<ARRAY_EXCEED_LIMIT_Y && y > ARRAY_BELOW_LIMIT_Y &&
+		stage->array[x][y] == val;
 }
 
 //道の設置可能位置
