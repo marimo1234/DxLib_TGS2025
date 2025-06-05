@@ -30,7 +30,7 @@ void StageSelectSceneInit(void)
 	stageselect.array_x = 0;
 	stageselect.array_y = 1;
 
-	stageselect.Abottom_rate = 0.06f;
+	stageselect.Abottom_rate = 0.15f;
 	stageselect.rate_num = 0.1;
 
 	//画像の取得
@@ -131,11 +131,11 @@ void StageSelectSceneDraw(void)
 
 	if (stageselect.Abottom_rate > 0.24)
 	{
-		stageselect.rate_num = -0.005f;
+		stageselect.rate_num = -0.001f;
 	}
-	else if (stageselect.Abottom_rate < 0.06)
+	else if (stageselect.Abottom_rate < 0.15)
 	{
-		stageselect.rate_num = 0.005f;
+		stageselect.rate_num = 0.001f;
 	}
 	stageselect.Abottom_rate += stageselect.rate_num;
 	DrawRotaGraph(640, 340, stageselect.Abottom_rate, 0.0, stageselect.Abottom, TRUE);

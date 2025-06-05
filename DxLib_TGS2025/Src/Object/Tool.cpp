@@ -821,6 +821,7 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 		{
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
+			tool.old_base_array[i][j] = 0;
 		}
 	}
 	Stage_Init(GetStage());
@@ -1244,6 +1245,7 @@ void Old_Position_Right(const CreateStage* stage)
 	/***********************************************************************************************************/
 	case eLake:				//今の位置が湖
 
+		//ゴールが上
 		if (Check_Outside_Array2(tool.base_x, tool.base_y - 1, GetStage(), 7))
 		{
 			tool.road_img_array[tool.base_x][tool.base_y] = tool_img.wood_road_Btmright;
