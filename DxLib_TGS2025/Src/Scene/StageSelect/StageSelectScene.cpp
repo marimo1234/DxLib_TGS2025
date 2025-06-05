@@ -30,7 +30,7 @@ void StageSelectSceneInit(void)
 	stageselect.array_x = 0;
 	stageselect.array_y = 1;
 
-	stageselect.Abottom_rate = 1.0f;
+	stageselect.Abottom_rate = 0.06f;
 	stageselect.rate_num = 0.1;
 
 	//画像の取得
@@ -47,7 +47,7 @@ void StageSelectSceneInit(void)
 
 	stageselect.car_image = LoadGraph("Resource/images/car2_right.png");
 
-	stageselect.Abottom = LoadGraph("Resource/images/Abottom.png");
+	stageselect.Abottom = LoadGraph("Resource/images/Abutton.png");
 
 	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 	stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
@@ -129,11 +129,11 @@ void StageSelectSceneDraw(void)
 	//択んでいる位置に車を描画
 	DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.15, 0.0, stageselect.car_image, TRUE);
 
-	if (stageselect.Abottom_rate > 1.3)
+	if (stageselect.Abottom_rate > 0.24)
 	{
 		stageselect.rate_num = -0.005f;
 	}
-	else if (stageselect.Abottom_rate < 1.0)
+	else if (stageselect.Abottom_rate < 0.06)
 	{
 		stageselect.rate_num = 0.005f;
 	}
