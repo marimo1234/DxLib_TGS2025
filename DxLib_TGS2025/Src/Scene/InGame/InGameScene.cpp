@@ -60,8 +60,7 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[5] = LoadGraph("Resource/images/stage_select.png");
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 
-	
-	
+	ingame.tutoria_log_num = 3;
 
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
@@ -249,7 +248,7 @@ void InGameSceneDraw(void)
 	//ゴールの描画
 	GoalDraw();
 	
-
+	Tutorial();
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
@@ -576,3 +575,23 @@ void Stop_InGameBgm(void)
 {
 	StopSoundMem(sound.bgm);
 }
+int tutorial_log;
+//チュートリアルのログ
+void Tutorial(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	char tutorial_load[256];
+	snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutoria_log_num);
+	tutorial_log = LoadGraph(tutorial_load);
+	DrawRotaGraphF(150.0f, 600.0f, 0.5, 0.0, tutorial_log, TRUE);
+	if (ingame.tutoria_log_num < 44)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::eHold)
+		{
+			ingame.tutoria_log_num++;
+		}
+	}
+	
+}
+    
