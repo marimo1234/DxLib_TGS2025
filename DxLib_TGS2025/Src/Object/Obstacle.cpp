@@ -6,6 +6,8 @@
 #include "../Object/Tool.h"
 #include "../Object/Map.h"
 #include "../Object/Cursor.h"
+#include "../Object/Car.h"
+#include "../Object/Goal.h"
 #include"../Scene/InGame/InGameScene.h"
 
 #include <math.h>
@@ -23,6 +25,8 @@ void MolePutRockFlag(const CreateStage* stage);
 void MoleRandomDirection(const CreateStage* stage);
 void MoleInit(const CreateStage* stage);
 void GetMoleStageNum(const InGame* ingame);
+void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
+
 
 int obstacle_images[7];
 int item_images[1];
@@ -49,21 +53,23 @@ void ObstacleManagerInit(void)
 
 	mole.start = false;
 	mole.menu_flag = false;
+	mole.operable_flag = false;
+
 }
 
 //障害物の更新
 void ObstacleManagerUpdate(void)
 {
 
-	MoleStart(GetInGame());
+	MoleStart(GetInGame(),GetGoal(),GetGameOver(),GetCar());
 	
-	if (mole.start == true&&mole.menu_flag==false)
+	if (mole.start == true && mole.menu_flag == false && mole.operable_flag == true)
 	{
 		//石を置くフラグ
 		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
 		//モグラの向きをランダムで変える
 		MoleRandomDirection(GetStage());
-		
+
 	}
 	else if(mole.start == false && mole.menu_flag == false)
 	{
@@ -100,15 +106,21 @@ void ObstacleAnimationControl(const Cursor* cursor)
 }
 
 //処理をスタートするフラグ
-void MoleStart(const InGame* ingame)
+void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car)
 {
 	if (ingame->start == true&& ingame->menu_flag == false)
 	{
 		mole.start = true;
+		mole.operable_flag = true;
 	}
 	else if(ingame->start == false && ingame->menu_flag == false)
 	{
 		mole.start = false;
+	}
+
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true)
+	{
+		mole.operable_flag = false;
 	}
 	mole.menu_flag = ingame->menu_flag;
 
@@ -140,6 +152,7 @@ void MoleReset(void)
 {
 	mole.start = false;
 	mole.menu_flag = false;
+	mole.operable_flag = false;
 	mole.image_count = 0;
 
 	MoleInit(GetStage());

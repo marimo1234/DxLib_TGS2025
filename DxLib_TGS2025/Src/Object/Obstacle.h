@@ -27,6 +27,7 @@ struct Mole
 {
 	bool start;
 	bool menu_flag;
+	bool operable_flag;
 	int image[4];
 	int image_num[12][7];
 	int animation[12][7];
