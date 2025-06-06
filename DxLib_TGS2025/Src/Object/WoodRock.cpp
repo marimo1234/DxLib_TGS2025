@@ -122,6 +122,7 @@ void WoodRockInit(void)
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock.mp3");
 	woodrock_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
 
+	rock.itemnum_bg_image = LoadGraph("Resource/images/ItemNum_bg_image.png");
 	rock.position.x = 600.0f;
 	rock.position.y = 360.0f;
 }
@@ -176,6 +177,10 @@ void WoodRockUpdate(void)
 void WoodRockDraw(void)
 {
 	//画像の描画
+	// 
+	//ItemNumの透過カラー
+	DrawRotaGraphF(1190.0f, 80.0f, 1.0, 0.0, rock.itemnum_bg_image, TRUE);
+
 	//ムーブフラグがtrueのとき
 	if (wood.move_flag == true)
 	{
@@ -470,6 +475,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 //アイテム化したアイテムをカウントする位置
 void WoodRockItemCount(void)
 {
+	
 	DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
 	DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
 	DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
