@@ -182,18 +182,17 @@
     <Image Include="..\..\..\..\..\Pictures\GAMEOVER.png" />
     <Image Include="..\..\..\..\..\Pictures\Saved Pictures\1.png" />
     <Image Include="..\..\..\..\..\Pictures\Saved Pictures\sougen.png" />
-    <Image Include="icon\icon.ico" />
+    <Image Include="icon\iconn.ico" />
     <Image Include="Resource\GroundReef.png" />
     <Image Include="Resource\images\1trout.png" />
     <Image Include="Resource\images\art_119.png" />
-    <Image Include="Resource\images\ChatGPT mori.png" />
-    <Image Include="Resource\images\ChatGPT kigi.png" />
+    <Image Include="Resource\images\mori.png" />
+    <Image Include="Resource\images\kigi.png" />
     <Image Include="Resource\images\front_car.png" />
     <Image Include="Resource\images\Ground.png" />
     <Image Include="Resource\images\GroundReef.png" />
     <Image Include="Resource\images\item_frame.png" />
     <Image Include="Resource\images\left_car.png" />
-    <Image Include="Resource\images\アイコン.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon\icon.rc" />

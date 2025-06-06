@@ -16,8 +16,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		return -1;
 	}
 
-	// アイコンの設定
-	SetWindowIconID(333);
+	//アイコンの設定
+	SetWindowIconID(123);
 
 	//シーンマネージャーの初期化
 	SceneManagerInitialize();

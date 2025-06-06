@@ -44,6 +44,7 @@ struct Rock
 	Vector2D position;
 	int item_num;
 	int image[4];
+	int itemnum_bg_image;
 	int animation[12][7];
 	int hit_count[12][7];
 	bool hit_flag[12][7];
