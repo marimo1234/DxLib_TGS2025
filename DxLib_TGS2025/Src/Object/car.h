@@ -57,7 +57,6 @@ void CarDraw(void);
 const Car* GetCar(void);
 const GameOver* GetGameOver(void);
 
-
 void CarReset(void);
 
 void CarWarnSE(void);

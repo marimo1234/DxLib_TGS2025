@@ -18,6 +18,9 @@ void CarGoalCheck(const CreateStage* stage);
 void GetBreakRoadPosition(const Tool* tool,int x,int y);
 void Play_Sound_Car(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
+void GetCarStageNum(const InGame*ingame);
+
+
 
 
 Car car;
@@ -66,8 +69,9 @@ void CarInit(void)
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
 	
-	car.current_x = 2;//ステージ①の初期位置
-	car.current_y = 3;
+	GetCarStageNum(GetInGame());
+	//car.current_x = 2;//ステージ①の初期位置
+	//car.current_y = 3;
 	car.animation = car.image[0];
 
 	//次の目的地の初期化
@@ -164,8 +168,9 @@ const GameOver* GetGameOver(void)
 //ステージ切り替えするときのリセット
 void CarReset(void)
 {
-	car.current_x = 2;//ステージ①の初期位置
-	car.current_y = 3;
+	GetCarStageNum(GetInGame());
+	//car.current_x = 2;//ステージ①の初期位置
+	//car.current_y = 3;
 	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;
 	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.direction = eRight;
@@ -180,8 +185,6 @@ void CarReset(void)
 	car.warn_image_flag = false;//警告マークのフラグ
 	car.warn_count = 0;//警告マークを表示する時間
 	car.menu_flag == false;//車のメニュー処理フラグ
-	car.current_x = 2;//ステージ①の初期位置
-	car.current_y = 3;
 	car.animation = car.image[0];
 	
 
@@ -481,5 +484,33 @@ void CarWarnDraw(void)
 	{
 		car.warn_image_flag = false;
 		car.warn_count = 0;
+	}
+}
+
+void GetCarStageNum(const InGame* ingame)
+{
+	//ステージごとの初期位置
+	switch (ingame->stage_num)
+	{
+	case eOne:
+		car.current_x = 1;//ステージ①の初期位置
+		car.current_y = 3;
+		break;
+	case eTwo:
+		car.current_x = 1;//ステージ①の初期位置
+		car.current_y = 3;
+		break;
+	case eThree:
+		car.current_x = 1;//ステージ①の初期位置
+		car.current_y = 3;
+		break;
+	case eFour:
+		car.current_x = 1;//ステージ①の初期位置
+		car.current_y = 3;
+		break;
+	case eFive:
+		car.current_x = 1;//ステージ①の初期位置
+		car.current_y = 3;
+		break;
 	}
 }
