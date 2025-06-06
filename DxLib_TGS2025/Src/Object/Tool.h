@@ -75,8 +75,7 @@ struct Tool
 	bool break_road_flag;
 	bool break_woodroad_flag;
 
-	int menu_flag;
-	
+	bool menu_flag;
 	
 };
 
@@ -140,10 +139,7 @@ struct Tool_SE
 void ToolInit(void);
 void ToolManagerUpdate(void);
 void ToolDraw(void);
-void Move_ItemSelect(void);
 void Sub_Num(void);
-void RB_Draw(void);
-void LB_Draw(void);
 
 void Base_Chenge(void);
 void Road_FLAG_OFF(void);
