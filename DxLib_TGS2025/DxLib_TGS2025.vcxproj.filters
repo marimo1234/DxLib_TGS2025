@@ -51,11 +51,10 @@
     <Image Include="Resource\images\item_frame.png" />
     <Image Include="Resource\images\left_car.png" />
     <Image Include="..\..\..\..\..\Pictures\GAMEOVER.png" />
-    <Image Include="icon\icon.ico" />
     <Image Include="..\..\..\..\..\Downloads\2025年4月16日 17_43_33.png" />
-    <Image Include="Resource\images\ChatGPT mori.png" />
-    <Image Include="Resource\images\ChatGPT kigi.png" />
-    <Image Include="Resource\images\アイコン.ico" />
+    <Image Include="Resource\images\mori.png" />
+    <Image Include="Resource\images\kigi.png" />
+    <Image Include="icon\iconn.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon\icon.rc" />
