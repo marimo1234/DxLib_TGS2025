@@ -78,8 +78,8 @@ void ToolInit(void)
 	tool.stage_number = 0;
 	tool.stage_array_exceed_x = 0;
 	tool.stage_array_exceed_y = 0;
-	tool.stage_array_below_x = 0;
-	tool.stage_array_below_y = 0;
+	tool.stage_array_below_x = -1;
+	tool.stage_array_below_y = -1;
 
 	tool_img.item_frame_ex_rate = 1.0;
 	tool_img.pickaxe_ex_rate = 0.4;
@@ -841,56 +841,50 @@ void Road_Imghandle_Init(const CreateStage*stage)
 //ステージごとの基準初期化
 void Stage_Init(const CreateStage*stage)
 {
-	if (tool.stage_number == 0)
+	switch (tool.stage_number)
 	{
+	case eOne:
 		tool.base_x = 3;
 		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[2][3] = 2;
+		tool.old_base_array[1][3] = 1;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		tool.stage_array_below_x = -1;
-		tool.stage_array_below_y = -1;
-	}
-	if (tool.stage_number == 1)
-	{
+		break;
+	case eTwo:
 		tool.base_x = 3;
 		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[2][3] = 2;
+		tool.old_base_array[1][3] = 1;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		tool.stage_array_below_x = -1;
-		tool.stage_array_below_y = -1;
-	}
-	if (tool.stage_number == 2)
-	{
+		break;
+	case eThree:
 		tool.base_x = 3;
 		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[2][3] = 2;
+		tool.old_base_array[1][3] = 1;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		tool.stage_array_below_x = -1;
-		tool.stage_array_below_y = -1;
-	}
-	if (tool.stage_number == 3)
-	{
+		break;
+	case eFour:
 		tool.base_x = 3;
 		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[2][3] = 2;
+		tool.old_base_array[1][3] = 1;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		tool.stage_array_below_x = -1;
-		tool.stage_array_below_y = -1;
-	}
-	if (tool.stage_number == 4)
-	{
+		break;
+	case eFive:
 		tool.base_x = 3;
 		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[2][3] = 2;
+		tool.old_base_array[1][3] = 1;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		tool.stage_array_below_x = -1;
-		tool.stage_array_below_y = -1;
+		break;
 	}
+	
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
