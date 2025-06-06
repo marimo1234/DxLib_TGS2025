@@ -21,7 +21,7 @@
 
 bool tool_start;			//ゲームスタート
 
-int abcd;
+//int abcd;
 
 Tool tool;
 Tool_Img tool_img;
@@ -60,7 +60,7 @@ void Play_Sound_Tool2(int sound,int volume);
 void ToolInit(void) 
 {
 	//初期化//
-	tool.frameselect_x = 1120;
+	tool.frameselect_x = ITEM_SELECT_BASE_X+80*4;
 	tool.frameselect_y = ITEM_SELECT_BASE_Y;
 	tool.item_frame_x = ITEM_SELECT_BASE_X;
 	tool.item_frame_y = ITEM_SELECT_BASE_Y;
@@ -198,13 +198,14 @@ void ToolInit(void)
 //更新
 void ToolManagerUpdate(void)
 {
-	Sub_Num();
-	Add_Road_Num();
+	
 	Tool_Start(GetInGame());
 
 	//ゲームスタートがtrueなら
 	if (tool_start == true&& tool.menu_flag == false)
 	{
+		Sub_Num();
+		Add_Road_Num();
 		Move_ItemSelect();
 		Road_FLAG_OFF();
 		
@@ -422,11 +423,11 @@ void RB_Draw(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold)
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 400, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 410, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 400, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.rb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 410, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
 		}
 	}
 }
@@ -439,11 +440,11 @@ void LB_Draw(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold)
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 80, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 80, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.lb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
 		}
 	}
 }
