@@ -269,7 +269,7 @@ void ToolDraw(void)
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
-	DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
+	/*DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
 		abcd);
 	for (int j = 0; j < 7; j++)
 	{
@@ -277,7 +277,7 @@ void ToolDraw(void)
 		{
 			DrawFormatString(100 + i * 20, 100 + j * 20, GetColor(255, 255, 255), "%d", tool.old_base_array[i][j]);
 		}
-	}
+	}*/
 }
 
 //アイテムセレクトの動き
