@@ -285,7 +285,7 @@ void GameStart(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
-			ingame.space = LoadGraph("Resource/images/aidaX.png");
+			ingame.space = LoadGraph("Resource/images/aida.png");
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
@@ -299,7 +299,7 @@ void GameStart(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
 		{
-			ingame.space = LoadGraph("Resource/images/aidaY.png");
+			ingame.space = LoadGraph("Resource/images/aida.png");
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
 		{
