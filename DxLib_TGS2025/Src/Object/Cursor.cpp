@@ -375,7 +375,7 @@ void GetCursorStageNum(const InGame* ingame)
 	switch (ingame->stage_num)
 	{
 	case eOne:
-		cursor.array_x_min = 2;
+		cursor.array_x_min = 1;
 		cursor.array_x_max = 9;
 		cursor.array_y_min = 3;
 		cursor.array_y_max = 4;

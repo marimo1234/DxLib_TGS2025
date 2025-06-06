@@ -242,7 +242,7 @@ void GetMoleStageNum(const InGame* ingame)
 	switch (ingame->stage_num)
 	{
 	case eOne:
-		mole.rock_x_min = 2;
+		mole.rock_x_min = 1;
 		mole.rock_x_max = 9;
 		mole.rock_y_min = 3;
 		mole.rock_y_max = 4;

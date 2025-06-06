@@ -422,8 +422,8 @@ void CarGoalCheck(const CreateStage* stage)
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7 && car.next_y[car.road_count] != 6)
 	{
 		//車の速度を上げる
-		car.velocity.x = 4.0f;
-		car.velocity.y = 4.0f;
+		car.velocity.x = 5.0f;
+		car.velocity.y = 5.0f;
 
 		//ゴールの配列番号を一番先端に入れる
 		car.next_x[car.road_count + 1] = stage->goal_x[0];
