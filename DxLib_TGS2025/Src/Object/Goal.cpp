@@ -33,7 +33,7 @@ void GoalInit(void)
 
 	goal.print_flag = false;
 	//画像の読み込み
-	goal.flag_image = LoadGraph("Resource/images/GOAL_FLAG2.png");
+	goal.flag_image = LoadGraph("Resource/images/goal_image.png");
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
 	goal.gameover_image= LoadGraph("Resource/images/GAMEOVER.png");
