@@ -9,15 +9,10 @@
 #include "../Object/car.h"
 #include "../Object/Obstacle.h"
 
-#define LB_X					(720)
-#define RB_X					(1200)
-#define	RLB_Y					(680)
-#define ROAD_NUM_X				(790)		//道路の所持数(x)
-#define ROAD_NUM_Y				(690)		//道路の所持数(y)
-#define WOODROAD_NUM_X			(870)		//木の道路の所持数(x)
-#define WOODROAD_NUM_Y			(690)		//木の道路の所持数(y)
-#define ITEM_SELECT_BASE_X		(800)		//アイテムの基準(x)
-#define ITEM_SELECT_BASE_Y		(680)		//アイテムの基準(y)
+
+
+#define ITEM_SELECT_BASE_X		(500)		//アイテムの基準(x)
+#define ITEM_SELECT_BASE_Y		(40)		//アイテムの基準(y)	//680,40
 #define MAP_TROUT_LENGTH		(80)		//マップの配列の間隔
 #define ARRAY_EXCEED_LIMIT_X	(12)		//配列要素を超過した値(x
 #define ARRAY_BELOW_LIMIT_X		(-1)		//配列要素を下回った値(x
@@ -66,9 +61,9 @@ void ToolInit(void)
 {
 	//初期化//
 	tool.frameselect_x = 1120;
-	tool.frameselect_y = 680;
-	tool.item_frame_x = 800;
-	tool.item_frame_y = 680;
+	tool.frameselect_y = ITEM_SELECT_BASE_Y;
+	tool.item_frame_x = ITEM_SELECT_BASE_X;
+	tool.item_frame_y = ITEM_SELECT_BASE_Y;
 	tool.item_number = ePickaxe;
 	tool.old_position_direction = eLP;
 	tool.now_base_state = eBlank;
@@ -353,7 +348,7 @@ void Move_ItemSelect(void)
 void Item_Frame_Draw(void)
 {
 	//アイテム枠
-	tool.item_frame_x = 800;
+	tool.item_frame_x = ITEM_SELECT_BASE_X;
 	for (int i = 0; i < 5; i++)
 	{
 		DrawRotaGraph(tool.item_frame_x, tool.item_frame_y, tool_img.item_frame_ex_rate, 0.0, tool_img.itemframe, TRUE);
@@ -394,9 +389,9 @@ void Item_Frame_Draw(void)
 	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
 
 	//道路の所持数
-	DrawExtendFormatString(ROAD_NUM_X, ROAD_NUM_Y, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.road_num);
+	DrawExtendFormatString(ITEM_SELECT_BASE_X-10, ITEM_SELECT_BASE_Y+10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.road_num);
 	//木の道の所持数
-	DrawExtendFormatString(WOODROAD_NUM_X, WOODROAD_NUM_Y, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
+	DrawExtendFormatString(ITEM_SELECT_BASE_X+70, ITEM_SELECT_BASE_Y+10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
 	switch (tool.item_number)
 	{
 	case ePickaxe:
@@ -427,11 +422,11 @@ void RB_Draw(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold)
 		{
-			DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 400, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.rb[1], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(RB_X, RLB_Y, 0.8, 0.0, tool_img.rb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 400, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.rb[0], TRUE);
 		}
 	}
 }
@@ -444,11 +439,11 @@ void LB_Draw(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold)
 		{
-			DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 80, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.lb[1], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(LB_X, RLB_Y, 0.8, 0.0, tool_img.lb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 80, ITEM_SELECT_BASE_Y, 0.8, 0.0, tool_img.lb[0], TRUE);
 		}
 	}
 }
