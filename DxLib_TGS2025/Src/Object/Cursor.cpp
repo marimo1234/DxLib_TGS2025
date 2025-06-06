@@ -17,7 +17,7 @@ int cursor_se;
 int cursorstart;
 int pickaxe_animation_num = 0, pickaxe_animation_count = 0, hammer_animation_count = 0;
 int ax_anim_num = 0, ax_anim_count = 0, hammer_anim_num = 0, hammer_anim_count = 0;
-int cursor_image1, cursor_image2;
+int cursor_image1;
 int cursor_ax;
 int cursor_drill;
 int cursor_road;
@@ -54,12 +54,11 @@ void CursorInit(void)
 
 	// カーソルがぞうの読み込み
 	cursor_image = LoadGraph("Resource/Images/cursol.png");
-	cursor_image1 = LoadGraph("Resource/Images/pickaxe1.png");
-	cursor_image2 = LoadGraph("Resource/Images/pickaxe2.0.png");
-	cursor_ax = LoadGraph("Resource/Images/ax2.1.png");
+	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
+	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
-	cursor_road = LoadGraph("Resource/Images/RoadVertical.png");
-	cursor_hasi = LoadGraph("Resource/Images/Log.png");
+	cursor_road = LoadGraph("Resource/Images/RoadVertical_cursol.png");
+	cursor_hasi = LoadGraph("Resource/Images/Log_cursol.png");
 	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
 }
 
@@ -140,17 +139,17 @@ void CursorDraw(const Tool*tool)
 		{
 			if (pickaxe_animation_num == 0)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 0.0, cursor_image1, TRUE);
 			}
 			else if (pickaxe_animation_num == 1)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image2, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 30.0, cursor_image1, TRUE);
 			}
 		}
 		// アニメーションが動いてなければcursor_image1にする
 		else
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_image1, TRUE);
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 0.0, cursor_image1, TRUE);
 		}
 	}
 	// もしitem_numberがeAxなら
@@ -161,17 +160,17 @@ void CursorDraw(const Tool*tool)
 		{
 			if (ax_anim_num == 0)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_ax, TRUE);
 			}
 			else if (ax_anim_num == 1)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, -90.0, cursor_ax, TRUE);
+				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, -90.0, cursor_ax, TRUE);
 			}
 		}
 		// アニメーションが動いていなければcursor_axにする
 		else
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_ax, TRUE);
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_ax, TRUE);
 		}
 	}
 	// もしitem_numberがeDrillなら
