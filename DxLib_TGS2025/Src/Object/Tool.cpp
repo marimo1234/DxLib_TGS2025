@@ -901,6 +901,14 @@ void Stage_Init(const CreateStage*stage)
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
 		break;
+	case eSix:
+		tool.base_x = 3;
+		tool.base_y = 3;
+		tool.old_base_array[2][3] = 1;
+		tool.old_base_array[1][3] = 2;
+		tool.stage_array_exceed_x = 12;
+		tool.stage_array_exceed_y = 7;
+		break;
 	}
 	
 	for (int j = 0; j < 7; j++)

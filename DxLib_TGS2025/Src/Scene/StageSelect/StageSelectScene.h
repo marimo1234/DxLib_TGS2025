@@ -12,7 +12,7 @@ struct StageSelect
 	float rate_num;
 	int car_image;
 	int trout_image[3];
-	int number_image[5];
+	int number_image[6];
 	int trout_array[3][3];
 	Vector2D position;
 	int number;
@@ -30,7 +30,8 @@ void StageSelectSceneDraw(void);
 void StageSelectCarMove(void);
 void StageSelectNumber(void);
 void StageSelectGetNumber(void);
-
+void NumTroutDraw(void);
+void SelectButtonDraw(void);
 
 
 const StageSelect*GetStageSelect(void);

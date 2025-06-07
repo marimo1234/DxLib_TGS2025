@@ -9,7 +9,8 @@ enum eStage
 	eTwo,
 	eThree,
 	eFour,
-	eFive
+	eFive,
+	eSix,
 };
 
 //ゲームのスタートとステージナンバーの構造体

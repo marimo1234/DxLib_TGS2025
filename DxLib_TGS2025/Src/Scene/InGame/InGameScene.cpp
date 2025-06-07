@@ -428,31 +428,38 @@ void StageChange(void)
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eTwo;
-			btr ++;
+			btr++;
 		}
 		break;
 	case eTwo:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eThree;
-			btr ++;
+			btr++;
 		}
 		break;
 	case eThree:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eFour;
-			btr ++;
+			btr++;
 		}
 		break;
 	case eFour:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eFive;
-			btr ++;
+			btr++;
 		}
 		break;
 	case eFive:
+		if (ingame.next_stage_flag == true)
+		{
+			ingame.stage_num = eSix;
+			btr++;
+		}
+		break;
+	case eSix:
 		if (ingame.next_stage_flag == true)
 		{
 			ingame.stage_num = eOne;
@@ -464,6 +471,7 @@ void StageChange(void)
 	}
 }
 
+//メニュー画面の開始とカーソルの処理
 void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 {
 
@@ -471,6 +479,7 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
+	//Goal,GameOver,Manualが開かれていない時
 	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
@@ -498,7 +507,7 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 	}
 }
 
-
+//メニュー画面の文字の拡大率処理
 void ChangeCharExtrate(void)
 {
 	for (int i = 0; i < 6; i++)
@@ -511,11 +520,9 @@ void ChangeCharExtrate(void)
 
 
 
-
+//メニュー画面の描画
 void MenuDraw(void)
 {
-	
-
 	if (ingame.menu_flag == true && ingame.goalmenu_flag == false&&ingame.menu_manual_flag == false)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
@@ -533,6 +540,7 @@ void MenuDraw(void)
 	
 }
 
+//Goalｎメニュー画面の描画
 void GoalSelectMenuDraw(void)
 {
 	if (ingame.goalmenu_flag == true)

@@ -413,6 +413,9 @@ void GetStageNum(const InGame* ingame)
 	case eFive:
 		stage.number = 5;
 		break;
+	case eSix:
+		stage.number = 6;
+		break;
 
 	}
 }
