@@ -32,7 +32,8 @@ void CarInit(void)
 	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
 	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.velocity.x = 0.2f;//速度
-	car.velocity.y = 0.2f;
+	car.velocity.y = 0.1f;
+	car.velocity.y = 0.1f;
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
@@ -434,8 +435,8 @@ void CarGoalCheck(const CreateStage* stage)
 	else
 	{
 		//ゴール以外の時の速度
-		car.velocity.x = 0.1f;
-		car.velocity.y = 0.1f;
+		car.velocity.x = car.speed.x;
+		car.velocity.y = car.speed.y;
 	}
 
 }
@@ -495,22 +496,35 @@ void GetCarStageNum(const InGame* ingame)
 	case eOne:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
+		car.speed.x = 0.1f;
+		car.speed.y = 0.1f;
 		break;
 	case eTwo:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
+		car.speed.x = 0.1f;
+		car.speed.y = 0.1f;
+
 		break;
 	case eThree:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
+		car.speed.x = 0.2f;
+		car.speed.y = 0.2f;
+
 		break;
 	case eFour:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
+		car.speed.x = 0.2f;
+		car.speed.y = 0.2f;
+
 		break;
 	case eFive:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
+		car.speed.x = 0.3f;
+		car.speed.y = 0.3f;
 		break;
 	}
 }

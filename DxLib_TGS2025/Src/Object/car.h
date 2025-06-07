@@ -16,6 +16,7 @@ struct Car
 {
     Vector2D position;
     Vector2D velocity;
+    Vector2D speed;
     int animation;
     int image[4];
     int ivy_image[4];
@@ -33,6 +34,7 @@ struct Car
     int old_direction;
     bool goal_flag;
     bool menu_flag;
+    
     
     int warn_image;
     int warn_se;
