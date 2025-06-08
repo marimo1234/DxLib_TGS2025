@@ -39,7 +39,6 @@ struct Car
     int warn_image;
     int warn_se;
     bool warn_image_flag;
-    bool warn_se_flag;
     int warn_count;
 
 };
@@ -62,4 +61,3 @@ const GameOver* GetGameOver(void);
 void CarReset(void);
 
 void CarWarnSE(void);
-void CarWarnDraw(void);
