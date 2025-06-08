@@ -70,9 +70,8 @@ void CarInit(void)
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
 	
+	//ステージ番号と車の初期位置を取得
 	GetCarStageNum(GetInGame());
-	//car.current_x = 2;//ステージ①の初期位置
-	//car.current_y = 3;
 	car.animation = car.image[0];
 
 	//次の目的地の初期化
@@ -81,9 +80,6 @@ void CarInit(void)
 		car.next_x[i] = -1;
 		car.next_y[i] = -1;
 	}
-
-	car.next_x[0] = 3;
-	car.next_y[0] = 3;
 }
 
 void CarManagerUpdate(void)
@@ -488,6 +484,7 @@ void CarWarnDraw(void)
 	}
 }
 
+//ステージ番号と車の初期位置を取得
 void GetCarStageNum(const InGame* ingame)
 {
 	//ステージごとの初期位置
@@ -498,12 +495,16 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.1f;
 		car.speed.y = 0.1f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	case eTwo:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.1f;
 		car.speed.y = 0.1f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eThree:
@@ -511,6 +512,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eFour:
@@ -518,6 +521,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eFive:
@@ -525,12 +530,16 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	case eSix:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	}
 }
