@@ -17,6 +17,7 @@ void TitleSceneInit(void)
 	title.cursor_y = 450.0f;
 	//画像の読み込み
 	title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
+	title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
 	title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
 	title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
 	title.char_image[1] = LoadGraph("Resource/Images/Options.png");	//タイトルの選択文字
@@ -83,6 +84,7 @@ void TitleSceneDraw(void)
 	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");*/
 
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
+	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでステージセレクト画面へ");
 	for (int i = 0; i < 3; i++)
 	{
