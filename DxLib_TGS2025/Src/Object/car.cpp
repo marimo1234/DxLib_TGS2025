@@ -542,8 +542,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.next_y[0] = 3;
 		break;
 	case eSix:
-		car.current_x = 1;//ステージ①の初期位置
-		car.current_y = 3;
+		car.current_x = 0;//ステージ①の初期位置
+		car.current_y = 6;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
 		car.next_x[0] = 3;
