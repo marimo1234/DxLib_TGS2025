@@ -35,7 +35,7 @@ void MapInit(void)
 	stage.trout_image= LoadGraph("Resource/images/trout.png");
 	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
 	ikl= LoadGraph("Resource/images/Back_Wood.png");
-	stage.cliff_imgage= LoadGraph("Resource/images/cliff.png");
+	stage.mountain_image=LoadGraph("Resource/images/mountain.png");
 	//csvファイルから値を取得
 	StageLoad();
 	//マップの各値を初期化
@@ -194,8 +194,8 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 			case 8://動けないマス
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.no_admittance, TRUE);
 				break;
-			case 9://崖
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.cliff_imgage, TRUE);
+			case 9://山
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.mountain_image, TRUE);
 				break;
 			}
 

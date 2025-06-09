@@ -22,7 +22,7 @@
 
 bool tool_start;			//ゲームスタート
 
-//int abcd;
+int abcd;
 
 Tool tool;
 Tool_Img tool_img;
@@ -276,9 +276,9 @@ void ToolDraw(void)
 	//破壊可能位置表示
 	Possible_Break(GetStage(), GetCursor1(), GetCar());
 
-	/*DrawFormatString(100, 500, GetColor(255, 255, 255), "abcd%d",
-		abcd);
-	for (int j = 0; j < 7; j++)
+	/*DrawFormatString(100, 500, GetColor(255, 255, 255), "%d",
+		abcd);*/
+	/*for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{
@@ -911,7 +911,7 @@ void Stage_Init(const CreateStage*stage)
 		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eSix:
-		tool.base_x = 0;
+		tool.base_x = 2;
 		tool.base_y = 6;
 		tool.old_base_array[1][6] = 1;
 		tool.old_base_array[2][6] = 2;
@@ -1669,7 +1669,7 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 			//道を一個以上持っているなら
 			if (tool.road_num > 0)
 			{
-
+				
 				//右が空
 				if (tool.base_x + 1 < tool.stage_array_exceed_x && stage->array[tool.base_x + 1][tool.base_y] == 0)
 				{
