@@ -12,9 +12,9 @@ enum eToolState
 {
 	eRoad,
 	eWoodRoad,
-	eHammer,
 	eAx,
 	ePickaxe,
+	eHammer,
 };
 
 enum eOldPosition
