@@ -9,7 +9,6 @@
 #include "../../Object/map.h"
 #include "../../Object/Tool.h"
 #include "../../Object/Goal.h"
-#include "../../Object/car.h"
 #include "DxLib.h"
 
 #include <math.h>
