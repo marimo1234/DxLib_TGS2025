@@ -49,11 +49,6 @@ eSceneType TitleSceneUpdate(void)
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
-	{
-		return eStageSelect;	//ステージセレクト画面へ
-	}
-
 	//タイトル画面の分岐
 	if (title.char_num == 0 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
@@ -88,7 +83,7 @@ void TitleSceneDraw(void)
 	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");*/
 
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
-	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでステージセレクト画面へ");
+	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでステージセレクト画面へ");
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
