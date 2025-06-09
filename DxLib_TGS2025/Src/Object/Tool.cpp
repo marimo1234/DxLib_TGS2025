@@ -12,7 +12,7 @@
 
 
 
-#define ITEM_SELECT_BASE_X		(500)		//アイテムの基準(x)
+#define ITEM_SELECT_BASE_X		(880)		//アイテムの基準(x)
 #define ITEM_SELECT_BASE_Y		(680)		//アイテムの基準(y)	//680,40
 #define MAP_TROUT_LENGTH		(80)		//マップの配列の間隔
 #define ARRAY_EXCEED_LIMIT_X	(12)		//配列要素を超過した値(x
@@ -165,6 +165,8 @@ void ToolInit(void)
 	tool_img.drill= LoadGraph("Resource/images/Drill.png");
 	//選択枠(アイテム)
 	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
+	//選択枠の内側(アイテム)
+	tool_img.item_select_inner= LoadGraph("Resource/images/item_frame_inner.png");
 	//道
 	tool_img.road_vertical = LoadGraph("Resource/images/RoadVertical.png");
 	tool_img.road_beside = LoadGraph("Resource/images/RoadBeside.png");
@@ -231,6 +233,7 @@ void ToolManagerUpdate(void)
 //描画
 void ToolDraw(void)
 {
+
 	//アイテム欄
 	Item_Frame_Draw();
 
@@ -238,7 +241,7 @@ void ToolDraw(void)
 	RB_Draw(GetCar());
 	LB_Draw(GetCar());
 
-	//枠選択の描画（アイテム枠）
+	//選択枠
 	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
 
 	//アニメーション
@@ -388,7 +391,8 @@ void Item_Frame_Draw(void)
 		tool_img.road_num_ex_rate += 0.2;
 		break;
 	}
-
+	//選択枠の内側
+	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select_inner, TRUE);
 	//つるはしの描画（アイテム枠）
 	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 3, ITEM_SELECT_BASE_Y, tool_img.pickaxe_ex_rate, 0.0, tool_img.pickaxe, TRUE);
 	//斧の描画（アイテム枠）

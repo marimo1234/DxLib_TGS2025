@@ -86,6 +86,7 @@ struct Tool_Img
 	int ax;						//斧の画像ハンドル
 	int drill;					//ドリルの画像ハンドル
 	int item_select;			//選択枠（アイテム）の画像ハンドル
+	int item_select_inner;
 	int wood_road_img;			//木の道の画像ハンドル
 	int rb[2];						//Rトリガー
 	int lb[2];						//Lトリガー
