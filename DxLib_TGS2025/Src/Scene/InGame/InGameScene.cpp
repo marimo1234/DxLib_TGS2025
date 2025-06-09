@@ -59,7 +59,7 @@ void InGameSceneInit(void)
 	ingame.menu_char_image[5] = LoadGraph("Resource/images/stage_select.png");
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 
-	ingame.tutoria_log_num = 3;
+	ingame.tutoria_log_num = 2;
 	ingame.mitibikikun= LoadGraph("Resource/images/mitibikikunn.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
