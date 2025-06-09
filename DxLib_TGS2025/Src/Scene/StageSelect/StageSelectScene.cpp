@@ -297,16 +297,18 @@ void NumTroutDraw(void)
 	if (stageselect.array_y != 2)
 	{
 		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y + 50.0f, 0.1, 0.0, stageselect.car_image, TRUE);
+
 	}
 	//BACKの枠だけ描画する画像を変える
 	else if (stageselect.array_y == 2)
 	{
 		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 1.0, 0.0, stageselect.trout_image[2], TRUE);
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.1, 0.0, stageselect.car_image, TRUE);
+
 	}
 
 
-	//択んでいる位置に車を描画
-	DrawRotaGraph(stageselect.position.x, stageselect.position.y + 50.0f, 0.1, 0.0, stageselect.car_image, TRUE);
 }
 
 //ボタンの描画　大きさが変わる
