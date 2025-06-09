@@ -118,7 +118,7 @@ void WoodRockInit(void)
 	rock.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
 
 	//サウンド読み込み
-	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood6.mp3");
+	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
 	woodrock_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
 
