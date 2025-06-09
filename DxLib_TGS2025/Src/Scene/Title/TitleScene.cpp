@@ -63,14 +63,14 @@ eSceneType TitleSceneUpdate(void)
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		/*Play_Sound_Ingame(sound.decision, 100);*/
-		//return eHelp;	//インゲーム画面へ
-		title.char_num = 0;
+		//return eHelp;	//ヘルプ画面へ
+		//title.char_num = 0;
 	}
 	if (title.char_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		/*Play_Sound_Ingame(sound.decision, 100);*/
-		return eEnd;	//インゲーム画面へ
+		return eEnd;	//エンド画面へ
 	}
 	return eTitle;
 }
