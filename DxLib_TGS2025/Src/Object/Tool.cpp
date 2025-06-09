@@ -33,7 +33,7 @@ void const Road_Add_Num(const Rock* rock,const Car*car);
 void const WoodRoad_Add_Num(const Wood* wood,const Car*car);
 void Put_Road_FLAG(const Cursor*cursor,const CreateStage* stage,const Mole*mole, const Car* car);
 void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car *car);
-void Road_Imghandle_Init(const CreateStage* stage);
+void Road_Imghandle_Init(int x1, int y1, int x2, int y2, int x3, int y3);
 void Road_Imghandle_Update(const CreateStage* stage);
 void Move_ItemSelect(const Car*car);
 void Possible_Prace(const CreateStage* stage,const Car*car);
@@ -197,7 +197,7 @@ void ToolInit(void)
 	tool_img.break_woodroad[2]= LoadGraph("Resource/images/woodbreak3.png");
 	
 	//配置済み道
-	Road_Imghandle_Init(GetStage());
+	/*Road_Imghandle_Init(GetStage());*/
 }
 
 //更新
@@ -838,13 +838,13 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 		}
 	}
 	Stage_Init(GetStage());
-	Road_Imghandle_Init(GetStage());
+	/*Road_Imghandle_Init(GetStage());*/
 }
 
 //道画像ハンドル初期化
-void Road_Imghandle_Init(const CreateStage*stage)
+void Road_Imghandle_Init(int x1,int y1,int x2,int y2,int x3,int y3)
 {
-	for (int j = 0; j < 7; j++)
+	/*for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
 		{
@@ -853,7 +853,11 @@ void Road_Imghandle_Init(const CreateStage*stage)
 				tool.road_img_array[i][j] = tool_img.road_beside;
 			}
 		}
-	}
+	}*/
+	
+	tool.road_img_array[x1][y1] = tool_img.road_beside;
+	tool.road_img_array[x2][y2] = tool_img.road_beside;
+	tool.road_img_array[x3][y3] = tool_img.road_beside;
 }
 
 //ステージごとの基準初期化
@@ -868,6 +872,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eTwo:
 		tool.base_x = 3;
@@ -876,6 +881,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eThree:
 		tool.base_x = 3;
@@ -884,6 +890,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eFour:
 		tool.base_x = 3;
@@ -892,6 +899,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eFive:
 		tool.base_x = 3;
@@ -900,6 +908,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eSix:
 		tool.base_x = 3;
@@ -908,6 +917,7 @@ void Stage_Init(const CreateStage*stage)
 		tool.old_base_array[1][3] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
+		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	}
 	

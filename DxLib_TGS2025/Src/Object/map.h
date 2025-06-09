@@ -16,6 +16,7 @@ struct CreateStage
 	bool menu_flag;
 
 	int trout_image;
+	int cliff_imgage;		//崖画像
 	int no_admittance;
 	int wood_x[84];
 	int wood_y[84];
