@@ -21,7 +21,7 @@ void Play_Sound_Car(int sound, int volume);
 void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
 void GetCarStageNum(const InGame*ingame);
-void CarWarnDraw(const Goal* goal, const GameOver* gameover);
+void CarWarnDraw(const Goal* goal, const GameOver* gameover,const InGame* ingame);
 
 
 
@@ -123,7 +123,7 @@ void CarDraw(void)
 	DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 
 	//警告マークの描画
-	CarWarnDraw(GetGoal(),GetGameOver()); 
+	CarWarnDraw(GetGoal(),GetGameOver(),GetInGame()); 
 	CarWarnSE();
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
@@ -469,7 +469,7 @@ void Play_Sound_Car_Loop(int sound, int volume)
 }
 
 
-void CarWarnDraw(const Goal*goal,const GameOver*gameover)
+void CarWarnDraw(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 {
 	
 	if (car.warn_image_flag == true&& car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
@@ -490,7 +490,7 @@ void CarWarnDraw(const Goal*goal,const GameOver*gameover)
 	}
 
 	if (car.next_x[car.next_count] != -1 && car.next_y[car.next_count] != -1||
-		goal->print_flag == true || gameover->image_flag == true )
+		goal->print_flag == true || gameover->image_flag == true ||ingame->menu_flag==true)
 	{
 		car.warn_image_flag = false;
 		car.warn_count = 0;
