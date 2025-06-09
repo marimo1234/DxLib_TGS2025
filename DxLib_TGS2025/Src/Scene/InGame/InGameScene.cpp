@@ -48,7 +48,7 @@ void InGameSceneInit(void)
 	ingame.manual_open = false;
 	//操作説明の画像
 	ingame.manual_image= LoadGraph("Resource/images/manual_menu.png");
-
+	ingame.space = LoadGraph("Resource/images/aida.png");
 	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
@@ -247,7 +247,7 @@ void InGameSceneDraw(void)
 	//ゴールの描画
 	GoalDraw();
 	
-	Tutorial();
+	/*Tutorial();*/
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
@@ -284,10 +284,6 @@ void GameStart(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
 		{
-			ingame.space = LoadGraph("Resource/images/aida.png");
-		}
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress)
-		{
 			ingame.gameover_se_flag = false;
 			ingame.start = true;
 			ingame.manual_open = false;
@@ -296,10 +292,6 @@ void GameStart(void)
 	}
 	if (ingame.manual_open == false&& ingame.start == false&&ingame.menu_flag == false)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
-		{
-			ingame.space = LoadGraph("Resource/images/aida.png");
-		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
 		{
 			ingame.manual_open = true;
