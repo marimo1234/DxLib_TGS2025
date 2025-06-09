@@ -4,6 +4,7 @@
 #include"../Scene/InGame/InGameScene.h"
 #include"../Object/map.h"
 #include"../Object/tool.h"
+#include"../Object/Goal.h"
 
 
 #define CAR_TROUT_LNEGTH (80.0f)
@@ -17,8 +18,11 @@ void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
 void GetBreakRoadPosition(const Tool* tool,int x,int y);
 void Play_Sound_Car(int sound, int volume);
+void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
 void GetCarStageNum(const InGame*ingame);
+void CarWarnDraw(const Goal* goal, const GameOver* gameover);
+
 
 
 
@@ -62,17 +66,15 @@ void CarInit(void)
 	car.warn_image= LoadGraph("Resource/images/Warn_image.png");
 	car.warn_image_flag = false;
 
-	car.warn_se = LoadSoundMem("Resource/Sounds/Warn2_se.mp3");
-	car.warn_se_flag = false;
+	car.warn_se = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_count = 0;
 
 
 	car.start = false;//車の処理フラグ
 	car.menu_flag == false;
 	
+	//ステージ番号と車の初期位置を取得
 	GetCarStageNum(GetInGame());
-	//car.current_x = 2;//ステージ①の初期位置
-	//car.current_y = 3;
 	car.animation = car.image[0];
 
 	//次の目的地の初期化
@@ -81,9 +83,6 @@ void CarInit(void)
 		car.next_x[i] = -1;
 		car.next_y[i] = -1;
 	}
-
-	car.next_x[0] = 3;
-	car.next_y[0] = 3;
 }
 
 void CarManagerUpdate(void)
@@ -116,7 +115,6 @@ void CarManagerUpdate(void)
 		CarReset();
 	}
 
-
 }
 
 void CarDraw(void)
@@ -125,8 +123,8 @@ void CarDraw(void)
 	DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 
 	//警告マークの描画
-	CarWarnDraw(); 
-		
+	CarWarnDraw(GetGoal(),GetGameOver()); 
+	CarWarnSE();
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -182,7 +180,6 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
-	car.warn_se_flag = false;//警告音のフラグ
 	car.warn_image_flag = false;//警告マークのフラグ
 	car.warn_count = 0;//警告マークを表示する時間
 	car.menu_flag == false;//車のメニュー処理フラグ
@@ -274,7 +271,6 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 150.0f &&
 			car.goal_flag == false)
 		{
-			CarWarnSE();
 			car.warn_image_flag = true;
 		}
 		break;
@@ -290,7 +286,6 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 90.0f &&
 			car.goal_flag == false)
 		{
-			CarWarnSE();
 			car.warn_image_flag = true;
 		}
 		break;
@@ -306,7 +301,6 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 170.0f &&
 			car.goal_flag == false)
 		{
-			CarWarnSE();
 			car.warn_image_flag = true;
 		}
 		break;
@@ -323,7 +317,6 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 230.0f &&
 			car.goal_flag == false)
 		{
-			CarWarnSE();
 			car.warn_image_flag = true;
 		}
 		break;
@@ -336,8 +329,6 @@ void CarMovePosition(const CreateStage* stage)
 //車の現在位置を検知して次の進行方向を決める
 void CarDetectPosition(void)
 {
-
-	car.warn_se_flag = false;
 	//現在のX位置よりも次のX位置が大きかったら
 	if (car.current_x < car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
@@ -442,12 +433,13 @@ void CarGoalCheck(const CreateStage* stage)
 }
 void CarWarnSE(void) 
 {
-	if (car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1&&
-		car.warn_se_flag==false)
+	if (car.warn_image_flag == true)
 	{
-		Play_Sound_Car(car.warn_se, 100);
-		/*PlaySoundMem(car.warn_se, DX_PLAYTYPE_BACK);*/
-		car.warn_se_flag = true;
+		Play_Sound_Car_Loop(car.warn_se, 100);
+	}
+	else if(car.warn_image_flag == false)
+	{
+			StopSoundMem(car.warn_se);
 	}
 }
 
@@ -461,7 +453,18 @@ void Play_Sound_Car(int sound, int volume)
 
 }
 
-void CarWarnDraw(void)
+void Play_Sound_Car_Loop(int sound, int volume)
+{
+	if (CheckSoundMem(sound) == 0)
+	{
+		//TRUEだとバック再生
+		PlaySoundMem(sound, DX_PLAYTYPE_LOOP,TRUE);
+		ChangeVolumeSoundMem(volume, sound);
+	}
+}
+
+
+void CarWarnDraw(const Goal*goal,const GameOver*gameover)
 {
 	
 	if (car.warn_image_flag == true&& car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
@@ -481,13 +484,15 @@ void CarWarnDraw(void)
 		}
 	}
 
-	if (car.next_x[car.next_count] != -1 && car.next_y[car.next_count] != -1)
+	if (car.next_x[car.next_count] != -1 && car.next_y[car.next_count] != -1||
+		goal->print_flag == true || gameover->image_flag == true )
 	{
 		car.warn_image_flag = false;
 		car.warn_count = 0;
 	}
 }
 
+//ステージ番号と車の初期位置を取得
 void GetCarStageNum(const InGame* ingame)
 {
 	//ステージごとの初期位置
@@ -498,12 +503,16 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.1f;
 		car.speed.y = 0.1f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	case eTwo:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.1f;
 		car.speed.y = 0.1f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eThree:
@@ -511,6 +520,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eFour:
@@ -518,6 +529,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 
 		break;
 	case eFive:
@@ -525,12 +538,16 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 3;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	case eSix:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
+		car.next_x[0] = 3;
+		car.next_y[0] = 3;
 		break;
 	}
 }
