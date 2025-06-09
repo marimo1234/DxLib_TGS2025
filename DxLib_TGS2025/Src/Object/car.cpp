@@ -167,6 +167,11 @@ const GameOver* GetGameOver(void)
 //ステージ切り替えするときのリセット
 void CarReset(void)
 {
+	for (int i = 0; i < 84; i++)
+	{
+		car.next_x[i] = -1;
+		car.next_y[i] = -1;
+	}
 	GetCarStageNum(GetInGame());
 	//car.current_x = 2;//ステージ①の初期位置
 	//car.current_y = 3;
@@ -191,13 +196,13 @@ void CarReset(void)
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
 
-	for (int i = 0; i < 84; i++)
+	/*for (int i = 0; i < 84; i++)
 	{
 		car.next_x[i] = -1;
 		car.next_y[i] = -1;
 	}
 	car.next_x[0] = 3;
-	car.next_y[0] = 3;
+	car.next_y[0] = 3;*/
 }
 
 //次の進行場所を取得する
@@ -546,8 +551,8 @@ void GetCarStageNum(const InGame* ingame)
 		car.current_y = 6;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
-		car.next_x[0] = 3;
-		car.next_y[0] = 3;
+		car.next_x[0] = 2;
+		car.next_y[0] = 6;
 		break;
 	}
 }

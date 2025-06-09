@@ -11,8 +11,17 @@ Title title;
 //タイトルシーンの初期化
 void TitleSceneInit(void)
 {
+
+	title.char_num = 0;
+	title.cursor_x = 370.0f;
+	title.cursor_y = 450.0f;
 	//画像の読み込み
 	title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
+	title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
+	title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
+	title.char_image[1] = LoadGraph("Resource/Images/Options.png");	//タイトルの選択文字
+	title.char_image[2] = LoadGraph("Resource/Images/Exit.png");	//タイトルの選択文字
+
 
 	//seの読み込み
 	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
@@ -23,6 +32,7 @@ void TitleSceneInit(void)
 //タイトルシーンの更新
 eSceneType TitleSceneUpdate(void)
 {
+	TitleCursorUpdate();
 	//スペースキーが押された瞬間に、各画面に遷移する
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
 	{
@@ -30,7 +40,7 @@ eSceneType TitleSceneUpdate(void)
 	}
 	if (GetKeyInputState(KEY_INPUT_X) == eRelease)
 	{
-		return eHelp;	//インゲーム画面へ
+		//return eHelp;	//インゲーム画面へ
 	}
 	if (GetKeyInputState(KEY_INPUT_C) == ePress)
 	{
@@ -44,6 +54,28 @@ eSceneType TitleSceneUpdate(void)
 		return eStageSelect;	//ステージセレクト画面へ
 	}
 
+	//タイトル画面の分岐
+	if (title.char_num == 0 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		/*Play_Sound_Ingame(sound.decision, 100);*/
+		return eStageSelect;	//ステージセレクト画面へ
+		title.char_num = 0;
+	
+	}
+	if (title.char_num == 1 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		/*Play_Sound_Ingame(sound.decision, 100);*/
+		return eHelp;	//インゲーム画面へ
+		title.char_num = 0;
+	}
+	if (title.char_num == 2 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	{
+		/*Play_Sound_Ingame(sound.decision, 100);*/
+		return eEnd;	//インゲーム画面へ
+	}
 	return eTitle;
 }
 
@@ -57,11 +89,43 @@ void TitleSceneDraw(void)
 
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Xボタンでステージセレクト画面へ");
+	for (int i = 0; i < 3; i++)
+	{
+		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
+	}
 
+	DrawRotaGraphF(title.cursor_x, title.cursor_y , 1.0, 0.0, title.cursor_image, TRUE);
 }
 
 //StageSelectを取得
 const Title* GetTitle(void)
 {
 	return &title;
+}
+
+
+//Goalした後のセレクト画面を出すフラグ
+void TitleCursorUpdate(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+	{
+		//Play_Sound_Title2(sound.select_move, 100);
+		
+		if (title.char_num < 0)
+		{
+			title.char_num = 1;
+		}
+
+		title.cursor_y = 450.0f + title.char_num * 90.0f;
+	}
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+	{
+		//Play_Sound_Title2(sound.select_move, 100);
+		title.char_num++;
+		title.char_num = title.char_num % 3;
+
+		title.cursor_y = 450.0f + title.char_num * 90.0f;
+	}
 }
