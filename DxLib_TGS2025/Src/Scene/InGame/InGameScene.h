@@ -26,11 +26,11 @@ struct InGame
 	bool menu_flag;
 	int menu_num;
 	int menu_image;
-	int menu_char_image[6];
+	int menu_char_image[7];
 	int menu_cursor;
 	float menu_cursor_x;
     float menu_cursor_y;
-	float char_extrate[6];
+	float char_extrate[7];
 
 	bool goalmenu_flag;
 	int goalmenu_num;
