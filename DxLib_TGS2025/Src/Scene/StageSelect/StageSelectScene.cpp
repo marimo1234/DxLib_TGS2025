@@ -36,7 +36,7 @@ void StageSelectSceneInit(void)
 	stageselect.array_y = 0;
 
 	//ボタンの画像拡大率の初期化
-	stageselect.Abottom_rate = 0.15f;
+	stageselect.Abutton_rate = 0.15f;
 	stageselect.rate_num = 0.1;
 
 	//画像の取得
@@ -56,7 +56,7 @@ void StageSelectSceneInit(void)
 	//車の画像
 	stageselect.car_image = LoadGraph("Resource/images/car2_right.png");
 	//ボタンの画像
-	stageselect.Abottom = LoadGraph("Resource/images/Abutton.png");
+	stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
 
 	//カーソルとボタンのSE
 	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
@@ -82,7 +82,8 @@ eSceneType StageSelectSceneUpdate(void)
 
 	//車がいる場所の配列番号でステージ番号を取得
 	StageSelectGetNumber();
-
+	//ボタンの描画
+	SelectButtonDraw();
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
@@ -113,8 +114,7 @@ void StageSelectSceneDraw(void)
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, stageselect.background_image, TRUE);
 	//数字、枠、車の描画
 	NumTroutDraw();
-	//ボタンの描画
-	SelectButtonDraw();
+	
 	
 	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
@@ -305,15 +305,16 @@ void NumTroutDraw(void)
 	if (stageselect.array_y != 2)
 	{
 		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y + 50.0f, 0.1, 0.0, stageselect.car_image, TRUE);
+		/*DrawRotaGraph(stageselect.position.x, stageselect.position.y + 50.0f, 0.1, 0.0, stageselect.car_image, TRUE);*/
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y + 60.0f, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
 
 	}
 	//BACKの枠だけ描画する画像を変える
 	else if (stageselect.array_y == 2)
 	{
 		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 1.0, 0.0, stageselect.trout_image[2], TRUE);
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.1, 0.0, stageselect.car_image, TRUE);
-
+		/*DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.1, 0.0, stageselect.car_image, TRUE);*/
+		DrawRotaGraph(stageselect.position.x, stageselect.position.y, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
 	}
 
 
@@ -323,16 +324,16 @@ void NumTroutDraw(void)
 void SelectButtonDraw(void)
 {
 	
-	if (stageselect.Abottom_rate > 0.24)
+	if (stageselect.Abutton_rate > 0.15)
 	{
-		stageselect.rate_num = -0.001f;
+		stageselect.rate_num = -0.0008f;
 	}
-	else if (stageselect.Abottom_rate < 0.15)
+	else if (stageselect.Abutton_rate < 0.10)
 	{
-		stageselect.rate_num = 0.001f;
+		stageselect.rate_num = 0.0008f;
 	}
-	stageselect.Abottom_rate += stageselect.rate_num;
-	DrawRotaGraph(640, 340, stageselect.Abottom_rate, 0.0, stageselect.Abottom, TRUE);
+	stageselect.Abutton_rate += stageselect.rate_num;
+	/*DrawRotaGraph(640, 340, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);*/
 }
 
 //音がなっていないなら鳴らす

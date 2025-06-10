@@ -10,8 +10,6 @@
 #include "../Object/Goal.h"
 #include "../Object/Obstacle.h"
 
-
-
 #define ITEM_SELECT_BASE_X		(880)		//アイテムの基準(x)
 #define ITEM_SELECT_BASE_Y		(680)		//アイテムの基準(y)	//680,40
 #define MAP_TROUT_LENGTH		(80)		//マップの配列の間隔
@@ -207,6 +205,7 @@ void ToolResourceInit(void)
 	tool_img.break_woodroad[1] = LoadGraph("Resource/images/woodbreak2.png");
 	tool_img.break_woodroad[2] = LoadGraph("Resource/images/woodbreak3.png");
 }
+
 //更新
 void ToolManagerUpdate(void)
 {
@@ -730,6 +729,12 @@ void Tool_Start(const InGame* ingame, const Goal* goal, const GameOver* gameover
 const Tool* Get_Tool(void)
 {
 	return &tool;
+}
+
+//構造体Tool_Imgの値渡し
+const Tool_Img* Get_Tool_Img(void)
+{
+	return &tool_img;
 }
 
 //道の数を増やす
