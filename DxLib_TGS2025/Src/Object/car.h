@@ -19,6 +19,8 @@ struct Car
     Vector2D speed;
     int animation;
     int image[4];
+    int move_image[4];
+    int animation_count;
     int ivy_image[4];
     int cutin_image[3];
     bool start;

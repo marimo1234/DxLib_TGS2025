@@ -38,6 +38,7 @@ void CarInit(void)
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
+	car.animation_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 
 
@@ -73,6 +74,10 @@ void CarResourceInit(void)
 	car.image[1] = LoadGraph("Resource/images/car2_left.png");
 	car.image[2] = LoadGraph("Resource/images/car2_up.png");
 	car.image[3] = LoadGraph("Resource/images/car2_down.png");
+	car.move_image[0]= LoadGraph("Resource/images/car2_right2.png");
+	car.move_image[1]= LoadGraph("Resource/images/car2_left2.png");
+	car.move_image[2]= LoadGraph("Resource/images/car2_up2.png");
+	car.move_image[3]= LoadGraph("Resource/images/car2_down2.png");
 
 	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
 	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
@@ -136,7 +141,7 @@ void CarDraw(void)
 	DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
 	DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
-	/*DrawFormatString(450, 350, GetColor(255, 255, 255), "%d",gameover.image_count); */
+	DrawFormatString(450, 350, GetColor(255, 255, 255), "%d",car.animation_count); 
 }
 
 
@@ -184,6 +189,7 @@ void CarReset(void)
 	car.velocity.y = 0.2f;
 	car.road_count = 0;
 	car.next_count = 0;
+	car.animation_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
@@ -238,6 +244,11 @@ void GetBreakRoadPosition(const Tool* tool, int x, int y)
 //車の移動処理
 void CarMovePosition(const CreateStage* stage)
 {
+	car.animation_count++;
+	if (car.animation_count > 60)
+	{
+		car.animation_count = 0;
+	}
 	switch (car.direction)
 	{
 
@@ -249,14 +260,12 @@ void CarMovePosition(const CreateStage* stage)
 			{
 				OverRoad();
 				gameover.image_flag = true;
-				/*car.animation = car.ivy_image[0];*/
 			}
 			if (overroad > 399)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
 				car.position.y += 0.0f;
-				/*gameover.image_flag = true;*/
 
 				if (gameover.image_count > 120)
 				{
@@ -267,7 +276,14 @@ void CarMovePosition(const CreateStage* stage)
 		}
 		break;
 	case eUp://上に
-		car.animation = car.image[2];
+		if (car.animation_count < 30)
+		{
+			car.animation = car.image[2];
+		}
+		else
+		{
+			car.animation = car.move_image[2];
+		}
 		car.position.y -= car.velocity.y;
 		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に0.2足している
 		{
@@ -282,7 +298,14 @@ void CarMovePosition(const CreateStage* stage)
 		}
 		break;
 	case eDown://下に
-		car.animation = car.image[3];
+		if (car.animation_count < 30)
+		{
+			car.animation = car.image[3];
+		}
+		else
+		{
+			car.animation = car.move_image[3];
+		}
 		car.position.y += car.velocity.y;
 		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
 		{
@@ -297,7 +320,15 @@ void CarMovePosition(const CreateStage* stage)
 		}
 		break;
 	case eRight://右に
-		car.animation = car.image[0];
+		if (car.animation_count < 30)
+		{
+			car.animation = car.image[0];
+		}
+		else
+		{
+			car.animation = car.move_image[0];
+		}
+		
 		car.position.x += car.velocity.x;
 		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から0.2引いている
 		{
@@ -313,7 +344,14 @@ void CarMovePosition(const CreateStage* stage)
 		break;
 
 	case eLeft:
-		car.animation = car.image[1];
+		if (car.animation_count < 30)
+		{
+			car.animation = car.image[1];
+		}
+		else
+		{
+			car.animation = car.move_image[1];
+		}
 		car.position.x -= car.velocity.x;
 		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
