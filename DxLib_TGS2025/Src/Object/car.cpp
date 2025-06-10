@@ -24,9 +24,6 @@ void GetCarStageNum(const InGame*ingame);
 void CarWarnDraw(const Goal* goal, const GameOver* gameover,const InGame* ingame);
 
 
-
-
-
 Car car;
 GameOver gameover;
 void CarInit(void)
@@ -50,23 +47,8 @@ void CarInit(void)
 
 
 	//画像の読み込み
-	car.image[0] = LoadGraph("Resource/images/car2_right.png");
-	car.image[1] = LoadGraph("Resource/images/car2_left.png");
-	car.image[2] = LoadGraph("Resource/images/car2_up.png");
-	car.image[3] = LoadGraph("Resource/images/car2_down.png");
-
-	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
-	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
-	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
-
-	car.ivy_image[0] = LoadGraph("Resource/images/ivy_car_right.png");
-	car.ivy_image[1] = LoadGraph("Resource/images/ivy_car_left.png");
-	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
-	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
-	car.warn_image= LoadGraph("Resource/images/Warn_image.png");
+	
 	car.warn_image_flag = false;
-
-	car.warn_se = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_count = 0;
 
 
@@ -83,6 +65,26 @@ void CarInit(void)
 		car.next_x[i] = -1;
 		car.next_y[i] = -1;
 	}
+}
+
+void CarResourceInit(void)
+{
+	car.image[0] = LoadGraph("Resource/images/car2_right.png");
+	car.image[1] = LoadGraph("Resource/images/car2_left.png");
+	car.image[2] = LoadGraph("Resource/images/car2_up.png");
+	car.image[3] = LoadGraph("Resource/images/car2_down.png");
+
+	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
+	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
+	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
+
+	car.ivy_image[0] = LoadGraph("Resource/images/ivy_car_right.png");
+	car.ivy_image[1] = LoadGraph("Resource/images/ivy_car_left.png");
+	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
+	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
+
+	car.warn_image = LoadGraph("Resource/images/Warn_image.png");
+	car.warn_se = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 }
 
 void CarManagerUpdate(void)

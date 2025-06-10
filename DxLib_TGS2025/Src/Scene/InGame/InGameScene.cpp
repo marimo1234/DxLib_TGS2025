@@ -117,6 +117,17 @@ void InGameSceneInit(void)
 	
 }
 
+void InGameResourceInit(void)
+{
+	MapResourceInit();
+	ObstacleManagerResourceInit();
+	WoodRockResourceInit();
+	ToolResourceInit();
+	CarResourceInit();
+	CursorResourceInit();
+	GoalResourceInit();
+}
+
 eSceneType InGameSceneUpdate()
 {
 	//ゴールを受け取ったらステージを変えることを可能にする

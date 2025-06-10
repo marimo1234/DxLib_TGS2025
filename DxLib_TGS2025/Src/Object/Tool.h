@@ -140,6 +140,7 @@ struct Tool_SE
 void ToolInit(void);
 void ToolManagerUpdate(void);
 void ToolDraw(void);
+void ToolResourceInit(void);
 void Sub_Num(void);
 
 void Base_Chenge(void);

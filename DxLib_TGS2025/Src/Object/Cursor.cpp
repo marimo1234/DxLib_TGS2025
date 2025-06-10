@@ -36,7 +36,6 @@ void GetCursorStageNum(const InGame* ingame);
 void CursorInit(void)
 {
 	//初期設定
-	cursor_image = {};
 	cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;			    	//初期位置（Ｘ）
 	cursor.position.y = MOVE_ONE_SPACE * cursor.array_y + 120.0f;				//初期位置（Ｙ）
 	cursor.box_size.x = 64.0f;				//矩形の大きさ（Ｘ）
@@ -51,17 +50,20 @@ void CursorInit(void)
 	GetCursorStageNum(GetInGame());
 	//カーソルの配列番号
 	GetCarInitPosition(GetCar());
+}
 
-	// カーソルがぞうの読み込み
-	cursor_image = LoadGraph("Resource/Images/cursol.png");
+void CursorResourceInit(void)
+{
+	// カーソル画像の読み込み
+	cursor_image = LoadGraph("Resource/Images/cursor.png");
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
 	cursor_road = LoadGraph("Resource/Images/RoadVertical_cursol.png");
 	cursor_hasi = LoadGraph("Resource/Images/Log_cursol.png");
+	//カーソル音の読み込み
 	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
 }
-
 //カーソルの更新
 void CursorUpdate(void)
 {

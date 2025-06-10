@@ -44,6 +44,7 @@ struct CreateStage
 void MapInit(void);
 void MapUpdate(void);
 void MapDraw(void);
+void MapResourceInit(void);
 //void StageLoad(void);
 
 void MapValueInit(void);

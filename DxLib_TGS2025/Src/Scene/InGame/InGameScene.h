@@ -64,6 +64,7 @@ struct InGame_Sound
 void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
+void InGameResourceInit(void);
 
 const InGame* GetInGame(void);
 

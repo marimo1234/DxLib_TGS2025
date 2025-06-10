@@ -61,3 +61,4 @@ const GameOver* GetGameOver(void);
 void CarReset(void);
 
 void CarWarnSE(void);
+void CarResourceInit(void);

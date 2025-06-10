@@ -34,22 +34,10 @@ int item_images[1];
 //障害物の初期化
 void ObstacleManagerInit(void)
 {
-
-	for (int i = 0; i < 3; i++)
-	{
-		mole.image[i] = -1;
-	}
-
 	//モグラの初期化
 	MoleInit(GetStage());
 	//ステージ番号の取得と置ける範囲の指定
 	GetMoleStageNum(GetInGame());
-
-	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
-	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
-	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
-	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
-	lake.image = LoadGraph("Resource/images/lake.png");
 
 	mole.start = false;
 	mole.menu_flag = false;
@@ -57,6 +45,14 @@ void ObstacleManagerInit(void)
 
 }
 
+void ObstacleManagerResourceInit(void)
+{
+	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
+	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
+	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
+	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
+	lake.image = LoadGraph("Resource/images/lake.png");
+}
 //障害物の更新
 void ObstacleManagerUpdate(void)
 {

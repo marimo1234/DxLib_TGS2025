@@ -21,6 +21,7 @@ void SceneManagerInitialize(void)
 	//継続状態にする
 	is_end_flag = 0;
 
+	SceneManagerResourceInit();
 	//最初のシーンの設定
 	ChangeScene(eTitle);
 }
@@ -139,4 +140,10 @@ void SceneInit(eSceneType new_scene_type)
 	default:
 		break;
 	}
+}
+
+//画像、音の読み込み
+void SceneManagerResourceInit(void)
+{
+	InGameResourceInit();
 }

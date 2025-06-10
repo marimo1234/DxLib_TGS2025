@@ -56,17 +56,6 @@ void WoodRockInit(void)
 	wood.fps = 0;
 	rock.fps = 0;
 
-	//画像変数の初期化
-	for (int i = 0; i < 3; i++)
-	{
-		wood.image[i] = -1;
-		rock.image[i] = -1;
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		wood.effect_image[i] = -1;
-		rock.effect_image[i] = -1;
-	}
 	//配列番号の初期化
 	wood.count_x = 0;
 	wood.count_y = 0;
@@ -87,8 +76,12 @@ void WoodRockInit(void)
 	wood.effect_flag = false;
 	rock.effect_flag = false;
 
+	rock.position.x = 600.0f;
+	rock.position.y = 360.0f;
+}
 
-
+void WoodRockResourceInit(void)
+{
 	//画像の読み込み
 	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
 	wood.image[1] = LoadGraph("Resource/images/Wood1.png");
@@ -105,10 +98,10 @@ void WoodRockInit(void)
 	wood.effect_image[2] = LoadGraph("Resource/images/reef_effect3.png");
 	wood.effect_image[3] = LoadGraph("Resource/images/reef_effect4.png");
 
-	rock.effect_image[0]= LoadGraph("Resource/images/rock_fragment1.png");
-	rock.effect_image[1]= LoadGraph("Resource/images/rock_fragment2.png");
-	rock.effect_image[2]= LoadGraph("Resource/images/rock_fragment3.png");
-	rock.effect_image[3]= LoadGraph("Resource/images/rock_fragment4.png");
+	rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment1.png");
+	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment2.png");
+	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment3.png");
+	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment4.png");
 
 	rock.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
 	rock.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
@@ -120,13 +113,10 @@ void WoodRockInit(void)
 	//サウンド読み込み
 	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
-	woodrock_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
+	woodrock_se.swing = LoadSoundMem("Resource/Sounds/swing.mp3");
 
 	rock.itemnum_bg_image = LoadGraph("Resource/images/ItemNum_bg_image.png");
-	rock.position.x = 600.0f;
-	rock.position.y = 360.0f;
 }
-
 //更新
 void WoodRockUpdate(void)
 {

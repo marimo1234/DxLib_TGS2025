@@ -32,13 +32,18 @@ void GoalInit(void)
 	goal.print_count = 0;
 
 	goal.print_flag = false;
+	
+}
+
+
+void GoalResourceInit(void)
+{
 	//画像の読み込み
 	goal.flag_image = LoadGraph("Resource/images/goal_image.png");
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
-	goal.gameover_image= LoadGraph("Resource/images/GAMEOVER.png");
+	goal.gameover_image = LoadGraph("Resource/images/GAMEOVER.png");
 }
-
 //更新
 void GoalUpdate(void)
 {
@@ -138,4 +143,7 @@ void GameOverDraw(const GameOver* gameover)
 		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.gameover_image, TRUE);
 	}
 }
+
+
+
 

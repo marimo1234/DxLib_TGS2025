@@ -123,6 +123,15 @@ void ToolInit(void)
 	}
 	Stage_Init(GetStage());
 
+	
+	
+	//配置済み道
+	/*Road_Imghandle_Init(GetStage());*/
+}
+
+
+void ToolResourceInit(void)
+{
 	/**********サウンド***********/
 	//アイテムセレクトSE
 	tool_se.select_se = LoadSoundMem("Resource/Sounds/item_select_se2.mp3");
@@ -130,43 +139,43 @@ void ToolInit(void)
 	tool_se.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
 	//道や木の橋等を増やすときのSE
 	tool_se.make_road = LoadSoundMem("Resource/Sounds/make_road.mp3");
-	tool_se.make_woodroad= LoadSoundMem("Resource/Sounds/make_woodroad.mp3");
+	tool_se.make_woodroad = LoadSoundMem("Resource/Sounds/make_woodroad.mp3");
 
 	tool_se.wood_road = LoadSoundMem("Resource/Sounds/wood_road.mp3");
-	
+
 	tool_se.road = LoadSoundMem("Resource/Sounds/put_road_se.mp3");
 
-	tool_se.swing= LoadSoundMem("Resource/Sounds/swing.mp3");
+	tool_se.swing = LoadSoundMem("Resource/Sounds/swing.mp3");
 
 	//******画像読み込み******//
 	//アイテム枠
-	tool_img.itemframe= LoadGraph("Resource/images/item_frame.png");
+	tool_img.itemframe = LoadGraph("Resource/images/item_frame.png");
 	//R,Lトリガー
 	tool_img.rb[0] = LoadGraph("Resource/images/RB.png");
 	tool_img.rb[1] = LoadGraph("Resource/images/RB_right.png");
 	tool_img.lb[0] = LoadGraph("Resource/images/LB.png");
 	tool_img.lb[1] = LoadGraph("Resource/images/LB_right.png");
-	
-	
+
+
 	//ピッケル
-	tool_img.pickaxe=LoadGraph("Resource/images/pickaxe.png");
+	tool_img.pickaxe = LoadGraph("Resource/images/pickaxe.png");
 	//木の道
 	tool_img.wood_road_img = LoadGraph("Resource/images/Log.png");
-	tool_img.wood_road_vertical= LoadGraph("Resource/images/wooodroad_vertical.png");
-	tool_img.wood_road_beside= LoadGraph("Resource/images/wooodroad_beside.png");
+	tool_img.wood_road_vertical = LoadGraph("Resource/images/wooodroad_vertical.png");
+	tool_img.wood_road_beside = LoadGraph("Resource/images/wooodroad_beside.png");
 	tool_img.wood_road_Topright = LoadGraph("Resource/images/woodroad_TR.png");
 	tool_img.wood_road_Btmright = LoadGraph("Resource/images/woodroad_BR.png");
 	tool_img.wood_road_Rbottom = LoadGraph("Resource/images/woodroad_RB.png");
 	tool_img.wood_road_Rtop = LoadGraph("Resource/images/woodroad_RTop.png");
-	
+
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
 	//ハンマー
-	tool_img.drill= LoadGraph("Resource/images/Drill.png");
+	tool_img.drill = LoadGraph("Resource/images/Drill.png");
 	//選択枠(アイテム)
 	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
 	//選択枠の内側(アイテム)
-	tool_img.item_select_inner= LoadGraph("Resource/images/item_frame_inner.png");
+	tool_img.item_select_inner = LoadGraph("Resource/images/item_frame_inner.png");
 	//道
 	tool_img.road_vertical = LoadGraph("Resource/images/RoadVertical.png");
 	tool_img.road_beside = LoadGraph("Resource/images/RoadBeside.png");
@@ -174,14 +183,14 @@ void ToolInit(void)
 	tool_img.road_Btmright = LoadGraph("Resource/images/RoadBottomRight.png");
 	tool_img.road_Rbottom = LoadGraph("Resource/images/RoadRightBottom.png");
 	tool_img.road_Rtop = LoadGraph("Resource/images/RoadRightTop.png");
-	
+
 	//透過させた道
 	tool_img.possible_roadB = LoadGraph("Resource/images/Possible_Beside.png");
-	tool_img.possible_roadV= LoadGraph("Resource/images/Possible_Vertical.png");
-	tool_img.possible_wood_roadB= LoadGraph("Resource/images/Possible_wood_roadB.png");
-	tool_img.possible_wood_roadV= LoadGraph("Resource/images/Possible_wood_roadV.png");
+	tool_img.possible_roadV = LoadGraph("Resource/images/Possible_Vertical.png");
+	tool_img.possible_wood_roadB = LoadGraph("Resource/images/Possible_wood_roadB.png");
+	tool_img.possible_wood_roadV = LoadGraph("Resource/images/Possible_wood_roadV.png");
 	//破壊可能を示す色(赤
-	tool_img.possible_break= LoadGraph("Resource/images/possible_break.png");
+	tool_img.possible_break = LoadGraph("Resource/images/possible_break.png");
 	//道を置いた時のアニメーション
 	tool_img.put_road[0] = LoadGraph("Resource/images/dust1.png");
 	tool_img.put_road[1] = LoadGraph("Resource/images/dust2.png");
@@ -190,18 +199,14 @@ void ToolInit(void)
 	tool_img.put_woodroad[0] = LoadGraph("Resource/images/put1.png");
 	tool_img.put_woodroad[1] = LoadGraph("Resource/images/put2.png");
 	//道を壊したときのアニメーション
-	tool_img.break_road[0]= LoadGraph("Resource/images/break1.png");
-	tool_img.break_road[1]= LoadGraph("Resource/images/break2.png");
-	tool_img.break_road[2]= LoadGraph("Resource/images/break3.png");
+	tool_img.break_road[0] = LoadGraph("Resource/images/break1.png");
+	tool_img.break_road[1] = LoadGraph("Resource/images/break2.png");
+	tool_img.break_road[2] = LoadGraph("Resource/images/break3.png");
 	//木の道を壊したときのアニメーション
-	tool_img.break_woodroad[0]= LoadGraph("Resource/images/woodbreak1.png");
-	tool_img.break_woodroad[1]= LoadGraph("Resource/images/woodbreak2.png");
-	tool_img.break_woodroad[2]= LoadGraph("Resource/images/woodbreak3.png");
-	
-	//配置済み道
-	/*Road_Imghandle_Init(GetStage());*/
+	tool_img.break_woodroad[0] = LoadGraph("Resource/images/woodbreak1.png");
+	tool_img.break_woodroad[1] = LoadGraph("Resource/images/woodbreak2.png");
+	tool_img.break_woodroad[2] = LoadGraph("Resource/images/woodbreak3.png");
 }
-
 //更新
 void ToolManagerUpdate(void)
 {

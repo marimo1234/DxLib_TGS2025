@@ -21,5 +21,7 @@ void GoalInit(void);
 void GoalUpdate(void);
 void GoalDraw(void);
 void GoalReset(void);
+void GoalResourceInit(void);
+
 
 const Goal* GetGoal(void);

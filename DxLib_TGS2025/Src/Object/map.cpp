@@ -30,12 +30,7 @@ void MapTroutDraw(const InGame* ingame);
 //初期化
 void MapInit(void)
 {
-	//画像の取得
-	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
-	stage.trout_image= LoadGraph("Resource/images/trout.png");
-	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
-	ikl= LoadGraph("Resource/images/Back_Wood.png");
-	stage.mountain_image=LoadGraph("Resource/images/mountain.png");
+	
 	//csvファイルから値を取得
 	StageLoad();
 	//マップの各値を初期化
@@ -51,6 +46,15 @@ void MapInit(void)
 	
 }
 
+void MapResourceInit(void)
+{
+	//画像の取得
+	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
+	stage.trout_image = LoadGraph("Resource/images/trout.png");
+	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
+	ikl = LoadGraph("Resource/images/Back_Wood.png");
+	stage.mountain_image = LoadGraph("Resource/images/mountain.png");
+}
 //更新
 void MapUpdate(void)
 {

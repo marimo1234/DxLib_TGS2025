@@ -49,6 +49,7 @@ struct Lake
 void ObstacleManagerInit(void);
 void ObstacleManagerUpdate(void);
 void ObstacleManagerDraw(void);
+void ObstacleManagerResourceInit(void);
 const Obstacle * GetObstacle(void);
 const Mole* GetMole(void);
 const Lake* GetLake(void);

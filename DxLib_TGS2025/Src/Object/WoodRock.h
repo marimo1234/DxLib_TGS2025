@@ -76,6 +76,7 @@ struct WoodRock_SE
 void WoodRockInit(void);
 void WoodRockUpdate(void);
 void WoodRockDraw(void);
+void WoodRockResourceInit(void);
 
 void WoodAnimation(void);//木のアニメーション
 void RockAnimation(void);//岩のアニメーション
