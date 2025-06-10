@@ -27,6 +27,9 @@ void TitleSceneInit(void)
 	//seの読み込み
 	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
 	//decision_SE = LoadSoundMem("Resource/SE/decision.mp3");	//決定サウンド
+	title.bgm=LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+	ChangeVolumeSoundMem(100, title.bgm);
+	/*PlaySoundMem(title.bgm, DX_PLAYTYPE_LOOP);*/
 }
 
 
@@ -69,6 +72,7 @@ eSceneType TitleSceneUpdate(void)
 	if (title.char_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		Stop_BGM();
 		/*Play_Sound_Ingame(sound.decision, 100);*/
 		return eEnd;	//エンド画面へ
 	}
@@ -125,4 +129,17 @@ void TitleCursorUpdate(void)
 
 		title.cursor_y = 450.0f + title.char_num * 90.0f;
 	}
+}
+
+void Play_Title_BGM(void)
+{
+	if (CheckSoundMem(title.bgm) == 0)
+	{
+
+	}
+}
+
+void Stop_BGM(void)
+{
+	StopSoundMem(title.bgm);
 }

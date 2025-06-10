@@ -11,11 +11,14 @@ struct Title
 	int char_num;
 	float cursor_x;
 	float cursor_y;
+
+	int bgm;
 };
 void TitleSceneInit(void);
 eSceneType TitleSceneUpdate(void);
 void TitleSceneDraw(void);
 
 void TitleCursorUpdate(void);
+void Stop_BGM(void);
 
 const Title* GetTitle(void);
