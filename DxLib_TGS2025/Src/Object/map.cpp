@@ -199,7 +199,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.no_admittance, TRUE);
 				break;
 			case 9://山
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.mountain_image, TRUE);
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 115, 0.23, 0.0, stage.mountain_image, TRUE);
 				break;
 			}
 
