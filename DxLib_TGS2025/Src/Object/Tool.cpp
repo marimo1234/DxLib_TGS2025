@@ -65,7 +65,7 @@ void Play_Sound_Tool2(int sound,int volume);
 void ToolInit(void) 
 {
 	//初期化//
-	tool.frameselect_x = ITEM_SELECT_BASE_X+80*4;
+	tool.frameselect_x = ITEM_SELECT_BASE_X+80*3;
 	tool.frameselect_y = ITEM_SELECT_BASE_Y;
 	tool.item_frame_x = ITEM_SELECT_BASE_X;
 	tool.item_frame_y = ITEM_SELECT_BASE_Y;
@@ -818,6 +818,8 @@ void Add_Road_Num(void)
 //ステージ切り替え時の値リセット
 void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 {
+	tool.frameselect_x = ITEM_SELECT_BASE_X + 80 * 3;
+	tool.frameselect_y = ITEM_SELECT_BASE_Y;
 	tool.item_number = ePickaxe;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
