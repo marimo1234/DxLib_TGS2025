@@ -146,4 +146,5 @@ void SceneInit(eSceneType new_scene_type)
 void SceneManagerResourceInit(void)
 {
 	InGameResourceInit();
+	TitleResourceInit();
 }

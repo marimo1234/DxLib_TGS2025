@@ -18,7 +18,9 @@ void TitleSceneInit(void);
 eSceneType TitleSceneUpdate(void);
 void TitleSceneDraw(void);
 
+void TitleResourceInit(void);
 void TitleCursorUpdate(void);
 void Stop_BGM(void);
+void Play_Title_BGM(void);
 
 const Title* GetTitle(void);

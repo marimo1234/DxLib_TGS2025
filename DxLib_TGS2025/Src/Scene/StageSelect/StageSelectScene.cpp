@@ -13,6 +13,10 @@ int result_score;		//表示するスコアの値
 void Play_Sound_StageSelect(int sound, int volume);
 //音が鳴っていても条件が合えば鳴らす
 void Play_Sound_StageSelect_NC(int sound, int volume);
+//タイトルBGMを止める
+void Stop_Title_BGM(const Title* title);
+//タイトルBGMが流れていなかったら流す
+void Play_StageSelect_BGM(const Title* title);
 
 
 
@@ -58,6 +62,8 @@ void StageSelectSceneInit(void)
 	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 	stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 
+	Play_StageSelect_BGM(GetTitle());
+
 	//配列にデフォルトの枠を入れる
 	for (int j = 0; j < 2; j++)
 	{
@@ -86,6 +92,7 @@ eSceneType StageSelectSceneUpdate(void)
 		//ステージ番号が-1じゃなければ
 		if (stageselect.number != -1 && stageselect.number != 6)
 		{
+			Stop_Title_BGM(GetTitle());
 			Play_Sound_StageSelect(stageselect.button_se, 80);
 			StageSelectNumber();
 			return eInGame;	//インゲーム画面へ
@@ -346,4 +353,18 @@ void Play_Sound_StageSelect_NC(int sound, int volume)
 	ChangeVolumeSoundMem(volume, sound);
 }
 
-//タイトルのBGMがなっていなかったら再生
+//タイトルのBGMを止める
+void Stop_Title_BGM(const Title* title)
+{
+	StopSoundMem(title->bgm);
+}
+
+//タイトルのBGMがなっていなかったら流す
+void Play_StageSelect_BGM(const Title* title)
+{
+	if (CheckSoundMem(title->bgm) == 0)
+	{
+		ChangeVolumeSoundMem(100, title->bgm);
+		PlaySoundMem(title->bgm, DX_PLAYTYPE_BACK);
+	}
+}

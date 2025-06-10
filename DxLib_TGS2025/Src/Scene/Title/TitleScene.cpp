@@ -8,6 +8,12 @@ int title_image;		//タイトル画像のハンドル
 
 Title title;
 
+//タイトルシーンのリソース初期化
+void TitleResourceInit(void)
+{
+	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+}
+
 //タイトルシーンの初期化
 void TitleSceneInit(void)
 {
@@ -27,11 +33,9 @@ void TitleSceneInit(void)
 	//seの読み込み
 	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
 	//decision_SE = LoadSoundMem("Resource/SE/decision.mp3");	//決定サウンド
-	title.bgm=LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
-	ChangeVolumeSoundMem(100, title.bgm);
-	/*PlaySoundMem(title.bgm, DX_PLAYTYPE_LOOP);*/
+	
+	Play_Title_BGM();
 }
-
 
 //タイトルシーンの更新
 eSceneType TitleSceneUpdate(void)
@@ -135,7 +139,8 @@ void Play_Title_BGM(void)
 {
 	if (CheckSoundMem(title.bgm) == 0)
 	{
-
+		ChangeVolumeSoundMem(100, title.bgm);
+		PlaySoundMem(title.bgm, DX_PLAYTYPE_LOOP);
 	}
 }
 
