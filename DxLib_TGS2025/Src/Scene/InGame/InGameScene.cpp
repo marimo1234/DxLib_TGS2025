@@ -95,7 +95,7 @@ void InGameSceneInit(void)
 void InGameResourceInit(void)
 {
 	//説明の後ろに表示
-	ingame.back = LoadGraph("Resource/images/waku.png");
+	ingame.back = LoadGraph("Resource/images/black_back.png");
 	//インゲーム前の画面
 	ingame.space = LoadGraph("Resource/images/aida.png");
 	//操作説明の画像

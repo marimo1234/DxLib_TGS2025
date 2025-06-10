@@ -39,6 +39,8 @@ void GoalInit(void)
 void GoalResourceInit(void)
 {
 	//画像の読み込み
+	goal.whiteback_image = LoadGraph("Resource/images/white_back.png");
+	goal.blackback_image = LoadGraph("Resource/images/black_back.png");
 	goal.flag_image = LoadGraph("Resource/images/goal_image.png");
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
@@ -64,7 +66,8 @@ void GoalDraw(void)
 {
 	if (goal.print_flag == true)
 	{
-		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.print_image, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
+		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.print_image, TRUE);
 	}
 
 	GameOverDraw(GetGameOver());
@@ -140,7 +143,8 @@ void GameOverDraw(const GameOver* gameover)
 {
 	if (gameover->image_flag == true)
 	{
-		DrawRotaGraphF(615, 380, 1.0, 0.0, goal.gameover_image, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 4.0, 0.0, goal.blackback_image, TRUE);
+		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.gameover_image, TRUE);
 	}
 }
 
