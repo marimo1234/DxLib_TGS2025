@@ -40,27 +40,10 @@ void Play_Sound_Ingame2(int sound, int volume);
 //初期化
 void InGameSceneInit(void)
 {
-	//説明の後ろに表示
-	ingame.back = LoadGraph("Resource/images/waku.png");
-	//インゲーム前の画面
-	ingame.space= LoadGraph("Resource/images/aida.png");
+	
 	//操作説明の表示
 	ingame.manual_open = false;
-	//操作説明の画像
-	ingame.manual_image= LoadGraph("Resource/images/manual_menu.png");
-	ingame.space = LoadGraph("Resource/images/aida.png");
-	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
-	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
-	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
-	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
-	ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
-	ingame.menu_char_image[3] = LoadGraph("Resource/images/title.png");
-	ingame.menu_char_image[4] = LoadGraph("Resource/images/next_stage.png");
-	ingame.menu_char_image[5] = LoadGraph("Resource/images/stage_select.png");
-	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
-
 	ingame.tutoria_log_num = 2;
-	ingame.mitibikikun= LoadGraph("Resource/images/mitibikikunn.png");
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -72,7 +55,7 @@ void InGameSceneInit(void)
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
 	ingame.menu_cursor_x=300.0f;
-	ingame.menu_cursor_y = 200.0f;
+	ingame.menu_cursor_y = 130.0f;
 
 	ingame.goalmenu_flag = false;
 	ingame.goalmenu_num = 0;
@@ -85,19 +68,13 @@ void InGameSceneInit(void)
 
 	ingame.gameover_se_flag = false;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 7; i++)
 	{
-		ingame.char_extrate[i] = 0.8f;
+		ingame.char_extrate[i] = 0.7f;
 	}
 	//確認用変数　後々消します
 	atr = 0;
 	btr = 1;
-
-		//BGMの初期化
-		PlayBgm();
-		//ステージ生成の初期化
-		
-		
 		//マップの初期化
 		MapInit();
 		//障害物の初期化
@@ -113,12 +90,33 @@ void InGameSceneInit(void)
 		//ゴールの読み込み
 		GoalInit();
 
-
-	
 }
 
 void InGameResourceInit(void)
 {
+	//説明の後ろに表示
+	ingame.back = LoadGraph("Resource/images/black_back.png");
+	//インゲーム前の画面
+	ingame.space = LoadGraph("Resource/images/aida.png");
+	//操作説明の画像
+	ingame.manual_image = LoadGraph("Resource/images/manual_menu.png");
+	ingame.space = LoadGraph("Resource/images/aida.png");
+	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
+	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
+	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
+	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
+	ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
+	ingame.menu_char_image[3] = LoadGraph("Resource/images/stage_select.png");
+	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
+	ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
+	ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
+	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
+
+	//BGMの初期化
+	PlayBgm();
+
+
 	MapResourceInit();
 	ObstacleManagerResourceInit();
 	WoodRockResourceInit();
@@ -191,6 +189,16 @@ eSceneType InGameSceneUpdate()
 		ingame.menu_manual_flag = true;
 	}
 	if (ingame.menu_num == 3 &&
+		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+		ingame.menu_flag == true)
+	{
+		Play_Sound_Ingame(sound.decision, 100);
+		Stop_InGameBgm();
+		return eStageSelect;	//タイトルに戻る
+		ingame.menu_flag = false;
+		ingame.menu_num = 0;
+	}
+	if (ingame.menu_num == 4 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
 		ingame.menu_flag == true)
 	{
@@ -477,7 +485,7 @@ void StageChange(void)
 void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 {
 
-	ingame.menu_cursor_y = 200.0f + ingame.menu_num * 130.0f;
+	ingame.menu_cursor_y = 130.0f + ingame.menu_num * 120.0f;
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
@@ -496,14 +504,14 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 			ingame.menu_num--;
 			if (ingame.menu_num < 0)
 			{
-				ingame.menu_num = 3;
+				ingame.menu_num = 4;
 			}
 		}
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 		{
 			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.menu_num++;
-			ingame.menu_num = ingame.menu_num % 4;
+			ingame.menu_num = ingame.menu_num % 5;
 			
 		}
 	}
@@ -512,12 +520,12 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 //メニュー画面の文字の拡大率処理
 void ChangeCharExtrate(void)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 7; i++)
 	{
-		ingame.char_extrate[i] = 0.8f;
+		ingame.char_extrate[i] = 0.7f;
 	}
-	ingame.char_extrate[ingame.menu_num] = 0.9f;
-	ingame.char_extrate[ingame.goalmenu_num+4] = 0.9f;
+	ingame.char_extrate[ingame.menu_num] = 0.8f;
+	ingame.char_extrate[ingame.goalmenu_num+5] = 0.8f;
 }
 
 
@@ -529,9 +537,9 @@ void MenuDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		{
-			DrawRotaGraphF(640.0f, i * 130.0f + 200.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f, i * 120.0f + 130.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
 
@@ -549,9 +557,9 @@ void GoalSelectMenuDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
-		for (int i = 4; i < 6; i++)
+		for (int i = 5; i < 7; i++)
 		{
-			DrawRotaGraphF(640.0f, (i - 4) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f, (i - 5) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
 		}
 	}
 }

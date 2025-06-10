@@ -407,7 +407,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						//Hitフラグをtrueにする
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
 						//hit時の斧が木を叩くSEを追加
-						Play_Sound_WoodRock(wood.break_wood, 255);
+						Play_Sound_WoodRock(wood.break_wood, 150);
 
 					}
 				}

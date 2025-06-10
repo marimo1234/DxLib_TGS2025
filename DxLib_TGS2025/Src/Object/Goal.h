@@ -15,6 +15,8 @@ struct Goal
 	int print_count;
 
 	int gameover_image;
+	int whiteback_image;
+	int blackback_image;
 };
 
 void GoalInit(void);

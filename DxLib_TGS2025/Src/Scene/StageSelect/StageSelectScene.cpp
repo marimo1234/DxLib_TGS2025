@@ -2,6 +2,7 @@
 #include "../../Utility/InputManager.h"
 #include "../../Utility/PadInputManager.h"
 #include"../InGame/InGameScene.h"
+#include"../Title/TitleScene.h"
 
 #include "DxLib.h"
 #include <stdlib.h>
@@ -344,3 +345,5 @@ void Play_Sound_StageSelect_NC(int sound, int volume)
 	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 	ChangeVolumeSoundMem(volume, sound);
 }
+
+//タイトルのBGMがなっていなかったら再生
