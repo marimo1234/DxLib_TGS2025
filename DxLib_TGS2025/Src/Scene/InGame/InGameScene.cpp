@@ -68,6 +68,8 @@ void InGameSceneInit(void)
 
 	ingame.gameover_se_flag = false;
 
+	ingame.mitibiki_flag = false;
+
 	for (int i = 0; i < 7; i++)
 	{
 		ingame.char_extrate[i] = 0.7f;
@@ -152,6 +154,8 @@ eSceneType InGameSceneUpdate()
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
 
+	TutorialUpdate();
+
 	InGameMenuUpdate(GetGoal(),GetGameOver());
 
 	NextSelectFlag(GetGoal());
@@ -163,49 +167,53 @@ eSceneType InGameSceneUpdate()
 	
 	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (ingame.menu_num == 0 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress&&
-		ingame.menu_flag==true)
+	if (ingame.mitibiki_flag == false)
 	{
-		Play_Sound_Ingame(sound.decision, 100);
-		ingame.menu_num = 0;
-		ingame.menu_flag = false;
-	}
-	if (ingame.menu_num == 1 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-		ingame.menu_flag == true)
-	{
-		Play_Sound_Ingame(sound.decision, 100);
-		ingame.menu_num = 0;
-		ingame.start = false;
-		ingame.menu_flag = false;
-		Stop_InGameBgm();
-	}
-	if (ingame.menu_num == 2 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-		ingame.menu_flag == true&& ingame.menu_manual_flag == false)
-	{
-		Play_Sound_Ingame(sound.decision, 100);
-		ingame.menu_manual_flag = true;
-	}
-	if (ingame.menu_num == 3 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-		ingame.menu_flag == true)
-	{
-		Play_Sound_Ingame(sound.decision, 100);
-		Stop_InGameBgm();
-		return eStageSelect;	//タイトルに戻る
-		ingame.menu_flag = false;
-		ingame.menu_num = 0;
-	}
-	if (ingame.menu_num == 4 &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-		ingame.menu_flag == true)
-	{
-		Play_Sound_Ingame(sound.decision, 100);
-		Stop_InGameBgm();
-		return eTitle;	//タイトルに戻る
-		ingame.menu_num = 0;
+		if (ingame.menu_num == 0 &&
+			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.menu_flag == true)
+		{
+			Play_Sound_Ingame(sound.decision, 100);
+			ingame.menu_num = 0;
+			ingame.menu_flag = false;
+		}
+		if (ingame.menu_num == 1 &&
+			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.menu_flag == true)
+		{
+			Play_Sound_Ingame(sound.decision, 100);
+			ingame.menu_num = 0;
+			ingame.start = false;
+			ingame.menu_flag = false;
+			Stop_InGameBgm();
+		}
+		if (ingame.menu_num == 2 &&
+			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.menu_flag == true && ingame.menu_manual_flag == false)
+		{
+			Play_Sound_Ingame(sound.decision, 100);
+			ingame.menu_manual_flag = true;
+		}
+		if (ingame.menu_num == 3 &&
+			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.menu_flag == true)
+		{
+			Play_Sound_Ingame(sound.decision, 100);
+			Stop_InGameBgm();
+			return eStageSelect;	//タイトルに戻る
+			ingame.menu_flag = false;
+			ingame.menu_num = 0;
+		}
+		if (ingame.menu_num == 4 &&
+			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.menu_flag == true)
+		{
+			Play_Sound_Ingame(sound.decision, 100);
+			Stop_InGameBgm();
+			return eTitle;	//タイトルに戻る
+
+			ingame.menu_num = 0;
+		}
 	}
 
 
@@ -498,7 +506,8 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 		ingame.menu_flag = true;
 	}
 
-	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false && ingame.menu_manual_flag == false)
+	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false
+		&& ingame.menu_manual_flag == false&&ingame.mitibiki_flag==false)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
@@ -535,7 +544,8 @@ void ChangeCharExtrate(void)
 //メニュー画面の描画
 void MenuDraw(void)
 {
-	if (ingame.menu_flag == true && ingame.goalmenu_flag == false&&ingame.menu_manual_flag == false)
+	if (ingame.menu_flag == true && ingame.goalmenu_flag == false
+		&&ingame.menu_manual_flag == false && ingame.mitibiki_flag == false)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
@@ -621,4 +631,22 @@ void Tutorial(void)
 			}
 	}
 }
+
+void TutorialUpdate(void)
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+		ingame.mitibiki_flag == false)
+	{
+		ingame.mitibiki_flag = true;
+		ingame.menu_flag = true;
+	}
+	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+		ingame.mitibiki_flag == true)
+	{
+		ingame.mitibiki_flag = false;
+		ingame.menu_flag = false;
+	}
+}
+
     
