@@ -27,7 +27,7 @@ void TitleSceneInit(void)
 	title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
 	title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
 	title.char_image[1] = LoadGraph("Resource/Images/Options.png");	//タイトルの選択文字
-	title.char_image[2] = LoadGraph("Resource/Images/Exit.png");	//タイトルの選択文字
+	title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
 
 
 	//seの読み込み
