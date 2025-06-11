@@ -16,7 +16,8 @@ enum eWoodRockState // Hit数の列挙
 
 struct Wood
 {
-	Vector2D position;
+	float position_x[12][7];
+	float position_y[12][7];
 	int item_num;
 	int image[4];
 	int animation[12][7];
@@ -26,8 +27,8 @@ struct Wood
 	int count_y;
 	bool delete_flag[12][7];
 
-	bool move_flag;
-	int move_count;
+	bool move_flag[12][7];
+	int move_count[12][7];
 	int fps;
 
 	int effect_image[5];
@@ -41,7 +42,8 @@ struct Wood
 
 struct Rock
 {
-	Vector2D position;
+	float position_x[12][7];
+	float position_y[12][7];
 	int item_num;
 	int image[4];
 	int itemnum_bg_image;
@@ -52,8 +54,9 @@ struct Rock
 	int count_y;
 	bool delete_flag[12][7];
 
-	bool move_flag;
-	int move_count;
+	bool move_flag[12][7];
+	int move_count[12][7];
+
 	int fps;
 
 	int effect_image[5];
@@ -78,8 +81,8 @@ void WoodRockUpdate(void);
 void WoodRockDraw(void);
 void WoodRockResourceInit(void);
 
-void WoodAnimation(void);//木のアニメーション
-void RockAnimation(void);//岩のアニメーション
+void WoodAnimation(int x,int y);//木のアニメーション
+void RockAnimation(int x, int y);//岩のアニメーション
 
 const Wood* GetWood(void);
 const Rock* GetRock(void);
@@ -87,8 +90,8 @@ const Rock* GetRock(void);
 void WoodRockItemCount(void);
 
 void WoodRockReset(void);
-void WoodMove(void);
-void RockMove(void);
+void WoodMove(int x, int y);
+void RockMove(int x, int y);
 void WR_Delete_Flag(void);
 void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
