@@ -35,7 +35,9 @@ void GetStageNumber(const StageSelect* stageselect);
 void InGameMenuUpdate(const Goal*goal,const GameOver* gameover);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
-void TutorialUpdate(const Cursor* cursor);
+void TutorialUpdate(void);
+void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, Tool* tool, const CreateStage* stage);
+
 
 
 
@@ -71,6 +73,7 @@ void InGameSceneInit(void)
 	ingame.gameover_se_flag = false;
 
 	ingame.mitibiki_flag = false;
+	ingame.tutorial_achievements = 0;
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -156,7 +159,9 @@ eSceneType InGameSceneUpdate()
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
 
-	/*TutorialUpdate(GetCursor1());*/
+	//////////////////////
+	/*TutorialUpdate();*/
+	/////////////////////
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
 
@@ -187,6 +192,7 @@ eSceneType InGameSceneUpdate()
 			ingame.menu_num = 0;
 			ingame.start = false;
 			ingame.menu_flag = false;
+			ingame.tutorial_log_num = 2;
 			Stop_InGameBgm();
 		}
 		if (ingame.menu_num == 2 &&
@@ -275,10 +281,12 @@ void InGameSceneDraw(void)
 
 	//ゴールの描画
 	GoalDraw();
-	if (ingame.start == true)
-	{
-		/*Tutorial();*/
-	}
+
+
+	////////////////////
+	/*Tutorial();*/
+	///////////////////
+
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
@@ -298,6 +306,8 @@ void InGameSceneDraw(void)
 
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
+
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.tutorial_log_num);
 
 	
 }
@@ -611,48 +621,49 @@ int tutorial_log;
 //チュートリアルのログ
 void Tutorial(void)
 {
-	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.stage_num == eOne)
 	{
-		
-			char tutorial_load[256];
-			snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
-			tutorial_log = LoadGraph(tutorial_load);
-			if (ingame.start == true)
-			{
-			  DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
-			  DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);	
-			}
-
-			if (ingame.tutorial_log_num < 19)
-			{
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-					ingame.menu_flag == true && ingame.mitibiki_flag == true)
-				{
-					ingame.tutorial_log_num++;
-				}
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
-					ingame.menu_flag == true && ingame.mitibiki_flag == true)
-				{
-					ingame.tutorial_log_num--;
-				}
-			}
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
+		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 	}
 }
 
-void TutorialUpdate(const Cursor*cursor)
+void TutorialUpdate(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
+	/*TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());*/
 	if (ingame.stage_num == eOne)
 	{
-		if (ingame.tutorial_log_num <=4&& cursor->array_x <= 5 && 
-			ingame.mitibiki_flag == false&&ingame.start==true)
+		char tutorial_load[256];
+		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
+		tutorial_log = LoadGraph(tutorial_load);
+
+		if (ingame.tutorial_log_num < 18)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+				ingame.menu_flag == true && ingame.mitibiki_flag == true)
+			{
+				ingame.tutorial_log_num++;
+			}
+		}
+		if (ingame.tutorial_log_num > 2)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
+				ingame.menu_flag == true && ingame.mitibiki_flag == true)
+			{
+				ingame.tutorial_log_num--;
+			}
+		}
+
+
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.menu_flag = true;
 		}
-		else if (ingame.tutorial_log_num == 4 && cursor->array_x==5&&
-			ingame.mitibiki_flag == true&&ingame.start == true)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
 			ingame.menu_flag = false;
@@ -660,4 +671,78 @@ void TutorialUpdate(const Cursor*cursor)
 	}
 }
 
-    
+void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,Tool*tool,const CreateStage*stage)
+{
+	switch (ingame.tutorial_achievements)
+	{
+	case 1:
+		if (ingame.tutorial_log_num < 4 && ingame.mitibiki_flag == false)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.menu_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+			ingame.menu_flag = false;
+			if (cursor->array_x == 5)
+			{
+				ingame.tutorial_achievements++;
+				break;
+			}
+		}
+	case 2:
+		if (ingame.tutorial_log_num < 5 && ingame.mitibiki_flag == false)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.menu_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+			ingame.menu_flag = false;
+			if (rock->item_num == 1)
+			{
+				ingame.tutorial_achievements++;
+				break;
+			}
+		}
+	case 3:
+			if (ingame.tutorial_log_num < 7 && ingame.mitibiki_flag == false)
+			{
+				ingame.mitibiki_flag = true;
+				ingame.menu_flag = true;
+			}
+			else
+			{
+				ingame.mitibiki_flag = false;
+				ingame.menu_flag = false;
+				if (tool->road_num == 1)
+				{
+					ingame.tutorial_achievements++;
+					break;
+				}
+			}
+	case 4:
+		if (ingame.tutorial_log_num < 9 && ingame.mitibiki_flag == false)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.menu_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+			ingame.menu_flag = false;
+			if (stage->array[6][4] == 4)
+			{
+				ingame.tutorial_achievements++;
+				break;
+			}
+		}
+	
+	}
+	
+		
+	
+
+}
