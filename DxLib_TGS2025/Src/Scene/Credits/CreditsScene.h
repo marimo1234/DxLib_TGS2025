@@ -4,6 +4,7 @@
 
 struct Credits
 {
+	int credits_background_img;
 	int button_se;
 };
 
