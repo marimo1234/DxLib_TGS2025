@@ -7,6 +7,7 @@
 #include "InGame/InGameScene.h"
 #include "StageSelect/StageSelectScene.h"
 #include "End/EndScene.h"
+#include "Credits/CreditsScene.h"
 
 eSceneType current_scene_type;
 int is_end_flag;
@@ -47,6 +48,9 @@ void SceneManagerUpdate(void)
 		next_scene_type = EndSceneUpdate();
 		break;
 	case eEnd2:
+	case eCredits:
+		next_scene_type = CreditsSceneUpdate();
+		break;
 	default:
 		break;
 	}
@@ -84,6 +88,8 @@ void SceneManagerDraw(void)
 		EndSceneDraw();
 		break;
 	case eEnd2:
+	case eCredits:
+		CreditsSceneDraw();
 	default:
 		break;
 	}
@@ -137,6 +143,9 @@ void SceneInit(eSceneType new_scene_type)
 		EndSceneInit();
 		break;
 	case eEnd2:
+	case eCredits:
+		CreditsSceneInit();
+		break;
 	default:
 		break;
 	}

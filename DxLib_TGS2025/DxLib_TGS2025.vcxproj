@@ -145,6 +145,7 @@
     <ClCompile Include="Src\Object\map.cpp" />
     <ClCompile Include="Src\Object\Tool.cpp" />
     <ClCompile Include="Src\Object\WoodRock.cpp" />
+    <ClCompile Include="Src\Scene\Credits\CreditsScene.cpp" />
     <ClCompile Include="Src\Scene\End\EndScene.cpp" />
     <ClCompile Include="Src\Scene\InGame\InGameScene.cpp" />
     <ClCompile Include="Src\Utility\InputManager.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Src\Object\map.h" />
     <ClInclude Include="Src\Object\Tool.h" />
     <ClInclude Include="Src\Object\WoodRock.h" />
+    <ClInclude Include="Src\Scene\Credits\CreditsScene.h" />
     <ClInclude Include="Src\Utility\Geometry.h" />
     <ClInclude Include="Src\Scene\End\EndScene.h" />
     <ClInclude Include="Src\Scene\InGame\InGameScene.h" />
