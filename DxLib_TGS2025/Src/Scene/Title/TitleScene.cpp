@@ -74,9 +74,9 @@ eSceneType TitleSceneUpdate(void)
 	if (title.char_num == 1 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		/*Play_Sound_Ingame(sound.decision, 100);*/
-		//return eHelp;	//ヘルプ画面へ
-		//title.char_num = 0;
+		Play_Title_SE(title.button_se, 100);
+		return eCredits;	//クレジット画面へ
+		title.char_num = 0;
 	}
 	if (title.char_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)

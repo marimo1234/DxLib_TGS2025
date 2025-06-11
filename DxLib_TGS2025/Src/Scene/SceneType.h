@@ -7,4 +7,5 @@ enum eSceneType
 	eInGame,
 	eEnd,
 	eEnd2,
+	eCredits,
 };
