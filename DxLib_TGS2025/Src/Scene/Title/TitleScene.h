@@ -13,6 +13,8 @@ struct Title
 	float cursor_y;
 
 	int bgm;
+	int cursor_se;
+	int button_se;
 };
 void TitleSceneInit(void);
 eSceneType TitleSceneUpdate(void);

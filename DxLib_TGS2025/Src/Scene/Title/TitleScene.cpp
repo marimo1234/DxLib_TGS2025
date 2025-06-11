@@ -6,12 +6,16 @@
 
 int title_image;		//タイトル画像のハンドル
 
+void Play_Title_SE(int sound, int volume);
+
 Title title;
 
 //タイトルシーンのリソース初期化
 void TitleResourceInit(void)
 {
 	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+	title.cursor_se= LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
+	title.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 }
 
 //タイトルシーンの初期化
@@ -61,7 +65,7 @@ eSceneType TitleSceneUpdate(void)
 	if (title.char_num == 0 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		/*Play_Sound_Ingame(sound.decision, 100);*/
+		Play_Title_SE(title.button_se, 100);
 		return eStageSelect;	//ステージセレクト画面へ
 		title.char_num = 0;
 	
@@ -77,7 +81,7 @@ eSceneType TitleSceneUpdate(void)
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Stop_BGM();
-		/*Play_Sound_Ingame(sound.decision, 100);*/
+		Play_Title_SE(title.button_se, 100);
 		return eEnd;	//エンド画面へ
 	}
 	return eTitle;
@@ -116,7 +120,7 @@ void TitleCursorUpdate(void)
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
-		//Play_Sound_Title2(sound.select_move, 100);
+		Play_Title_SE(title.cursor_se, 100);
 		title.char_num--;
 		if (title.char_num < 0)
 		{
@@ -127,7 +131,7 @@ void TitleCursorUpdate(void)
 	}
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
-		//Play_Sound_Title2(sound.select_move, 100);
+		Play_Title_SE(title.cursor_se, 100);
 		title.char_num++;
 		title.char_num = title.char_num % 3;
 
@@ -142,6 +146,12 @@ void Play_Title_BGM(void)
 		ChangeVolumeSoundMem(100, title.bgm);
 		PlaySoundMem(title.bgm, DX_PLAYTYPE_LOOP);
 	}
+}
+
+void Play_Title_SE(int sound, int volume)
+{
+	ChangeVolumeSoundMem(volume, sound);
+	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
 }
 
 void Stop_BGM(void)
