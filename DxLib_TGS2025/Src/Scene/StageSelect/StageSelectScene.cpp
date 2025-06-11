@@ -26,7 +26,7 @@ void StageSelectSceneInit(void)
 {  
 	//ポジションの初期化
 	stageselect.position.x = 400.0f;
-	stageselect.position.y = 235.0f;
+	stageselect.position.y = 255.0f;
 	//ステージ番号の初期化
 	stageselect.number = 0;
 	//ステージ配列の初期化
@@ -190,21 +190,21 @@ void StageSelectCarMove(void)
 		if (stageselect.array_y > 0 && stageselect.array_y != 2)
 		{
 			stageselect.array_y--;
-			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
+			stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
 
 		}
 		else if (stageselect.array_y == 0)
 		{
 			stageselect.array_y = 2;
 			stageselect.position.x = 920.0f;
-			stageselect.position.y = 605.0f;
+			stageselect.position.y = 625.0f;
 		}
 		else if (stageselect.array_y == 2)
 		{
 			stageselect.array_x = 2;
 			stageselect.array_y--;
 			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
+			stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
 		}
 
 		// 移動のSE（左とおんなじ音入れてね）
@@ -217,14 +217,14 @@ void StageSelectCarMove(void)
 		if (stageselect.array_y < 1)
 		{
 			stageselect.array_y++;
-			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
+			stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
 
 		}
 		else if (stageselect.array_y == 1)
 		{
 			stageselect.array_y = 2;
 			stageselect.position.x = 920.0f;
-			stageselect.position.y = 605.0f;
+			stageselect.position.y = 625.0f;
 
 		}
 		else if (stageselect.array_y == 2)
@@ -232,7 +232,7 @@ void StageSelectCarMove(void)
 			stageselect.array_x = 2;
 			stageselect.array_y = 0;
 			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-			stageselect.position.y = 200.0f * stageselect.array_y + 235.0f;
+			stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
 		}
 		// 移動のSE（左とおんなじ音入れてね）
 		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
@@ -300,9 +300,9 @@ void NumTroutDraw(void)
 			//X座標が280.0ｆ（余白）+端から中心までの120.0ｆ
 			//Y座標が135.0ｆ（余白）+端から中心までの100.0f
 			//枠の描画
-			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 235.0f, 0.4, 0.0, stageselect.trout_array[i][j], TRUE);
+			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 255.0f, 0.4, 0.0, stageselect.trout_array[i][j], TRUE);
 			//数字の描画
-			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 210.0f, 0.4, 0.0, stageselect.number_image[stageselect.array_number], TRUE);
+			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 230.0f, 0.4, 0.0, stageselect.number_image[stageselect.array_number], TRUE);
 			stageselect.array_number++;
 		}
 	}
