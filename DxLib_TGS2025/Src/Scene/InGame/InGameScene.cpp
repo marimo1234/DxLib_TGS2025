@@ -35,6 +35,8 @@ void GetStageNumber(const StageSelect* stageselect);
 void InGameMenuUpdate(const Goal*goal,const GameOver* gameover);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
+void TutorialUpdate(const Cursor* cursor);
+
 
 
 //初期化
@@ -43,7 +45,7 @@ void InGameSceneInit(void)
 	
 	//操作説明の表示
 	ingame.manual_open = false;
-	ingame.tutoria_log_num = 2;
+	ingame.tutorial_log_num = 2;
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
@@ -154,7 +156,7 @@ eSceneType InGameSceneUpdate()
 	//ゲームオーバーになったらリセットします
 	GameOverReset(GetGameOver(),GetCar());
 
-	TutorialUpdate();
+	/*TutorialUpdate(GetCursor1());*/
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
 
@@ -275,7 +277,7 @@ void InGameSceneDraw(void)
 	GoalDraw();
 	if (ingame.start == true)
 	{
-		Tutorial();
+		/*Tutorial();*/
 	}
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
@@ -614,7 +616,7 @@ void Tutorial(void)
 	{
 		
 			char tutorial_load[256];
-			snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutoria_log_num);
+			snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
 			tutorial_log = LoadGraph(tutorial_load);
 			if (ingame.start == true)
 			{
@@ -622,30 +624,39 @@ void Tutorial(void)
 			  DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);	
 			}
 
-			if (ingame.tutoria_log_num < 44)
+			if (ingame.tutorial_log_num < 19)
 			{
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && ingame.menu_flag == false)
+				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+					ingame.menu_flag == true && ingame.mitibiki_flag == true)
 				{
-					ingame.tutoria_log_num++;
+					ingame.tutorial_log_num++;
+				}
+				if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
+					ingame.menu_flag == true && ingame.mitibiki_flag == true)
+				{
+					ingame.tutorial_log_num--;
 				}
 			}
 	}
 }
 
-void TutorialUpdate(void)
+void TutorialUpdate(const Cursor*cursor)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
-		ingame.mitibiki_flag == false)
+	if (ingame.stage_num == eOne)
 	{
-		ingame.mitibiki_flag = true;
-		ingame.menu_flag = true;
-	}
-	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
-		ingame.mitibiki_flag == true)
-	{
-		ingame.mitibiki_flag = false;
-		ingame.menu_flag = false;
+		if (ingame.tutorial_log_num <=4&& cursor->array_x <= 5 && 
+			ingame.mitibiki_flag == false&&ingame.start==true)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.menu_flag = true;
+		}
+		else if (ingame.tutorial_log_num == 4 && cursor->array_x==5&&
+			ingame.mitibiki_flag == true&&ingame.start == true)
+		{
+			ingame.mitibiki_flag = false;
+			ingame.menu_flag = false;
+		}
 	}
 }
 

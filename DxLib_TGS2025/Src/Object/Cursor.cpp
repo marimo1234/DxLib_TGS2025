@@ -30,7 +30,7 @@ static bool is_animating_Hammer = false;    // ハンマーのアニメーショ
 void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
-void CursolButtonMovement(const Tool* tool);       // 十字キーの移動
+void CursolButtonMovement(const Tool* tool, const InGame* ingame);       // 十字キーの移動
 void CursorRange_eOne(const InGame* ingame);
 
 
@@ -74,7 +74,7 @@ void CursorUpdate(void)
 	
 	if (cursorstart == true&& cursor.menu_flag == false&& cursor.operable_flag == true)
 	{
-        CursolButtonMovement(Get_Tool());
+        CursolButtonMovement(Get_Tool(),GetInGame());
 		// ツルハシのアニメーション
 		if (is_animating_pickaxe)
 		{
@@ -237,7 +237,7 @@ const Cursor* GetCursor1(void)
 	return &cursor;
 }
 
-void CursolButtonMovement(const Tool* tool)
+void CursolButtonMovement(const Tool* tool,const InGame*ingame)
 {
 	//ステージ1のカーソルの範囲設定
 	CursorRange_eOne(GetInGame());
@@ -256,8 +256,12 @@ void CursolButtonMovement(const Tool* tool)
 			}
 			else if (cursor.array_x == cursor.array_x_min)
 			{
-				cursor.array_x = cursor.array_x_max;
-				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+				if (ingame->stage_num != eOne)
+				{
+					cursor.array_x = cursor.array_x_max;
+					cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+
+				}
 			}
 
 			// 移動のSE（もし使うならここに入れてね）
@@ -274,8 +278,11 @@ void CursolButtonMovement(const Tool* tool)
 			}
 			else if (cursor.array_x == cursor.array_x_max)
 			{
-				cursor.array_x = cursor.array_x_min;
-				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+				if (ingame->stage_num != eOne)
+				{
+					cursor.array_x = cursor.array_x_min;
+					cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
+				}
 			}
 			// 移動のSE（左とおんなじ音入れてね）
 			/*PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);*/
