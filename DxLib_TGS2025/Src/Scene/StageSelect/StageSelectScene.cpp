@@ -81,13 +81,6 @@ eSceneType StageSelectSceneUpdate(void)
 {
 //車がいる場所の配列番号でステージ番号を取得
 	StageSelectGetNumber();
-
-	//if (stageselect.flag == true)
-	//{
-	//	//ステージセレクト画面の車のムーブ
-	//	StageSelectCarMove();
-	//}
-	
 	
 	SelectButtonDraw();
 
