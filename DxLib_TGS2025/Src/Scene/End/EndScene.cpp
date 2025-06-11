@@ -8,6 +8,8 @@ void EndSceneInit(void)
 {
 	end.image= LoadGraph("Resource/Images/EndScene_image.png");
 	end.fps = 0;
+	end.black= LoadGraph("Resource/Images/end_black.png");
+	end.black_count = 0;
 	
 }
 
@@ -37,7 +39,22 @@ eSceneType EndSceneUpdate(void)
 
 void EndSceneDraw(void)
 {
+	
+	end.black_count = end.fps / 20;
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, end.image, TRUE);
+	if (end.black_count >= 6)
+	{
+		DrawRotaGraph(850 + 110 * end.black_count, 200, 1.0, 0.0, end.black, TRUE);
+		DrawRotaGraph(850 + 110 * end.black_count, 350, 1.0, 0.0, end.black, TRUE);
+		DrawRotaGraph(850 + 110 * end.black_count, 500, 1.0, 0.0, end.black, TRUE);
+	}
+	else
+	{
+		DrawRotaGraph(750 + 110 * end.black_count, 200, 1.0, 0.0, end.black, TRUE);
+		DrawRotaGraph(750 + 110 * end.black_count, 350, 1.0, 0.0, end.black, TRUE);
+		DrawRotaGraph(750 + 110 * end.black_count, 500, 1.0, 0.0, end.black, TRUE);
+	}
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", end.black_count);
 	//SetFontSize(40);
 	//DrawString(1000, 550, "Z:ゲーム開始\nX:タイトル\n", GetColor(255, 255, 255));			//ゲーム開始とタイトルへの表示
 	//SetFontSize(16);

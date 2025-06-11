@@ -6,6 +6,8 @@ struct End
 {
 	int image;
 	int fps;
+	int black;
+	int black_count;
 };
 
 void EndSceneInit(void);
