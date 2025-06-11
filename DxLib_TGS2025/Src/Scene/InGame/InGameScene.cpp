@@ -265,8 +265,10 @@ void InGameSceneDraw(void)
 
 	//ゴールの描画
 	GoalDraw();
-	
-	Tutorial();
+	if (ingame.start == true)
+	{
+		Tutorial();
+	}
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
@@ -600,19 +602,23 @@ void Tutorial(void)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.stage_num == eOne)
 	{
-		char tutorial_load[256];
-		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutoria_log_num);
-		tutorial_log = LoadGraph(tutorial_load);
-		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
-		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
+		
+			char tutorial_load[256];
+			snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutoria_log_num);
+			tutorial_log = LoadGraph(tutorial_load);
+			if (ingame.start == true)
+			{
+			  DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
+			  DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);	
+			}
+
+			if (ingame.tutoria_log_num < 44)
+			{
+				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && ingame.menu_flag == false)
+				{
+					ingame.tutoria_log_num++;
+				}
+			}
 	}
-	if (ingame.tutoria_log_num < 44)
-	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && ingame.menu_flag == false)
-		{
-			ingame.tutoria_log_num++;
-		}
-	}
-	
 }
     
