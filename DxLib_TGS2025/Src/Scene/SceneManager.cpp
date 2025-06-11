@@ -6,7 +6,7 @@
 #include "Title/TitleScene.h"
 #include "InGame/InGameScene.h"
 #include "StageSelect/StageSelectScene.h"
-#include "Help/HelpScene.h"
+#include "End/EndScene.h"
 
 eSceneType current_scene_type;
 int is_end_flag;
@@ -43,10 +43,10 @@ void SceneManagerUpdate(void)
 	case eInGame:
 		next_scene_type = InGameSceneUpdate();
 		break;
-	case eHelp:
-		next_scene_type = HelpSceneUpdate();
-		break;
 	case eEnd:
+		next_scene_type = EndSceneUpdate();
+		break;
+	case eEnd2:
 	default:
 		break;
 	}
@@ -80,10 +80,10 @@ void SceneManagerDraw(void)
 	case eInGame:
 		InGameSceneDraw();
 		break;
-	case eHelp:
-		HelpSceneDraw();
-		break;
 	case eEnd:
+		EndSceneDraw();
+		break;
+	case eEnd2:
 	default:
 		break;
 	}
@@ -106,7 +106,7 @@ void ChangeScene(eSceneType new_scene_type)
 	//２回目以降の呼び出し時↓
 
 	//エンド画面が呼び出されたらループ終了
-	if (new_scene_type == eEnd)
+	if (new_scene_type == eEnd2)
 	{
 		is_end_flag = 1;
 		return;
@@ -133,10 +133,10 @@ void SceneInit(eSceneType new_scene_type)
 	case eInGame:
 		InGameSceneInit();
 		break;
-	case eHelp:
-		HelpSceneInit();
-		break;
 	case eEnd:
+		EndSceneInit();
+		break;
+	case eEnd2:
 	default:
 		break;
 	}

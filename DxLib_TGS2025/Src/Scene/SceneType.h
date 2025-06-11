@@ -5,6 +5,6 @@ enum eSceneType
 	eTitle,
 	eStageSelect,
 	eInGame,
-	eHelp,
 	eEnd,
+	eEnd2,
 };
