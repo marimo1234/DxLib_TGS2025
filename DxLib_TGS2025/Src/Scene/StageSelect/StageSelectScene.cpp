@@ -39,6 +39,8 @@ void StageSelectSceneInit(void)
 	stageselect.Abutton_rate = 0.15f;
 	stageselect.rate_num = 0.1;
 
+	stageselect.flag = true;
+
 	//画像の取得
 	//背景
 	stageselect.background_image = LoadGraph("Resource/images/StageSelect.png");
@@ -77,12 +79,16 @@ void StageSelectSceneInit(void)
 //ステージセレクトシーンの更新
 eSceneType StageSelectSceneUpdate(void)
 {
-	//ステージセレクト画面の車のムーブ
-	StageSelectCarMove();
-
-	//車がいる場所の配列番号でステージ番号を取得
+//車がいる場所の配列番号でステージ番号を取得
 	StageSelectGetNumber();
-	//ボタンの描画
+
+	//if (stageselect.flag == true)
+	//{
+	//	//ステージセレクト画面の車のムーブ
+	//	StageSelectCarMove();
+	//}
+	
+	
 	SelectButtonDraw();
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -93,6 +99,7 @@ eSceneType StageSelectSceneUpdate(void)
 		//ステージ番号が-1じゃなければ
 		if (stageselect.number != -1 && stageselect.number != 6)
 		{
+			stageselect.flag = false;
 			Stop_Title_BGM(GetTitle());
 			Play_Sound_StageSelect(stageselect.button_se, 80);
 			StageSelectNumber();
@@ -103,6 +110,12 @@ eSceneType StageSelectSceneUpdate(void)
 			Play_Sound_StageSelect(stageselect.button_se, 80);
 			return eTitle;
 		}
+	}
+
+	if (stageselect.flag == true)
+	{
+		//ステージセレクト画面の車のムーブ
+		StageSelectCarMove();
 	}
 	return eStageSelect;
 }
@@ -304,17 +317,17 @@ void NumTroutDraw(void)
 	//車のいる枠が葉っぱつきになる描画
 	if (stageselect.array_y != 2)
 	{
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
+		DrawRotaGraphF(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
 		/*DrawRotaGraph(stageselect.position.x, stageselect.position.y + 50.0f, 0.1, 0.0, stageselect.car_image, TRUE);*/
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y + 60.0f, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
+		DrawRotaGraphF(stageselect.position.x, stageselect.position.y + 60.0f, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
 
 	}
 	//BACKの枠だけ描画する画像を変える
 	else if (stageselect.array_y == 2)
 	{
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y, 1.0, 0.0, stageselect.trout_image[2], TRUE);
+		DrawRotaGraphF(stageselect.position.x, stageselect.position.y, 1.0, 0.0, stageselect.trout_image[2], TRUE);
 		/*DrawRotaGraph(stageselect.position.x, stageselect.position.y, 0.1, 0.0, stageselect.car_image, TRUE);*/
-		DrawRotaGraph(stageselect.position.x, stageselect.position.y, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
+		DrawRotaGraphF(stageselect.position.x, stageselect.position.y, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
 	}
 
 

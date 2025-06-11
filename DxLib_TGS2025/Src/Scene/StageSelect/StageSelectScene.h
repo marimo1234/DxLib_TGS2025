@@ -6,6 +6,7 @@
 
 struct StageSelect
 {
+	bool flag;
 	int background_image;
 	int Abutton;
 	float Abutton_rate;
