@@ -198,17 +198,16 @@ void CursorDraw(const Tool*tool)
 	}
 	else if (tool->item_number == eRoad)
 	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_road, TRUE);
-		DrawExtendFormatString(cursor.position.x, cursor.position.y-40.0, 2.8, 2.5, GetColor(0, 0, 0), "%d", 
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
+		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->road_num);
 	}
 	else if (tool->item_number == eWoodRoad)
 	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.5, 0.0, cursor_hasi, TRUE);
-		DrawExtendFormatString(cursor.position.x + 20.0, cursor.position.y - 80.0, 2.8, 2.5, GetColor(0, 0, 0), "%d", 
+		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
+		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->wood_road_num);
 	}
-
 }
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)
