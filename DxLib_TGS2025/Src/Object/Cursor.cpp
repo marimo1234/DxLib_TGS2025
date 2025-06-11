@@ -30,6 +30,8 @@ static bool is_animating_Hammer = false;    // ハンマーのアニメーショ
 void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
+void CursolButtonMovement(const Tool* tool);       // 十字キーの移動
+void CursorRange_eOne(const InGame* ingame);
 
 
 //カーソルの初期化
@@ -237,7 +239,9 @@ const Cursor* GetCursor1(void)
 
 void CursolButtonMovement(const Tool* tool)
 {
-	
+	//ステージ1のカーソルの範囲設定
+	CursorRange_eOne(GetInGame());
+
 		PadInputManager* pad_input = PadInputManager::GetInstance();
 
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
@@ -380,7 +384,7 @@ void GetCursorStageNum(const InGame* ingame)
 	{
 	case eOne:
 		cursor.array_x_min = 1;
-		cursor.array_x_max = 9;
+		cursor.array_x_max = 8;
 		cursor.array_y_min = 3;
 		cursor.array_y_max = 4;
 		break;
@@ -390,5 +394,29 @@ void GetCursorStageNum(const InGame* ingame)
 		cursor.array_y_min = 0;
 		cursor.array_y_max = 6;
 		break;
+	}
+}
+
+void CursorRange_eOne(const InGame* ingame)
+{
+	if (ingame->stage_num == eOne)
+	{
+		if (cursor.array_x > 0 && cursor.array_x < 6)
+		{
+			cursor.array_y_max = 3;
+		}
+		else
+		{
+			cursor.array_y_max = 4;
+		}
+
+		if (cursor.array_y == 4)
+		{
+			cursor.array_x_min = 6;
+		}
+		else
+		{
+			cursor.array_x_min = 1;
+		}
 	}
 }

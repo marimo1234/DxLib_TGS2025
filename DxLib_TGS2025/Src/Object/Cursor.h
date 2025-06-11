@@ -27,6 +27,5 @@ void CursorInit(void);
 void CursorUpdate(void);
 void CursorDraw(const Tool* tool);
 const Cursor* GetCursor1(void);
-void CursolButtonMovement(const Tool* tool);       // 十字キーの移動
 void CursorReset(void);
 void CursorResourceInit(void);
