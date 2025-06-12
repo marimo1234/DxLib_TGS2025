@@ -160,7 +160,7 @@ eSceneType InGameSceneUpdate()
 	GameOverReset(GetGameOver(),GetCar());
 
 	//////////////////////
-	/*TutorialUpdate();*/
+	TutorialUpdate();
 	/////////////////////
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
@@ -284,7 +284,7 @@ void InGameSceneDraw(void)
 
 
 	////////////////////
-	/*Tutorial();*/
+	Tutorial();
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -513,8 +513,8 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//Goal,GameOver,Manualが開かれていない時
-	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&
-		pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&ingame.mitibiki_flag==false
+		&&pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		ingame.menu_flag = true;
 	}
@@ -642,7 +642,7 @@ void TutorialUpdate(void)
 		if (ingame.tutorial_log_num < 18)
 		{
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-				ingame.menu_flag == true && ingame.mitibiki_flag == true)
+				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num++;
 			}
@@ -650,7 +650,7 @@ void TutorialUpdate(void)
 		if (ingame.tutorial_log_num > 2)
 		{
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
-				ingame.menu_flag == true && ingame.mitibiki_flag == true)
+				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num--;
 			}
@@ -661,13 +661,13 @@ void TutorialUpdate(void)
 			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
+			/*ingame.menu_flag = true;*/
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
+			/*ingame.menu_flag = false;*/
 		}
 	}
 }

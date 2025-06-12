@@ -21,6 +21,8 @@ struct Cursor
 	int array_y_min;
 	int array_y_max;
 
+
+
 };
 
 void CursorInit(void);
