@@ -101,15 +101,18 @@ void InGameSceneInit(void)
 
 void InGameResourceInit(void)
 {
-	//説明の後ろに表示
+	//説明の後ろに表示(黒い背景）
 	ingame.back = LoadGraph("Resource/images/black_back.png");
 	//インゲーム前の画面
 	ingame.space = LoadGraph("Resource/images/aida.png");
 	//操作説明の画像
 	ingame.manual_image = LoadGraph("Resource/images/manual_menu.png");
 	ingame.space = LoadGraph("Resource/images/aida.png");
+	//白い背景
 	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
+	//メニューカーソル
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
+	//メニューバー画像
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
 	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
 	ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
@@ -117,7 +120,9 @@ void InGameResourceInit(void)
 	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
 	ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
 	ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+	//メニューのマニュアルで使う操作説明画像
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
+	//ミチビキ君
 	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
 
 	//BGMの初期化
@@ -624,6 +629,12 @@ void Tutorial(void)
 {
 	if (ingame.stage_num == eOne)
 	{
+		
+		if (ingame.mitibiki_flag == true&&ingame.start == true)
+		{
+			DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
+
+		}
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 	}
@@ -632,14 +643,25 @@ void Tutorial(void)
 void TutorialUpdate(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	//TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
+	//チュートリアル実績
+	TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
+
+	//ステージ1の時
 	if (ingame.stage_num == eOne)
 	{
 		char tutorial_load[256];
 		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
 		tutorial_log = LoadGraph(tutorial_load);
 
-		if (ingame.tutorial_log_num < 18)
+		//リセットする
+		if (ingame.start == false)
+		{
+			ingame.tutorial_log_num = 2;
+			ingame.tutorial_achievements = 1;
+		}
+
+		//チュートリアルのページをめくる
+		if (ingame.tutorial_log_num < 18&& ingame.start == true)
 		{
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
@@ -647,7 +669,7 @@ void TutorialUpdate(void)
 				ingame.tutorial_log_num++;
 			}
 		}
-		if (ingame.tutorial_log_num > 2)
+		if (ingame.tutorial_log_num > 2 && ingame.start == true)
 		{
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
@@ -657,7 +679,7 @@ void TutorialUpdate(void)
 		}
 
 
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+		/*if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
@@ -666,7 +688,7 @@ void TutorialUpdate(void)
 			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
-		}
+		}*/
 	}
 }
 
@@ -679,7 +701,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		{
 			ingame.mitibiki_flag = true;
 		}
-		else if (ingame.tutorial_log_num == 4)
+		else /*if (ingame.tutorial_log_num == 4)*/
 		{
 			ingame.mitibiki_flag = false;
 			if (cursor->array_x == 5)
@@ -688,6 +710,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 				break;
 			}
 		}
+		break;
 	case 2:
 		if (ingame.tutorial_log_num < 5 )
 		{
@@ -702,6 +725,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 				break;
 			}
 		}
+		break;
 	case 3:
 			if (ingame.tutorial_log_num < 7 )
 			{
@@ -716,6 +740,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 					break;
 				}
 			}
+			break;
 	case 4:
 		if (ingame.tutorial_log_num < 9 )
 		{
@@ -730,6 +755,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 				break;
 			}
 		}
+		break;
 	
 	}
 	
