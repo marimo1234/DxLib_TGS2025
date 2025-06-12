@@ -43,6 +43,7 @@ struct Car
     bool warn_image_flag;
     int warn_count;
 
+    bool mitibiki_flag;
 };
 
 struct GameOver

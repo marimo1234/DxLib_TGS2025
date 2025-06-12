@@ -104,7 +104,7 @@ void ObstacleAnimationControl(const Cursor* cursor)
 //処理をスタートするフラグ
 void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car)
 {
-	if (ingame->start == true&& ingame->menu_flag == false)
+	if (ingame->start == true&& ingame->menu_flag == false && ingame->mitibiki_flag ==false)
 	{
 		mole.start = true;
 		mole.operable_flag = true;
@@ -114,7 +114,7 @@ void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,
 		mole.start = false;
 	}
 
-	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true)
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||ingame->mitibiki_flag==true)
 	{
 		mole.operable_flag = false;
 	}

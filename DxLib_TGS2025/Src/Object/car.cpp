@@ -54,7 +54,8 @@ void CarInit(void)
 
 
 	car.start = false;//車の処理フラグ
-	car.menu_flag == false;
+	car.menu_flag = false;
+	car.mitibiki_flag = false;
 	
 	//ステージ番号と車の初期位置を取得
 	GetCarStageNum(GetInGame());
@@ -109,14 +110,14 @@ void CarManagerUpdate(void)
 	}
 
 	//処理開始がtrueなら
-	if (car.start == true && car.menu_flag == false)
+	if (car.start == true && car.menu_flag == false&&car.mitibiki_flag == false)
 	{
 		//車の移動処理
 		CarGoalCheck(GetStage());
 		CarMovePosition(GetStage());
 
 	}
-	else if (car.start == false && car.menu_flag == false)
+	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
 		//ステージ切り替えの時リセットする
 		CarReset();
@@ -148,15 +149,16 @@ void CarDraw(void)
 //車の処理をスタートするフラグ
 void CarStart(const InGame* ingame)
 {
-	if (ingame->start == true&& ingame->menu_flag == false)
+	if (ingame->start == true && ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		car.start = true;
 	}
-	else if (ingame->start == false && ingame->menu_flag == false)
+	else if (ingame->start == false && ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		car.start = false;
 	}
 	car.menu_flag = ingame->menu_flag;
+	car.mitibiki_flag= ingame->mitibiki_flag;
 }
 
 //車の情報を取得
@@ -197,6 +199,7 @@ void CarReset(void)
 	car.warn_count = 0;//警告マークを表示する時間
 	car.menu_flag == false;//車のメニュー処理フラグ
 	car.animation = car.image[0];
+	car.mitibiki_flag = false;
 	
 
 
@@ -204,13 +207,6 @@ void CarReset(void)
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
 
-	/*for (int i = 0; i < 84; i++)
-	{
-		car.next_x[i] = -1;
-		car.next_y[i] = -1;
-	}
-	car.next_x[0] = 3;
-	car.next_y[0] = 3;*/
 }
 
 //次の進行場所を取得する
