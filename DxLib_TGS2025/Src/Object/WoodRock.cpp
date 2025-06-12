@@ -19,7 +19,7 @@
 #define WOOD_ITEM_Y (110.0f)
 #define ROCK_ITEM_X (1170.0f)
 #define ROCK_ITEM_Y (50.0f)
-#define HIT_COOLTIME (30)
+#define HIT_COOLTIME (27)
 
 
 bool woodrock_start;
