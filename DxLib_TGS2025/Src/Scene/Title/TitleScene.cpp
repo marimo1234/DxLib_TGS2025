@@ -91,15 +91,9 @@ eSceneType TitleSceneUpdate(void)
 //タイトルシーン描画
 void TitleSceneDraw(void)
 {
-	//DrawGraph(0, 0, title_image, TRUE);								//背景
-	/*DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでインゲーム画面へ");
-	DrawFormatString(50, 60, GetColor(255, 255, 255), "Xでヘルプ画面へ");
-	DrawFormatString(50, 110, GetColor(255, 255, 255), "Cでエンド 画面なし");*/
-
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
-	DrawRotaGraphF(100.0f, 690.0f, 0.15f, 0.0, title.control_image, TRUE);
-	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでステージセレクト画面へ");*/
+	DrawRotaGraphF(900.0f, 680.0f, 0.15f, 0.0, title.control_image, TRUE);
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);

@@ -10,6 +10,7 @@ void CreditsSceneInit(void)
 {
 	//画像読み込み
 	credits.credits_background_img= LoadGraph("Resource/images/credits_image.png");
+	credits.B_back = LoadGraph("Resource/images/Bbacdk.png");
 	//SE読み込み
 	credits.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 }
@@ -31,7 +32,7 @@ eSceneType CreditsSceneUpdate(void)
 void CreditsSceneDraw(void)
 {
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, credits.credits_background_img, TRUE);
-	DrawFormatString(100, 100, GetColor(0, 0, 0), "クレジット画面Bボタンでタイトルへ");
+	DrawRotaGraphF(100.0f, 50.0f, 1.0, 0.0, credits.B_back, TRUE);
 }
 
 void Play_Credits_SE(int sound, int volume)
