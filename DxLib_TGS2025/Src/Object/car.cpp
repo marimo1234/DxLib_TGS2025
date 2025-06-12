@@ -548,7 +548,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.next_y[0] = 3;
 		break;
 	case eTwo:
-		car.current_x = 1;//ステージ①の初期位置
+		car.current_x = 1;//ステージ②の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.1f;
 		car.speed.y = 0.1f;
@@ -557,7 +557,7 @@ void GetCarStageNum(const InGame* ingame)
 
 		break;
 	case eThree:
-		car.current_x = 1;//ステージ①の初期位置
+		car.current_x = 1;//ステージ③の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
@@ -566,16 +566,16 @@ void GetCarStageNum(const InGame* ingame)
 
 		break;
 	case eFour:
-		car.current_x = 1;//ステージ①の初期位置
-		car.current_y = 3;
+		car.current_x = 0;//ステージ④の初期位置
+		car.current_y = 0;
 		car.speed.x = 0.2f;
 		car.speed.y = 0.2f;
-		car.next_x[0] = 3;
-		car.next_y[0] = 3;
+		car.next_x[0] = 2;
+		car.next_y[0] = 0;
 
 		break;
 	case eFive:
-		car.current_x = 1;//ステージ①の初期位置
+		car.current_x = 1;//ステージ⑤の初期位置
 		car.current_y = 3;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;
@@ -583,7 +583,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.next_y[0] = 3;
 		break;
 	case eSix:
-		car.current_x = 0;//ステージ①の初期位置
+		car.current_x = 0;//ステージ⑥の初期位置
 		car.current_y = 6;
 		car.speed.x = 0.3f;
 		car.speed.y = 0.3f;

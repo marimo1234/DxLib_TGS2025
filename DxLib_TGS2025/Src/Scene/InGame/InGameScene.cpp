@@ -37,6 +37,7 @@ void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
+void TutorialDraw(const Goal* goal,const GameOver*gameover);
 
 
 
@@ -101,15 +102,18 @@ void InGameSceneInit(void)
 
 void InGameResourceInit(void)
 {
-	//説明の後ろに表示
+	//説明の後ろに表示(黒い背景）
 	ingame.back = LoadGraph("Resource/images/black_back.png");
 	//インゲーム前の画面
 	ingame.space = LoadGraph("Resource/images/aida.png");
 	//操作説明の画像
 	ingame.manual_image = LoadGraph("Resource/images/manual_menu.png");
 	ingame.space = LoadGraph("Resource/images/aida.png");
+	//白い背景
 	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
+	//メニューカーソル
 	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
+	//メニューバー画像
 	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
 	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
 	ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
@@ -117,7 +121,9 @@ void InGameResourceInit(void)
 	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
 	ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
 	ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+	//メニューのマニュアルで使う操作説明画像
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
+	//ミチビキ君
 	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
 
 	//BGMの初期化
@@ -284,7 +290,7 @@ void InGameSceneDraw(void)
 
 
 	////////////////////
-	Tutorial();
+	TutorialDraw(GetGoal(),GetGameOver());
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -620,36 +626,60 @@ void Stop_InGameBgm(void)
 }
 int tutorial_log;
 //チュートリアルのログ
-void Tutorial(void)
+void TutorialDraw(const Goal* goal, const GameOver* gameover)
 {
-	if (ingame.stage_num == eOne)
+	if (ingame.stage_num == eOne&&ingame.start == true&&
+		goal->print_flag == false && gameover->image_flag == false&&ingame.goalmenu_flag==false)
 	{
+		if (ingame.mitibiki_flag == true)
+		{
+			DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
+
+		}
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
+		DrawFormatStringF(1100.0f, 235.0f, GetColor(255, 255, 255), "Y つぎへ\nX まえへ ");
+
 	}
 }
 
 void TutorialUpdate(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	//TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
+
+	//ステージ1の時
 	if (ingame.stage_num == eOne)
 	{
+		//チュートリアル実績
+		TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
+
+
 		char tutorial_load[256];
 		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
 		tutorial_log = LoadGraph(tutorial_load);
 
-		if (ingame.tutorial_log_num < 18)
+		//リセットする
+		if (ingame.start == false)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+			ingame.tutorial_log_num = 2;
+			ingame.tutorial_achievements = 1;
+		}
+
+		//チュートリアルのページをめくる
+		if (ingame.tutorial_log_num < 18&& ingame.start == true)
+		{
+			//Xボタンで進める
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num++;
 			}
 		}
-		if (ingame.tutorial_log_num > 2)
+
+		if (ingame.tutorial_log_num > 2 && ingame.start == true)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
+			//Yボタンで戻る
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num--;
@@ -657,90 +687,117 @@ void TutorialUpdate(void)
 		}
 
 
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+		/*if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
-			/*ingame.menu_flag = true;*/
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
-			/*ingame.menu_flag = false;*/
-		}
+		}*/
 	}
 }
 
-void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,const Tool*tool,const CreateStage*stage)
+void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,const Tool*tool,
+	                      const CreateStage*stage)
 {
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
-		if (ingame.tutorial_log_num < 4 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 4 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
-		else if (ingame.tutorial_log_num == 4)
+		else /*if (ingame.tutorial_log_num == 4)*/
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (cursor->array_x == 5)
 			{
 				ingame.tutorial_achievements++;
 				break;
 			}
 		}
+		break;
 	case 2:
-		if (ingame.tutorial_log_num < 5 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 5 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (rock->item_num == 1)
 			{
 				ingame.tutorial_achievements++;
 				break;
 			}
 		}
+		break;
 	case 3:
-			if (ingame.tutorial_log_num < 7 && ingame.mitibiki_flag == false)
+			if (ingame.tutorial_log_num < 7 )
 			{
 				ingame.mitibiki_flag = true;
-				ingame.menu_flag = true;
 			}
 			else
 			{
 				ingame.mitibiki_flag = false;
-				ingame.menu_flag = false;
 				if (tool->road_num == 1)
 				{
 					ingame.tutorial_achievements++;
 					break;
 				}
 			}
+			break;
 	case 4:
-		if (ingame.tutorial_log_num < 9 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 9 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (stage->array[6][4] == 4)
 			{
 				ingame.tutorial_achievements++;
 				break;
 			}
 		}
-	
+		break;
+	case 5:
+		if (ingame.tutorial_log_num < 11)
+		{
+			ingame.mitibiki_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+			if (tool->wood_road_num == 1)
+			{
+				ingame.tutorial_achievements++;
+				break;
+			}
+		}
+		break;
+	case 6:
+		if (ingame.tutorial_log_num < 18)
+		{
+			ingame.mitibiki_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+			if (stage->array[8][5] == 4)
+			{
+				ingame.tutorial_achievements++;
+				break;
+			}
+		}
+		break;
+	case 7:
+	default :
+		break;
 	}
 	
 		
