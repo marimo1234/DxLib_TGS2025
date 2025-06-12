@@ -36,7 +36,7 @@ void InGameMenuUpdate(const Goal*goal,const GameOver* gameover);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
-void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, Tool* tool, const CreateStage* stage);
+void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
 
 
 
@@ -73,7 +73,7 @@ void InGameSceneInit(void)
 	ingame.gameover_se_flag = false;
 
 	ingame.mitibiki_flag = false;
-	ingame.tutorial_achievements = 0;
+	ingame.tutorial_achievements = 1;
 
 	for (int i = 0; i < 7; i++)
 	{
@@ -307,7 +307,7 @@ void InGameSceneDraw(void)
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
 
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.tutorial_log_num);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
 
 	
 }
@@ -631,7 +631,7 @@ void Tutorial(void)
 void TutorialUpdate(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	/*TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());*/
+	//TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
 	if (ingame.stage_num == eOne)
 	{
 		char tutorial_load[256];
@@ -671,7 +671,7 @@ void TutorialUpdate(void)
 	}
 }
 
-void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,Tool*tool,const CreateStage*stage)
+void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,const Tool*tool,const CreateStage*stage)
 {
 	switch (ingame.tutorial_achievements)
 	{
@@ -681,7 +681,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			ingame.mitibiki_flag = true;
 			ingame.menu_flag = true;
 		}
-		else
+		else if (ingame.tutorial_log_num == 4)
 		{
 			ingame.mitibiki_flag = false;
 			ingame.menu_flag = false;
