@@ -68,7 +68,7 @@ void EndSceneDraw(void)
 	if (end.fps >= 50)
 	{
 		fps3++;
-		black_count3 += fps3 / 3;
+		black_count3 = fps3 / 3;
 		DrawRotaGraph(650 + 110 * black_count3, 550, 1.0, 0.0, end.black, TRUE);
 	}
 	else
