@@ -308,7 +308,7 @@ void InGameSceneDraw(void)
 	GoalSelectMenuDraw();
 
 	/////////////////////
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
 	////////////////////
 	
 }
@@ -661,13 +661,11 @@ void TutorialUpdate(void)
 			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
-			/*ingame.menu_flag = true;*/
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
-			/*ingame.menu_flag = false;*/
 		}
 	}
 }
@@ -677,15 +675,13 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
-		if (ingame.tutorial_log_num < 4 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 4 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
 		else if (ingame.tutorial_log_num == 4)
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (cursor->array_x == 5)
 			{
 				ingame.tutorial_achievements++;
@@ -693,15 +689,13 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			}
 		}
 	case 2:
-		if (ingame.tutorial_log_num < 5 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 5 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (rock->item_num == 1)
 			{
 				ingame.tutorial_achievements++;
@@ -709,15 +703,13 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			}
 		}
 	case 3:
-			if (ingame.tutorial_log_num < 7 && ingame.mitibiki_flag == false)
+			if (ingame.tutorial_log_num < 7 )
 			{
 				ingame.mitibiki_flag = true;
-				ingame.menu_flag = true;
 			}
 			else
 			{
 				ingame.mitibiki_flag = false;
-				ingame.menu_flag = false;
 				if (tool->road_num == 1)
 				{
 					ingame.tutorial_achievements++;
@@ -725,15 +717,13 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 				}
 			}
 	case 4:
-		if (ingame.tutorial_log_num < 9 && ingame.mitibiki_flag == false)
+		if (ingame.tutorial_log_num < 9 )
 		{
 			ingame.mitibiki_flag = true;
-			ingame.menu_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			ingame.menu_flag = false;
 			if (stage->array[6][4] == 4)
 			{
 				ingame.tutorial_achievements++;
