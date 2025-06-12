@@ -912,13 +912,13 @@ void Stage_Init(const CreateStage*stage)
 		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
 		break;
 	case eFour:
-		tool.base_x = 3;
-		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
-		tool.old_base_array[1][3] = 2;
+		tool.base_x = 2;
+		tool.base_y = 0;
+		tool.old_base_array[0][0] = 1;
+		tool.old_base_array[1][0] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
+		Road_Imghandle_Init(2, 0, 0, 0, 1, 0);
 		break;
 	case eFive:
 		tool.base_x = 3;
