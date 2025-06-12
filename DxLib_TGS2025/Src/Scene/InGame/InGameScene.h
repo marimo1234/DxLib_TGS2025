@@ -79,7 +79,6 @@ void MenuDraw(void);
 void GoalSelectMenuDraw(void);
 void Play_InGameBgm(void);
 void Stop_InGameBgm(void);
-void Tutorial(void);
 
 
 //void StageChange(const Goal* goal);
