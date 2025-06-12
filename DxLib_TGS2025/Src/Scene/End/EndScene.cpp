@@ -31,7 +31,7 @@ eSceneType EndSceneUpdate(void)
 		return eTitle;								//タイトル画面へ
 	}
 
-	if (end.fps > 600)
+	if (end.fps > 300)
 	{
 		return eEnd2;
 	}
