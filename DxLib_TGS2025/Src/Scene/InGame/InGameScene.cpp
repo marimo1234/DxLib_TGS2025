@@ -307,8 +307,9 @@ void InGameSceneDraw(void)
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
 
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
-
+	/////////////////////
+	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
+	////////////////////
 	
 }
 const InGame* GetInGame(void)

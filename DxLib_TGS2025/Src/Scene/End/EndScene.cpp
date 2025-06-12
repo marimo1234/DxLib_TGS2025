@@ -75,7 +75,7 @@ void EndSceneDraw(void)
 	{
 		DrawRotaGraph(850 + 110 * black_count3, 550, 1.0, 0.0, end.black, TRUE);
 	}
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", end.black_count);
+	//DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", end.black_count);
 	//SetFontSize(40);
 	//DrawString(1000, 550, "Z:ゲーム開始\nX:タイトル\n", GetColor(255, 255, 255));			//ゲーム開始とタイトルへの表示
 	//SetFontSize(16);
