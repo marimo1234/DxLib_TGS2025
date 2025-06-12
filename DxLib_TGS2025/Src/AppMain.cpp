@@ -19,7 +19,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	//アイコンの設定
 	SetWindowIconID(123);
 	// ウィンドウタイトルを設定
-	SetMainWindowText("Go!GO! RaadMaker");
+	SetMainWindowText("Go!Go! RoadMaker");
 
 	//シーンマネージャーの初期化
 	SceneManagerInitialize();
