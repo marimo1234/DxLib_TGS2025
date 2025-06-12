@@ -76,6 +76,7 @@ struct Tool
 	bool break_woodroad_flag;
 
 	bool menu_flag;
+	bool mitibiki_flag;
 	
 };
 

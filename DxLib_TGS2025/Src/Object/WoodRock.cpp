@@ -336,7 +336,7 @@ const Rock* GetRock(void)
 //処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover ,const Car*car)
 {
-	if (ingame->start == true&& ingame->menu_flag == false)
+	if (ingame->start == true&& ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		woodrock_start = true;
 		woodrock_operable_flag = true;
@@ -349,7 +349,7 @@ void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover
 
 	woodrock_menu_flag = ingame->menu_flag;
 
-	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true)
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||ingame->mitibiki_flag==true)
 	{
 		woodrock_operable_flag = false;
 	}

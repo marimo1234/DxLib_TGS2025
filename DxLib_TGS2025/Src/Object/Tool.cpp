@@ -74,6 +74,7 @@ void ToolInit(void)
 	tool.wood_road_num = 0;
 	tool_start = false;
 	tool.menu_flag = false;
+	tool.mitibiki_flag = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
 	tool.rock_add_flag = false;
@@ -213,7 +214,7 @@ void ToolManagerUpdate(void)
 	Tool_Start(GetInGame(),GetGoal(),GetGameOver(),GetCar());
 
 	//ゲームスタートがtrueなら
-	if (tool_start == true&& tool.menu_flag == false)
+	if (tool_start == true&& tool.menu_flag == false&&tool.mitibiki_flag==false)
 	{
 		Sub_Num();
 		Add_Road_Num();
@@ -226,7 +227,7 @@ void ToolManagerUpdate(void)
 		Put_Road_FLAG(GetCursor1(),GetStage(),GetMole(), GetCar());
 		Put_Wood_Road_FLAG(GetCursor1(), GetStage(),GetCar());
 	}
-	else if (tool_start == false && tool.menu_flag == false)
+	else if (tool_start == false && tool.menu_flag == false && tool.mitibiki_flag == false)
 	{
 		Tool_Reset(GetStage(), GetInGame());
 	}
@@ -711,18 +712,19 @@ void Road_FLAG_OFF(void)
 void Tool_Start(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car)
 {
 	//TRUEならtoolもTRUEに
-	if (ingame->start == true&& ingame->menu_flag == false)
+	if (ingame->start == true&& ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		tool_start = true;
 	}
 
 	//そうでなければFALSEに
-	else if(ingame->start == false && ingame->menu_flag == false)
+	else if(ingame->start == false && ingame->menu_flag == false&&ingame->mitibiki_flag==false)
 	{
 		tool_start = false;
 	}	
 
 	tool.menu_flag = ingame->menu_flag;
+	tool.mitibiki_flag = ingame->mitibiki_flag;
 }
 
 //構造体Toolの値渡し
@@ -829,6 +831,7 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool.menu_flag == false;
+	tool.mitibiki_flag = false;
 	tool.rock_sub_flag = false;
 	tool.wood_sub_flag = false;
 	tool.rock_add_flag = false;

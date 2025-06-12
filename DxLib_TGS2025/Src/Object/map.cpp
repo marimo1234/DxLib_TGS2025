@@ -39,6 +39,7 @@ void MapInit(void)
 	
 	stage.start = false;
 	stage.menu_flag = false;
+	stage.mitibiki_flag = false;
 	stage.number = 1;
 
 	GetStageNum(GetInGame());
@@ -62,7 +63,7 @@ void MapUpdate(void)
 	Stage_Start(GetInGame());
 	
 
-	if (stage.start == true && stage.menu_flag == false)
+	if (stage.start == true && stage.menu_flag == false&& stage.mitibiki_flag==false)
 	{
 
 		//採取した後に描画を消す
@@ -212,18 +213,19 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 void Stage_Start(const InGame* ingame)
 {
 	//TRUEならstageもTRUEに
-	if (ingame->start == true && ingame->menu_flag == false)
+	if (ingame->start == true && ingame->menu_flag == false&& ingame->mitibiki_flag==false)
 	{
 		stage.start = true;
 	}
 
 	//そうでなければFALSEに
-	else if(ingame->start == false&&ingame->menu_flag == false)
+	else if(ingame->start == false&&ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		stage.start = false;
 	}
 
 	stage.menu_flag = ingame->menu_flag;
+	stage.mitibiki_flag= ingame->mitibiki_flag;
 }
 
 
@@ -433,6 +435,8 @@ void MapReset(void)
 	//スタートフラグの初期化
 	stage.start = false;
 	stage.menu_flag = false;
+	stage.mitibiki_flag = false;
+
 
 
 

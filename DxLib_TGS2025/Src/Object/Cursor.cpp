@@ -214,7 +214,7 @@ void CursorDraw(const Tool*tool)
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)
 {
-	if (ingame->start == true && ingame->menu_flag == false)
+	if (ingame->start == true && ingame->menu_flag == false &&ingame->mitibiki_flag == false)
 	{
 		cursorstart = true;
 		cursor.operable_flag = true;
@@ -224,7 +224,7 @@ void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,
 		cursorstart = false;
 	}
 
-	if (goal->print_flag == true || gameover->image_flag == true||car->goal_flag==true)
+	if (goal->print_flag == true || gameover->image_flag == true||car->goal_flag==true||ingame->mitibiki_flag==true)
 	{
 		cursor.operable_flag = false;
 	}

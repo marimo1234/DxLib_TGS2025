@@ -37,6 +37,8 @@ struct CreateStage
 	int rock_count;
 	int rock_count_flag;
 	int mole_count;
+
+	bool mitibiki_flag;
 	
 };
 
