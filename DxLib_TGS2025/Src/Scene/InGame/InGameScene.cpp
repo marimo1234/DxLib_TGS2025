@@ -168,7 +168,7 @@ eSceneType InGameSceneUpdate()
 	GameOverReset(GetGameOver(),GetCar());
 
 	//////////////////////
-	TutorialUpdate();
+	/*TutorialUpdate();*/
 	/////////////////////
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
@@ -293,7 +293,7 @@ void InGameSceneDraw(void)
 
 
 	////////////////////
-	TutorialDraw(GetGoal(),GetGameOver());
+	/*TutorialDraw(GetGoal(),GetGameOver());*/
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
