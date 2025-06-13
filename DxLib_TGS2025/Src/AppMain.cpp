@@ -21,6 +21,22 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	// ウィンドウタイトルを設定
 	SetMainWindowText("Go!Go! RoadMaker");
 
+	int load_image;
+	int mole_image;
+	load_image = LoadGraph("Resource/images/Loading2.png");
+	mole_image = LoadGraph("Resource/images/mole.png");
+
+	//画面の初期化
+	ClearDrawScreen();
+
+	DrawRotaGraph(640, 360, 1.0, 0.0, load_image, TRUE);
+	for (int i = 0; i < 3; i++)
+	{
+		DrawRotaGraph(990+i*50, 360, 1.0, 0.0, mole_image, TRUE);
+	}
+
+	ScreenFlip();
+
 	//シーンマネージャーの初期化
 	SceneManagerInitialize();
 

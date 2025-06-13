@@ -1,5 +1,6 @@
 ﻿#include "SceneManager.h"
 #include "SceneType.h"
+#include "DxLib.h"
 
 #include "../System/System.h"
 
@@ -15,6 +16,8 @@ int is_end_flag;
 void SceneManagerDraw(void);
 void ChangeScene(eSceneType new_scene_type);
 void SceneInit(eSceneType new_scene_type);
+
+
 
 //シーンマネージャーの初期化
 void SceneManagerInitialize(void)
@@ -157,3 +160,4 @@ void SceneManagerResourceInit(void)
 	InGameResourceInit();
 	TitleResourceInit();
 }
+
