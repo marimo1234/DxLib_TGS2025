@@ -20,6 +20,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	SetWindowIconID(123);
 	// ウィンドウタイトルを設定
 	SetMainWindowText("Go!Go! RoadMaker");
+	// マウスカーソル非表示
+	SetMouseDispFlag(FALSE);
 
 	int load_image;
 	int mole_image;
