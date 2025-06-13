@@ -726,6 +726,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			ingame.mitibiki_flag = false;
 			if (cursor->array_x == 5)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
@@ -741,6 +742,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			ingame.mitibiki_flag = false;
 			if (rock->item_num == 1)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
@@ -754,23 +756,25 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			else
 			{
 				ingame.mitibiki_flag = false;
-				if (tool->road_num == 1)
+				if (tool->item_number == eRoad)
 				{
+					ingame.tutorial_log_num++;
 					ingame.tutorial_achievements++;
 					break;
 				}
 			}
 			break;
 	case 4:
-		if (ingame.tutorial_log_num < 8 )
+		if (ingame.tutorial_log_num < 9 )
 		{
-			ingame.mitibiki_flag = true;
+			ingame.mitibiki_flag = false;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			if (stage->array[6][4] == 4)
+			if (tool->road_num==1)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
@@ -779,7 +783,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 	case 5:
 		if (ingame.tutorial_log_num < 10)
 		{
-			ingame.mitibiki_flag = true;
+			ingame.mitibiki_flag = false;
 		}
 		else
 		{
