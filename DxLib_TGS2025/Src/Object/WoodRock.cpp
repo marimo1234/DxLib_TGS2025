@@ -187,7 +187,7 @@ void WoodRockDraw(void)
 	//エフェクトの描画
 	WoodRockEffectDraw();	
 
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
+	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
 }
 
 //木のアニメーション

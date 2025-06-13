@@ -8,6 +8,7 @@ struct End
 	int fps;
 	int black;
 	int black_count;
+	int bgm;
 };
 
 void EndSceneInit(void);

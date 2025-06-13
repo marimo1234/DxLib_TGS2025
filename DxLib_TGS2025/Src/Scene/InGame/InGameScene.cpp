@@ -168,7 +168,7 @@ eSceneType InGameSceneUpdate()
 	GameOverReset(GetGameOver(),GetCar());
 
 	//////////////////////
-	TutorialUpdate();
+	/*TutorialUpdate();*/
 	/////////////////////
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
@@ -256,7 +256,7 @@ eSceneType InGameSceneUpdate()
 		ingame.goalmenu_num = 0;
 	}
 
-	if (ingame.menu_manual_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+	if (ingame.menu_manual_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_manual_flag = false;
@@ -293,7 +293,7 @@ void InGameSceneDraw(void)
 
 
 	////////////////////
-	TutorialDraw(GetGoal(),GetGameOver());
+	/*TutorialDraw(GetGoal(),GetGameOver());*/
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -354,7 +354,7 @@ void GameStart(void)
 	}
 	else if (ingame.manual_open == true)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
 		{
 			ingame.manual_open = false;
 		}
@@ -391,24 +391,32 @@ void NextSelectFlag(const Goal* goal)
 
 	if (ingame.goalmenu_flag == true)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+		if (ingame.stage_num == eSix)
 		{
-			Play_Sound_Ingame2(sound.select_move, 100);
-			ingame.goalmenu_num--;
-			if (ingame.goalmenu_num < 0)
-			{
-				ingame.goalmenu_num = 1;
-			}
-
-			ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			ingame.goalmenu_num = 1;
+			ingame.goalmenu_cursor_y = 240.0f + ingame.goalmenu_num * 130.0f;
 		}
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+		else
 		{
-			Play_Sound_Ingame2(sound.select_move, 100);
-			ingame.goalmenu_num++;
-			ingame.goalmenu_num = ingame.goalmenu_num % 2;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+			{
+				Play_Sound_Ingame2(sound.select_move, 100);
+				ingame.goalmenu_num--;
+				if (ingame.goalmenu_num < 0)
+				{
+					ingame.goalmenu_num = 1;
+				}
 
-			ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+				ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			}
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+			{
+				Play_Sound_Ingame2(sound.select_move, 100);
+				ingame.goalmenu_num++;
+				ingame.goalmenu_num = ingame.goalmenu_num % 2;
+
+				ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			}
 		}
 	}
 }
@@ -595,9 +603,16 @@ void GoalSelectMenuDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
-		for (int i = 5; i < 7; i++)
+		if (ingame.stage_num == eSix)
 		{
-			DrawRotaGraphF(640.0f, (i - 5) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f,130.0+240.0f, 0.8, 0.0, ingame.menu_char_image[6], TRUE);
+		}
+		else
+		{
+			for (int i = 5; i < 7; i++)
+			{
+				DrawRotaGraphF(640.0f, (i - 5) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			}
 		}
 	}
 }
@@ -711,13 +726,14 @@ void TutorialUpdate(void)
 	}
 }
 
-void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,const Tool*tool,
-	                      const CreateStage*stage)
+void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
+	const CreateStage* stage)
 {
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
-		if (ingame.tutorial_log_num < 4 )
+		if (ingame.tutorial_log_num < 4)
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -726,13 +742,14 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			ingame.mitibiki_flag = false;
 			if (cursor->array_x == 5)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
 		}
 		break;
 	case 2:
-		if (ingame.tutorial_log_num < 5 )
+		if (ingame.tutorial_log_num < 5)
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -741,73 +758,71 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			ingame.mitibiki_flag = false;
 			if (rock->item_num == 1)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
 		}
 		break;
 	case 3:
-			if (ingame.tutorial_log_num < 7 )
-			{
-				ingame.mitibiki_flag = true;
-			}
-			else
-			{
-				ingame.mitibiki_flag = false;
-				if (tool->road_num == 1)
-				{
-					ingame.tutorial_achievements++;
-					break;
-				}
-			}
-			break;
-	case 4:
-		if (ingame.tutorial_log_num < 9 )
+		if (ingame.tutorial_log_num < 6)
 		{
 			ingame.mitibiki_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			if (stage->array[6][4] == 4)
+			if (tool->item_number == eRoad)
 			{
+				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				break;
 			}
+		}
+		break;
+	case 4:
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+		{
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
 		break;
 	case 5:
-		if (ingame.tutorial_log_num < 11)
+		if (stage->array[6][4] == 4)
 		{
-			ingame.mitibiki_flag = true;
-		}
-		else
-		{
-			ingame.mitibiki_flag = false;
-			if (tool->wood_road_num == 1)
-			{
-				ingame.tutorial_achievements++;
-				break;
-			}
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
 		break;
 	case 6:
-		if (ingame.tutorial_log_num < 18)
+		if (wood->item_num == 1)
 		{
-			ingame.mitibiki_flag = true;
-		}
-		else
-		{
-			ingame.mitibiki_flag = false;
-			if (stage->array[8][5] == 4)
-			{
-				ingame.tutorial_achievements++;
-				break;
-			}
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
 		break;
 	case 7:
-	default :
+		if (stage->array[7][4] == 4)
+		{
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
+		}
+	case 8:
+		if (stage->array[8][4] == 5)
+		{
+			ingame.mitibiki_flag = true;
+			if (ingame.tutorial_log_num > 14)
+			{
+				ingame.mitibiki_flag = false;
+			}
+		}
+
+	default:
+
 		break;
 	}
 }
