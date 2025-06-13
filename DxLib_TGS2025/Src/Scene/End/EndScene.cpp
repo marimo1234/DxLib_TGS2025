@@ -2,6 +2,8 @@
 #include "../../Utility/InputManager.h"
 #include "DxLib.h"
 
+void Play_Sound_End(int sound, int volume);
+
 End end;
 int black_count1 = end.fps / 3;
 int black_count2 = 0;
@@ -15,7 +17,8 @@ void EndSceneInit(void)
 	end.fps = 0;
 	end.black= LoadGraph("Resource/Images/end_black.png");
 	end.black_count = 0;
-	
+	end.bgm= LoadSoundMem("Resource/Sounds/End.mp3");
+	Play_Sound_End(end.bgm, 130);
 }
 
 //ヘルプシーン更新
@@ -79,4 +82,14 @@ void EndSceneDraw(void)
 	//SetFontSize(40);
 	//DrawString(1000, 550, "Z:ゲーム開始\nX:タイトル\n", GetColor(255, 255, 255));			//ゲーム開始とタイトルへの表示
 	//SetFontSize(16);
+}
+
+void Play_Sound_End(int sound, int volume)
+{
+
+	if (CheckSoundMem(sound) == 0)
+	{
+		PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+		ChangeVolumeSoundMem(volume, sound);
+	}
 }
