@@ -726,13 +726,14 @@ void TutorialUpdate(void)
 	}
 }
 
-void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood,const Tool*tool,
-	                      const CreateStage*stage)
+void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
+	const CreateStage* stage)
 {
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
-		if (ingame.tutorial_log_num < 4 )
+		if (ingame.tutorial_log_num < 4)
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -748,7 +749,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		}
 		break;
 	case 2:
-		if (ingame.tutorial_log_num < 5 )
+		if (ingame.tutorial_log_num < 5)
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -764,30 +765,14 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		}
 		break;
 	case 3:
-			if (ingame.tutorial_log_num < 6 )
-			{
-				ingame.mitibiki_flag = true;
-			}
-			else
-			{
-				ingame.mitibiki_flag = false;
-				if (tool->item_number == eRoad)
-				{
-					ingame.tutorial_log_num++;
-					ingame.tutorial_achievements++;
-					break;
-				}
-			}
-			break;
-	case 4:
-		if (ingame.tutorial_log_num < 9 )
+		if (ingame.tutorial_log_num < 6)
 		{
-			ingame.mitibiki_flag = false;
+			ingame.mitibiki_flag = true;
 		}
 		else
 		{
 			ingame.mitibiki_flag = false;
-			if (tool->road_num==1)
+			if (tool->item_number == eRoad)
 			{
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
@@ -795,38 +780,49 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			}
 		}
 		break;
-	case 5:
-		if (ingame.tutorial_log_num < 10)
+	case 4:
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 		{
-			ingame.mitibiki_flag = false;
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
-		else
+		break;
+	case 5:
+		if (stage->array[6][4] == 4)
 		{
-			ingame.mitibiki_flag = false;
-			if (tool->wood_road_num == 1)
-			{
-				ingame.tutorial_achievements++;
-				break;
-			}
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
 		break;
 	case 6:
-		if (ingame.tutorial_log_num < 15)
+		if (wood->item_num == 1)
 		{
-			ingame.mitibiki_flag = true;
-		}
-		else
-		{
-			ingame.mitibiki_flag = false;
-			if (stage->array[8][5] == 4)
-			{
-				ingame.tutorial_achievements++;
-				break;
-			}
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
 		break;
 	case 7:
-	default :
+		if (stage->array[7][4] == 4)
+		{
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
+		}
+	case 8:
+		if (stage->array[8][4] == 5)
+		{
+			ingame.mitibiki_flag = true;
+			if (ingame.tutorial_log_num > 14)
+			{
+				ingame.mitibiki_flag = false;
+			}
+		}
+
+	default:
+
 		break;
 	}
 }
