@@ -20,6 +20,7 @@
 //確認用変数　後に消します
 int atr ;
 int btr ;
+int animetion_num;
 
 //この辺まだ使っていない
 //void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
@@ -38,6 +39,7 @@ void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
 void TutorialDraw(const Goal* goal,const GameOver*gameover);
+void TutorialCursor(void);
 
 
 
@@ -177,7 +179,8 @@ eSceneType InGameSceneUpdate()
 
 	GoalSelectFlagReset();
 
-	
+	TutorialCursor();
+
 	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.mitibiki_flag == false)
@@ -305,6 +308,10 @@ void InGameSceneDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
+	}
+	if (animetion_num==1)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
 	}
 	
 	//Startボタンが押されたときにだすセレクト画面
@@ -637,6 +644,10 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 
 		}
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
+		if (animetion_num == 1)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
+		}
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 		DrawFormatStringF(1100.0f, 235.0f, GetColor(255, 255, 255), "Y つぎへ\nX まえへ ");
 
@@ -799,8 +810,39 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 	default :
 		break;
 	}
-	
-		
-	
-
+}
+void TutorialCursor(void) 
+{
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (ingame.tutorial_log_num == 4&&animetion_num == 1)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
+	}
+	if (ingame.tutorial_log_num == 4)
+	{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold)
+		{
+			ingame.tutorial_controol=LoadGraph("Resource/images/log4_left.png");
+			animetion_num = 1;
+		}
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHold)
+		{
+			ingame.tutorial_controol = LoadGraph("Resource/images/log4_right.png");
+			animetion_num = 1;
+		}
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::eHold)
+		{
+			ingame.tutorial_controol = LoadGraph("Resource/images/log4_up.png");
+			animetion_num = 1;
+		}
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::eHold)
+		{
+			ingame.tutorial_controol = LoadGraph("Resource/images/log4_down.png");
+			animetion_num = 1;
+		}
+		else
+		{
+			animetion_num = 0;
+		}
+	}
 }

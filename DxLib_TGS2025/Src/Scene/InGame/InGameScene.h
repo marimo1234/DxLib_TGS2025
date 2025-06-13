@@ -50,6 +50,7 @@ struct InGame
 	int mitibikikun;
 	bool mitibiki_flag;
 	int tutorial_achievements;
+	int tutorial_controol;
 };
 
 struct InGame_Sound
