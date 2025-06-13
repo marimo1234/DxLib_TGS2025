@@ -29,7 +29,7 @@ struct Wood
 
 	bool move_flag[12][7];
 	int move_count[12][7];
-	int fps;
+	int fps[12][7];
 
 	int effect_image[5];
 	bool effect_flag;
@@ -57,7 +57,7 @@ struct Rock
 	bool move_flag[12][7];
 	int move_count[12][7];
 
-	int fps;
+	int fps[12][7];
 
 	int effect_image[5];
 	bool effect_flag;
@@ -97,7 +97,6 @@ void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
 void WoodRockEffectDraw(void);
 void PutRockEffect(int x, int y);
-
 
 
 
