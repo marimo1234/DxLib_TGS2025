@@ -391,24 +391,32 @@ void NextSelectFlag(const Goal* goal)
 
 	if (ingame.goalmenu_flag == true)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+		if (ingame.stage_num == eSix)
 		{
-			Play_Sound_Ingame2(sound.select_move, 100);
-			ingame.goalmenu_num--;
-			if (ingame.goalmenu_num < 0)
-			{
-				ingame.goalmenu_num = 1;
-			}
-
-			ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			ingame.goalmenu_num = 1;
+			ingame.goalmenu_cursor_y = 240.0f + ingame.goalmenu_num * 130.0f;
 		}
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+		else
 		{
-			Play_Sound_Ingame2(sound.select_move, 100);
-			ingame.goalmenu_num++;
-			ingame.goalmenu_num = ingame.goalmenu_num % 2;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+			{
+				Play_Sound_Ingame2(sound.select_move, 100);
+				ingame.goalmenu_num--;
+				if (ingame.goalmenu_num < 0)
+				{
+					ingame.goalmenu_num = 1;
+				}
 
-			ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+				ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			}
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+			{
+				Play_Sound_Ingame2(sound.select_move, 100);
+				ingame.goalmenu_num++;
+				ingame.goalmenu_num = ingame.goalmenu_num % 2;
+
+				ingame.goalmenu_cursor_y = 300.0f + ingame.goalmenu_num * 130.0f;
+			}
 		}
 	}
 }
@@ -595,9 +603,16 @@ void GoalSelectMenuDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
-		for (int i = 5; i < 7; i++)
+		if (ingame.stage_num == eSix)
 		{
-			DrawRotaGraphF(640.0f, (i - 5) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			DrawRotaGraphF(640.0f,130.0+240.0f, 0.8, 0.0, ingame.menu_char_image[6], TRUE);
+		}
+		else
+		{
+			for (int i = 5; i < 7; i++)
+			{
+				DrawRotaGraphF(640.0f, (i - 5) * 130.0f + 300.0f, ingame.char_extrate[i], 0.0, ingame.menu_char_image[i], TRUE);
+			}
 		}
 	}
 }
