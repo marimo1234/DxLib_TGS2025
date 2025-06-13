@@ -354,7 +354,7 @@ void GameStart(void)
 	}
 	else if (ingame.manual_open == true)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
 		{
 			ingame.manual_open = false;
 		}
@@ -747,7 +747,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		}
 		break;
 	case 3:
-			if (ingame.tutorial_log_num < 7 )
+			if (ingame.tutorial_log_num < 6 )
 			{
 				ingame.mitibiki_flag = true;
 			}
@@ -762,7 +762,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 			}
 			break;
 	case 4:
-		if (ingame.tutorial_log_num < 9 )
+		if (ingame.tutorial_log_num < 8 )
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -777,7 +777,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		}
 		break;
 	case 5:
-		if (ingame.tutorial_log_num < 11)
+		if (ingame.tutorial_log_num < 10)
 		{
 			ingame.mitibiki_flag = true;
 		}
@@ -792,7 +792,7 @@ void TutorialAchievements(const Cursor* cursor,const Rock*rock, const Wood* wood
 		}
 		break;
 	case 6:
-		if (ingame.tutorial_log_num < 18)
+		if (ingame.tutorial_log_num < 15)
 		{
 			ingame.mitibiki_flag = true;
 		}
