@@ -256,7 +256,7 @@ eSceneType InGameSceneUpdate()
 		ingame.goalmenu_num = 0;
 	}
 
-	if (ingame.menu_manual_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+	if (ingame.menu_manual_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame(sound.decision, 100);
 		ingame.menu_manual_flag = false;
