@@ -93,7 +93,7 @@ void TitleSceneDraw(void)
 {
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
-	DrawRotaGraphF(900.0f, 680.0f, 0.15f, 0.0, title.control_image, TRUE);
+	DrawRotaGraphF(900.0f, 680.0f, 1.0f, 0.0, title.control_image, TRUE);
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
