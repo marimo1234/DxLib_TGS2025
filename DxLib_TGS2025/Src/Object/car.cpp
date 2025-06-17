@@ -255,15 +255,15 @@ void CarMovePosition(const CreateStage* stage)
 			if (overroad < 400)
 			{
 				OverRoad();
-				gameover.image_flag = true;
+				/*gameover.image_flag = true;*/
 			}
 			if (overroad > 399)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
 				car.position.y += 0.0f;
-
-				if (gameover.image_count > 120)
+				gameover.image_flag = true;
+				if (gameover.image_count > 240)
 				{
 					gameover.flag = true;
 					gameover.image_count = 0;
@@ -526,7 +526,7 @@ void CarWarnDraw(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	}
 
 	if (car.next_x[car.next_count] != -1 && car.next_y[car.next_count] != -1||
-		goal->print_flag == true || gameover->image_flag == true ||ingame->menu_flag==true)
+		goal->print_flag == true || gameover->image_flag == true ||ingame->menu_flag==true||car.direction==eStop)
 	{
 		car.warn_image_flag = false;
 		car.warn_count = 0;

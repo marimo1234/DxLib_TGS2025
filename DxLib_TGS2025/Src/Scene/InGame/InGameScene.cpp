@@ -61,12 +61,12 @@ void InGameSceneInit(void)
 
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
-	ingame.menu_cursor_x=300.0f;
+	ingame.menu_cursor_x=280.0f;
 	ingame.menu_cursor_y = 130.0f;
 
 	ingame.goalmenu_flag = false;
 	ingame.goalmenu_num = 0;
-	ingame.goalmenu_cursor_x = 300.0f;
+	ingame.goalmenu_cursor_x = 280.0f;
 	ingame.goalmenu_cursor_y = 300.0f;
 
 	ingame.goalselect_flag = false;
@@ -460,7 +460,7 @@ void GameOverReset(const GameOver* gameover,const Car* car)
 				Play_Sound_Ingame(sound.clear, 90);
 				ingame.gameover_se_flag = true;
 			}
-			else
+			else if(gameover->image_flag == true)
 			{
 				Play_Sound_Ingame(sound.gameover, 60);
 				ingame.gameover_se_flag = true;
@@ -569,8 +569,8 @@ void ChangeCharExtrate(void)
 	{
 		ingame.char_extrate[i] = 0.7f;
 	}
-	ingame.char_extrate[ingame.menu_num] = 0.8f;
-	ingame.char_extrate[ingame.goalmenu_num+5] = 0.8f;
+	ingame.char_extrate[ingame.menu_num] = 0.9f;
+	ingame.char_extrate[ingame.goalmenu_num+5] = 0.9f;
 }
 
 
