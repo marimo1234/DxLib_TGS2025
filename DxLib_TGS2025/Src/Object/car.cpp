@@ -507,7 +507,7 @@ void CarGoalCheck(const CreateStage* stage)
 }
 void CarWarnSE(void) 
 {
-	if (car.warn_image_flag == true)
+	if (car.warn_image_flag == true && car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
 	{
 		switch (car.warn_num)
 		{
