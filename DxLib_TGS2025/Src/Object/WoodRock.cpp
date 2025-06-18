@@ -59,6 +59,7 @@ void WoodRockInit(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
+	
 	wood.effect_num = 0;
 	wood.effect_count = 0;
 	rock.effect_num = 0;
@@ -188,6 +189,8 @@ void WoodRockDraw(void)
 	WoodRockEffectDraw();	
 
 	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
+		DrawFormatString(200, 200, GetColor(255, 255, 255), "%f\n%f", rock.add_x[8][4], rock.add_x[1][2]);
+
 }
 
 //木のアニメーション
@@ -234,7 +237,6 @@ void WoodAnimation(int x, int y)
 		if (wood.hit_flag[x][y] == true)
 		{
 			wood.effect_flag = true;
-			wood.item_num++;     //　HIT数が3になった時、アイテム化した物の数を+1する
 			wood.hit_count[x][y] = eHit3;
 			wood.hit_flag[x][y] = false;   //hitフラグをfalseにする
 			wood.fps[x][y] = 0;
@@ -246,6 +248,7 @@ void WoodAnimation(int x, int y)
 		wood.delete_flag[x][y] = true;//削除フラグをtrueにする
 		wood.position_x[x][y] = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
 		wood.position_y[x][y] = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
+		wood.add_x[x][y] = fabs((12.0f - (float)x) * 0.8f);
 		wood.move_flag[x][y] = true;//ムーブフラグをtrueにする
 		wood.hit_count[x][y] = eHitEnd;
 
@@ -300,7 +303,6 @@ void RockAnimation(int x, int y)
 		if (rock.hit_flag[x][y] == true)
 		{
 				rock.effect_flag = true;
-				rock.item_num++;//HIT数が3になった時、アイテム化した物の数を+1する
 				rock.hit_count[x][y] = eHit3;
 				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
 				rock.fps[x][y] = 0;
@@ -311,6 +313,7 @@ void RockAnimation(int x, int y)
 		rock.delete_flag[x][y] = true; //削除フラグをtrueにする
 		rock.position_x[x][y] = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position_y[x][y] = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
+		rock.add_x[x][y] = fabs((12.0f - (float)x )* 0.8f);
 		rock.move_flag[x][y] = true;//ムーブフラグをtrueにする
 		rock.hit_count[x][y] = eHitEnd;//0に戻す
 		
@@ -514,12 +517,13 @@ void WoodMove(int x, int y)
 
 	if (wood.move_count[x][y] > 20)
 	{
-		wood.position_x[x][y] += 9.0f;
-		wood.position_y[x][y] += 9.0f * -fy;
+		wood.position_x[x][y] += wood.add_x[x][y] * 2.0f;
+		wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * -fy;
 	}
 
-	if (wood.position_y[x][y] + 2 < my)
+	if (wood.position_y[x][y] < my)
 	{
+		wood.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
 		wood.move_count[x][y] = 0;
 		wood.move_flag[x][y] = false;
 	}
@@ -528,7 +532,7 @@ void WoodMove(int x, int y)
 //アイテム化した時の岩の挙動
 void RockMove(int x, int y)
 {
-	
+
 
 	rock.move_count[x][y]++;
 
@@ -552,13 +556,14 @@ void RockMove(int x, int y)
 
 	if (rock.move_count[x][y] > 20)
 	{
-		rock.position_x[x][y] += 9.0f;
-		rock.position_y[x][y] += 9.0f * -fy;
+		rock.position_x[x][y] += rock.add_x[x][y] * 2.0f;
+		rock.position_y[x][y] += rock.add_x[x][y] * 2.0f * -fy;
 	}
-	
 
-	if (rock.position_y[x][y] +2 < my)
+
+	if (rock.position_y[x][y] < my)
 	{
+		rock.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
 		rock.move_count[x][y] = 0;
 		rock.move_flag[x][y] = false;
 	}
@@ -600,11 +605,14 @@ void WoodRockHitInit(const CreateStage* stage)
 			wood.move_count[i][j] = 0;
 			wood.position_x[i][j] = 0.0f;
 			wood.position_y[i][j] = 0.0f;
+			wood.add_x[i][j] = 0.0f;
+
 
 			rock.move_flag[i][j] = false;
 			rock.move_count[i][j] = 0;
 			rock.position_x[i][j] = 0.0f;
 			rock.position_y[i][j] = 0.0f;
+			rock.add_x[i][j] = 0.0f;
 
 			if (stage->array[i][j] == 1)
 			{
