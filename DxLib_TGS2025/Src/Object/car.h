@@ -38,10 +38,13 @@ struct Car
     bool menu_flag;
     
     
-    int warn_image;
-    int warn_se;
+    int warn_image[2];
+    int warn_se[2];
     bool warn_image_flag;
+    int warn_count_max;
     int warn_count;
+    int warn_num;
+    float warn_range;
 
     bool mitibiki_flag;
 };
