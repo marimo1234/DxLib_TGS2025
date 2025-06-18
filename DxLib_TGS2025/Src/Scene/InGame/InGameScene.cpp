@@ -168,7 +168,7 @@ eSceneType InGameSceneUpdate()
 	GameOverReset(GetGameOver(),GetCar());
 
 	//////////////////////
-	/*TutorialUpdate();*/
+	TutorialUpdate();
 	/////////////////////
 
 	InGameMenuUpdate(GetGoal(),GetGameOver());
@@ -293,7 +293,7 @@ void InGameSceneDraw(void)
 
 
 	////////////////////
-	/*TutorialDraw(GetGoal(),GetGameOver());*/
+	TutorialDraw(GetGoal(),GetGameOver());
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -321,7 +321,7 @@ void InGameSceneDraw(void)
 	GoalSelectMenuDraw();
 
 	/////////////////////
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
 	////////////////////
 	
 }
@@ -781,7 +781,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 4:
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 		{
 			ingame.tutorial_log_num++;
 			ingame.tutorial_achievements++;
@@ -797,7 +797,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 6:
-		if (wood->item_num == 1)
+		if (tool->wood_road_num==1)
 		{
 			ingame.tutorial_log_num++;
 			ingame.tutorial_achievements++;
@@ -805,7 +805,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 7:
-		if (stage->array[7][4] == 4)
+		if (stage->array[8][4] == 5)
 		{
 			ingame.tutorial_log_num++;
 			ingame.tutorial_achievements++;
