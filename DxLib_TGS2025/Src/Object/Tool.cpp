@@ -477,7 +477,7 @@ void Put_Road_FLAG(const Cursor* cursor,const CreateStage*stage,const Mole*mole,
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
 	//Aボタンが押されたら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
 
 		//アイテムが道路なら
@@ -554,7 +554,7 @@ void Put_Wood_Road_FLAG(const Cursor* cursor, const CreateStage* stage,const Car
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタンが押されたら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
 	{
 
 		//アイテムが木の道路なら
@@ -755,7 +755,7 @@ void const Road_Add_Num(const Rock* rock,const Car*car)
 			if (car->goal_flag == false && car->direction != eStop)
 			{
 				//Ｂボタンが押されたら
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 				{
 					tool.road_num++;
 					tool.rock_sub_flag = true;
@@ -781,7 +781,7 @@ void const WoodRoad_Add_Num(const Wood* wood,const Car*car)
 			if (car->goal_flag == false&&car->direction!=eStop)
 			{
 				//Ｂボタンが押されたら
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 				{
 					tool.wood_road_num++;
 					tool.wood_sub_flag = true;
