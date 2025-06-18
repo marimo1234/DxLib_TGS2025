@@ -36,7 +36,7 @@ void StageSelectSceneInit(void)
 	stageselect.array_y = 0;
 
 	//ボタンの画像拡大率の初期化
-	stageselect.Abutton_rate = 0.9f;
+	stageselect.Abutton_rate = 0.5f;
 	stageselect.rate_num = 0.1;
 
 	stageselect.flag = true;
@@ -330,11 +330,11 @@ void NumTroutDraw(void)
 void SelectButtonDraw(void)
 {
 	
-	if (stageselect.Abutton_rate > 0.9)
+	if (stageselect.Abutton_rate > 0.5)
 	{
 		stageselect.rate_num = -0.005f;
 	}
-	else if (stageselect.Abutton_rate < 0.7)
+	else if (stageselect.Abutton_rate < 0.3)
 	{
 		stageselect.rate_num = 0.005f;
 	}
