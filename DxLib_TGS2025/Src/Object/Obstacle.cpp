@@ -51,6 +51,10 @@ void ObstacleManagerResourceInit(void)
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
 	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
+	mole.rock_image[0] = LoadGraph("Resource/images/mole_down_rock.png");
+	mole.rock_image[1] = LoadGraph("Resource/images/mole_up_rock.png");
+	mole.rock_image[2] = LoadGraph("Resource/images/mole_left_rock.png");
+	mole.rock_image[3] = LoadGraph("Resource/images/mole_right_rock.png");
 	lake.image = LoadGraph("Resource/images/lake.png");
 }
 //障害物の更新
@@ -127,6 +131,14 @@ void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
+	if (mole.image_count / 60 > 2)
+	{
+		for (int i = 0; i < stage->mole_count; i++)
+		{
+			/*mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);*/
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+		}
+	}
 	if (mole.image_count / 60 > 4)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
