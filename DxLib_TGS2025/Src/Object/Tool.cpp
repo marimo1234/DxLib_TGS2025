@@ -444,11 +444,11 @@ void RB_Draw(const Car*car)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
 			&& tool_start == true && tool.menu_flag == false)
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
 		}
 	}
 }
@@ -462,11 +462,11 @@ void LB_Draw(const Car*car)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
 			&& tool_start == true && tool.menu_flag == false)
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
 		}
 		else
 		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
 		}
 	}
 }
