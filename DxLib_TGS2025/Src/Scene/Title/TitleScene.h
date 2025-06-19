@@ -12,6 +12,10 @@ struct Title
 	int char_num;
 	float cursor_x;
 	float cursor_y;
+	int mole_image[8];
+	int mole_num;
+	int mole_count;
+	int mole_move;
 
 	int bgm;
 	int cursor_se;

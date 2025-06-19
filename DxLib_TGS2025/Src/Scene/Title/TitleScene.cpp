@@ -33,6 +33,18 @@ void TitleSceneInit(void)
 	title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
 	title.control_image = LoadGraph("Resource/Images/control_img.png");
 
+	title.mole_image[0] = LoadGraph("Resource/Images/title_mole0.png");
+	title.mole_image[1] = LoadGraph("Resource/Images/title_mole1.png");
+	title.mole_image[2] = LoadGraph("Resource/Images/title_mole2.png");
+	title.mole_image[3] = LoadGraph("Resource/Images/title_mole3.png");
+	title.mole_image[4] = LoadGraph("Resource/Images/title_mole4.png");
+	title.mole_image[5] = LoadGraph("Resource/Images/title_mole5.png");
+	title.mole_image[6] = LoadGraph("Resource/Images/title_mole6.png");
+
+	title.mole_num = 0;
+	title.mole_count = 0;
+	title.mole_move = 0;
+
 
 	//seの読み込み
 	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
@@ -45,6 +57,31 @@ void TitleSceneInit(void)
 eSceneType TitleSceneUpdate(void)
 {
 	TitleCursorUpdate();
+	title.mole_count++;
+
+	if (title.mole_count > 5)
+	{
+		if(title.mole_move==0)
+		{
+			title.mole_num++;
+		}
+		else if (title.mole_move == 1)
+		{
+			title.mole_num--;
+		}
+
+		if (title.mole_num == 6)
+		{
+			title.mole_move = 1;
+		}
+		else if(title.mole_num==0)
+		{
+			title.mole_move = 0;
+		}
+		
+		title.mole_count = 0;
+	}
+
 	//スペースキーが押された瞬間に、各画面に遷移する
 	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
 	{
@@ -93,6 +130,7 @@ void TitleSceneDraw(void)
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
 	DrawRotaGraphF(900.0f, 680.0f, 1.0f, 0.0, title.control_image, TRUE);
+	DrawRotaGraphF(200.0f, 400.0f, 1.0, 0.0, title.mole_image[title.mole_num],TRUE);
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
