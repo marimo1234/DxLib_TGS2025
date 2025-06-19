@@ -13,6 +13,7 @@ Title title;
 //タイトルシーンのリソース初期化
 void TitleResourceInit(void)
 {
+	title.char_num = 0;
 	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
 	title.cursor_se= LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 	title.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
@@ -21,10 +22,8 @@ void TitleResourceInit(void)
 //タイトルシーンの初期化
 void TitleSceneInit(void)
 {
-
-	title.char_num = 0;
 	title.cursor_x = 370.0f;
-	title.cursor_y = 450.0f;
+	title.cursor_y = 450.0f+title.char_num * 90.0f;
 	//画像の読み込み
 	title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
 	title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
@@ -76,7 +75,7 @@ eSceneType TitleSceneUpdate(void)
 	{
 		Play_Title_SE(title.button_se, 100);
 		return eCredits;	//クレジット画面へ
-		title.char_num = 0;
+		title.char_num = 1;
 	}
 	if (title.char_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
