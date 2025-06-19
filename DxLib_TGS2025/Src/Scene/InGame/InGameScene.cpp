@@ -127,7 +127,8 @@ void InGameResourceInit(void)
 	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 	//ミチビキ君
 	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
-
+	//チュートリアル中のログの選択画像
+	ingame.tutoriallog_select =LoadGraph("Resource/images/logselection.png");
 	//BGMの初期化
 	PlayBgm();
 
@@ -664,7 +665,10 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
 		}
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
-		DrawFormatStringF(1100.0f, 235.0f, GetColor(255, 255, 255), "Y つぎへ\nX まえへ ");
+		if (ingame.mitibiki_flag == true)
+		{
+			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
+		}
 
 	}
 }
@@ -695,7 +699,7 @@ void TutorialUpdate(void)
 		if (ingame.tutorial_log_num < 18&& ingame.start == true)
 		{
 			//Xボタンで進める
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num++;
@@ -705,7 +709,7 @@ void TutorialUpdate(void)
 		if (ingame.tutorial_log_num > 2 && ingame.start == true)
 		{
 			//Yボタンで戻る
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress &&
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
 				ingame.tutorial_log_num--;
