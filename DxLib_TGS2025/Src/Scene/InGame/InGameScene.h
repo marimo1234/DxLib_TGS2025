@@ -50,7 +50,10 @@ struct InGame
 	int mitibikikun;
 	bool mitibiki_flag;
 	int tutorial_achievements;
-	int tutorial_controol;
+	int tutorial_controol_up;
+	int tutorial_controol_left;
+	int tutorial_controol_right;
+	int tutorial_controol_down;
 	int tutoriallog_select;
 };
 

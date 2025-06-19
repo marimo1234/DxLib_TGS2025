@@ -129,6 +129,11 @@ void InGameResourceInit(void)
 	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
 	//チュートリアル中のログの選択画像
 	ingame.tutoriallog_select =LoadGraph("Resource/images/logselection.png");
+	//チュートリアル中のコントローラアニメーション
+	ingame.tutorial_controol_left=LoadGraph("Resource/images/log4_left.png");
+	ingame.tutorial_controol_right = LoadGraph("Resource/images/log4_right.png");
+	ingame.tutorial_controol_up = LoadGraph("Resource/images/log4_up.png");
+	ingame.tutorial_controol_down = LoadGraph("Resource/images/log4_down.png");
 	//BGMの初期化
 	PlayBgm();
 
@@ -310,11 +315,6 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
 	}
-	if (animetion_num==1)
-	{
-		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
-	}
-	
 	//Startボタンが押されたときにだすセレクト画面
 	MenuDraw();
 
@@ -322,7 +322,7 @@ void InGameSceneDraw(void)
 	GoalSelectMenuDraw();
 
 	/////////////////////
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.tutorial_log_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
 	////////////////////
 	
 }
@@ -660,16 +660,12 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 
 		}
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
-		if (animetion_num == 1)
-		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
-		}
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 		if (ingame.mitibiki_flag == true)
 		{
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
-
+		TutorialCursor();
 	}
 }
 
@@ -698,7 +694,7 @@ void TutorialUpdate(void)
 		//チュートリアルのページをめくる
 		if (ingame.tutorial_log_num < 18&& ingame.start == true)
 		{
-			//Xボタンで進める
+			//Aボタンで進める
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
@@ -708,7 +704,7 @@ void TutorialUpdate(void)
 
 		if (ingame.tutorial_log_num > 2 && ingame.start == true)
 		{
-			//Yボタンで戻る
+			//Bボタンで戻る
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
 				ingame.mitibiki_flag == true)
 			{
@@ -833,30 +829,26 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 void TutorialCursor(void) 
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (ingame.tutorial_log_num == 4&&animetion_num == 1)
-	{
-		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol, TRUE);
-	}
-	if (ingame.tutorial_log_num == 4)
+	if (ingame.tutorial_log_num == 4 && ingame.menu_flag==false )
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold)
 		{
-			ingame.tutorial_controol=LoadGraph("Resource/images/log4_left.png");
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_left, TRUE);
 			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHold)
 		{
-			ingame.tutorial_controol = LoadGraph("Resource/images/log4_right.png");
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_right, TRUE);
 			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::eHold)
 		{
-			ingame.tutorial_controol = LoadGraph("Resource/images/log4_up.png");
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_up, TRUE);
 			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::eHold)
 		{
-			ingame.tutorial_controol = LoadGraph("Resource/images/log4_down.png");
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_down, TRUE);
 			animetion_num = 1;
 		}
 		else
