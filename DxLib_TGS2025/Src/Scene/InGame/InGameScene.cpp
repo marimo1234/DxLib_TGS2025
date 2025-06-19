@@ -850,7 +850,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			if (stage->array[8][4] == 5)
 			{
 				ingame.mitibiki_flag = true;
-				if (ingame.tutorial_log_num > 14)
+				if (ingame.tutorial_log_num > 13)
 				{
 					ingame.mitibiki_flag = false;
 					animetion_num = 0;
