@@ -102,7 +102,7 @@ eSceneType StageSelectSceneUpdate(void)
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		//ステージ番号が-1じゃなければ
-		if (stageselect.number != -1 && stageselect.number != 6)
+		if (stageselect.number != -1)
 		{
 			stageselect.flag = false;
 			Stop_Title_BGM(GetTitle());
