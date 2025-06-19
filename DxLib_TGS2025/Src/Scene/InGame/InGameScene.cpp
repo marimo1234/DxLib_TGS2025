@@ -793,7 +793,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 5:
-		if (stage->array[6][4] == 4)
+		if (stage->array[7][4] == 4)
 		{
 			ingame.tutorial_log_num++;
 			ingame.tutorial_achievements++;
