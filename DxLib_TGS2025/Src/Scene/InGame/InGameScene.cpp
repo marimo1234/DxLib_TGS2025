@@ -129,6 +129,8 @@ void InGameResourceInit(void)
 	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
 	//チュートリアル中のログの選択画像
 	ingame.tutoriallog_select =LoadGraph("Resource/images/logselection.png");
+	//メニューのボタン
+	ingame.start_button_image= LoadGraph("Resource/images/STARTbutton.png");
 	//チュートリアル中のコントローラアニメーション
 	ingame.tutorial_controol_left=LoadGraph("Resource/images/log4_left.png");
 	ingame.tutorial_controol_right = LoadGraph("Resource/images/log4_right.png");
@@ -302,6 +304,9 @@ void InGameSceneDraw(void)
 	TutorialDraw(GetGoal(),GetGameOver());
 	///////////////////
 
+	//スタートボタン
+	DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);
+
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
 	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
@@ -315,11 +320,14 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
 	}
+
 	//Startボタンが押されたときにだすセレクト画面
 	MenuDraw();
 
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
+
+	
 
 	/////////////////////
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);

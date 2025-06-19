@@ -43,6 +43,8 @@ struct InGame
 	bool menu_manual_flag;
     int  menu_manual_image;
 
+	int start_button_image;
+
 	bool gameover_se_flag;
 
 	int tutorial_log;
