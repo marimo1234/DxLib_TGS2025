@@ -322,7 +322,7 @@ void InGameSceneDraw(void)
 	GoalSelectMenuDraw();
 
 	/////////////////////
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.mitibiki_flag);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
 	////////////////////
 	
 }
@@ -742,9 +742,16 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.mitibiki_flag = false;
 			if (cursor->array_x == 5)
 			{
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				break;
+				animetion_num++;
+				if (animetion_num>30)
+				{
+					ingame.tutorial_log_num++;
+					ingame.tutorial_achievements++;
+					animetion_num=0;
+					break;
+
+				}
+				
 			}
 		}
 		break;
@@ -756,11 +763,16 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		else
 		{
 			ingame.mitibiki_flag = false;
-			if (rock->item_num == 1)
+			if (rock->item_num > 0)
 			{
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				break;
+				animetion_num++;
+				if (animetion_num > 30)
+				{
+					ingame.tutorial_log_num++;
+					ingame.tutorial_achievements++;
+					animetion_num = 0;
+					break;
+				}
 			}
 		}
 		break;
@@ -774,50 +786,75 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.mitibiki_flag = false;
 			if (tool->item_number == eRoad)
 			{
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				break;
+				animetion_num++;
+				if (animetion_num > 30)
+				{
+					ingame.tutorial_log_num++;
+					ingame.tutorial_achievements++;
+					animetion_num = 0;
+					break;
+				}
 			}
 		}
 		break;
 	case 4:
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+		if (tool->road_num > 0)
 		{
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
-			break;
+			animetion_num++;
+			if (animetion_num > 30)
+			{
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
+			}
 		}
 		break;
 	case 5:
 		if (stage->array[7][4] == 4)
 		{
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
-			break;
+			animetion_num++;
+			if (animetion_num > 30)
+			{
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
+			}
 		}
 		break;
 	case 6:
 		if (tool->wood_road_num==1)
 		{
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
-			break;
+			animetion_num++;
+			if (animetion_num > 30)
+			{
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
+			}
 		}
 		break;
 	case 7:
 		if (stage->array[8][4] == 5)
 		{
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
-			break;
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				break;
 		}
 	case 8:
-		if (stage->array[8][4] == 5)
+		animetion_num++;
+		if (animetion_num > 30)
 		{
-			ingame.mitibiki_flag = true;
-			if (ingame.tutorial_log_num > 14)
+			if (stage->array[8][4] == 5)
 			{
-				ingame.mitibiki_flag = false;
+				ingame.mitibiki_flag = true;
+				if (ingame.tutorial_log_num > 13)
+				{
+					ingame.mitibiki_flag = false;
+					animetion_num = 0;
+				}
 			}
 		}
 
@@ -834,26 +871,18 @@ void TutorialCursor(void)
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold)
 		{
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_left, TRUE);
-			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHold)
 		{
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_right, TRUE);
-			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::eHold)
 		{
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_up, TRUE);
-			animetion_num = 1;
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::eHold)
 		{
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_down, TRUE);
-			animetion_num = 1;
-		}
-		else
-		{
-			animetion_num = 0;
 		}
 	}
 }
