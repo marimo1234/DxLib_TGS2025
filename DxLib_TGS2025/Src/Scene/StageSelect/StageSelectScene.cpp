@@ -104,6 +104,11 @@ eSceneType StageSelectSceneUpdate(void)
 			return eTitle;
 		}
 	}
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+	{
+		Play_Sound_StageSelect(stageselect.button_se, 80);
+		return eTitle;
+	}
 
 	if (stageselect.flag == true)
 	{
