@@ -131,11 +131,10 @@ void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
-	if (mole.image_count / 60 > 2)
+	if (mole.image_count / 60 >= 2)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
-			/*mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);*/
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
