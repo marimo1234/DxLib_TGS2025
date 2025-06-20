@@ -440,7 +440,7 @@ void RB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
-		&& tool_start == true && tool.menu_flag == false)
+		&& tool_start == true && tool.menu_flag == false&&car->direction==eStop&&car->goal_flag==false)
 	{
 		DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
 	}
@@ -455,7 +455,7 @@ void LB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
-		&& tool_start == true && tool.menu_flag == false)
+		&& tool_start == true && tool.menu_flag == false && car->direction == eStop && car->goal_flag == false)
 	{
 		DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
 	}
