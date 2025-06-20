@@ -2,5 +2,6 @@
 
 void SceneManagerInitialize(void);
 void SceneManagerUpdate(void);
-void SceneManagerResourceInit(void);
+bool SceneManagerResourceInit();
 int IsFinish(void);
+bool IsSceneManagerInitialized();

@@ -14,9 +14,9 @@ Title title;
 void TitleResourceInit(void)
 {
 	title.char_num = 0;
-	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+	/*title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
 	title.cursor_se= LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
-	title.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+	title.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");*/
 }
 
 //タイトルシーンの初期化
@@ -40,6 +40,10 @@ void TitleSceneInit(void)
 	title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
 	title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
 	title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
+
+	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+	title.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
+	title.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 
 	title.mole_num = 0;
 	title.mole_count = 0;

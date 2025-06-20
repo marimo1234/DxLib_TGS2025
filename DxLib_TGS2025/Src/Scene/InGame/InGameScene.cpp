@@ -21,6 +21,8 @@
 int atr ;
 int btr ;
 int animetion_num;
+int init_step = 0;
+int is_initialized = false;
 
 //この辺まだ使っていない
 //void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
@@ -104,49 +106,76 @@ void InGameSceneInit(void)
 
 void InGameResourceInit(void)
 {
-	//説明の後ろに表示(黒い背景）
-	ingame.back = LoadGraph("Resource/images/black_back.png");
-	//インゲーム前の画面
-	ingame.space = LoadGraph("Resource/images/aida.png");
-	//操作説明の画像
-	ingame.manual_image = LoadGraph("Resource/images/manual_menu.png");
-	ingame.space = LoadGraph("Resource/images/aida.png");
-	//白い背景
-	ingame.menu_image = LoadGraph("Resource/images/white_back.png");
-	//メニューカーソル
-	ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
-	//メニューバー画像
-	ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
-	ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
-	ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
-	ingame.menu_char_image[3] = LoadGraph("Resource/images/stage_select.png");
-	ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
-	ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
-	ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
-	//メニューのマニュアルで使う操作説明画像
-	ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
-	//ミチビキ君
-	ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
-	//チュートリアル中のログの選択画像
-	ingame.tutoriallog_select =LoadGraph("Resource/images/logselection.png");
-	//メニューのボタン
-	ingame.start_button_image= LoadGraph("Resource/images/STARTbutton.png");
-	//チュートリアル中のコントローラアニメーション
-	ingame.tutorial_controol_left=LoadGraph("Resource/images/log4_left.png");
-	ingame.tutorial_controol_right = LoadGraph("Resource/images/log4_right.png");
-	ingame.tutorial_controol_up = LoadGraph("Resource/images/log4_up.png");
-	ingame.tutorial_controol_down = LoadGraph("Resource/images/log4_down.png");
-	//BGMの初期化
-	PlayBgm();
+	switch (init_step)
+	{
+	case 0:
+		//説明の後ろに表示(黒い背景）
+		ingame.back = LoadGraph("Resource/images/black_back.png");
+		//インゲーム前の画面
+		ingame.space = LoadGraph("Resource/images/aida.png");
+		//操作説明の画像
+		ingame.manual_image = LoadGraph("Resource/images/manual_menu.png");
+		ingame.space = LoadGraph("Resource/images/aida.png");
+		//白い背景
+		ingame.menu_image = LoadGraph("Resource/images/white_back.png");
+		//メニューカーソル
+		ingame.menu_cursor = LoadGraph("Resource/images/menu_cursor.png");
+		//メニューバー画像
+		ingame.menu_char_image[0] = LoadGraph("Resource/images/continue.png");
+		ingame.menu_char_image[1] = LoadGraph("Resource/images/retry.png");
+		ingame.menu_char_image[2] = LoadGraph("Resource/images/manual.png");
+		ingame.menu_char_image[3] = LoadGraph("Resource/images/stage_select.png");
+		ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
+		ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
+		ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+		//メニューのマニュアルで使う操作説明画像
+		ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
+		//ミチビキ君
+		ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
+		//チュートリアル中のログの選択画像
+		ingame.tutoriallog_select = LoadGraph("Resource/images/logselection.png");
+		//メニューのボタン
+		ingame.start_button_image = LoadGraph("Resource/images/STARTbutton.png");
+		//チュートリアル中のコントローラアニメーション
+		ingame.tutorial_controol_left = LoadGraph("Resource/images/log4_left.png");
+		ingame.tutorial_controol_right = LoadGraph("Resource/images/log4_right.png");
+		ingame.tutorial_controol_up = LoadGraph("Resource/images/log4_up.png");
+		ingame.tutorial_controol_down = LoadGraph("Resource/images/log4_down.png");
+		//BGMの初期化
+		PlayBgm();
+		break;
+	case 1:
+		MapResourceInit();
+		break;
+	case 2:
+		ObstacleManagerResourceInit();
+		break;
+	case 3:
+		WoodRockResourceInit();
+		break;
+	case 4:
+		ToolResourceInit();
+		break;
+	case 5:
+		CarResourceInit();
+		break;
+	case 6:
+		CursorResourceInit();
+		break;
+	case 7:
+		GoalResourceInit();
+		break;
+	case 8:
+		is_initialized = true;
+		break;
+	}
 
+	init_step++;
+}
 
-	MapResourceInit();
-	ObstacleManagerResourceInit();
-	WoodRockResourceInit();
-	ToolResourceInit();
-	CarResourceInit();
-	CursorResourceInit();
-	GoalResourceInit();
+bool IsInGameInit()
+{
+	return is_initialized;
 }
 
 eSceneType InGameSceneUpdate()

@@ -12,6 +12,7 @@
 
 eSceneType current_scene_type;
 int is_end_flag;
+static int init_flag = false;
 
 void SceneManagerDraw(void);
 void ChangeScene(eSceneType new_scene_type);
@@ -25,9 +26,20 @@ void SceneManagerInitialize(void)
 	//継続状態にする
 	is_end_flag = 0;
 
-	SceneManagerResourceInit();
-	//最初のシーンの設定
-	ChangeScene(eTitle);
+	InGameResourceInit();
+	TitleResourceInit();
+
+	if (IsInGameInit() == true)
+	{
+		//最初のシーンの設定
+		ChangeScene(eTitle);
+		init_flag = true;
+	}
+}
+
+bool IsSceneManagerInitialized()
+{
+	return init_flag;
 }
 
 void SceneManagerUpdate(void)
@@ -50,10 +62,10 @@ void SceneManagerUpdate(void)
 	case eEnd:
 		next_scene_type = EndSceneUpdate();
 		break;
-	case eEnd2:
 	case eCredits:
 		next_scene_type = CreditsSceneUpdate();
 		break;
+	case eEnd2:
 	default:
 		break;
 	}
@@ -90,9 +102,9 @@ void SceneManagerDraw(void)
 	case eEnd:
 		EndSceneDraw();
 		break;
-	case eEnd2:
 	case eCredits:
 		CreditsSceneDraw();
+	case eEnd2:
 	default:
 		break;
 	}
@@ -145,17 +157,17 @@ void SceneInit(eSceneType new_scene_type)
 	case eEnd:
 		EndSceneInit();
 		break;
-	case eEnd2:
 	case eCredits:
 		CreditsSceneInit();
 		break;
+	case eEnd2:
 	default:
 		break;
 	}
 }
 
 //画像、音の読み込み
-void SceneManagerResourceInit(void)
+bool SceneManagerResourceInit(void)
 {
 	InGameResourceInit();
 	TitleResourceInit();

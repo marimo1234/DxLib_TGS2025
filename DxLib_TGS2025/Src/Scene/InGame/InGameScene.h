@@ -74,6 +74,7 @@ void InGameSceneInit(void);
 eSceneType InGameSceneUpdate(void);
 void InGameSceneDraw(void);
 void InGameResourceInit(void);
+bool IsInGameInit();
 
 const InGame* GetInGame(void);
 

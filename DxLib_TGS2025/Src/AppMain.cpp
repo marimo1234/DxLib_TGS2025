@@ -25,22 +25,38 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 
 	int load_image;
 	int mole_image;
+	int loadbar[3];
 	load_image = LoadGraph("Resource/images/Loading2.png");
 	mole_image = LoadGraph("Resource/images/mole.png");
+	loadbar[0]= LoadGraph("Resource/images/LoadBar.png");
+	loadbar[1]= LoadGraph("Resource/images/LoadBlackBar.png");
+	loadbar[2]= LoadGraph("Resource/images/LoadEmptyBar.png");
+	
 
-	//画面の初期化
-	ClearDrawScreen();
+	int fps = 0;
+	int i = 0;
 
-	DrawRotaGraph(640, 360, 1.0, 0.0, load_image, TRUE);
-	for (int i = 0; i < 3; i++)
+	while (!IsSceneManagerInitialized())
 	{
-		DrawRotaGraph(990+i*50, 360, 1.0, 0.0, mole_image, TRUE);
+		fps++;
+		ClearDrawScreen();
+
+		// 背景
+		DrawRotaGraph(650, 260, 1.0, 0.0, load_image, TRUE);
+		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[0], TRUE);
+		DrawRotaGraph(640 + i * 120, 500, 1.0, 0.0, loadbar[1], TRUE);
+		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[2], TRUE);
+		for (int j = 0; j < 3; j++)
+		{
+			DrawRotaGraph(1000 + j * 50, 260, 1.0, 0.0, mole_image, TRUE);
+		}
+		i++;
+		// ここで1つずつ初期化を進める（リソース系含む）
+		SceneManagerInitialize();
+		ScreenFlip();
 	}
 
-	ScreenFlip();
-
-	//シーンマネージャーの初期化
-	SceneManagerInitialize();
+	
 
 	// パッド入力制御のインスタンスを取得
 	PadInputManager* pad_input = PadInputManager::GetInstance();
