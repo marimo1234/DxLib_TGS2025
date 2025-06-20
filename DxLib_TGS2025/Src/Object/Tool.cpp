@@ -436,38 +436,32 @@ void Item_Frame_Draw(void)
 }
 
 //RB描画
-void RB_Draw(const Car*car)
+void RB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (car->goal_flag == false && car->direction != eStop)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
+		&& tool_start == true && tool.menu_flag == false)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
-			&& tool_start == true && tool.menu_flag == false)
-		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
-		}
-		else
-		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
-		}
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
+	}
+	else
+	{
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
 	}
 }
 
 //LB描画
-void LB_Draw(const Car*car)
+void LB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (car->goal_flag == false && car->direction != eStop)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
+		&& tool_start == true && tool.menu_flag == false)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
-			&& tool_start == true && tool.menu_flag == false)
-		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
-		}
-		else
-		{
-			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
-		}
+		DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
+	}
+	else
+	{
+		DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
 	}
 }
 
