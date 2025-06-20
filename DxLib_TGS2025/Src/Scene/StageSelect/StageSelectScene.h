@@ -6,14 +6,22 @@
 
 struct StageSelect
 {
+	int car_fps;
+	int move_fps;
 	bool flag;
 	int background_image;
 	int Abutton;
 	float Abutton_rate;
 	float rate_num;
-	int car_image;
+	int car_image1;
+	int car_image2;
 	int trout_image[3];
 	int number_image[6];
+	int b_back;
+	bool car_flag;
+	float car_x;
+	float car_y;
+	int car_num;
 	float number_extrate[3][2];
 	int number_count;
 	int trout_array[3][3];
@@ -36,6 +44,9 @@ void StageSelectGetNumber(void);
 void NumTroutDraw(void);
 void SelectButtonDraw(void);
 void ChangeNumberExtrate(void);
+//車描画
+void Draw_Select_Car(void);
+
 
 
 
