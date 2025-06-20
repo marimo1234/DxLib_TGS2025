@@ -44,6 +44,7 @@ void StageSelectGetNumber(void);
 void NumTroutDraw(void);
 void SelectButtonDraw(void);
 void ChangeNumberExtrate(void);
+void StageSelectResourceInit(void);
 //車描画
 void Draw_Select_Car(void);
 

@@ -165,8 +165,10 @@ void InGameResourceInit(void)
 	case 7:
 		GoalResourceInit();
 		break;
-	case 8:
+	case 120:
 		is_initialized = true;
+		break;
+	default:
 		break;
 	}
 

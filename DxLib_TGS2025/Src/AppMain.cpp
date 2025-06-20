@@ -26,11 +26,13 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	int load_image;
 	int mole_image;
 	int loadbar[3];
+	int car_image;
 	load_image = LoadGraph("Resource/images/Loading2.png");
 	mole_image = LoadGraph("Resource/images/mole.png");
 	loadbar[0]= LoadGraph("Resource/images/LoadBar.png");
 	loadbar[1]= LoadGraph("Resource/images/LoadBlackBar.png");
 	loadbar[2]= LoadGraph("Resource/images/LoadEmptyBar.png");
+	car_image= LoadGraph("Resource/images/car2_right.png");
 	
 
 	int fps = 0;
@@ -41,18 +43,27 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		fps++;
 		ClearDrawScreen();
 
-		// 背景
+		// Loadingの描画
 		DrawRotaGraph(650, 260, 1.0, 0.0, load_image, TRUE);
+		//バーの描画
 		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[0], TRUE);
-		DrawRotaGraph(640 + i * 120, 500, 1.0, 0.0, loadbar[1], TRUE);
+		DrawRotaGraph(640 + i * 95, 500, 1.0, 0.0, loadbar[1], TRUE);
 		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[2], TRUE);
+		//車の描画
+		DrawRotaGraph(260 + i * 95, 500, 0.1, 0.0, car_image, TRUE);
+
+		//モグラの描画
 		for (int j = 0; j < 3; j++)
 		{
 			DrawRotaGraph(1000 + j * 50, 260, 1.0, 0.0, mole_image, TRUE);
 		}
-		i++;
+		if (fps < 9)
+		{
+			i++;
+		}
 		// ここで1つずつ初期化を進める（リソース系含む）
 		SceneManagerInitialize();
+		DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", fps);
 		ScreenFlip();
 	}
 

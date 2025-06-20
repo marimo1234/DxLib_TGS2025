@@ -10,7 +10,7 @@
 
 #define CAR_SPEED		(1.5f)
 
-int result_score;		//表示するスコアの値
+int stageselect_init_step = 0;;
 
 //音がなっていないなら鳴らす
 void Play_Sound_StageSelect(int sound, int volume);
@@ -67,29 +67,6 @@ void StageSelectSceneInit(void)
 		}
 	}
 
-	//画像の取得
-	//背景
-	stageselect.background_image = LoadGraph("Resource/images/StageSelect2.png");
-	//マスの画像
-	stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
-	stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
-	stageselect.trout_image[2] = LoadGraph("Resource/images/BackTrout2.png");
-	//数字の画像
-	stageselect.number_image[0] = LoadGraph("Resource/images/1.png");
-	stageselect.number_image[1] = LoadGraph("Resource/images/2.png");
-	stageselect.number_image[2] = LoadGraph("Resource/images/3.png");
-	stageselect.number_image[3] = LoadGraph("Resource/images/4.png");
-	stageselect.number_image[4] = LoadGraph("Resource/images/5.png");
-	stageselect.number_image[5] = LoadGraph("Resource/images/6.png");
-	
-	//ボタンの画像
-	stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
-	stageselect.b_back= LoadGraph("Resource/images/Bback3.png");
-
-	//カーソルとボタンのSE
-	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
-	stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
-
 	Play_StageSelect_BGM(GetTitle());
 
 	//配列にデフォルトの枠を入れる
@@ -100,6 +77,40 @@ void StageSelectSceneInit(void)
 			stageselect.trout_array[i][j] = stageselect.trout_image[0];
 		}
 	} 
+}
+
+void StageSelectResourceInit(void)
+{
+	switch (stageselect_init_step)
+	{
+	case 0:
+		//ボタンの画像
+		stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
+		stageselect.b_back = LoadGraph("Resource/images/Bback3.png");
+		//カーソルとボタンのSE
+		stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
+		stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+		break;
+	case 1:
+		//画像の取得
+	//背景
+		stageselect.background_image = LoadGraph("Resource/images/StageSelect2.png");
+		//マスの画像
+		stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
+		stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
+		stageselect.trout_image[2] = LoadGraph("Resource/images/BackTrout2.png");
+		//数字の画像
+		stageselect.number_image[0] = LoadGraph("Resource/images/1.png");
+		stageselect.number_image[1] = LoadGraph("Resource/images/2.png");
+		stageselect.number_image[2] = LoadGraph("Resource/images/3.png");
+		stageselect.number_image[3] = LoadGraph("Resource/images/4.png");
+		stageselect.number_image[4] = LoadGraph("Resource/images/5.png");
+		stageselect.number_image[5] = LoadGraph("Resource/images/6.png");
+		break;
+	default:
+		break;
+	}
+	stageselect_init_step++;
 }
 
 //ステージセレクトシーンの更新

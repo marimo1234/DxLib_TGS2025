@@ -299,6 +299,7 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range*0.6&&
 			car.goal_flag == false)
 		{
+			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
 		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f+  car.warn_range &&
@@ -327,6 +328,7 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range*0.6 &&
 			car.goal_flag == false)
 		{
+			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f- car.warn_range &&
@@ -356,6 +358,7 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range*0.6 &&
 			car.goal_flag == false)
 		{
+			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f- car.warn_range &&
@@ -385,6 +388,7 @@ void CarMovePosition(const CreateStage* stage)
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range*0.6 &&
 			car.goal_flag == false)
 		{
+			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range &&

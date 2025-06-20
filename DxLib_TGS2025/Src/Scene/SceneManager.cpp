@@ -28,6 +28,7 @@ void SceneManagerInitialize(void)
 
 	InGameResourceInit();
 	TitleResourceInit();
+	StageSelectResourceInit();
 
 	if (IsInGameInit() == true)
 	{
@@ -166,10 +167,4 @@ void SceneInit(eSceneType new_scene_type)
 	}
 }
 
-//画像、音の読み込み
-bool SceneManagerResourceInit(void)
-{
-	InGameResourceInit();
-	TitleResourceInit();
-}
 
