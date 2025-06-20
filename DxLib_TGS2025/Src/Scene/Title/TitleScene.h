@@ -16,6 +16,7 @@ struct Title
 	int mole_num;
 	int mole_count;
 	int mole_move;
+	int mole_active;
 
 	int bgm;
 	int cursor_se;
@@ -24,6 +25,7 @@ struct Title
 void TitleSceneInit(void);
 eSceneType TitleSceneUpdate(void);
 void TitleSceneDraw(void);
+void TitleMoleDraw(void);
 
 void TitleResourceInit(void);
 void TitleCursorUpdate(void);

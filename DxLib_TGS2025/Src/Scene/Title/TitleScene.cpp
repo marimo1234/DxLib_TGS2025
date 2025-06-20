@@ -33,17 +33,18 @@ void TitleSceneInit(void)
 	title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
 	title.control_image = LoadGraph("Resource/Images/control_img.png");
 
-	title.mole_image[0] = LoadGraph("Resource/Images/title_mole0.png");
-	title.mole_image[1] = LoadGraph("Resource/Images/title_mole1.png");
-	title.mole_image[2] = LoadGraph("Resource/Images/title_mole2.png");
-	title.mole_image[3] = LoadGraph("Resource/Images/title_mole3.png");
-	title.mole_image[4] = LoadGraph("Resource/Images/title_mole4.png");
-	title.mole_image[5] = LoadGraph("Resource/Images/title_mole5.png");
-	title.mole_image[6] = LoadGraph("Resource/Images/title_mole6.png");
+	title.mole_image[0] = LoadGraph("Resource/Images/title_mole00.png");
+	title.mole_image[1] = LoadGraph("Resource/Images/title_mole01.png");
+	title.mole_image[2] = LoadGraph("Resource/Images/title_mole02.png");
+	title.mole_image[3] = LoadGraph("Resource/Images/title_mole03.png");
+	title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
+	title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
+	title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
 
 	title.mole_num = 0;
 	title.mole_count = 0;
 	title.mole_move = 0;
+	title.mole_active = 0;
 
 
 	//seの読み込み
@@ -59,27 +60,30 @@ eSceneType TitleSceneUpdate(void)
 	TitleCursorUpdate();
 	title.mole_count++;
 
-	if (title.mole_count > 5)
+	if (title.mole_count % 5 == 0)
 	{
-		if(title.mole_move==0)
+		if (title.mole_move == 0 && title.mole_num != 6)
 		{
 			title.mole_num++;
 		}
-		else if (title.mole_move == 1)
+		else if (title.mole_move == 1 && title.mole_num != 0)
 		{
 			title.mole_num--;
 		}
 
-		if (title.mole_num == 6)
+		if (title.mole_num == 6&& title.mole_count>180)
 		{
 			title.mole_move = 1;
+			title.mole_count = 0;
 		}
-		else if(title.mole_num==0)
+		else if (title.mole_num == 0 && title.mole_count > 180)
 		{
 			title.mole_move = 0;
+			title.mole_count = 0;
+			title.mole_active = GetRand(2) + 1;
 		}
-		
-		title.mole_count = 0;
+
+		/*title.mole_count = 0;*/
 	}
 
 	//スペースキーが押された瞬間に、各画面に遷移する
@@ -129,14 +133,19 @@ void TitleSceneDraw(void)
 {
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
-	DrawRotaGraphF(900.0f, 680.0f, 1.0f, 0.0, title.control_image, TRUE);
-	DrawRotaGraphF(200.0f, 400.0f, 1.0, 0.0, title.mole_image[title.mole_num],TRUE);
+	DrawRotaGraphF(900.0f, 680.0f, 1.0, 0.0, title.control_image, TRUE);
+
+	//モグラの描画
+	TitleMoleDraw();
+
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
 	}
 
 	DrawRotaGraphF(title.cursor_x, title.cursor_y , 1.0, 0.0, title.cursor_image, TRUE);
+
+	DrawFormatString(120, 120, GetColor(255, 255, 255), "%d", title.mole_count);
 }
 
 //StageSelectを取得
@@ -190,4 +199,25 @@ void Play_Title_SE(int sound, int volume)
 void Stop_BGM(void)
 {
 	StopSoundMem(title.bgm);
+}
+
+void TitleMoleDraw(void)
+{
+	DrawRotaGraphF(400.0f, 380.0f, 0.5, 0.0, title.mole_image[0], TRUE);
+	DrawRotaGraphF(230.0f, 540.0f, 2.0, 0.0, title.mole_image[0], TRUE);
+	DrawRotaGraphF(1020.0f, 450.0f, 1.0, 0.0, title.mole_image[0], TRUE);
+
+	switch (title.mole_active)
+	{
+	case 1:
+		DrawRotaGraphF(400.0f, 380.0f, 0.5, 0.0, title.mole_image[title.mole_num], TRUE);
+		break;
+	case 2:
+		DrawRotaGraphF(230.0f, 540.0f, 2.0, 0.0, title.mole_image[title.mole_num], TRUE);
+		break;
+	case 3:
+		DrawRotaGraphF(1020.0f, 450.0f, 1.0, 0.0, title.mole_image[title.mole_num], TRUE);
+		break;
+	}
+	
 }
