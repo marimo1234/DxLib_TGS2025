@@ -3,9 +3,12 @@
 #include "../../Utility/PadInputManager.h"
 #include"../InGame/InGameScene.h"
 #include"../Title/TitleScene.h"
+#include"../../Object/car.h"
 
 #include "DxLib.h"
 #include <stdlib.h>
+
+#define CAR_SPEED		(1.5f)
 
 int result_score;		//表示するスコアの値
 
@@ -17,13 +20,18 @@ void Play_Sound_StageSelect_NC(int sound, int volume);
 void Stop_Title_BGM(const Title* title);
 //タイトルBGMが流れていなかったら流す
 void Play_StageSelect_BGM(const Title* title);
-
-
+//車移動
+void Move_Car(const Car* car);
+void Set_Coordinate(int img1, int img2, float x, float y);
 
 StageSelect stageselect;
-//リザルト画面初期化
+//ステージセレクト画面初期化
 void StageSelectSceneInit(void)
 {  
+	//fps
+	stageselect.car_fps = 0;
+	stageselect.move_fps = 0;
+
 	//ポジションの初期化
 	stageselect.position.x = 400.0f;
 	stageselect.position.y = 255.0f;
@@ -41,6 +49,14 @@ void StageSelectSceneInit(void)
 	stageselect.Abutton_rate = 0.5f;
 	stageselect.rate_num = 0.1;
 
+	//車の描画座標
+	stageselect.car_x = 0.0f;
+	stageselect.car_y = 0.0f;
+	stageselect.car_image1 = 0;
+	stageselect.car_image2 = 0;
+	stageselect.car_num = 0;
+	stageselect.car_flag = false;
+
 	stageselect.flag = true;
 
 	for (int j = 0; j < 2; j++)
@@ -53,7 +69,7 @@ void StageSelectSceneInit(void)
 
 	//画像の取得
 	//背景
-	stageselect.background_image = LoadGraph("Resource/images/StageSelect.png");
+	stageselect.background_image = LoadGraph("Resource/images/StageSelect2.png");
 	//マスの画像
 	stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
 	stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
@@ -65,10 +81,10 @@ void StageSelectSceneInit(void)
 	stageselect.number_image[3] = LoadGraph("Resource/images/4.png");
 	stageselect.number_image[4] = LoadGraph("Resource/images/5.png");
 	stageselect.number_image[5] = LoadGraph("Resource/images/6.png");
-	//車の画像
-	stageselect.car_image = LoadGraph("Resource/images/car2_right.png");
+	
 	//ボタンの画像
 	stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
+	stageselect.b_back= LoadGraph("Resource/images/Bback3.png");
 
 	//カーソルとボタンのSE
 	stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
@@ -93,6 +109,9 @@ eSceneType StageSelectSceneUpdate(void)
 	StageSelectGetNumber();
 	
 	ChangeNumberExtrate();
+
+	Move_Car(GetCar());
+
 	SelectButtonDraw();
 
 
@@ -130,10 +149,14 @@ void StageSelectSceneDraw(void)
 {
 	//背景の描画
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, stageselect.background_image, TRUE);
-	//数字、枠、車の描画
+	
+	//車描画
+	Draw_Select_Car();
+
+	//数字、枠、ボタンの描画
 	NumTroutDraw();
 	
-	
+	DrawRotaGraph(1142.0, 730.0, 0.1, 0.0, stageselect.Abutton, TRUE);
 	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 }
@@ -297,6 +320,8 @@ void NumTroutDraw(void)
 		DrawRotaGraphF(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
 		DrawRotaGraphF(stageselect.position.x, stageselect.position.y + 60.0f, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
 	}
+
+	DrawRotaGraphF(900.0f, 620.0f, 1.0, 0.0, stageselect.b_back, TRUE);
 }
 
 //ボタンの描画　大きさが変わる
@@ -387,4 +412,103 @@ void Play_StageSelect_BGM(const Title* title)
 		ChangeVolumeSoundMem(100, title->bgm);
 		PlaySoundMem(title->bgm, DX_PLAYTYPE_BACK);
 	}
+}
+
+//車移動更新
+void Move_Car(const Car*car)
+{
+	if (stageselect.car_flag == true)
+	{
+		switch (stageselect.car_num)
+		{
+		case 0:
+			stageselect.car_y += CAR_SPEED;
+			if (stageselect.car_y > 730.0f)
+			{
+				stageselect.car_flag = false;
+			}
+			break;
+		case 1:
+			stageselect.car_y += CAR_SPEED;
+			if (stageselect.car_y > 730.0f)
+			{
+				stageselect.car_flag = false;
+			}
+			break;
+		case 2:
+			stageselect.car_y -= CAR_SPEED;
+			if (stageselect.car_y <-5.0f)
+			{
+				stageselect.car_flag = false;
+			}
+			break;
+		case 3:
+			stageselect.car_y -= CAR_SPEED;
+			if (stageselect.car_y < -5.0f)
+			{
+				stageselect.car_flag = false;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		stageselect.car_fps++;	//fps加算
+		if (stageselect.car_fps > 180)		//三秒後
+		{
+			stageselect.car_num = GetRand(3);	//乱数取得0～3
+			switch (stageselect.car_num)
+			{
+			case 0:
+				Set_Coordinate(car->image[3], car->move_image[3], 125.0f, -5.0f);//左上		
+				break;
+			case 1:
+				Set_Coordinate(car->image[3], car->move_image[3], 1142.0f, -5.0f);//右上
+				break;
+			case 2:
+				Set_Coordinate(car->image[2], car->move_image[2], 125.0f, 730.0f);//左下
+				break;
+			case 3:
+				Set_Coordinate(car->image[2], car->move_image[2], 1142.0f, 730.0f);//右下
+				break;
+			default:
+				break;
+			}
+			stageselect.car_flag = true;	//フラグTRUEに
+			stageselect.car_fps = 0;		//fpsリセット
+		}
+	}
+}
+
+//車描画
+void Draw_Select_Car(void)
+{
+	if (stageselect.car_flag == true)
+	{
+		if (stageselect.move_fps<20)
+		{
+			DrawRotaGraph(stageselect.car_x, stageselect.car_y, 0.1, 0.0, stageselect.car_image1, TRUE);
+			stageselect.move_fps++;
+		}
+		else
+		{
+			DrawRotaGraph(stageselect.car_x, stageselect.car_y, 0.1, 0.0, stageselect.car_image2, TRUE);
+			stageselect.move_fps++;
+			if (stageselect.move_fps > 40)
+			{
+				stageselect.move_fps = 0;
+			}
+		}
+	}
+}
+
+//車の座標代入
+void Set_Coordinate(int img1, int img2, float x, float y)
+{
+	stageselect.car_image1 = img1;//左上
+	stageselect.car_image2 = img2;
+	stageselect.car_x = x;
+	stageselect.car_y = y;
 }
