@@ -21,7 +21,7 @@
 int atr ;
 int btr ;
 int animetion_num;
-int init_step = 0;
+int ingame_init_step = 0;
 int is_initialized = false;
 
 //この辺まだ使っていない
@@ -106,7 +106,7 @@ void InGameSceneInit(void)
 
 void InGameResourceInit(void)
 {
-	switch (init_step)
+	switch (ingame_init_step)
 	{
 	case 0:
 		//説明の後ろに表示(黒い背景）
@@ -170,7 +170,7 @@ void InGameResourceInit(void)
 		break;
 	}
 
-	init_step++;
+	ingame_init_step++;
 }
 
 bool IsInGameInit()

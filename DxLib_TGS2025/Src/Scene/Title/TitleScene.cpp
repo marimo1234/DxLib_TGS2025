@@ -5,6 +5,7 @@
 #include <math.h>
 
 int title_image;		//タイトル画像のハンドル
+int title_init_step = 0;
 
 void Play_Title_SE(int sound, int volume);
 
@@ -13,10 +14,36 @@ Title title;
 //タイトルシーンのリソース初期化
 void TitleResourceInit(void)
 {
-	title.char_num = 0;
-	/*title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
-	title.cursor_se= LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
-	title.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");*/
+	switch (title_init_step)
+	{
+	case 0:
+		title.char_num = 0;
+		title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
+		title.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
+		title.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+		break;
+	case 1:
+		title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
+		title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
+		title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
+		title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
+		title.char_image[1] = LoadGraph("Resource/Images/Credits.png");	//タイトルの選択文字
+		title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
+		title.control_image = LoadGraph("Resource/Images/control_img.png");
+		break;
+	case 2:
+		title.mole_image[0] = LoadGraph("Resource/Images/title_mole00.png");
+		title.mole_image[1] = LoadGraph("Resource/Images/title_mole01.png");
+		title.mole_image[2] = LoadGraph("Resource/Images/title_mole02.png");
+		title.mole_image[3] = LoadGraph("Resource/Images/title_mole03.png");
+		title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
+		title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
+		title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
+		break;
+	default:
+		break;
+	}
+	title_init_step++;
 }
 
 //タイトルシーンの初期化
@@ -24,36 +51,10 @@ void TitleSceneInit(void)
 {
 	title.cursor_x = 370.0f;
 	title.cursor_y = 450.0f+title.char_num * 90.0f;
-	//画像の読み込み
-	title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
-	title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
-	title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
-	title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
-	title.char_image[1] = LoadGraph("Resource/Images/Credits.png");	//タイトルの選択文字
-	title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
-	title.control_image = LoadGraph("Resource/Images/control_img.png");
-
-	title.mole_image[0] = LoadGraph("Resource/Images/title_mole00.png");
-	title.mole_image[1] = LoadGraph("Resource/Images/title_mole01.png");
-	title.mole_image[2] = LoadGraph("Resource/Images/title_mole02.png");
-	title.mole_image[3] = LoadGraph("Resource/Images/title_mole03.png");
-	title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
-	title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
-	title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
-
-	title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
-	title.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
-	title.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
-
 	title.mole_num = 0;
 	title.mole_count = 0;
 	title.mole_move = 0;
 	title.mole_active = GetRand(2) + 1;
-
-
-	//seの読み込み
-	//select_SE = LoadSoundMem("Resource/SE/select.mp3");		//セレクトサウンド
-	//decision_SE = LoadSoundMem("Resource/SE/decision.mp3");	//決定サウンド
 	
 	Play_Title_BGM();
 }
