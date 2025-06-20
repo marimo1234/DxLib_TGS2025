@@ -44,7 +44,7 @@ void TitleSceneInit(void)
 	title.mole_num = 0;
 	title.mole_count = 0;
 	title.mole_move = 0;
-	title.mole_active = 0;
+	title.mole_active = GetRand(2) + 1;
 
 
 	//seの読み込み
@@ -145,7 +145,7 @@ void TitleSceneDraw(void)
 
 	DrawRotaGraphF(title.cursor_x, title.cursor_y , 1.0, 0.0, title.cursor_image, TRUE);
 
-	DrawFormatString(120, 120, GetColor(255, 255, 255), "%d", title.mole_count);
+	//DrawFormatString(120, 120, GetColor(255, 255, 255), "%d", title.mole_count);
 }
 
 //StageSelectを取得
