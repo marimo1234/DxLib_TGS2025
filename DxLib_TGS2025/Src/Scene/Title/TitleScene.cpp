@@ -4,6 +4,8 @@
 #include "DxLib.h"
 #include <math.h>
 
+#define MOLE_MOVE_UP (0)
+#define MOLE_MOVE_DOWN (1)
 int title_image;		//タイトル画像のハンドル
 int title_init_step = 0;
 
@@ -67,23 +69,23 @@ eSceneType TitleSceneUpdate(void)
 
 	if (title.mole_count % 2 == 0)
 	{
-		if (title.mole_move == 0 && title.mole_num != 6)
+		if (title.mole_move == MOLE_MOVE_UP && title.mole_num != 6)
 		{
 			title.mole_num++;
 		}
-		else if (title.mole_move == 1 && title.mole_num != 0)
+		else if (title.mole_move == MOLE_MOVE_DOWN && title.mole_num != 0)
 		{
 			title.mole_num--;
 		}
 
 		if (title.mole_num == 6&& title.mole_count>180)
 		{
-			title.mole_move = 1;
+			title.mole_move = MOLE_MOVE_DOWN;
 			title.mole_count = 0;
 		}
 		else if (title.mole_num == 0 && title.mole_count > 180)
 		{
-			title.mole_move = 0;
+			title.mole_move = MOLE_MOVE_UP;
 			title.mole_count = 0;
 			title.mole_active = GetRand(2) + 1;
 		}
