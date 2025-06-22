@@ -65,9 +65,9 @@ eSceneType TitleSceneUpdate(void)
 	TitleCursorUpdate();
 	title.mole_count++;
 
-	if (title.mole_count % 3 == 0)
+	if (title.mole_count % 2 == 0)
 	{
-		if (title.mole_move == 0 && title.mole_num != 5)
+		if (title.mole_move == 0 && title.mole_num != 6)
 		{
 			title.mole_num++;
 		}
@@ -76,7 +76,7 @@ eSceneType TitleSceneUpdate(void)
 			title.mole_num--;
 		}
 
-		if (title.mole_num == 5&& title.mole_count>180)
+		if (title.mole_num == 6&& title.mole_count>180)
 		{
 			title.mole_move = 1;
 			title.mole_count = 0;
