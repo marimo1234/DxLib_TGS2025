@@ -65,9 +65,9 @@ eSceneType TitleSceneUpdate(void)
 	TitleCursorUpdate();
 	title.mole_count++;
 
-	if (title.mole_count % 5 == 0)
+	if (title.mole_count % 3 == 0)
 	{
-		if (title.mole_move == 0 && title.mole_num != 6)
+		if (title.mole_move == 0 && title.mole_num != 5)
 		{
 			title.mole_num++;
 		}
@@ -76,7 +76,7 @@ eSceneType TitleSceneUpdate(void)
 			title.mole_num--;
 		}
 
-		if (title.mole_num == 6&& title.mole_count>180)
+		if (title.mole_num == 5&& title.mole_count>180)
 		{
 			title.mole_move = 1;
 			title.mole_count = 0;
@@ -208,17 +208,17 @@ void Stop_BGM(void)
 
 void TitleMoleDraw(void)
 {
-	DrawRotaGraphF(400.0f, 380.0f, 0.5, 0.0, title.mole_image[0], TRUE);
-	DrawRotaGraphF(230.0f, 540.0f, 2.0, 0.0, title.mole_image[0], TRUE);
+	DrawRotaGraphF(420.0f, 380.0f, 0.5, 0.0, title.mole_image[0], TRUE);
+	DrawRotaGraphF(230.0f, 550.0f, 2.0, 0.0, title.mole_image[0], TRUE);
 	DrawRotaGraphF(1020.0f, 450.0f, 1.0, 0.0, title.mole_image[0], TRUE);
 
 	switch (title.mole_active)
 	{
 	case 1:
-		DrawRotaGraphF(400.0f, 380.0f, 0.5, 0.0, title.mole_image[title.mole_num], TRUE);
+		DrawRotaGraphF(420.0f, 380.0f, 0.5, 0.0, title.mole_image[title.mole_num], TRUE);
 		break;
 	case 2:
-		DrawRotaGraphF(230.0f, 540.0f, 2.0, 0.0, title.mole_image[title.mole_num], TRUE);
+		DrawRotaGraphF(230.0f, 550.0f, 2.0, 0.0, title.mole_image[title.mole_num], TRUE);
 		break;
 	case 3:
 		DrawRotaGraphF(1020.0f, 450.0f, 1.0, 0.0, title.mole_image[title.mole_num], TRUE);
