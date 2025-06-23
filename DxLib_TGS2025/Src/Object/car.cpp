@@ -23,6 +23,8 @@ void CarMovePosition(const CreateStage*stage);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
 void CarWarnDraw(void);
+void CarIvyAnimation(void);
+void CarIvyDraw(int carx, int cary);
 
 Car car;
 GameOver gameover;
@@ -40,6 +42,9 @@ void CarInit(void)
 	car.next_count = 0;//取得した道の配列番号
 	car.animation_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
+	car.ivy_flag = false;//ツタのアニメーションフラグ
+	car.ivy_count = 0;//ツタのアニメーションカウント
+	car.ivy_num = 0;//ツタのアニメーションナンバー
 
 
 	gameover.image_flag = false;//GameOverをだすか
@@ -91,10 +96,21 @@ void CarResourceInit(void)
 	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
 	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 
+	car.ivy_animation[0] = LoadGraph("Resource/images/ivy00.png");
+	car.ivy_animation[1] = LoadGraph("Resource/images/ivy01.png");
+	car.ivy_animation[2] = LoadGraph("Resource/images/ivy02.png");
+	car.ivy_animation[3] = LoadGraph("Resource/images/ivy03.png");
+	car.ivy_animation[4] = LoadGraph("Resource/images/ivy04.png");
+	car.ivy_animation[5] = LoadGraph("Resource/images/ivy05.png");
+	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");
+	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
+
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
+
+	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
 
 void CarManagerUpdate(void)
@@ -121,6 +137,7 @@ void CarManagerUpdate(void)
 		//車の移動処理
 		CarGoalCheck(GetStage());
 		CarMovePosition(GetStage());
+		CarIvyAnimation();
 	
 
 	}
@@ -140,15 +157,18 @@ void CarDraw(void)
 	//警告マークの描画
 	CarWarnDraw(); 
 	CarWarnSE();
+
+	//ツタの描画
+	CarIvyDraw(car.position.x, car.position.y);
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
 		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);*/
 	
-	/*DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
-	DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.current_x, car.current_y, car.next_count);
-	DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );*/
+	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
+	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.ivy_flag, car.ivy_num,car.ivy_count);
+	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );
 	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
 }
 
@@ -209,6 +229,10 @@ void CarReset(void)
 	car.menu_flag == false;//車のメニュー処理フラグ
 	car.animation = car.image[0];
 	car.mitibiki_flag = false;
+
+	car.ivy_flag = false;
+	car.ivy_count = 0;
+	car.ivy_num = 0;
 	
 
 
@@ -260,18 +284,19 @@ void CarMovePosition(const CreateStage* stage)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
-			
-			if (overroad < 400)
+			car.ivy_flag = true;
+			if (overroad < 300)
 			{
 				OverRoad();
 				/*gameover.image_flag = true;*/
 			}
-			if (overroad > 399)
+			if (overroad > 299)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
 				car.position.y += 0.0f;
 				gameover.image_flag = true;
+				Stop_InGameBgm();
 				if (gameover.image_count > 240)
 				{
 					gameover.flag = true;
@@ -468,7 +493,7 @@ void OverRoad(void)
 		overroad += 2;
 		break;
 	case eRight://右に
-		car.animation = car.ivy_image[0];
+		//car.animation = car.ivy_image[0];
 		car.position.x += 0.1f;
 		overroad += 2;
 		break;
@@ -596,6 +621,48 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
 	
 }
+
+ void CarIvyAnimation(void)
+ {
+	 if (car.ivy_flag == true)
+	 {
+		 car.ivy_count++;
+		 if (car.ivy_count>30&&car.ivy_count % 10 == 0 && car.ivy_num < 5)
+		 {
+			 car.ivy_num++;
+		 }
+
+		 if (car.start == false)
+		 {
+			 car.ivy_flag = false;
+			 car.ivy_count = 0;
+			 car.ivy_num = 0;
+		 }
+	 }
+ }
+
+ void CarIvyDraw(int carx, int cary)
+ {
+	 if (car.ivy_flag == true)
+	 {
+		 DrawRotaGraphF(carx, cary, 1.0, 0.0,gameover.circle, TRUE);
+		 if (car.ivy_count > 30)
+		 {
+
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+
+			 if (car.ivy_count < 60)
+			 {
+				 Play_Sound_Car(car.ivy_se, 150);
+			 }
+		 }
+	 }
+	 else if(car.ivy_flag == false)
+	 {
+		 StopSoundMem(car.ivy_se);
+	 }
+ }
+
 
 //ステージ番号と車の初期位置を取得
 void GetCarStageNum(const InGame* ingame)

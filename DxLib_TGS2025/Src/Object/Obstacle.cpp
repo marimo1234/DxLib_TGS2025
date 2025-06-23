@@ -118,7 +118,8 @@ void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,
 		mole.start = false;
 	}
 
-	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||ingame->mitibiki_flag==true)
+	if (car->direction == eStop || car->goal_flag == true||ingame->mitibiki_flag==true||
+		goal->print_flag == true || gameover->image_flag == true )
 	{
 		mole.operable_flag = false;
 	}

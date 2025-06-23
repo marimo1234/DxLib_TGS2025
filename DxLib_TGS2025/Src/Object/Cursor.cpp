@@ -224,7 +224,8 @@ void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,
 		cursorstart = false;
 	}
 
-	if (goal->print_flag == true || gameover->image_flag == true||car->goal_flag==true||ingame->mitibiki_flag==true)
+	if (goal->print_flag == true || car->direction==eStop||ingame->mitibiki_flag==true
+		|| gameover->image_flag == true||car->goal_flag==true)
 	{
 		cursor.operable_flag = false;
 	}

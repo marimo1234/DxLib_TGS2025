@@ -351,7 +351,8 @@ void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover
 
 	woodrock_menu_flag = ingame->menu_flag;
 
-	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||ingame->mitibiki_flag==true)
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||
+		ingame->mitibiki_flag==true|| car->direction == eStop)
 	{
 		woodrock_operable_flag = false;
 	}

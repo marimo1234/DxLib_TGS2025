@@ -470,7 +470,7 @@ void NextStageFlag(const Goal* goal)
 		ingame.next_stage_flag = true;
 		atr ++;
 		ingame.start = false;
-		Stop_InGameBgm();
+		/*Stop_InGameBgm();*/
 	}
 
 	

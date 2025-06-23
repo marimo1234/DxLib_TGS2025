@@ -21,9 +21,17 @@ struct Car
     int image[4];
     int move_image[4];
     int animation_count;
+
     int ivy_image[4];
+    int ivy_animation[7];
+    bool ivy_flag;
+    int ivy_count;
+    int ivy_num;
+    int ivy_se;
+
+
     int cutin_image[3];
-    bool start;
+
     int x;
     int y;
     int direction;
@@ -34,6 +42,8 @@ struct Car
     int road_count;
     int next_count;
     int old_direction;
+
+    bool start;
     bool goal_flag;
     bool menu_flag;
     
@@ -55,6 +65,7 @@ struct GameOver
     int image;
     int image_count;
     bool flag;
+    int circle;
 };
 
 void CarInit(void);
