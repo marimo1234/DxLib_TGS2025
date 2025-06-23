@@ -483,12 +483,12 @@ void OverRoad(void)
 	switch (car.old_direction)
 	{
 	case eUp://上に
-		car.animation = car.ivy_image[2];
+		//car.animation = car.ivy_image[2];
 		car.position.y -= 0.1f;
 		overroad += 2;
 		break;
 	case eDown://下に
-		car.animation = car.ivy_image[3];
+		//car.animation = car.ivy_image[3];
 		car.position.y += 0.1f;
 		overroad += 2;
 		break;
@@ -498,7 +498,7 @@ void OverRoad(void)
 		overroad += 2;
 		break;
 	case eLeft:
-		car.animation = car.ivy_image[1];
+		//car.animation = car.ivy_image[1];
 		car.position.x -= 0.1f;
 		overroad += 2;
 		break;
