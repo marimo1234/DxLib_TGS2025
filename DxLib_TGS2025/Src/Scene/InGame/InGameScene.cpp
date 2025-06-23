@@ -327,16 +327,15 @@ void InGameSceneDraw(void)
 	//カーソルの描画
 	CursorDraw(Get_Tool());
 
+	//スタートボタン
+	DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);
+
 	//ゴールの描画
 	GoalDraw();
-
 
 	////////////////////
 	TutorialDraw(GetGoal(),GetGameOver());
 	///////////////////
-
-	//スタートボタン
-	DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
 	//後々消します
