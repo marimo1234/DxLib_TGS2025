@@ -55,6 +55,7 @@ struct Tool
 	int stage_begin_array[12][7];	//ステージ読み込み時の配列
 	int old_position_direction;
 	int now_base_state;
+	int possible_fps;				//設置可能位置の点滅fps
 
 	bool rock_sub_flag;				//岩の所持数を引くフラグ
 	bool wood_sub_flag;				//木の所持数数を引くフラグ
@@ -77,7 +78,6 @@ struct Tool
 
 	bool menu_flag;
 	bool mitibiki_flag;
-	
 };
 
 struct Tool_Img
@@ -87,10 +87,10 @@ struct Tool_Img
 	int ax;						//斧の画像ハンドル
 	int drill;					//ドリルの画像ハンドル
 	int item_select;			//選択枠（アイテム）の画像ハンドル
-	int item_select_inner;
+	int item_select_inner;		//選択枠（アイテム）の内側の画像ハンドル
 	int wood_road_img;			//木の道の画像ハンドル
-	int rb[2];						//Rトリガー
-	int lb[2];						//Lトリガー
+	int rb[2];					//Rトリガー
+	int lb[2];					//Lトリガー
 	
 	int road_beside;			//左右への道の画像ハンドル
 	int road_vertical;			//上下への道の画像ハンドル
@@ -129,13 +129,13 @@ struct Tool_Img
 
 struct Tool_SE
 {
-	int break_se;               //破壊時のSEハンドル
-	int wood_road;				//木の道のサウンドハンドル
-	int road;					//道のサウンドハンドル
-	int make_road;				//道の数を増やすときのサウンドハンドル
-	int make_woodroad;			//木の道の数を増やすときのサウンドハンドル
-	int select_se;				//アイテムセレクト欄サウンドハンドル
-	int swing;
+	int break_se;               //破壊時のSE
+	int wood_road;				//木の道のSE
+	int road;					//道のSE
+	int make_road;				//道の数を増やすときのSE
+	int make_woodroad;			//木の道の数を増やすときのSE
+	int select_se;				//アイテムセレクト欄SE
+	int swing;					//ツール空振りのSE
 };
 
 void ToolInit(void);
