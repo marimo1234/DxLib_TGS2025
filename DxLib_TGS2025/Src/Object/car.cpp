@@ -440,8 +440,11 @@ void CarDetectPosition(void)
 	if (car.current_x < car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
 	{
-		car.position.x += car.overcount.x;
-		car.position.y += car.overcount.y;
+		if (car.direction != eRight)
+		{
+			car.position.x += car.overcount.x;
+			car.position.y += car.overcount.y;	
+		}
 		car.overcount.x = 0.0f;
 		car.overcount.y = 0.0f;
 		car.direction = eRight;//右に
@@ -453,8 +456,11 @@ void CarDetectPosition(void)
 	else if (car.current_x > car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
 	{
-		car.position.x += car.overcount.x;
-		car.position.y += car.overcount.y;
+		if (car.direction != eLeft)
+		{
+			car.position.x += car.overcount.x;
+			car.position.y += car.overcount.y;
+		}
 		car.overcount.x = 0.0f;
 		car.overcount.y = 0.0f;
 		car.direction = eLeft;//右に
@@ -467,8 +473,11 @@ void CarDetectPosition(void)
 	else if (car.current_y > car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
-		car.position.x += car.overcount.x;
-		car.position.y += car.overcount.y;
+		if (car.direction != eUp)
+		{
+			car.position.x += car.overcount.x;
+			car.position.y += car.overcount.y;
+		}
 		car.overcount.x = 0.0f;
 		car.overcount.y = 0.0f;
 		car.direction = eUp;//上に
@@ -481,8 +490,11 @@ void CarDetectPosition(void)
 	else if (car.current_y < car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
-		car.position.x += car.overcount.x;
-		car.position.y += car.overcount.y;
+		if (car.direction != eDown)
+		{
+			car.position.x += car.overcount.x;
+			car.position.y += car.overcount.y;
+		}
 		car.overcount.x = 0.0f;
 		car.overcount.y = 0.0f;
 		car.direction = eDown;//下に
