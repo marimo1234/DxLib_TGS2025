@@ -45,6 +45,8 @@ void CarInit(void)
 	car.ivy_flag = false;//ツタのアニメーションフラグ
 	car.ivy_count = 0;//ツタのアニメーションカウント
 	car.ivy_num = 0;//ツタのアニメーションナンバー
+	car.overcount.x = 0.0f;
+	car.overcount.y = 0.0f;
 
 
 	gameover.image_flag = false;//GameOverをだすか
@@ -168,7 +170,7 @@ void CarDraw(void)
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	//DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.ivy_flag, car.ivy_num,car.ivy_count);
-	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n", car.velocity.x, car.velocity.y );
+	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
 }
 
@@ -229,11 +231,13 @@ void CarReset(void)
 	car.menu_flag == false;//車のメニュー処理フラグ
 	car.animation = car.image[0];
 	car.mitibiki_flag = false;
+	car.overcount.x = 0.0f;
+	car.overcount.y = 0.0f;
 
 	car.ivy_flag = false;
 	car.ivy_count = 0;
 	car.ivy_num = 0;
-	
+
 
 
 	gameover.image_flag = false;//GameOverをだすか
@@ -436,6 +440,10 @@ void CarDetectPosition(void)
 	if (car.current_x < car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
 	{
+		car.position.x += car.overcount.x;
+		car.position.y += car.overcount.y;
+		car.overcount.x = 0.0f;
+		car.overcount.y = 0.0f;
 		car.direction = eRight;//右に
 		car.old_direction = eRight;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
@@ -445,6 +453,10 @@ void CarDetectPosition(void)
 	else if (car.current_x > car.next_x[car.next_count] &&
 		car.current_y == car.next_y[car.next_count])
 	{
+		car.position.x += car.overcount.x;
+		car.position.y += car.overcount.y;
+		car.overcount.x = 0.0f;
+		car.overcount.y = 0.0f;
 		car.direction = eLeft;//右に
 		car.old_direction = eLeft;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
@@ -455,6 +467,10 @@ void CarDetectPosition(void)
 	else if (car.current_y > car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
+		car.position.x += car.overcount.x;
+		car.position.y += car.overcount.y;
+		car.overcount.x = 0.0f;
+		car.overcount.y = 0.0f;
 		car.direction = eUp;//上に
 		car.old_direction = eUp;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
@@ -465,6 +481,10 @@ void CarDetectPosition(void)
 	else if (car.current_y < car.next_y[car.next_count] &&
 		car.current_x == car.next_x[car.next_count])
 	{
+		car.position.x += car.overcount.x;
+		car.position.y += car.overcount.y;
+		car.overcount.x = 0.0f;
+		car.overcount.y = 0.0f;
 		car.direction = eDown;//下に
 		car.old_direction = eDown;
 		car.current_x = car.next_x[car.next_count];//現在の位置につぎの位置を格納
@@ -474,7 +494,52 @@ void CarDetectPosition(void)
 	//次の進行位置がなければストップ
 	else
 	{
-		car.direction = eStop;//ストップ
+		if (car.goal_flag == false)
+		{
+			//car.direction = eStop;//ストップ
+			switch (car.direction)
+			{
+			case eUp://上に
+				car.overcount.y += car.speed.y;
+				if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 90.0f)//微調整で120に0.2足している
+				{
+					car.direction = eStop;//ストップ
+					car.overcount.y = 0.0f;
+				}
+				break;
+			case eDown://下に
+				car.overcount.y -= car.speed.y;
+				if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 150.0f)//微調整で120から0.2引いている
+				{
+					car.direction = eStop;//ストップ
+					car.overcount.y = 0.0f;
+				}
+				break;
+			case eRight://右に
+				car.overcount.x -= car.speed.x;
+				if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 230.0f)//微調整で200から0.2引いている
+				{
+					car.direction = eStop;//ストップ
+					car.overcount.x = 0.0f;
+				}
+				break;
+			case eLeft://左に
+				car.overcount.x += car.speed.x;
+				if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 170.0f)//微調整で200から0.2足している
+				{
+					car.direction = eStop;//ストップ
+					car.overcount.x = 0.0f;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			car.direction = eStop;//ストップ
+			car.overcount.y = 0.0f;
+		}
 	}
 }
 //GameOver時のアニメーション

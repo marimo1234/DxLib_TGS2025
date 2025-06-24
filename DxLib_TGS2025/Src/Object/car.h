@@ -17,6 +17,7 @@ struct Car
     Vector2D position;
     Vector2D velocity;
     Vector2D speed;
+    Vector2D overcount;
     int animation;
     int image[4];
     int move_image[4];
