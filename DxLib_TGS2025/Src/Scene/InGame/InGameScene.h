@@ -57,6 +57,10 @@ struct InGame
 	int tutorial_controol_right;
 	int tutorial_controol_down;
 	int tutoriallog_select;
+	int itemtutorial1;
+	int itemtutorial2;
+	int itemtutorial3;
+	int itemtutorial4;
 };
 
 struct InGame_Sound
