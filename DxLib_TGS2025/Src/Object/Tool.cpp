@@ -1687,7 +1687,7 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 			//道を一個以上持っているなら
 			if (tool.road_num > 0)
 			{
-				if (tool.possible_fps < 35)
+				if (tool.possible_fps < 75)
 				{
 					//右が空
 					if (tool.base_x + 1 < tool.stage_array_exceed_x && stage->array[tool.base_x + 1][tool.base_y] == 0)
@@ -1715,8 +1715,8 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 					}
 				}
 				tool.possible_fps++;
-				//
-				if (tool.possible_fps > 70)
+				//fps値リセット
+				if (tool.possible_fps > 100)
 				{
 					tool.possible_fps = 0;
 				}
@@ -1728,7 +1728,7 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 			//木の道を一個以上持っているなら
 			if (tool.wood_road_num > 0)
 			{
-				if (tool.possible_fps < 35)
+				if (tool.possible_fps < 75)
 				{
 					//右が湖
 					if (tool.base_x + 1 < tool.stage_array_exceed_x && stage->array[tool.base_x + 1][tool.base_y] == 6)
@@ -1752,8 +1752,8 @@ void Possible_Prace(const CreateStage* stage,const Car*car)
 					}
 				}
 				tool.possible_fps++;
-				//
-				if (tool.possible_fps > 70)
+				//fps値リセット
+				if (tool.possible_fps > 100)
 				{
 					tool.possible_fps = 0;
 				}
