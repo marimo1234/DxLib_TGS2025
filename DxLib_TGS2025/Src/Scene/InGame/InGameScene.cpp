@@ -42,6 +42,7 @@ void TutorialUpdate(void);
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
 void TutorialDraw(const Goal* goal,const GameOver*gameover);
 void TutorialCursor(void);
+void ItemTutorial(void);
 
 
 
@@ -360,7 +361,7 @@ void InGameSceneDraw(void)
 	
 
 	/////////////////////
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
 	////////////////////
 	
 }
@@ -864,6 +865,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 	case 6:
 		if (tool->wood_road_num==1)
 		{
+
 			animetion_num++;
 			if (animetion_num > 30)
 			{
@@ -882,7 +884,10 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 				break;
 		}
 	case 8:
-		animetion_num++;
+		if (animetion_num < 31)
+		{
+			animetion_num++;
+		}
 		if (animetion_num > 30)
 		{
 			if (stage->array[8][4] == 5)
@@ -891,7 +896,6 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 				if (ingame.tutorial_log_num > 13)
 				{
 					ingame.mitibiki_flag = false;
-					animetion_num = 0;
 				}
 			}
 		}
@@ -923,4 +927,8 @@ void TutorialCursor(void)
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_down, TRUE);
 		}
 	}
+}
+void ItemTutorial(void)
+{
+
 }
