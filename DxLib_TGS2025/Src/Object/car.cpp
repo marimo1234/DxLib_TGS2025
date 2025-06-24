@@ -325,7 +325,7 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition();
 
 		}
-		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range*0.6&&
+		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range*0.3&&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -354,7 +354,7 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition();
 
 		}
-		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range*0.6 &&
+		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range*0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -384,7 +384,7 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition();
 
 		}
-		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range*0.6 &&
+		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range*0.3&&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -414,7 +414,7 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition();
 
 		}
-		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range*0.6 &&
+		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range*0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -738,7 +738,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.1f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
-		car.warn_range = 40.0f;
+		car.warn_range = 20.0f;
 		break;
 	case eTwo:
 		car.current_x = 1;//ステージ②の初期位置
@@ -747,7 +747,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.1f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
-		car.warn_range = 40.0f;
+		car.warn_range = 20.0f;
 		break;
 	case eThree:
 		car.current_x = 1;//ステージ③の初期位置
@@ -756,7 +756,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.1f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
-		car.warn_range = 40.0f;
+		car.warn_range = 20.0f;
 		break;
 	case eFour:
 		car.current_x = 0;//ステージ④の初期位置
@@ -765,7 +765,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.2f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 0;
-		car.warn_range = 60.0f;
+		car.warn_range = 40.0f;
 		break;
 	case eFive:
 		car.current_x = 1;//ステージ⑤の初期位置
@@ -774,7 +774,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.2f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
-		car.warn_range = 60.0f;
+		car.warn_range = 40.0f;
 		break;
 	case eSix:
 		car.current_x = 0;//ステージ⑥の初期位置
@@ -783,7 +783,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.3f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 6;
-		car.warn_range = 80.0f;
+		car.warn_range = 60.0f;
 		break;
 	}
 }
