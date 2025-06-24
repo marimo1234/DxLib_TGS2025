@@ -4,13 +4,15 @@
 #include"../InGame/InGameScene.h"
 #include"../Title/TitleScene.h"
 #include"../../Object/car.h"
-
+#include"../../../Effect/Fade.h"
 #include "DxLib.h"
 #include <stdlib.h>
 
 #define CAR_SPEED		(1.5f)
 
 int stageselect_init_step = 0;;
+static Fade fade;
+static bool is_fading = false;
 
 //音がなっていないなら鳴らす
 void Play_Sound_StageSelect(int sound, int volume);
@@ -28,6 +30,7 @@ StageSelect stageselect;
 //ステージセレクト画面初期化
 void StageSelectSceneInit(void)
 {  
+
 	//fps
 	stageselect.car_fps = 0;
 	stageselect.move_fps = 0;
@@ -66,6 +69,8 @@ void StageSelectSceneInit(void)
 			stageselect.number_extrate[i][j] = 0.3f;
 		}
 	}
+	fade.Initialize(true);
+	is_fading = true;
 
 	Play_StageSelect_BGM(GetTitle());
 
@@ -116,6 +121,15 @@ void StageSelectResourceInit(void)
 //ステージセレクトシーンの更新
 eSceneType StageSelectSceneUpdate(void)
 {
+	if (is_fading)
+	{
+		fade.Update();
+		if (fade.GetEndFlag())
+		{
+			is_fading = false;
+		}
+		return eStageSelect;
+	}
 //車がいる場所の配列番号でステージ番号を取得
 	StageSelectGetNumber();
 	
@@ -124,7 +138,6 @@ eSceneType StageSelectSceneUpdate(void)
 	Move_Car(GetCar());
 
 	SelectButtonDraw();
-
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
@@ -170,6 +183,8 @@ void StageSelectSceneDraw(void)
 	DrawRotaGraph(1142.0, 730.0, 0.1, 0.0, stageselect.Abutton, TRUE);
 	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
+
+	fade.Draw();
 }
 
 //StageSelectを取得

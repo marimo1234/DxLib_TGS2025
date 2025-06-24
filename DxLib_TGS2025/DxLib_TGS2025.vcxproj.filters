@@ -18,6 +18,7 @@
     <ClCompile Include="Src\Scene\Title\TitleScene.cpp" />
     <ClCompile Include="Src\Utility\PadInputManager.cpp" />
     <ClCompile Include="Src\Scene\Credits\CreditsScene.cpp" />
+    <ClCompile Include="Effect\Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Object\car.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="Src\Scene\Title\TitleScene.h" />
     <ClInclude Include="Src\Utility\PadInputManager.h" />
     <ClInclude Include="Src\Scene\Credits\CreditsScene.h" />
+    <ClInclude Include="Effect\Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Downloads\Pixelart0\Pixelart0\01_1536x768\art_097.png" />

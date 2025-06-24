@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Effect\Fade.cpp" />
     <ClCompile Include="Src\AppMain.cpp" />
     <ClCompile Include="Src\Object\car.cpp" />
     <ClCompile Include="Src\Object\Goal.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Src\Utility\PadInputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Effect\Fade.h" />
     <ClInclude Include="Src\Object\car.h" />
     <ClInclude Include="Src\Object\Goal.h" />
     <ClInclude Include="Src\Object\map.h" />

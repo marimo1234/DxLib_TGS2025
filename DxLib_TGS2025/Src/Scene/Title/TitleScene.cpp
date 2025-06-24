@@ -1,6 +1,7 @@
 ﻿#include "TitleScene.h"
 #include "../../Utility/InputManager.h"
 #include "../../Utility/PadInputManager.h"
+#include"../../../Effect/Fade.h"
 #include "DxLib.h"
 #include <math.h>
 
@@ -8,6 +9,8 @@
 #define MOLE_MOVE_DOWN (1)
 int title_image;		//タイトル画像のハンドル
 int title_init_step = 0;
+static Fade fade;
+static bool is_fading = false;
 
 void Play_Title_SE(int sound, int volume);
 
@@ -59,11 +62,23 @@ void TitleSceneInit(void)
 	title.mole_active = GetRand(2) + 1;
 	
 	Play_Title_BGM();
+	fade.Initialize(true);
+	is_fading = true;
 }
 
 //タイトルシーンの更新
 eSceneType TitleSceneUpdate(void)
 {
+	if (is_fading)
+	{
+		fade.Update();
+		if (fade.GetEndFlag())
+		{
+			is_fading = false;
+		}
+		return eTitle;
+	}
+
 	TitleCursorUpdate();
 	title.mole_count++;
 
@@ -114,22 +129,25 @@ eSceneType TitleSceneUpdate(void)
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Play_Title_SE(title.button_se, 100);
-		return eStageSelect;	//ステージセレクト画面へ
-		title.char_num = 0;
-	
+		/*fade.Initialize(true);
+		is_fading = true;*/
+		return eStageSelect;	//　フェードアウトが終わるまではTitleのまま	
 	}
 	if (title.char_num == 1 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Play_Title_SE(title.button_se, 100);
+		/*fade.Initialize(true);
+		is_fading = true;*/
 		return eCredits;	//クレジット画面へ
-		title.char_num = 1;
 	}
 	if (title.char_num == 2 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Stop_BGM();
 		Play_Title_SE(title.button_se, 100);
+		/*fade.Initialize(false);
+		is_fading = true;*/
 		return eEnd;	//エンド画面へ
 	}
 	return eTitle;
@@ -153,6 +171,8 @@ void TitleSceneDraw(void)
 	DrawRotaGraphF(title.cursor_x, title.cursor_y , 1.0, 0.0, title.cursor_image, TRUE);
 
 	//DrawFormatString(120, 120, GetColor(255, 255, 255), "%d", title.mole_count);
+
+	fade.Draw();
 }
 
 //StageSelectを取得
