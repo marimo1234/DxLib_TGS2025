@@ -361,7 +361,7 @@ void InGameSceneDraw(void)
 	
 
 	/////////////////////
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
+	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
 	////////////////////
 	
 }
