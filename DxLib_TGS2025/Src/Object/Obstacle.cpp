@@ -51,10 +51,16 @@ void ObstacleManagerResourceInit(void)
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
 	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
-	mole.rock_image[0] = LoadGraph("Resource/images/mole_down_rock1.png");
-	mole.rock_image[1] = LoadGraph("Resource/images/mole_up_rock.png");
-	mole.rock_image[2] = LoadGraph("Resource/images/mole_left_rock.png");
-	mole.rock_image[3] = LoadGraph("Resource/images/mole_right_rock.png");
+	mole.rock1_image[0] = LoadGraph("Resource/images/mole_down_rock1.png");
+	mole.rock1_image[1] = LoadGraph("Resource/images/mole_up_rock1.png");
+	mole.rock1_image[2] = LoadGraph("Resource/images/mole_left_rock1.png");
+	mole.rock1_image[3] = LoadGraph("Resource/images/mole_right_rock1.png");
+
+	mole.rock2_image[0] = LoadGraph("Resource/images/mole_down_rock2.png");
+	mole.rock2_image[1] = LoadGraph("Resource/images/mole_up_rock2.png");
+	mole.rock2_image[2] = LoadGraph("Resource/images/mole_left_rock2.png");
+	mole.rock2_image[3] = LoadGraph("Resource/images/mole_right_rock2.png");
+
 	lake.image = LoadGraph("Resource/images/lake.png");
 }
 //障害物の更新
@@ -132,13 +138,20 @@ void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
-	if (mole.image_count / 60 >= 2)
+	if (mole.image_count / 60 > 2)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
-			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock1_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
+		if (mole.image_count / 60 > 3)
+		{
+			for (int i = 0; i < stage->mole_count; i++)
+			{
+				mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			}
+		}
 	if (mole.image_count / 60 > 4)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
