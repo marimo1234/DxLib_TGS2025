@@ -61,6 +61,9 @@ struct InGame
 	int itemtutorial2;
 	int itemtutorial3;
 	int itemtutorial4;
+
+	int itemtutorial_num = 1;
+
 };
 
 struct InGame_Sound
