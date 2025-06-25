@@ -51,7 +51,7 @@ void ObstacleManagerResourceInit(void)
 	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
 	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
 	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
-	mole.rock_image[0] = LoadGraph("Resource/images/mole_down_rock.png");
+	mole.rock_image[0] = LoadGraph("Resource/images/mole_down_rock1.png");
 	mole.rock_image[1] = LoadGraph("Resource/images/mole_up_rock.png");
 	mole.rock_image[2] = LoadGraph("Resource/images/mole_left_rock.png");
 	mole.rock_image[3] = LoadGraph("Resource/images/mole_right_rock.png");
