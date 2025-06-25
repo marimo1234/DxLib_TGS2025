@@ -188,7 +188,7 @@ void WoodRockDraw(void)
 	//エフェクトの描画
 	WoodRockEffectDraw();	
 
-	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
 	/*	DrawFormatString(200, 200, GetColor(255, 255, 255), "%f\n%f", rock.add_x[8][4], rock.add_x[1][2]);*/
 
 }
@@ -236,10 +236,18 @@ void WoodAnimation(int x, int y)
 		
 		if (wood.hit_flag[x][y] == true)
 		{
+			wood.animation[x][y] = wood.image[3];
+			wood.fps[x][y]++;
 			wood.effect_flag = true;
-			wood.hit_count[x][y] = eHit3;
-			wood.hit_flag[x][y] = false;   //hitフラグをfalseにする
-			wood.fps[x][y] = 0;
+			
+			if (wood.fps[x][y] > HIT_COOLTIME)
+			{
+				wood.hit_count[x][y] = eHit3;
+				wood.hit_flag[x][y] = false;   //hitフラグをfalseにする
+				wood.fps[x][y] = 0;
+				
+			}
+			
 		}
 		break;
 
@@ -302,10 +310,15 @@ void RockAnimation(int x, int y)
 		
 		if (rock.hit_flag[x][y] == true)
 		{
-				rock.effect_flag = true;
+			rock.animation[x][y] = rock.image[3];
+			rock.fps[x][y]++;
+			rock.effect_flag = true;
+			if (rock.fps[x][y] > HIT_COOLTIME)
+			{
 				rock.hit_count[x][y] = eHit3;
 				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
 				rock.fps[x][y] = 0;
+			}
 		}
 		break;
 

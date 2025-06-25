@@ -5,6 +5,7 @@
 #include "../System/System.h"
 #include "../Object/Map.h"
 #include"../Object/Tool.h"
+#include"../Object/WoodRock.h"
 #include"../Object/Car.h"
 #include"../Object/Goal.h"
 #include "DxLib.h"
@@ -30,7 +31,7 @@ static bool is_animating_Hammer = false;    // ハンマーのアニメーショ
 void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
-void CursolButtonMovement(const Tool* tool, const InGame* ingame);       // 十字キーの移動
+void CursolButtonMovement(const Tool* tool, const InGame* ingame, const Wood* wood, const Rock* rock);       // 十字キーの移動
 void CursorRange_eOne(const InGame* ingame);
 
 
@@ -74,7 +75,7 @@ void CursorUpdate(void)
 	
 	if (cursorstart == true&& cursor.menu_flag == false&& cursor.operable_flag == true)
 	{
-        CursolButtonMovement(Get_Tool(),GetInGame());
+        CursolButtonMovement(Get_Tool(),GetInGame(),GetWood(),GetRock());
 		// ツルハシのアニメーション
 		if (is_animating_pickaxe)
 		{
@@ -238,22 +239,23 @@ const Cursor* GetCursor1(void)
 	return &cursor;
 }
 
-void CursolButtonMovement(const Tool* tool,const InGame*ingame)
+void CursolButtonMovement(const Tool* tool,const InGame*ingame,const Wood*wood,const Rock*rock)
 {
 	//ステージ1のカーソルの範囲設定
 	CursorRange_eOne(GetInGame());
 
 		PadInputManager* pad_input = PadInputManager::GetInstance();
 
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress &&
+			wood->fps[wood->count_x][wood->count_y] == 0 && rock->fps[rock->count_x][rock->count_y] == 0)
 		{
-			
+
 			// 十字ボタンの左を押したとき
 			if (cursor.array_x > cursor.array_x_min)
 			{
 				cursor.array_x--;
 				cursor.position.x = MOVE_ONE_SPACE * cursor.array_x + 200.0f;
-				
+
 			}
 			else if (cursor.array_x == cursor.array_x_min)
 			{
@@ -268,7 +270,8 @@ void CursolButtonMovement(const Tool* tool,const InGame*ingame)
 			// 移動のSE（もし使うならここに入れてね）
 			/*PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);*/
 		}
-		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress &&
+			wood->fps[wood->count_x][wood->count_y] == 0 && rock->fps[rock->count_x][rock->count_y] == 0)
 		{
 			// 十字ボタンの右を押したとき
 			if (cursor.array_x < cursor.array_x_max)
@@ -288,7 +291,8 @@ void CursolButtonMovement(const Tool* tool,const InGame*ingame)
 			// 移動のSE（左とおんなじ音入れてね）
 			/*PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);*/
 		}
-		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress &&
+			wood->fps[wood->count_x][wood->count_y] == 0 && rock->fps[rock->count_x][rock->count_y] == 0)
 		{
 			// 十字ボタンの上を押したとき
 			if (cursor.array_y > cursor.array_y_min)
@@ -305,7 +309,8 @@ void CursolButtonMovement(const Tool* tool,const InGame*ingame)
 			// 移動のSE（左とおんなじ音入れてね）
 			/*PlaySoundMem(cursor_se, DX_PLAYTYPE_BACK);*/
 		}
-		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
+		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress &&
+			wood->fps[wood->count_x][wood->count_y] == 0 && rock->fps[rock->count_x][rock->count_y] == 0)
 		{
 			// 十字ボタンの下を押したとき
 			if (cursor.array_y < cursor.array_y_max)
