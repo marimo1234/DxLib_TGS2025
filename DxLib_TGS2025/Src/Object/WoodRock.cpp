@@ -395,7 +395,8 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 		if (tool->item_number == eAx)
 		{
 			//カーソルの配列番号が木だったら
-			if (stage->array[cursor->array_x][cursor->array_y] == 1)
+			if (stage->array[cursor->array_x][cursor->array_y] == 1 &&
+				wood.fps[wood.count_x][wood.count_y] == 0)
 			{
 
 				for (int i = 0; i < WOODROCK_MAX; i++)
@@ -406,12 +407,13 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						//変更する配列番号を記憶
 						wood.count_x = stage->wood_x[i];
 						wood.count_y = stage->wood_y[i];
+					}
+
 						//Hitフラグをtrueにする
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
+
 						//hit時の斧が木を叩くSEを追加
 						Play_Sound_WoodRock(wood.break_wood, 150);
-
-					}
 				}
 			}
 			else if (stage->array[cursor->array_x][cursor->array_y] != 1)
