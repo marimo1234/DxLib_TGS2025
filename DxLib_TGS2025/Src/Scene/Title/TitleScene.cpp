@@ -108,20 +108,6 @@ eSceneType TitleSceneUpdate(void)
 		/*title.mole_count = 0;*/
 	}
 
-	//スペースキーが押された瞬間に、各画面に遷移する
-	if (GetKeyInputState(KEY_INPUT_SPACE) == ePress)
-	{
-		return eInGame;	//インゲーム画面へ
-	}
-	if (GetKeyInputState(KEY_INPUT_X) == eRelease)
-	{
-		//return eHelp;	//インゲーム画面へ
-	}
-	if (GetKeyInputState(KEY_INPUT_C) == ePress)
-	{
-		Stop_BGM();
-		return eEnd;	//インゲーム画面へ
-	}
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 

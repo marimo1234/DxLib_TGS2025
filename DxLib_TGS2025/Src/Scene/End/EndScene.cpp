@@ -25,14 +25,6 @@ void EndSceneInit(void)
 eSceneType EndSceneUpdate(void)
 {
 	end.fps++;
-	if (GetKeyInputState(KEY_INPUT_Z) == ePress)
-	{
-		return eInGame;								//インゲームへ
-	}
-	if (GetKeyInputState(KEY_INPUT_X) == ePress)
-	{
-		return eTitle;								//タイトル画面へ
-	}
 
 	if (end.fps > 300)
 	{
