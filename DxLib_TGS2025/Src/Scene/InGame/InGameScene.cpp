@@ -43,7 +43,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 void TutorialDraw(const Goal* goal,const GameOver*gameover);
 void TutorialCursor(void);
 void ItemTutorial(void);
-
+void BlinkingAnimation(void);
 
 
 
@@ -147,7 +147,8 @@ void InGameResourceInit(void)
 		ingame.itemtutorial2 = LoadGraph("Resource/images/itemtutorial2.png");
 		ingame.itemtutorial3 = LoadGraph("Resource/images/itemtutorial3.png");
 		ingame.itemtutorial4 = LoadGraph("Resource/images/itemtutorial4.png");
-
+		//チュートリアル中のAぼたんの点滅
+		ingame.blinkingA= LoadGraph("Resource/images/log5.png");
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -715,6 +716,11 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 		{
 			ItemTutorial();
 		}
+		if (ingame.tutorial_log_num == 5)
+		{
+				BlinkingAnimation();
+		}
+		
 	}
 }
 
@@ -769,11 +775,11 @@ void TutorialUpdate(void)
 		}*/
 		if (ingame.tutorial_log_num == 4)
 		{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-			ingame.mitibiki_flag == true)
-		{
-			ingame.mitibiki_flag = false;
-		}
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+				ingame.mitibiki_flag == true)
+			{
+				ingame.mitibiki_flag = false;
+			}
 		}
 	}
 }
@@ -783,7 +789,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 {
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", stage->array[7][4], ingame.tutorial_achievements);
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (stage->array[7][4] == 4)
+	if (stage->array[8][4] == 4)
 	{
 		ingame.mitibiki_flag = true;
 	}
@@ -884,7 +890,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 7:
-		if (stage->array[7][4] == 4)
+		if (stage->array[8][4] == 4)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num++;
@@ -963,4 +969,16 @@ void ItemTutorial(void)
 
 
 }
-
+void BlinkingAnimation(void)
+{
+	
+	ingame.blinkingcount++;
+	if (ingame.blinkingcount>25)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.blinkingA, TRUE);
+	}	
+	if (ingame.blinkingcount > 50)
+	{
+		ingame.blinkingcount=0;
+	}
+}

@@ -63,7 +63,8 @@ struct InGame
 	int itemtutorial4;
 
 	int itemtutorial_num = 1;
-
+	int blinkingA;
+	int blinkingcount=0;
 };
 
 struct InGame_Sound
