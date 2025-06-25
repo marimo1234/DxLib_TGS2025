@@ -88,7 +88,7 @@ void StageSelectResourceInit(void)
 {
 	switch (stageselect_init_step)
 	{
-	case 0:
+	case 2:
 		//ボタンの画像
 		stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
 		stageselect.b_back = LoadGraph("Resource/images/Bback3.png");
@@ -96,7 +96,7 @@ void StageSelectResourceInit(void)
 		stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 		stageselect.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 		break;
-	case 1:
+	case 6:
 		//画像の取得
 	//背景
 		stageselect.background_image = LoadGraph("Resource/images/StageSelect2.png");

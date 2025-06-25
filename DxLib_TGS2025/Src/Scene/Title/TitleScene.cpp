@@ -21,13 +21,13 @@ void TitleResourceInit(void)
 {
 	switch (title_init_step)
 	{
-	case 0:
+	case 2:
 		title.char_num = 0;
 		title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
 		title.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 		title.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 		break;
-	case 1:
+	case 5:
 		title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
 		title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
 		title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
@@ -36,7 +36,7 @@ void TitleResourceInit(void)
 		title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
 		title.control_image = LoadGraph("Resource/Images/control_img.png");
 		break;
-	case 2:
+	case 6:
 		title.mole_image[0] = LoadGraph("Resource/Images/title_mole00.png");
 		title.mole_image[1] = LoadGraph("Resource/Images/title_mole01.png");
 		title.mole_image[2] = LoadGraph("Resource/Images/title_mole02.png");
