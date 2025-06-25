@@ -142,6 +142,12 @@ void InGameResourceInit(void)
 		ingame.tutorial_controol_right = LoadGraph("Resource/images/log4_right.png");
 		ingame.tutorial_controol_up = LoadGraph("Resource/images/log4_up.png");
 		ingame.tutorial_controol_down = LoadGraph("Resource/images/log4_down.png");
+		//アイテム欄のチュートリアルのアニメーション
+		ingame.itemtutorial1 = LoadGraph("Resource/images/itemtutorial1.png");
+		ingame.itemtutorial2 = LoadGraph("Resource/images/itemtutorial2.png");
+		ingame.itemtutorial3 = LoadGraph("Resource/images/itemtutorial3.png");
+		ingame.itemtutorial4 = LoadGraph("Resource/images/itemtutorial4.png");
+
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -690,8 +696,8 @@ int tutorial_log;
 //チュートリアルのログ
 void TutorialDraw(const Goal* goal, const GameOver* gameover)
 {
-	if (ingame.stage_num == eOne&&ingame.start == true&&
-		goal->print_flag == false && gameover->image_flag == false&&ingame.goalmenu_flag==false)
+	if (ingame.stage_num == eOne && ingame.start == true &&
+		goal->print_flag == false && gameover->image_flag == false && ingame.goalmenu_flag == false)
 	{
 		if (ingame.mitibiki_flag == true)
 		{
@@ -705,6 +711,10 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
 		TutorialCursor();
+		if (ingame.tutorial_log_num == 6)
+		{
+			ItemTutorial();
+		}
 	}
 }
 
@@ -731,7 +741,7 @@ void TutorialUpdate(void)
 		}
 
 		//チュートリアルのページをめくる
-		if (ingame.tutorial_log_num < 18&& ingame.start == true)
+		if (ingame.tutorial_log_num < 18 && ingame.start == true)
 		{
 			//Aボタンで進める
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
@@ -756,19 +766,27 @@ void TutorialUpdate(void)
 			ingame.mitibiki_flag == false)
 		{
 			ingame.mitibiki_flag = true;
-		}
-		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
+		}*/
+		if (ingame.tutorial_log_num == 4)
+		{
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
 			ingame.mitibiki_flag == true)
 		{
 			ingame.mitibiki_flag = false;
-		}*/
+		}
+		}
 	}
 }
 
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
 	const CreateStage* stage)
 {
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", stage->array[7][4], ingame.tutorial_achievements);
 	PadInputManager* pad_input = PadInputManager::GetInstance();
+	if (stage->array[7][4] == 4)
+	{
+		ingame.mitibiki_flag = true;
+	}
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
@@ -776,21 +794,20 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			ingame.mitibiki_flag = true;
 		}
-		else /*if (ingame.tutorial_log_num == 4)*/
+		else if (ingame.tutorial_log_num == 4)
 		{
-			ingame.mitibiki_flag = false;
 			if (cursor->array_x == 5)
 			{
 				animetion_num++;
-				if (animetion_num>30)
+				if (animetion_num > 30)
 				{
 					ingame.tutorial_log_num++;
 					ingame.tutorial_achievements++;
-					animetion_num=0;
+					animetion_num = 0;
 					break;
 
 				}
-				
+
 			}
 		}
 		break;
@@ -801,7 +818,6 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		else
 		{
-			ingame.mitibiki_flag = false;
 			if (rock->item_num > 0)
 			{
 				animetion_num++;
@@ -816,23 +832,15 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 3:
-		if (ingame.tutorial_log_num < 6)
+		if (tool->item_number == eRoad)
 		{
-			ingame.mitibiki_flag = true;
-		}
-		else
-		{
-			ingame.mitibiki_flag = false;
-			if (tool->item_number == eRoad)
+			animetion_num++;
+			if (animetion_num > 30)
 			{
-				animetion_num++;
-				if (animetion_num > 30)
-				{
-					ingame.tutorial_log_num++;
-					ingame.tutorial_achievements++;
-					animetion_num = 0;
-					break;
-				}
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
 			}
 		}
 		break;
@@ -850,7 +858,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 5:
-		if (stage->array[7][4] == 4)
+		if (stage->array[6][4] == 4)
 		{
 			animetion_num++;
 			if (animetion_num > 30)
@@ -863,9 +871,8 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 6:
-		if (tool->wood_road_num==1)
+		if (tool->wood_road_num == 1)
 		{
-
 			animetion_num++;
 			if (animetion_num > 30)
 			{
@@ -877,18 +884,20 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 7:
-		if (stage->array[8][4] == 5)
+		if (stage->array[7][4] == 4)
 		{
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				break;
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			break;
 		}
+		break;
 	case 8:
-		if (animetion_num < 31)
+		if (animetion_num < 32)
 		{
 			animetion_num++;
 		}
-		if (animetion_num > 30)
+		else if (animetion_num > 30)
 		{
 			if (stage->array[8][4] == 5)
 			{
@@ -905,10 +914,10 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		break;
 	}
 }
-void TutorialCursor(void) 
+void TutorialCursor(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (ingame.tutorial_log_num == 4 && ingame.menu_flag==false )
+	if (ingame.tutorial_log_num == 4 && ingame.menu_flag == false)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold)
 		{
@@ -930,5 +939,28 @@ void TutorialCursor(void)
 }
 void ItemTutorial(void)
 {
+	ingame.itemtutorial_num++;
+	if (ingame.itemtutorial_num > 300)
+	{
+		ingame.itemtutorial_num = 1;
+	}
+	else if (ingame.itemtutorial_num > 150)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial4, TRUE);
+	}
+	else if (ingame.itemtutorial_num > 100)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial3, TRUE);
+	}
+	else if (ingame.itemtutorial_num > 50)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
+	}
+	else if (ingame.itemtutorial_num > 1)
+	{
+		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial1, TRUE);
+	}
+
 
 }
+
