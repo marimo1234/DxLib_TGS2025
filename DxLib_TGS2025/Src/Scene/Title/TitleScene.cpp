@@ -119,6 +119,7 @@ eSceneType TitleSceneUpdate(void)
 	}
 	if (GetKeyInputState(KEY_INPUT_C) == ePress)
 	{
+		Stop_BGM();
 		return eEnd;	//インゲーム画面へ
 	}
 
@@ -129,16 +130,12 @@ eSceneType TitleSceneUpdate(void)
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Play_Title_SE(title.button_se, 100);
-		/*fade.Initialize(true);
-		is_fading = true;*/
 		return eStageSelect;	//　フェードアウトが終わるまではTitleのまま	
 	}
 	if (title.char_num == 1 &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Play_Title_SE(title.button_se, 100);
-		/*fade.Initialize(true);
-		is_fading = true;*/
 		return eCredits;	//クレジット画面へ
 	}
 	if (title.char_num == 2 &&
@@ -146,8 +143,6 @@ eSceneType TitleSceneUpdate(void)
 	{
 		Stop_BGM();
 		Play_Title_SE(title.button_se, 100);
-		/*fade.Initialize(false);
-		is_fading = true;*/
 		return eEnd;	//エンド画面へ
 	}
 	return eTitle;
