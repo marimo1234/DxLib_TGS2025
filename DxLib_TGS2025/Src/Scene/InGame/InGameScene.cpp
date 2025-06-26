@@ -148,7 +148,18 @@ void InGameResourceInit(void)
 		ingame.itemtutorial3 = LoadGraph("Resource/images/itemtutorial3.png");
 		ingame.itemtutorial4 = LoadGraph("Resource/images/itemtutorial4.png");
 		//チュートリアル中のAぼたんの点滅
-		ingame.blinkingA= LoadGraph("Resource/images/log5.png");
+		ingame.brakestoneanimetion1 = LoadGraph("Resource/images/log5-2.png");
+		ingame.brakestoneanimetion2 = LoadGraph("Resource/images/log5-3.png");
+		ingame.brakestoneanimetion3 = LoadGraph("Resource/images/log5-4.png");
+		ingame.brakestoneanimetion4 = LoadGraph("Resource/images/log5-5.png");
+		ingame.brakestoneanimetion5 = LoadGraph("Resource/images/log5-6.png");
+		ingame.brakestoneanimetion6 = LoadGraph("Resource/images/log5-7.png");
+		//チュートリアル中の道の生成アニメーション
+		ingame.makeroda1 = LoadGraph("Resource/images/log7-1.png");
+		ingame.makeroda2 = LoadGraph("Resource/images/log7-2.png");
+		//チュートリアル中の道の置き方アニメーション
+		ingame.putroda1 = LoadGraph("Resource/images/log8-1.png");
+		ingame.putroda2 = LoadGraph("Resource/images/log8-2.png");
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -369,6 +380,7 @@ void InGameSceneDraw(void)
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", animetion_num,ingame.tutorial_achievements,ingame.tutorial_achievements);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount);
 	////////////////////
 	
 }
@@ -716,7 +728,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 		{
 			ItemTutorial();
 		}
-		if (ingame.tutorial_log_num == 5)
+		if (ingame.tutorial_log_num == 5|| ingame.tutorial_log_num == 7|| ingame.tutorial_log_num == 8)
 		{
 				BlinkingAnimation();
 		}
@@ -787,7 +799,7 @@ void TutorialUpdate(void)
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
 	const CreateStage* stage)
 {
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", stage->array[7][4], ingame.tutorial_achievements);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", stage->array[7][4], ingame.tutorial_achievements, ingame.makerodacount);
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	/*if (stage->array[8][4] == 4)
 	{
@@ -974,13 +986,72 @@ void ItemTutorial(void)
 void BlinkingAnimation(void)
 {
 	
-	ingame.blinkingcount++;
-	if (ingame.blinkingcount>25)
+	if (ingame.tutorial_log_num == 5)
 	{
-		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.blinkingA, TRUE);
-	}	
-	if (ingame.blinkingcount > 50)
+		ingame.brakestoneanimetioncount++;
+		if (ingame.brakestoneanimetioncount > 225)
+		{
+			ingame.brakestoneanimetioncount = 0;
+		}
+		else if (ingame.brakestoneanimetioncount > 195)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion7, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 165)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion6, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 135)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion5, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 105)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion4, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 85)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion3, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 55)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion2, TRUE);
+		}
+		else if (ingame.brakestoneanimetioncount > 25)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion1, TRUE);
+		}
+	}
+	else if (ingame.tutorial_log_num == 7)
 	{
-		ingame.blinkingcount=0;
+		ingame.makerodacount++;
+		if (ingame.makerodacount > 105)
+		{
+			ingame.makerodacount = 0;
+		}
+		else if (ingame.makerodacount > 70)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.makeroda2, TRUE);
+		}
+		else if (ingame.makerodacount > 35)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.makeroda1, TRUE);
+		}
+	}
+	else if (ingame.tutorial_log_num == 8)
+	{
+		ingame.putrodacount++;
+		if (ingame.putrodacount > 105)
+		{
+			ingame.putrodacount = 0;
+		}
+		else if (ingame.putrodacount > 70)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.putroda2, TRUE);
+		}
+		else if (ingame.putrodacount > 35)
+		{
+			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.putroda1, TRUE);
+		}
 	}
 }
