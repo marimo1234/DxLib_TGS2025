@@ -154,6 +154,7 @@ void CarResourceInit(void)
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
+	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
@@ -216,7 +217,7 @@ void CarDraw(void)
 	
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	//DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
 }
@@ -861,11 +862,15 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
+		 if (car.lake_count > 40&&car.lake_count<50)
+		 {
+			 Play_Sound_Car(car.lake_se, 120);
+		 }
 	 }
 
-	 else if (car.ivy_flag == false)
+	 else if (car.lake_flag == false)
 	 {
-		 StopSoundMem(car.ivy_se);
+		 StopSoundMem(car.lake_se);
 	 }
  }
 
