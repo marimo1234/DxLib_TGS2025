@@ -842,17 +842,15 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.lake_flag == true)
 	 {
-	
-		
 		 switch (car.old_direction)
 		 {
 		 case eUp:
-			 DrawRotaGraphF(carx, cary - car.lake_num * 8 -5,1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary - car.lake_num * 8-5, 0.1, 0.0, car.lake_up_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx, cary - car.lake_num * 8 - 5, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary - car.lake_num * 8 - 5, 0.1, 0.0, car.lake_up_anim[car.lake_num], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary + car.lake_num * 2 +10, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary + car.lake_num * 2+5, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx, cary + car.lake_num * 2 + 10, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary + car.lake_num * 2 + 5, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
 			 break;
 		 case eRight:
 			 DrawRotaGraphF(carx + car.lake_num * 8, cary, 1.0, 0.0, gameover.circle, TRUE);
@@ -860,7 +858,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 case eLeft:
 			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx-car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
 	 }
