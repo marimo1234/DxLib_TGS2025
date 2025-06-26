@@ -77,6 +77,17 @@ struct InGame
 	int putroda1;
 	int putroda2;
 	int putrodacount=0;
+	int brakewood1;
+	int brakewood2;
+	int brakewood3;
+	int brakewood4;
+	int brakewood5;
+	int brakewood6;
+	int brakewoodcount=0;
+	int putbridge1;
+	int putbridgecount=0;
+	int menuanimationflag;
+
 
 };
 
