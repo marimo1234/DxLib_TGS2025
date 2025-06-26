@@ -134,6 +134,21 @@ void CarResourceInit(void)
 	car.lake_left_anim[5] = LoadGraph("Resource/images/car_inL_lake5.png");
 	car.lake_left_anim[6] = LoadGraph("Resource/images/car_inL_lake6.png");
 
+	car.lake_up_anim[0] = LoadGraph("Resource/images/car_inU_lake0.png");
+	car.lake_up_anim[1] = LoadGraph("Resource/images/car_inU_lake1.png");
+	car.lake_up_anim[2] = LoadGraph("Resource/images/car_inU_lake2.png");
+	car.lake_up_anim[3] = LoadGraph("Resource/images/car_inU_lake3.png");
+	car.lake_up_anim[4] = LoadGraph("Resource/images/car_inU_lake4.png");
+	car.lake_up_anim[5] = LoadGraph("Resource/images/car_inU_lake5.png");
+	car.lake_up_anim[6] = LoadGraph("Resource/images/car_inU_lake6.png");
+
+	car.lake_down_anim[0] = LoadGraph("Resource/images/car_inD_lake0.png");
+	car.lake_down_anim[1] = LoadGraph("Resource/images/car_inD_lake1.png");
+	car.lake_down_anim[2] = LoadGraph("Resource/images/car_inD_lake2.png");
+	car.lake_down_anim[3] = LoadGraph("Resource/images/car_inD_lake3.png");
+	car.lake_down_anim[4] = LoadGraph("Resource/images/car_inD_lake4.png");
+	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
+	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -809,7 +824,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.lake_flag == true)
 	 {
 		 car.lake_count++;
-		 if (car.lake_count > 10 && car.lake_count % 8 == 0 && car.lake_num < 6)
+		 if (car.lake_count > 30 && car.lake_count % 8 == 0 && car.lake_num < 6)
 		 {
 			 car.lake_num++;
 			 
@@ -832,10 +847,12 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eUp:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_up_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx, cary - car.lake_num * 8 -5,1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary - car.lake_num * 8-5, 0.1, 0.0, car.lake_up_anim[car.lake_num], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx, cary + car.lake_num * 2 +10, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary + car.lake_num * 2+5, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
 			 break;
 		 case eRight:
 			 DrawRotaGraphF(carx + car.lake_num * 8, cary, 1.0, 0.0, gameover.circle, TRUE);
