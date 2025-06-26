@@ -41,7 +41,7 @@ void Fade::Update()
 		// フェードイン（明るくなる）
 		if (alpha > 0)
 		{
-			alpha -= 15;
+			alpha -= 7;
 
 			if (alpha <= 0)
 			{
@@ -56,7 +56,7 @@ void Fade::Update()
 		// フェードアウト（暗くなる）
 		if (alpha < 255)
 		{
-			alpha += 15;
+			alpha += 7;
 
 			if (alpha >= 255)
 			{
