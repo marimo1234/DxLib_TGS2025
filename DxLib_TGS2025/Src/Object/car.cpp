@@ -117,6 +117,8 @@ void CarResourceInit(void)
 	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
+	car.lake_right_anim[0] = LoadGraph("Resource/images/ivy00.png");
+
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
@@ -805,6 +807,21 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.lake_flag == true)
 	 {
 		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+		 switch (car.old_direction)
+		 {
+		 case eUp:
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_up_anim[car.ivy_num], TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_down_anim[car.ivy_num], TRUE);
+			 break;
+		 case eRight:
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_right_anim[car.ivy_num], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_left_anim[car.ivy_num], TRUE);
+			 break;
+		 }
 	 }
 
 	 else if (car.ivy_flag == false)
