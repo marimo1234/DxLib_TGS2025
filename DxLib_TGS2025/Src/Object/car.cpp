@@ -12,7 +12,7 @@
 int overroad;
 
 void CarStart(const InGame* ingame);
-void CarDetectPosition(void);
+void CarDetectPosition(const CreateStage* stage);
 void GetNextDestination(const Tool* tool,int x,int y);
 void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
@@ -25,6 +25,8 @@ void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* inga
 void CarWarnDraw(void);
 void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
+void CarLakeAnimation(void);
+void CarLakeDraw(int carx, int cary);
 
 Car car;
 GameOver gameover;
@@ -32,6 +34,7 @@ void CarInit(void)
 {
 
 	overroad = 0;
+
 	car.position.x = car.current_x * CAR_TROUT_LNEGTH + 200.0f;//初期位置
 	car.position.y = car.current_y * CAR_TROUT_LNEGTH + 120.0f;
 	car.velocity.x = 0.2f;//速度
@@ -40,11 +43,18 @@ void CarInit(void)
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
+
 	car.animation_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
+
 	car.ivy_flag = false;//ツタのアニメーションフラグ
 	car.ivy_count = 0;//ツタのアニメーションカウント
 	car.ivy_num = 0;//ツタのアニメーションナンバー
+
+	car.lake_flag = false;//湖の中に落ちるアニメーションフラグ
+	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
+	car.lake_num = 0;//湖の中に落ちるアニメーションナンバー
+
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
 
@@ -238,6 +248,10 @@ void CarReset(void)
 	car.ivy_count = 0;
 	car.ivy_num = 0;
 
+	car.lake_flag = false;//湖の中に落ちるアニメーションフラグ
+	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
+	car.lake_num = 0;//湖の中に落ちるアニメーションナンバー
+
 
 
 	gameover.image_flag = false;//GameOverをだすか
@@ -288,7 +302,6 @@ void CarMovePosition(const CreateStage* stage)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
-			car.ivy_flag = true;
 			if (overroad < 300)
 			{
 				OverRoad();
@@ -322,7 +335,7 @@ void CarMovePosition(const CreateStage* stage)
 		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
-			CarDetectPosition();
+			CarDetectPosition(GetStage());
 
 		}
 		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range*0.3&&
@@ -351,7 +364,7 @@ void CarMovePosition(const CreateStage* stage)
 		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
-			CarDetectPosition();
+			CarDetectPosition(GetStage());
 
 		}
 		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range*0.3 &&
@@ -381,7 +394,7 @@ void CarMovePosition(const CreateStage* stage)
 		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
-			CarDetectPosition();
+			CarDetectPosition(GetStage());
 
 		}
 		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range*0.3&&
@@ -411,7 +424,7 @@ void CarMovePosition(const CreateStage* stage)
 		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
-			CarDetectPosition();
+			CarDetectPosition(GetStage());
 
 		}
 		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range*0.3 &&
@@ -434,7 +447,7 @@ void CarMovePosition(const CreateStage* stage)
 }
 
 //車の現在位置を検知して次の進行方向を決める
-void CarDetectPosition(void)
+void CarDetectPosition(const CreateStage* stage)
 {
 	//現在のX位置よりも次のX位置が大きかったら
 	if (car.current_x < car.next_x[car.next_count] &&
@@ -443,7 +456,7 @@ void CarDetectPosition(void)
 		if (car.direction != eRight)
 		{
 			car.position.x += car.overcount.x;
-			car.position.y += car.overcount.y;	
+			car.position.y += car.overcount.y;
 		}
 		car.overcount.x = 0.0f;
 		car.overcount.y = 0.0f;
@@ -513,32 +526,65 @@ void CarDetectPosition(void)
 			{
 			case eUp://上に
 				car.overcount.y += car.speed.y;
-				if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 90.0f)//微調整で120に0.2足している
+				if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 90.0f)
 				{
+					if (stage->array[car.current_x][car.current_y - 1] == 6)
+					{
+
+					}
+					else
+					{
+						car.ivy_flag = true;
+					}
+
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
 				break;
 			case eDown://下に
 				car.overcount.y -= car.speed.y;
-				if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 150.0f)//微調整で120から0.2引いている
+				if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 150.0f)
 				{
+					if (stage->array[car.current_x][car.current_y + 1] == 6)
+					{
+
+					}
+					else
+					{
+						car.ivy_flag = true;
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
 				break;
 			case eRight://右に
 				car.overcount.x -= car.speed.x;
-				if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 230.0f)//微調整で200から0.2引いている
+				if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 230.0f)
 				{
+					if (stage->array[car.current_x + 1][car.current_y] == 6)
+					{
+
+					}
+					else
+					{
+						car.ivy_flag = true;
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
 				break;
 			case eLeft://左に
 				car.overcount.x += car.speed.x;
-				if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 170.0f)//微調整で200から0.2足している
+				if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 170.0f)
 				{
+					if (stage->array[car.current_x - 1][car.current_y] == 6)
+					{
+
+					}
+					else
+					{
+						car.ivy_flag = true;
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
@@ -731,6 +777,37 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 }
 	 }
 	 else if(car.ivy_flag == false)
+	 {
+		 StopSoundMem(car.ivy_se);
+	 }
+ }
+
+ void CarLakeAnimation(void)
+ {
+	 if (car.lake_flag == true)
+	 {
+		 car.lake_count++;
+		 if (car.lake_count > 10 && car.lake_count % 10 == 0 && car.lake_num < 10)
+		 {
+			 car.lake_num++;
+		 }
+
+		 if (car.start == false)
+		 {
+			 car.lake_flag = false;
+			 car.lake_count = 0;
+			 car.lake_num = 0;
+		 }
+	 }
+ }
+ void CarLakeDraw(int carx, int cary)
+ {
+	 if (car.lake_flag == true)
+	 {
+		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+	 }
+
+	 else if (car.ivy_flag == false)
 	 {
 		 StopSoundMem(car.ivy_se);
 	 }
