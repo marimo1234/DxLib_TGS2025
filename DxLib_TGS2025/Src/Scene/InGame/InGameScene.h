@@ -63,8 +63,21 @@ struct InGame
 	int itemtutorial4;
 
 	int itemtutorial_num = 1;
-	int blinkingA;
-	int blinkingcount=0;
+	int brakestoneanimetion1;
+	int brakestoneanimetion2;
+	int brakestoneanimetion3;
+	int brakestoneanimetion4;
+	int brakestoneanimetion5;
+	int brakestoneanimetion6;
+	int brakestoneanimetion7;
+	int brakestoneanimetioncount=0;
+	int makeroda1;
+	int makeroda2;
+	int makerodacount=0;
+	int putroda1;
+	int putroda2;
+	int putrodacount=0;
+
 };
 
 struct InGame_Sound
