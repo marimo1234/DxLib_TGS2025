@@ -54,6 +54,7 @@ void CarInit(void)
 	car.lake_flag = false;//湖の中に落ちるアニメーションフラグ
 	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
 	car.lake_num = 0;//湖の中に落ちるアニメーションナンバー
+	car.lake_mul = 0;//湖の中に落ちるアニメーション**
 
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
@@ -124,6 +125,15 @@ void CarResourceInit(void)
 	car.lake_right_anim[4] = LoadGraph("Resource/images/car_inR_lake4.png");
 	car.lake_right_anim[5] = LoadGraph("Resource/images/car_inR_lake5.png");
 	car.lake_right_anim[6] = LoadGraph("Resource/images/car_inR_lake6.png");
+
+	car.lake_left_anim[0] = LoadGraph("Resource/images/car_inL_lake0.png");
+	car.lake_left_anim[1] = LoadGraph("Resource/images/car_inL_lake1.png");
+	car.lake_left_anim[2] = LoadGraph("Resource/images/car_inL_lake2.png");
+	car.lake_left_anim[3] = LoadGraph("Resource/images/car_inL_lake3.png");
+	car.lake_left_anim[4] = LoadGraph("Resource/images/car_inL_lake4.png");
+	car.lake_left_anim[5] = LoadGraph("Resource/images/car_inL_lake5.png");
+	car.lake_left_anim[6] = LoadGraph("Resource/images/car_inL_lake6.png");
+
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -314,12 +324,12 @@ void CarMovePosition(const CreateStage* stage)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
-			if (overroad < 400)
+			if (overroad < 300)
 			{
 				OverRoad();
 				/*gameover.image_flag = true;*/
 			}
-			if (overroad > 399)
+			if (overroad > 299)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
@@ -799,9 +809,10 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.lake_flag == true)
 	 {
 		 car.lake_count++;
-		 if (car.lake_count > 120 && car.lake_count % 10 == 0 && car.lake_num < 6)
+		 if (car.lake_count > 10 && car.lake_count % 8 == 0 && car.lake_num < 6)
 		 {
 			 car.lake_num++;
+			 
 		 }
 
 		 if (car.start == false)
@@ -816,7 +827,8 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.lake_flag == true)
 	 {
-		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+	
+		
 		 switch (car.old_direction)
 		 {
 		 case eUp:
@@ -826,10 +838,12 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
 			 break;
 		 case eRight:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_right_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx + car.lake_num * 8, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx + car.lake_num * 8, cary, 0.1, 0.0, car.lake_right_anim[car.lake_num], TRUE);
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
+			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx-car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
 	 }

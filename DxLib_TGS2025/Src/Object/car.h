@@ -38,6 +38,7 @@ struct Car
     int lake_count;
     int lake_num;
     int lake_se;
+    int lake_mul;
 
     int cutin_image[3];
 
