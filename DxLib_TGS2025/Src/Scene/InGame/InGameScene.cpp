@@ -789,10 +789,10 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 {
 	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", stage->array[7][4], ingame.tutorial_achievements);
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (stage->array[8][4] == 4)
+	/*if (stage->array[8][4] == 4)
 	{
 		ingame.mitibiki_flag = true;
-	}
+	}*/
 	switch (ingame.tutorial_achievements)
 	{
 	case 1:
@@ -864,7 +864,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 5:
-		if (stage->array[6][4] == 4)
+		if (stage->array[5][3] == 4)
 		{
 			animetion_num++;
 			if (animetion_num > 30)
@@ -890,7 +890,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 7:
-		if (stage->array[7][4] == 5)
+		if (stage->array[6][3] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num++;
