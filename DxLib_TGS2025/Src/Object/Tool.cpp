@@ -417,9 +417,9 @@ void Item_Frame_Draw(void)
 	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
 
 	//道路の所持数
-	DrawExtendFormatString(ITEM_SELECT_BASE_X-10, ITEM_SELECT_BASE_Y+10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.road_num);
+	DrawExtendFormatString(ITEM_SELECT_BASE_X-10, ITEM_SELECT_BASE_Y+10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.road_num);
 	//木の道の所持数
-	DrawExtendFormatString(ITEM_SELECT_BASE_X+70, ITEM_SELECT_BASE_Y+10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(255, 255, 255), "×%d", tool.wood_road_num);
+	DrawExtendFormatString(ITEM_SELECT_BASE_X+70, ITEM_SELECT_BASE_Y+10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.wood_road_num);
 	switch (tool.item_number)
 	{
 	case ePickaxe:
@@ -432,12 +432,12 @@ void Item_Frame_Draw(void)
 		tool_img.drill_ex_rate -= 0.2;
 		break;*/
 	case eWoodRoad:
-		tool_img.woodroad_ex_rate -= 0.2;
-		tool_img.woodroad_num_ex_rate -= 0.2;
+		tool_img.woodroad_ex_rate -= 0.2f;
+		tool_img.woodroad_num_ex_rate -= 0.2f;
 		break;
 	case eRoad:
-		tool_img.road_ex_rate -= 0.2;
-		tool_img.road_num_ex_rate -= 0.2;
+		tool_img.road_ex_rate -= 0.2f;
+		tool_img.road_num_ex_rate -= 0.2f;
 		break;
 	}
 }
