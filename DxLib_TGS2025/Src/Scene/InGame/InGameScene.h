@@ -87,7 +87,11 @@ struct InGame
 	int putbridge1;
 	int putbridgecount=0;
 	int menuanimationflag;
-
+	int woodtutorial=false;
+	int woodrodamake1;
+	int woodrodamake2;
+	int woodrodamakeswitch=false;
+	int madewoodswitch = false;
 
 };
 
