@@ -818,6 +818,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 2:
+		if (stage->array[7][4] == 4)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements = 8;
+			break;
+		}
 		if (ingame.tutorial_log_num < 5)
 		{
 			ingame.mitibiki_flag = true;
@@ -838,6 +845,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 3:
+		if (stage->array[7][4] == 4)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements = 8;
+			break;
+		}
 		if (tool->item_number == eRoad)
 		{
 			animetion_num++;
@@ -851,6 +865,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 4:
+		if (stage->array[7][4] == 4)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements = 8;
+			break;
+		}
 		if (tool->road_num > 0)
 		{
 			animetion_num++;
@@ -864,6 +885,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 5:
+		if (stage->array[7][4] == 4)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements = 8;
+			break;
+		}
 		if (stage->array[6][4] == 4)
 		{
 			animetion_num++;
@@ -877,6 +905,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 6:
+		if (stage->array[7][4] == 4)
+		{
+			ingame.mitibiki_flag = true;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements=8;
+			break;
+		}
 		if (tool->wood_road_num == 1)
 		{
 			animetion_num++;
@@ -890,7 +925,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 7:
-		if (stage->array[8][4] == 4)
+		if (stage->array[7][4] == 4)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num++;
@@ -905,14 +940,14 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		else if (animetion_num > 30)
 		{
-			if (stage->array[8][4] == 5)
-			{
-				ingame.mitibiki_flag = true;
-				if (ingame.tutorial_log_num > 13)
+				if (ingame.tutorial_log_num < 13)
+				{
+					ingame.mitibiki_flag = true;
+				}
+				else
 				{
 					ingame.mitibiki_flag = false;
 				}
-			}
 		}
 
 	default:
