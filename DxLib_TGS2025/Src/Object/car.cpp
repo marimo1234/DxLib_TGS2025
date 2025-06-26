@@ -117,7 +117,13 @@ void CarResourceInit(void)
 	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
-	car.lake_right_anim[0] = LoadGraph("Resource/images/ivy00.png");
+	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
+	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
+	car.lake_right_anim[2] = LoadGraph("Resource/images/car_inR_lake2.png");
+	car.lake_right_anim[3] = LoadGraph("Resource/images/car_inR_lake3.png");
+	car.lake_right_anim[4] = LoadGraph("Resource/images/car_inR_lake4.png");
+	car.lake_right_anim[5] = LoadGraph("Resource/images/car_inR_lake5.png");
+	car.lake_right_anim[6] = LoadGraph("Resource/images/car_inR_lake6.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -152,6 +158,7 @@ void CarManagerUpdate(void)
 		CarGoalCheck(GetStage());
 		CarMovePosition(GetStage());
 		CarIvyAnimation();
+		CarLakeAnimation();
 	
 
 	}
@@ -166,14 +173,17 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
-
+	if (car.lake_flag == false)
+	{
+		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
+	}
 	//警告マークの描画
 	CarWarnDraw(); 
 	CarWarnSE();
 
 	//ツタの描画
 	CarIvyDraw(car.position.x, car.position.y);
+	CarLakeDraw(car.position.x, car.position.y);
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -181,7 +191,7 @@ void CarDraw(void)
 	
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	//DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.ivy_flag, car.ivy_num,car.ivy_count);
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
 }
@@ -304,12 +314,12 @@ void CarMovePosition(const CreateStage* stage)
 	case eStop://止まる
 		if (car.goal_flag == false)
 		{
-			if (overroad < 300)
+			if (overroad < 400)
 			{
 				OverRoad();
 				/*gameover.image_flag = true;*/
 			}
-			if (overroad > 299)
+			if (overroad > 399)
 			{
 				gameover.image_count++;
 				car.position.x += 0.0f;
@@ -532,7 +542,7 @@ void CarDetectPosition(const CreateStage* stage)
 				{
 					if (stage->array[car.current_x][car.current_y - 1] == 6)
 					{
-
+						car.lake_flag = true;
 					}
 					else
 					{
@@ -549,7 +559,7 @@ void CarDetectPosition(const CreateStage* stage)
 				{
 					if (stage->array[car.current_x][car.current_y + 1] == 6)
 					{
-
+						car.lake_flag = true;
 					}
 					else
 					{
@@ -565,7 +575,7 @@ void CarDetectPosition(const CreateStage* stage)
 				{
 					if (stage->array[car.current_x + 1][car.current_y] == 6)
 					{
-
+						car.lake_flag = true;
 					}
 					else
 					{
@@ -581,7 +591,7 @@ void CarDetectPosition(const CreateStage* stage)
 				{
 					if (stage->array[car.current_x - 1][car.current_y] == 6)
 					{
-
+						car.lake_flag = true;
 					}
 					else
 					{
@@ -789,7 +799,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.lake_flag == true)
 	 {
 		 car.lake_count++;
-		 if (car.lake_count > 10 && car.lake_count % 10 == 0 && car.lake_num < 10)
+		 if (car.lake_count > 120 && car.lake_count % 10 == 0 && car.lake_num < 6)
 		 {
 			 car.lake_num++;
 		 }
@@ -810,16 +820,16 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eUp:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_up_anim[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_up_anim[car.lake_num], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_down_anim[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_down_anim[car.lake_num], TRUE);
 			 break;
 		 case eRight:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_right_anim[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_right_anim[car.lake_num], TRUE);
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_left_anim[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
 	 }
