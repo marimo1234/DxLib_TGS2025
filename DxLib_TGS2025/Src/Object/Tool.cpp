@@ -32,7 +32,7 @@ void const Road_Add_Num(const Rock* rock,const Car*car);
 void const WoodRoad_Add_Num(const Wood* wood,const Car*car);
 void Put_Road(const Cursor*cursor,const CreateStage* stage,const Mole*mole, const Car* car);
 void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car *car);
-void Put_Road_Process(bool* flag, int* sub_num, int array_x, int array_y, int base_x, int base_y,int sound,int val);
+void Put_Road_Process(bool* flag, int* sub_num, int array[][7],int array_x, int array_y, int base_x, int base_y,int sound,int val);
 void Road_Imghandle_Init(int x1, int y1, int x2, int y2, int x3, int y3);
 void Road_Imghandle_Update(const CreateStage* stage);
 void Move_ItemSelect(const Car*car);
@@ -496,28 +496,28 @@ void Put_Road(const Cursor* cursor,const CreateStage*stage,const Mole*mole,const
 					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
 						(stage->array[tool.base_x + 1][tool.base_y] == 0))
 					{
-						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.base_x + 1, tool.base_y, 1, 0, tool_se.road,110);
+						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.road_flag, tool.base_x + 1, tool.base_y, 1, 0, tool_se.road, 110);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
 						(stage->array[tool.base_x - 1][tool.base_y] == 0))
 					{
-						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.base_x - 1, tool.base_y, -1, 0, tool_se.road,110);
+						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.road_flag,tool.base_x - 1, tool.base_y, -1, 0, tool_se.road,110);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
 						(stage->array[tool.base_x][tool.base_y - 1] == 0))
 					{
-						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.base_x, tool.base_y - 1, 0, -1, tool_se.road,110);
+						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.road_flag,tool.base_x, tool.base_y - 1, 0, -1, tool_se.road,110);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
 						(stage->array[tool.base_x][tool.base_y + 1] == 0))
 					{
-						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.base_x, tool.base_y + 1, 0, 1, tool_se.road,110);
+						Put_Road_Process(&tool.put_road_flag, &tool.road_num, tool.road_flag,tool.base_x, tool.base_y + 1, 0, 1, tool_se.road,110);
 					}
 				}
 			}
@@ -546,28 +546,28 @@ void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car*car)
 					if ((cursor->array_x == tool.base_x + 1 && cursor->array_y == tool.base_y) &&
 						stage->array[tool.base_x + 1][tool.base_y] == 6)
 					{
-						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.base_x + 1, tool.base_y, 1, 0, tool_se.wood_road, 100);
+						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.wood_road_flag, tool.base_x + 1, tool.base_y, 1, 0, tool_se.wood_road, 100);
 					}
 
 					//左の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x - 1 && cursor->array_y == tool.base_y) &&
 						stage->array[tool.base_x - 1][tool.base_y] == 6)
 					{
-						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.base_x - 1, tool.base_y, -1, 0, tool_se.wood_road, 100);
+						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.wood_road_flag, tool.base_x - 1, tool.base_y, -1, 0, tool_se.wood_road, 100);
 					}
 
 					//上の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y - 1) &&
 						stage->array[tool.base_x][tool.base_y - 1] == 6)
 					{
-						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.base_x, tool.base_y - 1, 0, -1, tool_se.wood_road, 100);
+						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.wood_road_flag, tool.base_x, tool.base_y - 1, 0, -1, tool_se.wood_road, 100);
 					}
 
 					//下の時,カーソルの位置のマップの配列の中身が0なら
 					else if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y + 1) &&
 						stage->array[tool.base_x][tool.base_y + 1] == 6)
 					{
-						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.base_x, tool.base_y + 1, 0, 1, tool_se.wood_road, 100);
+						Put_Road_Process(&tool.put_woodroad_flag, &tool.wood_road_num, tool.wood_road_flag, tool.base_x, tool.base_y + 1, 0, 1, tool_se.wood_road, 100);
 					}
 				}
 			}
@@ -576,11 +576,11 @@ void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car*car)
 }
 
 //置いた時の処理関数
-void Put_Road_Process(bool* flag, int* sub_num, int array_x, int array_y, int base_x, int base_y,int sound,int val)
+void Put_Road_Process(bool* flag, int* sub_num,  int array[][7], int array_x, int array_y, int base_x, int base_y, int sound, int val)
 {
 	*flag = true;
 	(*sub_num)--;
-	tool.road_flag[array_x][array_y] = true;
+	array[array_x][array_y] = true;
 	tool.possible_fps = 0;
 	Base_Chenge();
 	tool.base_x += base_x;
