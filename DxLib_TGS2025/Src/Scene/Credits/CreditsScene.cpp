@@ -1,10 +1,12 @@
 #include "CreditsScene.h"
 #include "DxLib.h"
 #include "../../Utility/PadInputManager.h"
+#include"../Title/TitleScene.h"
 
 Credits credits;
 
 void Play_Credits_SE(int sound, int volume);
+void Play_Credits_BGM(const Title* title);
 
 void CreditsSceneInit(void)
 {
@@ -17,6 +19,8 @@ void CreditsSceneInit(void)
 	credits.B_back = LoadGraph("Resource/images/Bbacdk.png");
 	//SE“Ç‚Ýž‚Ý
 	credits.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+
+	Play_Credits_BGM(GetTitle());
 }
 
 eSceneType CreditsSceneUpdate(void)
@@ -84,4 +88,15 @@ void Play_Credits_SE(int sound, int volume)
 {
 	ChangeVolumeSoundMem(volume, sound);
 	PlaySoundMem(sound, DX_PLAYTYPE_BACK);
+}
+
+
+//BGM‚ðÄ¶
+void Play_Credits_BGM(const Title* title)
+{
+	if (CheckSoundMem(title->bgm) == 0)
+	{
+		ChangeVolumeSoundMem(100, title->bgm);
+		PlaySoundMem(title->bgm, DX_PLAYTYPE_BACK);
+	}
 }
