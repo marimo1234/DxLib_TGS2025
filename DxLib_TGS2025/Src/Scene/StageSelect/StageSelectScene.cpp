@@ -121,6 +121,14 @@ void StageSelectResourceInit(void)
 //ステージセレクトシーンの更新
 eSceneType StageSelectSceneUpdate(void)
 {
+//車がいる場所の配列番号でステージ番号を取得
+	StageSelectGetNumber();
+	
+	ChangeNumberExtrate();
+
+	Move_Car(GetCar());
+
+	SelectButtonDraw();
 	if (is_fading)
 	{
 		fade.Update();
@@ -130,14 +138,6 @@ eSceneType StageSelectSceneUpdate(void)
 		}
 		return eStageSelect;
 	}
-//車がいる場所の配列番号でステージ番号を取得
-	StageSelectGetNumber();
-	
-	ChangeNumberExtrate();
-
-	Move_Car(GetCar());
-
-	SelectButtonDraw();
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
