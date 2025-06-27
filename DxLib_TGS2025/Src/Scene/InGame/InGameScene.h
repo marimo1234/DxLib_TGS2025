@@ -62,6 +62,18 @@ struct InGame
 	int itemtutorial3;
 	int itemtutorial4;
 
+	int tutorial_log1;
+	int tutorial_log2;
+	int tutorial_log3;
+	int tutorial_log4;
+	int tutorial_log5;
+	int tutorial_log6;
+	int tutorial_log7;
+	int tutorial_log8;
+	int tutorial_log9;
+	int tutorial_log10;
+	int tutorial_log11;
+	int tutorial_log12;
 	int itemtutorial_num = 1;
 	int brakestoneanimetion1;
 	int brakestoneanimetion2;
