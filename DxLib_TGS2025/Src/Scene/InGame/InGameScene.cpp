@@ -178,6 +178,19 @@ void InGameResourceInit(void)
 		//チュートリアル中の橋の作り方
 		ingame.woodrodamake1 = LoadGraph("Resource/images/log10.5.png");
 		ingame.woodrodamake2 = LoadGraph("Resource/images/log10.9.png");
+		//チュートリアル中のログ
+		ingame.tutorial_log1 = LoadGraph("Resource/tutorial/log2.png");
+		ingame.tutorial_log2 = LoadGraph("Resource/tutorial/log3.png");
+		ingame.tutorial_log3 = LoadGraph("Resource/tutorial/log4.png");
+		ingame.tutorial_log4 = LoadGraph("Resource/tutorial/log5.png");
+		ingame.tutorial_log5 = LoadGraph("Resource/tutorial/log6.png");
+		ingame.tutorial_log6 = LoadGraph("Resource/tutorial/log7.png");
+		ingame.tutorial_log7 = LoadGraph("Resource/tutorial/log8.png");
+		ingame.tutorial_log8 = LoadGraph("Resource/tutorial/log9.png");
+		ingame.tutorial_log9 = LoadGraph("Resource/tutorial/log10.png");
+		ingame.tutorial_log10 = LoadGraph("Resource/tutorial/log11.png");
+		ingame.tutorial_log11 = LoadGraph("Resource/tutorial/log12.png");
+		ingame.tutorial_log12 = LoadGraph("Resource/tutorial/log13.png");
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -743,7 +756,48 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 			}
 			else if(ingame.madewoodswitch == false)
 			{
-                DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
+				switch (ingame.tutorial_log_num)
+				{
+				case 2:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log1, TRUE);
+					break;
+				case 3:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log2, TRUE);
+					break;
+				case 4:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log3, TRUE);
+					break;
+				case 5:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log4, TRUE);
+					break;
+				case 6:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log5, TRUE);
+					break;
+				case 7:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log6, TRUE);
+					break;
+				case 8:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
+					break;
+				case 9:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log8, TRUE);
+					break;
+				case 10:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log9, TRUE);
+					break;
+				case 11:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log10, TRUE);
+					break;
+				case 12:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log11, TRUE);
+					break;
+				case 13:
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log12, TRUE);
+					break;
+				default:
+					break;
+				}
+                //DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 			}
 		}
 		
@@ -776,9 +830,9 @@ void TutorialUpdate(void)
 		TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
 
 
-		char tutorial_load[256];
+		/*char tutorial_load[256];
 		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
-		tutorial_log = LoadGraph(tutorial_load);
+		tutorial_log = LoadGraph(tutorial_load);*/
 
 		//リセットする
 		if (ingame.start == false)
@@ -947,10 +1001,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				animetion_num = 0;
-				/*if (tool->wood_road_num == 1)
-				{*/
-					ingame.menuanimationflag = true;
-				//}
+				ingame.menuanimationflag = true;
 				break;
 			
 		}
