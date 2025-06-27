@@ -30,10 +30,15 @@ void CreditsSceneInit(void)
 
 eSceneType CreditsSceneUpdate(void)
 {
-	fade.Update();
-	if (fade.GetEndFlag())
+	if (is_fading)
 	{
-		is_fading = false;
+		fade.Update();
+		if (fade.GetEndFlag())
+		{
+			is_fading = false;
+
+		}
+		return eCredits;
 	}
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 

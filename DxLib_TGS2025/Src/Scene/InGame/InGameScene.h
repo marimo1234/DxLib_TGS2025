@@ -107,7 +107,6 @@ struct InGame
 	int itembaraxcount;
 	int itembarwoodroadcount;
 	int tutorial_count;
-
 };
 
 struct InGame_Sound
