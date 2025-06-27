@@ -268,7 +268,7 @@ void TitleMoleDraw(void)
 void TitleNameAnimation(void)
 {
 	title.name_count++;
-	if (title.name_count % 2 == 0&&title.name_num<26)
+	if (title.name_count % 8 == 0&&title.name_num<26)
 	{
 		title.name_num++;
 	}
