@@ -29,7 +29,6 @@ void TitleResourceInit(void)
 		break;
 	case 5:
 		title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
-		title.name_image = LoadGraph("Resource/Images/Title_Text.png");	//タイトル画像
 		title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
 		title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
 		title.char_image[1] = LoadGraph("Resource/Images/Credits.png");	//タイトルの選択文字
@@ -44,6 +43,36 @@ void TitleResourceInit(void)
 		title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
 		title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
 		title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
+		break;
+	case 7:
+		title.name_image[0] = LoadGraph("Resource/Images/Title_Text_Anim0.png");	//タイトル画像
+		title.name_image[1] = LoadGraph("Resource/Images/Title_Text_Anim1.png");	
+		title.name_image[2] = LoadGraph("Resource/Images/Title_Text_Anim2.png");	
+		title.name_image[3] = LoadGraph("Resource/Images/Title_Text_Anim3.png");	
+		title.name_image[4] = LoadGraph("Resource/Images/Title_Text_Anim4.png");	
+		title.name_image[5] = LoadGraph("Resource/Images/Title_Text_Anim5.png");	
+		title.name_image[6] = LoadGraph("Resource/Images/Title_Text_Anim6.png");	
+		title.name_image[7] = LoadGraph("Resource/Images/Title_Text_Anim7.png");	
+		title.name_image[8] = LoadGraph("Resource/Images/Title_Text_Anim8.png");	
+		title.name_image[9] = LoadGraph("Resource/Images/Title_Text_Anim9.png");	
+		title.name_image[10] = LoadGraph("Resource/Images/Title_Text_Anim10.png");	
+		title.name_image[11] = LoadGraph("Resource/Images/Title_Text_Anim11.png");	
+		title.name_image[12] = LoadGraph("Resource/Images/Title_Text_Anim12.png");	
+		break;
+	case 8:
+		title.name_image[13] = LoadGraph("Resource/Images/Title_Text_Anim13.png");	
+		title.name_image[14] = LoadGraph("Resource/Images/Title_Text_Anim14.png");	
+		title.name_image[15] = LoadGraph("Resource/Images/Title_Text_Anim15.png");	
+		title.name_image[16] = LoadGraph("Resource/Images/Title_Text_Anim16.png");	
+		title.name_image[17] = LoadGraph("Resource/Images/Title_Text_Anim17.png");	
+		title.name_image[18] = LoadGraph("Resource/Images/Title_Text_Anim18.png");	
+		title.name_image[19] = LoadGraph("Resource/Images/Title_Text_Anim19.png");	
+		title.name_image[20] = LoadGraph("Resource/Images/Title_Text_Anim20.png");	
+		title.name_image[21] = LoadGraph("Resource/Images/Title_Text_Anim21.png");	
+		title.name_image[22] = LoadGraph("Resource/Images/Title_Text_Anim22.png");	
+		title.name_image[23] = LoadGraph("Resource/Images/Title_Text_Anim23.png");
+		title.name_image[24] = LoadGraph("Resource/Images/Title_Text_Anim24.png");	
+		title.name_image[25] = LoadGraph("Resource/Images/Title_Text_Anim25.png");	
 		break;
 	default:
 		break;
@@ -60,6 +89,8 @@ void TitleSceneInit(void)
 	title.mole_count = 0;
 	title.mole_move = 0;
 	title.mole_active = GetRand(2) + 1;
+	title.name_count = 0;
+	title.name_num = 0;
 	
 	Play_Title_BGM();
 	fade.Initialize(true);
@@ -80,7 +111,10 @@ eSceneType TitleSceneUpdate(void)
 	}
 
 	TitleCursorUpdate();
+	TitleNameAnimation();
 	title.mole_count++;
+
+	
 
 	if (title.mole_count % 2 == 0)
 	{
@@ -138,7 +172,7 @@ eSceneType TitleSceneUpdate(void)
 void TitleSceneDraw(void)
 {
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
-	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image, TRUE);
+	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image[title.name_num], TRUE);
 	DrawRotaGraphF(900.0f, 680.0f, 1.0, 0.0, title.control_image, TRUE);
 
 	//モグラの描画
@@ -228,4 +262,18 @@ void TitleMoleDraw(void)
 		break;
 	}
 	
+}
+
+void TitleNameAnimation(void)
+{
+	title.name_count++;
+	if (title.name_count % 3 == 0&&title.name_num<25)
+	{
+		title.name_num++;
+	}
+	if (title.name_count > 200)
+	{
+		title.name_count = 0;
+		title.name_num = 0;
+	}
 }
