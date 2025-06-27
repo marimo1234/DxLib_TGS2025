@@ -154,7 +154,7 @@ void CarResourceInit(void)
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
-	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
+	/*car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");*/
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
@@ -296,8 +296,8 @@ void CarReset(void)
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
 
 	//仮
-	DeleteSoundMem(car.lake_se);
-	car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");
+	/*DeleteSoundMem(car.lake_se);
+	car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");*/
 }
 
 //次の進行場所を取得する
@@ -864,7 +864,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
-		 if (car.lake_count > 40 && car.lake_count < 170 && ingame->menu_flag == false)
+		 /*if (car.lake_count > 40 && car.lake_count < 170 && ingame->menu_flag == false)
 		 {
 			 PlaySoundMem(car.lake_se, DX_PLAYTYPE_BACK, FALSE);
 		 }
@@ -876,13 +876,13 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (CheckSoundMem(car.lake_se)==1&&car.menu_flag == true)
 			 {
 				 StopSoundMem(car.lake_se);
-			 }
+			 }*/
 	 }
 
-	 else if (car.lake_flag == false)
+	/* else if (car.lake_flag == false)
 	 {
 		 StopSoundMem(car.lake_se);
-	 }
+	 }*/
  }
 
 
