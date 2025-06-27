@@ -2,8 +2,11 @@
 #include "DxLib.h"
 #include "../../Utility/PadInputManager.h"
 #include"../Title/TitleScene.h"
+#include"../../../Effect/Fade.h"
 
 Credits credits;
+static Fade fade;
+static bool is_fading = false;
 
 void Play_Credits_SE(int sound, int volume);
 void Play_Credits_BGM(const Title* title);
@@ -21,10 +24,17 @@ void CreditsSceneInit(void)
 	credits.button_se= LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 
 	Play_Credits_BGM(GetTitle());
+	fade.Initialize(true);
+	is_fading = true;
 }
 
 eSceneType CreditsSceneUpdate(void)
 {
+	fade.Update();
+	if (fade.GetEndFlag())
+	{
+		is_fading = false;
+	}
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//Bボタンでタイトルへ
@@ -82,6 +92,8 @@ void CreditsSceneDraw(void)
 		GetColor(255, 255, 255), "ラッコツールズ");
 	DrawExtendFormatString(credits.url_x, credits.url_y + 80.0 * 5, 1.5, 1.5,
 		GetColor(0, 255, 0), "https://rakko.tools/");
+
+	fade.Draw();
 }
 
 void Play_Credits_SE(int sound, int volume)
