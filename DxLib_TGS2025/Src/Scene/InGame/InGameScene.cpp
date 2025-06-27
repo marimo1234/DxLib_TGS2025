@@ -18,8 +18,8 @@
 #define D_SCROOL_SPEED		(200.0f)
 
 //確認用変数　後に消します
-int atr ;
-int btr ;
+int atr;
+int btr;
 int animetion_num;
 int ingame_init_step = 0;
 int is_initialized = false;
@@ -33,14 +33,14 @@ InGame_Sound sound;
 
 void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
-void GameOverReset(const GameOver* gameover,const Car*car);
+void GameOverReset(const GameOver* gameover, const Car* car);
 void GetStageNumber(const StageSelect* stageselect);
-void InGameMenuUpdate(const Goal*goal,const GameOver* gameover);
+void InGameMenuUpdate(const Goal* goal, const GameOver* gameover);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
-void TutorialDraw(const Goal* goal,const GameOver*gameover);
+void TutorialDraw(const Goal* goal, const GameOver* gameover);
 void TutorialCursor(void);
 void ItemTutorial(void);
 void BlinkingAnimation(void);
@@ -51,7 +51,7 @@ void TutorialReset(void);
 //初期化
 void InGameSceneInit(void)
 {
-	
+
 	//操作説明の表示
 	ingame.manual_open = false;
 	ingame.tutorial_log_num = 2;
@@ -65,7 +65,7 @@ void InGameSceneInit(void)
 
 	ingame.menu_flag = false;
 	ingame.menu_num = 0;
-	ingame.menu_cursor_x=280.0f;
+	ingame.menu_cursor_x = 280.0f;
 	ingame.menu_cursor_y = 130.0f;
 
 	ingame.goalmenu_flag = false;
@@ -81,12 +81,13 @@ void InGameSceneInit(void)
 
 	ingame.mitibiki_flag = false;
 	ingame.tutorial_achievements = 1;
-	ingame.menuanimationflag=false;
+	ingame.menuanimationflag = false;
 	ingame.woodtutorial = false;
 	ingame.woodrodamakeswitch = false;
 	ingame.madewoodswitch = false;
-	ingame.itembaraxcount=1;
-	ingame.itembarwoodroadcount=1;
+	ingame.itembarcomentswitch = false;
+	ingame.itembaraxcount = 1;
+	ingame.itembarwoodroadcount = 1;
 
 	ingame.tutorial_count = 0;
 	for (int i = 0; i < 7; i++)
@@ -96,20 +97,20 @@ void InGameSceneInit(void)
 	//確認用変数　後々消します
 	atr = 0;
 	btr = 1;
-		//マップの初期化
-		MapInit();
-		//障害物の初期化
-		ObstacleManagerInit();
-		//木岩の初期化
-		WoodRockInit();
-		//ツールの初期化
-		ToolInit();
-		//車の初期化
-		CarInit();
-		//カーソルの初期化
-		CursorInit();
-		//ゴールの読み込み
-		GoalInit();
+	//マップの初期化
+	MapInit();
+	//障害物の初期化
+	ObstacleManagerInit();
+	//木岩の初期化
+	WoodRockInit();
+	//ツールの初期化
+	ToolInit();
+	//車の初期化
+	CarInit();
+	//カーソルの初期化
+	CursorInit();
+	//ゴールの読み込み
+	GoalInit();
 
 }
 
@@ -193,6 +194,10 @@ void InGameResourceInit(void)
 		ingame.tutorial_log10 = LoadGraph("Resource/tutorial/log11.png");
 		ingame.tutorial_log11 = LoadGraph("Resource/tutorial/log12.png");
 		ingame.tutorial_log12 = LoadGraph("Resource/tutorial/log13.png");
+		//チュートリアル中のアイテム欄のコメント
+		ingame.itembarcoment1 = LoadGraph("Resource/images/itemtutorialcoment1.png");
+		ingame.itembarcoment2 = LoadGraph("Resource/images/itemtutorialcoment2.png");
+		ingame.itembarcoment3 = LoadGraph("Resource/images/itemtutorialcoment3.png");
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -256,13 +261,13 @@ eSceneType InGameSceneUpdate()
 	GoalUpdate();
 
 	//ゲームオーバーになったらリセットします
-	GameOverReset(GetGameOver(),GetCar());
+	GameOverReset(GetGameOver(), GetCar());
 
 	//////////////////////
 	TutorialUpdate();
 	/////////////////////
 
-	InGameMenuUpdate(GetGoal(),GetGameOver());
+	InGameMenuUpdate(GetGoal(), GetGameOver());
 
 	NextSelectFlag(GetGoal());
 
@@ -360,7 +365,7 @@ eSceneType InGameSceneUpdate()
 
 void InGameSceneDraw(void)
 {
-	
+
 	/*DrawFormatString(50, 10, GetColor(255, 255, 255), "スペースでリザルト画面へ");*/
 
 	//マップの描画
@@ -388,7 +393,7 @@ void InGameSceneDraw(void)
 	GoalDraw();
 
 	////////////////////
-	TutorialDraw(GetGoal(),GetGameOver());
+	TutorialDraw(GetGoal(), GetGameOver());
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -399,7 +404,7 @@ void InGameSceneDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.manual_image, TRUE);
 	}
-	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false&&ingame.stage_num!=eOne)
+	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
@@ -411,13 +416,13 @@ void InGameSceneDraw(void)
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
 
-	
+
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.itemtutorial_num ,ingame.itembaraxcount , ingame.itembarwoodroadcount );
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
-	
+
 }
 const InGame* GetInGame(void)
 {
@@ -538,12 +543,12 @@ void NextStageFlag(const Goal* goal)
 	if (ingame.goalselect_flag == true)
 	{
 		ingame.next_stage_flag = true;
-		atr ++;
+		atr++;
 		ingame.start = false;
 		/*Stop_InGameBgm();*/
 	}
 
-	
+
 }
 
 void GoalSelectFlagReset(void)
@@ -555,7 +560,7 @@ void GoalSelectFlagReset(void)
 }
 
 //GameOverの時の処理
-void GameOverReset(const GameOver* gameover,const Car* car)
+void GameOverReset(const GameOver* gameover, const Car* car)
 {
 	if (gameover->flag == true)
 	{
@@ -570,7 +575,7 @@ void GameOverReset(const GameOver* gameover,const Car* car)
 				Play_Sound_Ingame(sound.clear, 90);
 				ingame.gameover_se_flag = true;
 			}
-			else if(gameover->image_flag == true)
+			else if (gameover->image_flag == true)
 			{
 				Play_Sound_Ingame(sound.gameover, 60);
 				ingame.gameover_se_flag = true;
@@ -636,7 +641,7 @@ void StageChange(void)
 }
 
 //メニュー画面の開始とカーソルの処理
-void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
+void InGameMenuUpdate(const Goal* goal, const GameOver* gameover)
 {
 
 	ingame.menu_cursor_y = 130.0f + ingame.menu_num * 120.0f;
@@ -644,15 +649,15 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//Goal,GameOver,Manualが開かれていない時
-	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&ingame.mitibiki_flag==false
-		&&pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false && ingame.mitibiki_flag == false
+		&& pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
-		Play_Sound_Ingame2(sound.select_move,100);
+		Play_Sound_Ingame2(sound.select_move, 100);
 		ingame.menu_flag = true;
 	}
 
-	if (ingame.menu_flag == true&& ingame.goalmenu_flag == false
-		&& ingame.menu_manual_flag == false&&ingame.mitibiki_flag==false)
+	if (ingame.menu_flag == true && ingame.goalmenu_flag == false
+		&& ingame.menu_manual_flag == false && ingame.mitibiki_flag == false)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 		{
@@ -668,7 +673,7 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 			Play_Sound_Ingame2(sound.select_move, 100);
 			ingame.menu_num++;
 			ingame.menu_num = ingame.menu_num % 5;
-			
+
 		}
 	}
 }
@@ -681,7 +686,7 @@ void ChangeCharExtrate(void)
 		ingame.char_extrate[i] = 0.7f;
 	}
 	ingame.char_extrate[ingame.menu_num] = 0.9f;
-	ingame.char_extrate[ingame.goalmenu_num+5] = 0.9f;
+	ingame.char_extrate[ingame.goalmenu_num + 5] = 0.9f;
 }
 
 
@@ -690,7 +695,7 @@ void ChangeCharExtrate(void)
 void MenuDraw(void)
 {
 	if (ingame.menu_flag == true && ingame.goalmenu_flag == false
-		&&ingame.menu_manual_flag == false && ingame.mitibiki_flag == false)
+		&& ingame.menu_manual_flag == false && ingame.mitibiki_flag == false)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_image, TRUE);
 		DrawRotaGraphF(ingame.menu_cursor_x, ingame.menu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
@@ -704,7 +709,7 @@ void MenuDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.menu_manual_image, TRUE);
 	}
-	
+
 }
 
 //Goalｎメニュー画面の描画
@@ -716,7 +721,7 @@ void GoalSelectMenuDraw(void)
 		DrawRotaGraphF(ingame.goalmenu_cursor_x, ingame.goalmenu_cursor_y, 1.0, 0.0, ingame.menu_cursor, TRUE);
 		if (ingame.stage_num == eSix)
 		{
-			DrawRotaGraphF(640.0f,130.0+240.0f, 0.8, 0.0, ingame.menu_char_image[6], TRUE);
+			DrawRotaGraphF(640.0f, 130.0 + 240.0f, 0.8, 0.0, ingame.menu_char_image[6], TRUE);
 		}
 		else
 		{
@@ -767,16 +772,16 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 		if (ingame.mitibiki_flag == true)
 		{
 			DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
-			
+
 		}
 		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 		if (ingame.menuanimationflag == false)
 		{
-			if (ingame.woodrodamakeswitch==true)
+			if (ingame.woodrodamakeswitch == true)
 			{
 				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
 			}
-			else if(ingame.madewoodswitch == false)
+			else if (ingame.madewoodswitch == false)
 			{
 				switch (ingame.tutorial_log_num)
 				{
@@ -819,10 +824,10 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 				default:
 					break;
 				}
-                //DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
+				//DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 			}
 		}
-		if (ingame.mitibiki_flag == true&& ingame.tutorial_count == 80)
+		if (ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 		{
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
@@ -830,12 +835,24 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 		if (ingame.tutorial_log_num == 6 || ingame.menuanimationflag == true)
 		{
 			ItemTutorial();
+			if (ingame.tutorial_log_num == 6)
+			{
+				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
+			}
+			else if (ingame.itembarcomentswitch == false)
+			{
+				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment2, TRUE);
+			}
+			else if (ingame.itembarcomentswitch == true)
+			{
+				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment3, TRUE);
+			}
 		}
-		if (ingame.tutorial_log_num == 5|| ingame.tutorial_log_num == 7|| ingame.tutorial_log_num == 8|| ingame.tutorial_log_num == 9|| ingame.tutorial_log_num == 10)
+		if (ingame.tutorial_log_num == 5 || ingame.tutorial_log_num == 7 || ingame.tutorial_log_num == 8 || ingame.tutorial_log_num == 9 || ingame.tutorial_log_num == 10)
 		{
-				BlinkingAnimation();
+			BlinkingAnimation();
 		}
-		
+
 	}
 }
 
@@ -866,7 +883,7 @@ void TutorialUpdate(void)
 		{
 			//Aボタンで進める
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-				ingame.mitibiki_flag == true&&ingame.tutorial_count==80)
+				ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 			{
 				ingame.tutorial_log_num++;
 			}
@@ -919,11 +936,11 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (cursor->array_x == 5)
 			{
-				
-					ingame.tutorial_log_num++;
-					ingame.tutorial_achievements++;
-					animetion_num = 0;
-					break;
+
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
 
 			}
 		}
@@ -948,12 +965,12 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (rock->item_num > 0)
 			{
-				
-					ingame.tutorial_log_num++;
-					ingame.tutorial_achievements++;
-					animetion_num = 0;
-					break;
-				
+
+				ingame.tutorial_log_num++;
+				ingame.tutorial_achievements++;
+				animetion_num = 0;
+				break;
+
 			}
 		}
 		break;
@@ -971,13 +988,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		ingame.woodtutorial == false;
 		if (tool->item_number == eRoad)
 		{
-		
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				animetion_num = 0;
-				ingame.itemtutorial_num = 1;
-				break;
-			
+
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			animetion_num = 0;
+			ingame.itemtutorial_num = 1;
+			break;
+
 		}
 		break;
 	case 4:
@@ -993,13 +1010,13 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		if (tool->road_num > 0)
 		{
-			
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				animetion_num = 0;
-				
-				break;
-			
+
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			animetion_num = 0;
+
+			break;
+
 		}
 		break;
 
@@ -1016,22 +1033,22 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		if (stage->array[5][3] == 4)
 		{
-			
-			
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				animetion_num = 0;
-				ingame.menuanimationflag = true;
-				break;
-			
+
+
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			animetion_num = 0;
+			ingame.menuanimationflag = true;
+			break;
+
 		}
 		break;
 	case 6:
 		if (stage->array[6][3] == 5)
 		{
 			ingame.mitibiki_flag = true;
-			ingame.tutorial_log_num=11;
-			ingame.tutorial_achievements=8;
+			ingame.tutorial_log_num = 11;
+			ingame.tutorial_achievements = 8;
 			ingame.woodtutorial = false;
 			ingame.woodrodamakeswitch = false;
 			ingame.madewoodswitch = false;
@@ -1041,15 +1058,17 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			ingame.menuanimationflag = false;
 		}
-		if (wood->item_num>0)
+		if (wood->item_num > 0)
 		{
 			if (tool->wood_road_num != 1)
 			{
+				ingame.itembarcomentswitch == true;
 				ingame.menuanimationflag = true;
+
 			}
 			ingame.woodtutorial = true;
 		}
-		if (wood->item_num > 0 &&tool->item_number == eWoodRoad)
+		if (wood->item_num > 0 && tool->item_number == eWoodRoad)
 		{
 			ingame.menuanimationflag = false;
 			ingame.woodtutorial = false;
@@ -1058,17 +1077,17 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		if (tool->wood_road_num == 1)
 		{
 			ingame.menuanimationflag = false;
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
-				animetion_num = 0;
-				ingame.woodrodamakeswitch = false;
-				ingame.madewoodswitch = false;
-				break;
-			
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			animetion_num = 0;
+			ingame.woodrodamakeswitch = false;
+			ingame.madewoodswitch = false;
+			break;
+
 		}
 		break;
 	case 7:
-	
+
 		if (stage->array[6][3] == 5)
 		{
 			ingame.mitibiki_flag = true;
@@ -1078,17 +1097,17 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 8:
-		
-			if (ingame.tutorial_log_num < 13)
-			{
-				ingame.mitibiki_flag = true;
-			}
-			else
-			{
-				ingame.mitibiki_flag = false;
-			}
 
-		
+		if (ingame.tutorial_log_num < 13)
+		{
+			ingame.mitibiki_flag = true;
+		}
+		else
+		{
+			ingame.mitibiki_flag = false;
+		}
+
+
 
 	default:
 
@@ -1124,12 +1143,12 @@ void ItemTutorial(void)
 	{
 		if (ingame.tutorial_log_num == 6)
 		{
-           ingame.itemtutorial_num++;
+			ingame.itemtutorial_num++;
 
 		}
 		else if (ingame.tutorial_log_num == 9 && ingame.woodtutorial == false)
 		{
-			ingame.itembaraxcount ++;
+			ingame.itembaraxcount++;
 		}
 		else if (ingame.woodtutorial == true)
 		{
@@ -1158,25 +1177,25 @@ void ItemTutorial(void)
 		ingame.itembaraxcount = 1;
 		ItemTutorial();
 	}
-	else if (ingame.itemtutorial_num > 15 || ingame.itembaraxcount > 15 || ingame.itembarwoodroadcount>15)
+	else if (ingame.itemtutorial_num > 15 || ingame.itembaraxcount > 15 || ingame.itembarwoodroadcount > 15)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
 	}
-	else if (ingame.itemtutorial_num > 1 || ingame.itembaraxcount > 1 || ingame.itembarwoodroadcount>1)
+	else if (ingame.itemtutorial_num > 1 || ingame.itembaraxcount > 1 || ingame.itembarwoodroadcount > 1)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial1, TRUE);
 	}
 }
 void BlinkingAnimation(void)
 {
-	
+
 	if (ingame.tutorial_log_num == 5)
 	{
 		if (ingame.menu_flag == false)
 		{
-           ingame.brakestoneanimetioncount++;
+			ingame.brakestoneanimetioncount++;
 		}
-		
+
 		if (ingame.brakestoneanimetioncount > 225)
 		{
 			ingame.brakestoneanimetioncount = 0;
@@ -1214,9 +1233,9 @@ void BlinkingAnimation(void)
 	{
 		if (ingame.menu_flag == false)
 		{
-           ingame.makerodacount++;
+			ingame.makerodacount++;
 		}
-		
+
 		if (ingame.makerodacount > 105)
 		{
 			ingame.makerodacount = 0;
@@ -1234,9 +1253,9 @@ void BlinkingAnimation(void)
 	{
 		if (ingame.menu_flag == false)
 		{
-           ingame.putrodacount++;
+			ingame.putrodacount++;
 		}
-		
+
 		if (ingame.putrodacount > 105)
 		{
 			ingame.putrodacount = 0;
@@ -1292,7 +1311,7 @@ void BlinkingAnimation(void)
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood1, TRUE);
 				}
 			}
-			else if (ingame.woodrodamakeswitch == true&& ingame.tutorial_log_num == 9)
+			else if (ingame.woodrodamakeswitch == true && ingame.tutorial_log_num == 9)
 			{
 				if (ingame.brakewoodcount > 105)
 				{
@@ -1316,7 +1335,7 @@ void BlinkingAnimation(void)
 		{
 			ingame.putbridgecount++;
 		}
-		
+
 		if (ingame.putbridgecount > 70)
 		{
 			ingame.putbridgecount = 0;
@@ -1338,6 +1357,7 @@ void TutorialReset(void)
 		ingame.woodtutorial = false;
 		ingame.woodrodamakeswitch = false;
 		ingame.madewoodswitch = false;
+		ingame.itembarcomentswitch = false;
 		ingame.putbridgecount = 0;
 		ingame.brakewoodcount = 0;
 		ingame.putrodacount = 0;
@@ -1346,6 +1366,6 @@ void TutorialReset(void)
 		ingame.itemtutorial_num = 1;
 		ingame.itembaraxcount = 1;
 		ingame.itembarwoodroadcount = 1;
-		
+
 	}
 }

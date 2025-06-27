@@ -29,7 +29,7 @@ struct InGame
 	int menu_char_image[7];
 	int menu_cursor;
 	float menu_cursor_x;
-    float menu_cursor_y;
+	float menu_cursor_y;
 	float char_extrate[7];
 
 	bool goalmenu_flag;
@@ -41,7 +41,7 @@ struct InGame
 	bool goalselect_flag;
 
 	bool menu_manual_flag;
-    int  menu_manual_image;
+	int  menu_manual_image;
 
 	int start_button_image;
 
@@ -82,31 +82,35 @@ struct InGame
 	int brakestoneanimetion5;
 	int brakestoneanimetion6;
 	int brakestoneanimetion7;
-	int brakestoneanimetioncount=0;
+	int brakestoneanimetioncount = 0;
 	int makeroda1;
 	int makeroda2;
-	int makerodacount=0;
+	int makerodacount = 0;
 	int putroda1;
 	int putroda2;
-	int putrodacount=0;
+	int putrodacount = 0;
 	int brakewood1;
 	int brakewood2;
 	int brakewood3;
 	int brakewood4;
 	int brakewood5;
 	int brakewood6;
-	int brakewoodcount=0;
+	int brakewoodcount = 0;
 	int putbridge1;
-	int putbridgecount=0;
+	int putbridgecount = 0;
 	int menuanimationflag;
-	int woodtutorial=false;
+	int woodtutorial = false;
 	int woodrodamake1;
 	int woodrodamake2;
-	int woodrodamakeswitch=false;
+	int woodrodamakeswitch = false;
 	int madewoodswitch = false;
 	int itembaraxcount;
 	int itembarwoodroadcount;
 	int tutorial_count;
+	int itembarcoment1;
+	int itembarcoment2;
+	int itembarcoment3;
+	int itembarcomentswitch = false;
 };
 
 struct InGame_Sound
@@ -117,7 +121,7 @@ struct InGame_Sound
 	int pose;
 	int select_move;
 	int decision;
-	
+
 };
 
 void InGameSceneInit(void);
