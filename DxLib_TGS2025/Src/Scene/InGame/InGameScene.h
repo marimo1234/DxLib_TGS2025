@@ -106,6 +106,7 @@ struct InGame
 	int madewoodswitch = false;
 	int itembaraxcount;
 	int itembarwoodroadcount;
+	int tutorial_count;
 
 };
 

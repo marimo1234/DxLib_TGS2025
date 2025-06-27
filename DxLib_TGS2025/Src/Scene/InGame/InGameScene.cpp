@@ -87,6 +87,8 @@ void InGameSceneInit(void)
 	ingame.madewoodswitch = false;
 	ingame.itembaraxcount=1;
 	ingame.itembarwoodroadcount=1;
+
+	ingame.tutorial_count = 0;
 	for (int i = 0; i < 7; i++)
 	{
 		ingame.char_extrate[i] = 0.7f;
@@ -290,6 +292,7 @@ eSceneType InGameSceneUpdate()
 			Play_Sound_Ingame(sound.decision, 100);
 			ingame.menu_num = 0;
 			ingame.start = false;
+			TutorialReset();
 			ingame.menu_flag = false;
 			ingame.tutorial_log_num = 2;
 			Stop_InGameBgm();
@@ -396,7 +399,7 @@ void InGameSceneDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.manual_image, TRUE);
 	}
-	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false)
+	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false&&ingame.stage_num!=eOne)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
@@ -412,7 +415,7 @@ void InGameSceneDraw(void)
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.itemtutorial_num ,ingame.itembaraxcount , ingame.itembarwoodroadcount );
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 	
 }
@@ -425,10 +428,13 @@ const InGame* GetInGame(void)
 void GameStart(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-
-	if (ingame.start == false && ingame.menu_flag == false)
+	if (ingame.stage_num == eOne)
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress&& ingame.manual_open == false)
+		if (ingame.tutorial_count < 80)
+		{
+			ingame.tutorial_count++;
+		}
+		if (ingame.start == false && ingame.menu_flag == false)
 		{
 			ingame.gameover_se_flag = false;
 			ingame.start = true;
@@ -436,18 +442,31 @@ void GameStart(void)
 			Play_InGameBgm();
 		}
 	}
-	if (ingame.manual_open == false&& ingame.start == false&&ingame.menu_flag == false)
+	else
 	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+		if (ingame.start == false && ingame.menu_flag == false)
 		{
-			ingame.manual_open = true;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress && ingame.manual_open == false)
+			{
+				ingame.gameover_se_flag = false;
+				ingame.start = true;
+				ingame.manual_open = false;
+				Play_InGameBgm();
+			}
 		}
-	}
-	else if (ingame.manual_open == true)
-	{
-		if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
+		if (ingame.manual_open == false && ingame.start == false && ingame.menu_flag == false)
 		{
-			ingame.manual_open = false;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+			{
+				ingame.manual_open = true;
+			}
+		}
+		else if (ingame.manual_open == true)
+		{
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
+			{
+				ingame.manual_open = false;
+			}
 		}
 	}
 }
@@ -748,7 +767,9 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 		if (ingame.mitibiki_flag == true)
 		{
 			DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
+			
 		}
+		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
 		if (ingame.menuanimationflag == false)
 		{
 			if (ingame.woodrodamakeswitch==true)
@@ -801,9 +822,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
                 //DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 			}
 		}
-		
-		DrawRotaGraphF(1190.0f, 425.0f, 0.16, 0.0, ingame.mitibikikun, TRUE);
-		if (ingame.mitibiki_flag == true)
+		if (ingame.mitibiki_flag == true&& ingame.tutorial_count == 80)
 		{
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
@@ -847,7 +866,7 @@ void TutorialUpdate(void)
 		{
 			//Aボタンで進める
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
-				ingame.mitibiki_flag == true)
+				ingame.mitibiki_flag == true&&ingame.tutorial_count==80)
 			{
 				ingame.tutorial_log_num++;
 			}
@@ -857,7 +876,7 @@ void TutorialUpdate(void)
 		{
 			//Bボタンで戻る
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress &&
-				ingame.mitibiki_flag == true)
+				ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 			{
 				ingame.tutorial_log_num--;
 			}
@@ -1313,6 +1332,7 @@ void TutorialReset(void)
 {
 	if (ingame.start == false)
 	{
+		ingame.tutorial_count = 0;
 		ingame.mitibiki_flag = false;
 		ingame.tutorial_achievements = 1;
 		ingame.menuanimationflag = false;
@@ -1327,5 +1347,6 @@ void TutorialReset(void)
 		ingame.itemtutorial_num = 1;
 		ingame.itembaraxcount = 1;
 		ingame.itembarwoodroadcount = 1;
+		
 	}
 }
