@@ -419,7 +419,7 @@ void InGameSceneDraw(void)
 
 
 	/////////////////////
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.itemtutorial_num ,ingame.itembaraxcount , ingame.itembarwoodroadcount );
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.itemtutorial_num ,ingame.itembaraxcount , ingame.itembarwoodroadcount );
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
@@ -1062,9 +1062,11 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (tool->wood_road_num != 1)
 			{
-				ingame.itembarcomentswitch == true;
+				ingame.itembarcomentswitch = true;
 				ingame.menuanimationflag = true;
-
+				ingame.itemtutorial_num = 1;
+				ingame.itembaraxcount = 1;
+				ingame.itembarwoodroadcount = 1;
 			}
 			ingame.woodtutorial = true;
 		}
@@ -1163,7 +1165,7 @@ void ItemTutorial(void)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial4, TRUE);
 	}
-	else if (ingame.itembarwoodroadcount > 44 && ingame.woodtutorial == true)
+	else if (ingame.itembarwoodroadcount > 70 && ingame.woodtutorial == true)
 	{
 		ingame.itembarwoodroadcount = 1;
 		ItemTutorial();
@@ -1181,7 +1183,7 @@ void ItemTutorial(void)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
 	}
-	else if (ingame.itemtutorial_num > 1 || ingame.itembaraxcount > 1 || ingame.itembarwoodroadcount > 1)
+	else if (ingame.itemtutorial_num > 0 || ingame.itembaraxcount >0 || ingame.itembarwoodroadcount > 0)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial1, TRUE);
 	}
@@ -1363,9 +1365,9 @@ void TutorialReset(void)
 		ingame.putrodacount = 0;
 		ingame.makerodacount = 0;
 		ingame.brakestoneanimetioncount = 0;
-		ingame.itemtutorial_num = 1;
-		ingame.itembaraxcount = 1;
-		ingame.itembarwoodroadcount = 1;
+		ingame.itemtutorial_num = 0;
+		ingame.itembaraxcount = 0;
+		ingame.itembarwoodroadcount = 0;
 
 	}
 }
