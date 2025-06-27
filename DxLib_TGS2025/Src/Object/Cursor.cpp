@@ -81,7 +81,7 @@ void CursorUpdate(void)
 		{
 			pickaxe_animation_count++;
 
-			if (pickaxe_animation_count % 13 == 0)
+			if (pickaxe_animation_count % 14 == 0)
 			{
 				pickaxe_animation_num++;
 				if (pickaxe_animation_num > 1)
@@ -96,7 +96,7 @@ void CursorUpdate(void)
 		if (is_animating_ax)
 		{
 			ax_anim_count++;
-			if (ax_anim_count % 13 == 0)
+			if (ax_anim_count % 14 == 0)
 			{
 				ax_anim_num++;
 				if (ax_anim_num > 1)
