@@ -154,7 +154,7 @@ void CarResourceInit(void)
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
-	/*car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");*/
+	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
@@ -877,12 +877,17 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 {
 				 StopSoundMem(car.lake_se);
 			 }*/
+
+		 if (car.lake_count > 40 && car.lake_count < 50)
+		 {
+			 Play_Sound_Car(car.lake_se, 200);
+		 }
 	 }
 
-	/* else if (car.lake_flag == false)
+	 else if (car.lake_flag == false)
 	 {
 		 StopSoundMem(car.lake_se);
-	 }*/
+	 }
  }
 
 
