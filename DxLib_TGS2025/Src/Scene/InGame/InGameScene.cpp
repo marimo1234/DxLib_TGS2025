@@ -35,7 +35,7 @@ void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover, const Car* car);
 void GetStageNumber(const StageSelect* stageselect);
-void InGameMenuUpdate(const Goal* goal, const GameOver* gameover);
+void InGameMenuUpdate(const Goal* goal, const GameOver* gameover, const Car* car);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
@@ -267,7 +267,7 @@ eSceneType InGameSceneUpdate()
 	TutorialUpdate();
 	/////////////////////
 
-	InGameMenuUpdate(GetGoal(), GetGameOver());
+	InGameMenuUpdate(GetGoal(), GetGameOver(),GetCar());
 
 	NextSelectFlag(GetGoal());
 
@@ -641,7 +641,7 @@ void StageChange(void)
 }
 
 //メニュー画面の開始とカーソルの処理
-void InGameMenuUpdate(const Goal* goal, const GameOver* gameover)
+void InGameMenuUpdate(const Goal* goal, const GameOver* gameover,const Car*car)
 {
 
 	ingame.menu_cursor_y = 130.0f + ingame.menu_num * 120.0f;
@@ -650,7 +650,7 @@ void InGameMenuUpdate(const Goal* goal, const GameOver* gameover)
 
 	//Goal,GameOver,Manualが開かれていない時
 	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false && ingame.mitibiki_flag == false
-		&& pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+		&&car->direction!=eStop&& pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame2(sound.select_move, 100);
 		ingame.menu_flag = true;
