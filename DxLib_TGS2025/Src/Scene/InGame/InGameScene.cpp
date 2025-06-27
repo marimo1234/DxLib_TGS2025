@@ -23,7 +23,6 @@ int btr;
 int animetion_num;
 int ingame_init_step = 0;
 int is_initialized = false;
-
 //この辺まだ使っていない
 //void HitCheck(const Cursor* cursor, const Obstacle* obstacle, int index);
 void PlayBgm(void);
@@ -419,7 +418,7 @@ void InGameSceneDraw(void)
 
 
 	/////////////////////
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", ingame.itemtutorial_num ,ingame.itembaraxcount , ingame.itembarwoodroadcount );
+	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
@@ -1064,11 +1063,9 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			{
 				ingame.itembarcomentswitch = true;
 				ingame.menuanimationflag = true;
-				ingame.itemtutorial_num = 1;
-				ingame.itembaraxcount = 1;
-				ingame.itembarwoodroadcount = 1;
+				ingame.woodtutorial = true;
 			}
-			ingame.woodtutorial = true;
+			
 		}
 		if (wood->item_num > 0 && tool->item_number == eWoodRoad)
 		{
@@ -1143,7 +1140,12 @@ void ItemTutorial(void)
 {
 	if (ingame.menu_flag == false)
 	{
-		if (ingame.tutorial_log_num == 6)
+		if (ingame.woodtutorial == true)
+		{
+			ingame.itembarwoodroadcount++;
+		
+		}
+		else if (ingame.tutorial_log_num == 6)
 		{
 			ingame.itemtutorial_num++;
 
@@ -1152,10 +1154,7 @@ void ItemTutorial(void)
 		{
 			ingame.itembaraxcount++;
 		}
-		else if (ingame.woodtutorial == true)
-		{
-			ingame.itembarwoodroadcount++;
-		}
+		
 	}
 	if (ingame.itemtutorial_num > 150)
 	{
@@ -1365,9 +1364,9 @@ void TutorialReset(void)
 		ingame.putrodacount = 0;
 		ingame.makerodacount = 0;
 		ingame.brakestoneanimetioncount = 0;
-		ingame.itemtutorial_num = 0;
-		ingame.itembaraxcount = 0;
-		ingame.itembarwoodroadcount = 0;
+		ingame.itemtutorial_num = 1;
+		ingame.itembaraxcount = 1;
+		ingame.itembarwoodroadcount = 1;
 
 	}
 }
