@@ -1057,8 +1057,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		if (tool->wood_road_num == 1)
 		{
-			ingame.madewoodswitch = true;
-			
+			ingame.menuanimationflag = false;
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				animetion_num = 0;
