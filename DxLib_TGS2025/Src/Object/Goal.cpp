@@ -67,6 +67,7 @@ void GoalDraw(void)
 	if (goal.print_flag == true)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
 		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.print_image, TRUE);
 	}
 

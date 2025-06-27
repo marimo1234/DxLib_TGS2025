@@ -1136,20 +1136,20 @@ void ItemTutorial(void)
 			ingame.itembarwoodroadcount++;
 		}
 	}
-	if (ingame.itemtutorial_num > 300)
+	if (ingame.itemtutorial_num > 150)
 	{
 		ingame.itemtutorial_num = 1;
 	}
-	else if (ingame.itemtutorial_num > 120)
+	else if (ingame.itemtutorial_num > 45)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial4, TRUE);
 	}
-	else if (ingame.itembarwoodroadcount > 119 && ingame.woodtutorial == true)
+	else if (ingame.itembarwoodroadcount > 44 && ingame.woodtutorial == true)
 	{
 		ingame.itembarwoodroadcount = 1;
 		ItemTutorial();
 	}
-	else if (ingame.itemtutorial_num > 70 || ingame.itembarwoodroadcount > 70)
+	else if (ingame.itemtutorial_num > 30 || ingame.itembarwoodroadcount > 30)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial3, TRUE);
 	}
@@ -1158,7 +1158,7 @@ void ItemTutorial(void)
 		ingame.itembaraxcount = 1;
 		ItemTutorial();
 	}
-	else if (ingame.itemtutorial_num > 35 || ingame.itembaraxcount > 35 || ingame.itembarwoodroadcount>35)
+	else if (ingame.itemtutorial_num > 15 || ingame.itembaraxcount > 15 || ingame.itembarwoodroadcount>15)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
 	}

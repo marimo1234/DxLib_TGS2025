@@ -677,7 +677,7 @@ void WoodEffect(int x, int y)
 	{
 		wood.effect_count++;
 
-		if (wood.effect_count > 4)
+		if (wood.effect_count > 3)
 		{
 			wood.effect_num++;
 			wood.effect_count = 0;
@@ -700,7 +700,7 @@ void RockEffect(int x, int y)
 	{
 		rock.effect_count++;
 
-		if (rock.effect_count > 4)
+		if (rock.effect_count > 3)
 		{
 			rock.effect_num++;
 			rock.effect_count = 0;
