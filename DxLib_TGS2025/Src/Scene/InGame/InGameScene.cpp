@@ -628,6 +628,7 @@ void InGameMenuUpdate(const Goal* goal,const GameOver*gameover)
 	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false &&ingame.mitibiki_flag==false
 		&&pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
+		Play_Sound_Ingame2(sound.select_move,100);
 		ingame.menu_flag = true;
 	}
 
