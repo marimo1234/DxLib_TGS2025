@@ -398,8 +398,8 @@ void GetCursorStageNum(const InGame* ingame)
 	case eOne:
 		cursor.array_x_min = 1;
 		cursor.array_x_max = 8;
-		cursor.array_y_min = 3;
-		cursor.array_y_max = 4;
+		cursor.array_y_min = 4;
+		cursor.array_y_max = 5;
 		break;
 	default:
 		cursor.array_x_min = 0;
@@ -416,14 +416,14 @@ void CursorRange_eOne(const InGame* ingame)
 	{
 		if (cursor.array_x > 0 && cursor.array_x < 6)
 		{
-			cursor.array_y_max = 3;
+			cursor.array_y_max = 4;
 		}
 		else
 		{
-			cursor.array_y_max = 4;
+			cursor.array_y_max = 5;
 		}
 
-		if (cursor.array_y == 4)
+		if (cursor.array_y == 5)
 		{
 			cursor.array_x_min = 6;
 		}

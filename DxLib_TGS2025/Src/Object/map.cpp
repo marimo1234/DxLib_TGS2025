@@ -387,7 +387,7 @@ void MapTroutDraw(const InGame* ingame)
 			if (stage.number == 1)
 			{
 
-				if (x > 0 && x < 10 && y>2 && y < 5)
+				if (x > 0 && x < 10 && y>3 && y < 6)
 				{
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.trout_image, TRUE);
 				}

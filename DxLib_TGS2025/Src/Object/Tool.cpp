@@ -868,12 +868,12 @@ void Stage_Init(const CreateStage*stage)
 	{
 	case eOne:
 		tool.base_x = 3;
-		tool.base_y = 3;
-		tool.old_base_array[2][3] = 1;
-		tool.old_base_array[1][3] = 2;
+		tool.base_y = 4;
+		tool.old_base_array[2][4] = 1;
+		tool.old_base_array[1][4] = 2;
 		tool.stage_array_exceed_x = 12;
 		tool.stage_array_exceed_y = 7;
-		Road_Imghandle_Init(3, 3, 2, 3, 1, 3);
+		Road_Imghandle_Init(3, 4, 2, 4, 1, 4);
 		break;
 	case eTwo:
 		tool.base_x = 3;

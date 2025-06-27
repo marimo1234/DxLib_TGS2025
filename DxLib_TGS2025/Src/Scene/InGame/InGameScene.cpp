@@ -946,7 +946,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 2:
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num = 11;
@@ -975,7 +975,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 3:
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num = 11;
@@ -998,7 +998,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 4:
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num = 11;
@@ -1021,7 +1021,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		break;
 
 	case 5:
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num = 11;
@@ -1031,7 +1031,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.madewoodswitch = false;
 			break;
 		}
-		if (stage->array[5][3] == 4)
+		if (stage->array[5][4] == 4)
 		{
 
 
@@ -1044,7 +1044,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		break;
 	case 6:
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num = 11;
@@ -1088,7 +1088,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		break;
 	case 7:
 
-		if (stage->array[6][3] == 5)
+		if (stage->array[6][4] == 5)
 		{
 			ingame.mitibiki_flag = true;
 			ingame.tutorial_log_num++;
@@ -1172,7 +1172,7 @@ void ItemTutorial(void)
 	{
 		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial3, TRUE);
 	}
-	else if (ingame.itembaraxcount > 69 && ingame.tutorial_log_num == 9 && ingame.woodtutorial == false)
+	else if (ingame.itembaraxcount > 44 && ingame.tutorial_log_num == 9 && ingame.woodtutorial == false)
 	{
 		ingame.itembaraxcount = 1;
 		ItemTutorial();
