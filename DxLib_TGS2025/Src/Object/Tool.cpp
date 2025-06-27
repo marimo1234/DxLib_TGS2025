@@ -35,6 +35,7 @@ void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car *car
 void Put_Road_Process(bool* flag, int* sub_num, int array[][7],int array_x, int array_y, int base_x, int base_y,int sound,int val);
 void Road_Imghandle_Init(int x1, int y1, int x2, int y2, int x3, int y3);
 void Road_Imghandle_Update(const CreateStage* stage);
+void Item_Frame_Draw(const Car*car);
 void Move_ItemSelect(const Car*car);
 void Possible_Prace(const CreateStage* stage,const Car*car);
 void Break_Road_FLAG(const Cursor*cursor, const CreateStage* stage, const Car* car);
@@ -243,14 +244,13 @@ void ToolDraw(void)
 {
 
 	//アイテム欄
-	Item_Frame_Draw();
+	Item_Frame_Draw(GetCar());
 
 	//R,Lトリガー
 	RB_Draw(GetCar());
 	LB_Draw(GetCar());
 
-	//選択枠
-	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
+	
 
 	//アニメーション
 	if (tool.put_road_flag == true)
@@ -372,16 +372,11 @@ void Move_ItemSelect(const Car*car)
 }
 
 //アイテム欄描画
-void Item_Frame_Draw(void)
+void Item_Frame_Draw(const Car*car)
 {
 	//アイテム枠
 	tool.item_frame_x = ITEM_SELECT_BASE_X;
-	for (int i = 0; i < 4; i++)
-	{
-		DrawRotaGraph(tool.item_frame_x, tool.item_frame_y, tool_img.item_frame_ex_rate, 0.0, tool_img.itemframe, TRUE);
-		tool.item_frame_x += 80;
-	}
-
+	
 	//アイテム
 	switch (tool.item_number)
 	{
@@ -403,23 +398,35 @@ void Item_Frame_Draw(void)
 		tool_img.road_num_ex_rate += 0.2f;
 		break;
 	}
-	//選択枠の内側
-	DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select_inner, TRUE);
-	//つるはしの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 3, ITEM_SELECT_BASE_Y, tool_img.pickaxe_ex_rate, 0.0, tool_img.pickaxe, TRUE);
-	//斧の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.ax_ex_rate, 0.0, tool_img.ax, TRUE);
-	/*ドリルの描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.drill_ex_rate, 0.0, tool_img.drill, TRUE);*/
-	//木の道の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 1, ITEM_SELECT_BASE_Y, tool_img.woodroad_ex_rate, 0.0, tool_img.wood_road_img, TRUE);
-	//道路の描画（アイテム枠）
-	DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
+	if (tool_start == true && car->direction != eStop && car->goal_flag == false)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			DrawRotaGraph(tool.item_frame_x, tool.item_frame_y, tool_img.item_frame_ex_rate, 0.0, tool_img.itemframe, TRUE);
+			tool.item_frame_x += 80;
+		}
 
-	//道路の所持数
-	DrawExtendFormatString(ITEM_SELECT_BASE_X-10, ITEM_SELECT_BASE_Y+10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.road_num);
-	//木の道の所持数
-	DrawExtendFormatString(ITEM_SELECT_BASE_X+70, ITEM_SELECT_BASE_Y+10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.wood_road_num);
+		//選択枠の内側
+		DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select_inner, TRUE);
+		//つるはしの描画（アイテム枠）
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 3, ITEM_SELECT_BASE_Y, tool_img.pickaxe_ex_rate, 0.0, tool_img.pickaxe, TRUE);
+		//斧の描画（アイテム枠）
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.ax_ex_rate, 0.0, tool_img.ax, TRUE);
+		/*ドリルの描画（アイテム枠）
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 2, ITEM_SELECT_BASE_Y, tool_img.drill_ex_rate, 0.0, tool_img.drill, TRUE);*/
+		//木の道の描画（アイテム枠）
+		DrawRotaGraph(ITEM_SELECT_BASE_X + 80 * 1, ITEM_SELECT_BASE_Y, tool_img.woodroad_ex_rate, 0.0, tool_img.wood_road_img, TRUE);
+		//道路の描画（アイテム枠）
+		DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
+
+		//道路の所持数
+		DrawExtendFormatString(ITEM_SELECT_BASE_X - 10, ITEM_SELECT_BASE_Y + 10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.road_num);
+		//木の道の所持数
+		DrawExtendFormatString(ITEM_SELECT_BASE_X + 70, ITEM_SELECT_BASE_Y + 10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.wood_road_num);
+
+		//選択枠
+		DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
+	}
 	switch (tool.item_number)
 	{
 	case ePickaxe:
@@ -446,14 +453,17 @@ void Item_Frame_Draw(void)
 void RB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
-		&& tool_start == true && tool.menu_flag == false && car->direction != eStop && car->goal_flag == false)
+	if (tool_start == true && car->direction != eStop && car->goal_flag == false)
 	{
-		DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
-	}
-	else
-	{
-		DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
+		if (pad_input->GetButtonInputState(XINPUT_BUTTON_RIGHT_SHOULDER) == ePadInputState::eHold
+			&& tool.menu_flag == false)
+		{
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[0], TRUE);
+		}
+		else
+		{
+			DrawRotaGraph(ITEM_SELECT_BASE_X + 330, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.rb[1], TRUE);
+		}
 	}
 }
 
@@ -461,14 +471,20 @@ void RB_Draw(const Car* car)
 void LB_Draw(const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
-		&& tool_start == true && tool.menu_flag == false && car->direction != eStop && car->goal_flag == false)
+	if ( tool_start == true  && car->direction != eStop && car->goal_flag == false)
 	{
-		DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
-	}
+		if(pad_input->GetButtonInputState(XINPUT_BUTTON_LEFT_SHOULDER) == ePadInputState::eHold
+			&& tool.menu_flag == false)
+		{
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[0], TRUE);
+		}
 	else
 	{
-		DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
+		if (tool_start == true)
+		{
+			DrawRotaGraph(ITEM_SELECT_BASE_X - 90, ITEM_SELECT_BASE_Y, 0.15, 0.0, tool_img.lb[1], TRUE);
+		}
+	}
 	}
 }
 

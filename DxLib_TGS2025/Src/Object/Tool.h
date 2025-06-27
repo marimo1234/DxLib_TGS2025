@@ -147,7 +147,6 @@ void Sub_Num(void);
 void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
-void Item_Frame_Draw(void);
 void Search_Old_Position(void);
 
 
