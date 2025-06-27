@@ -26,7 +26,7 @@ void CarWarnDraw(void);
 void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
 void CarLakeAnimation(void);
-void CarLakeDraw(int carx, int cary);
+void CarLakeDraw(int carx, int cary,const InGame*ingame);
 
 Car car;
 GameOver gameover;
@@ -193,7 +193,6 @@ void CarManagerUpdate(void)
 		//ステージ切り替えの時リセットする
 		CarReset();
 	}
-
 }
 
 void CarDraw(void)
@@ -209,7 +208,7 @@ void CarDraw(void)
 
 	//ツタの描画
 	CarIvyDraw(car.position.x, car.position.y);
-	CarLakeDraw(car.position.x, car.position.y);
+	CarLakeDraw(car.position.x, car.position.y,GetInGame());
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -217,7 +216,7 @@ void CarDraw(void)
 	
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	//DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
 }
@@ -296,6 +295,9 @@ void CarReset(void)
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
 
+	//仮
+	DeleteSoundMem(car.lake_se);
+	car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");
 }
 
 //次の進行場所を取得する
@@ -839,7 +841,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 }
 	 }
  }
- void CarLakeDraw(int carx, int cary)
+ void CarLakeDraw(int carx, int cary,const InGame*ingame)
  {
 	 if (car.lake_flag == true)
 	 {
@@ -862,10 +864,19 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx - car.lake_num * 8, cary, 0.1, 0.0, car.lake_left_anim[car.lake_num], TRUE);
 			 break;
 		 }
-		 if (car.lake_count > 40&&car.lake_count<50)
+		 if (car.lake_count > 40 && car.lake_count < 170 && ingame->menu_flag == false)
 		 {
-			 Play_Sound_Car(car.lake_se, 120);
+			 PlaySoundMem(car.lake_se, DX_PLAYTYPE_BACK, FALSE);
 		 }
+		 else if (car.lake_count >= 170)
+		 {
+			 StopSoundMem(car.lake_se);
+		 }
+		 
+		 if (CheckSoundMem(car.lake_se)==1&&car.menu_flag == true)
+			 {
+				 StopSoundMem(car.lake_se);
+			 }
 	 }
 
 	 else if (car.lake_flag == false)
