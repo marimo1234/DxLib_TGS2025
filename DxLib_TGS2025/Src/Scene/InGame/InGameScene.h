@@ -92,6 +92,8 @@ struct InGame
 	int woodrodamake2;
 	int woodrodamakeswitch=false;
 	int madewoodswitch = false;
+	int itembaraxcount;
+	int itembarwoodroadcount;
 
 };
 
