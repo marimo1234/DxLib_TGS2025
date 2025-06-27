@@ -111,6 +111,7 @@ struct InGame
 	int itembarcoment2;
 	int itembarcoment3;
 	int itembarcomentswitch = false;
+
 };
 
 struct InGame_Sound
