@@ -268,11 +268,11 @@ void TitleMoleDraw(void)
 void TitleNameAnimation(void)
 {
 	title.name_count++;
-	if (title.name_count % 3 == 0&&title.name_num<26)
+	if (title.name_count % 2 == 0&&title.name_num<26)
 	{
 		title.name_num++;
 	}
-	if (title.name_count > 200)
+	if (title.name_count > 300)
 	{
 		title.name_count = 0;
 		title.name_num = 0;
