@@ -73,6 +73,7 @@ void TitleResourceInit(void)
 		title.name_image[23] = LoadGraph("Resource/Images/Title_Text_Anim23.png");
 		title.name_image[24] = LoadGraph("Resource/Images/Title_Text_Anim24.png");	
 		title.name_image[25] = LoadGraph("Resource/Images/Title_Text_Anim25.png");	
+		title.name_image[26] = LoadGraph("Resource/Images/Title_Text_Anim26.png");	
 		break;
 	default:
 		break;
@@ -267,7 +268,7 @@ void TitleMoleDraw(void)
 void TitleNameAnimation(void)
 {
 	title.name_count++;
-	if (title.name_count % 3 == 0&&title.name_num<25)
+	if (title.name_count % 3 == 0&&title.name_num<26)
 	{
 		title.name_num++;
 	}
