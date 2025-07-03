@@ -145,13 +145,13 @@ void MoleRandomDirection(const CreateStage* stage)
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock1_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
-		if (mole.image_count / 60 > 3)
+	if (mole.image_count / 60 > 3)
+	{
+		for (int i = 0; i < stage->mole_count; i++)
 		{
-			for (int i = 0; i < stage->mole_count; i++)
-			{
-				mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-			}
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
+	}
 	if (mole.image_count / 60 > 4)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
