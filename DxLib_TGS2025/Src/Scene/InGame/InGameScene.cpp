@@ -1007,6 +1007,11 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.madewoodswitch = false;
 			break;
 		}
+		else if (tool->item_number != eRoad)
+		{
+			ingame.tutorial_log_num--;
+			ingame.tutorial_achievements--;
+		}
 		if (tool->road_num > 0)
 		{
 
@@ -1056,6 +1061,10 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		if (tool->item_number == eAx)
 		{
 			ingame.menuanimationflag = false;
+		}
+		else 
+		{
+			ingame.menuanimationflag = true;
 		}
 		if (wood->item_num > 0)
 		{
