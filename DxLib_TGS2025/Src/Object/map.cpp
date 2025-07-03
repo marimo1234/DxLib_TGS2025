@@ -176,7 +176,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 			switch (stage.array[x][y])
 			{
 			case 1://木
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);				
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200+wood->add_anim_x[x][y], MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				break;
 			case 2://石
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);

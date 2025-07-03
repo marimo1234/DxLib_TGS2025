@@ -67,8 +67,7 @@ void WoodRockInit(void)
 	wood.effect_flag = false;
 	rock.effect_flag = false;
 
-	wood.add_efect_x = 0;
-	wood.shake_efect = 0;
+	
 }
 
 void WoodRockResourceInit(void)
@@ -212,6 +211,7 @@ void WoodAnimation(int x, int y)
 			if (wood.fps[x][y] > HIT_COOLTIME)
 			{
 				wood.hit_count[x][y] = eHit1;
+				wood.effect_flag = false;
 				wood.hit_flag[x][y] = false;//hitフラグをfalseにする
 				wood.fps[x][y] = 0;
 			}
@@ -228,6 +228,7 @@ void WoodAnimation(int x, int y)
 			if (wood.fps[x][y] > HIT_COOLTIME)
 			{
 				wood.hit_count[x][y] = eHit2;
+				wood.effect_flag = false;
 				wood.hit_flag[x][y] = false;//hitフラグをfalseにする
 				wood.fps[x][y] = 0;
 			}
@@ -246,6 +247,7 @@ void WoodAnimation(int x, int y)
 			if (wood.fps[x][y] > HIT_COOLTIME)
 			{
 				wood.hit_count[x][y] = eHit3;
+				wood.effect_flag = false;
 				wood.hit_flag[x][y] = false;   //hitフラグをfalseにする
 				wood.fps[x][y] = 0;
 				
@@ -286,8 +288,8 @@ void RockAnimation(int x, int y)
 			{
 
 				rock.hit_count[x][y] = eHit1;
+				rock.effect_flag = false;
 				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
-
 				rock.fps[x][y] = 0;
 			}
 		}
@@ -302,6 +304,7 @@ void RockAnimation(int x, int y)
 			if (rock.fps[x][y] > HIT_COOLTIME)
 			{
 				rock.hit_count[x][y] = eHit2;
+				rock.effect_flag = false;
 				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
 				rock.fps[x][y] = 0;
 			}
@@ -319,6 +322,7 @@ void RockAnimation(int x, int y)
 			if (rock.fps[x][y] > HIT_COOLTIME)
 			{
 				rock.hit_count[x][y] = eHit3;
+				rock.effect_flag = false;
 				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
 				rock.fps[x][y] = 0;
 			}
@@ -633,6 +637,9 @@ void WoodRockHitInit(const CreateStage* stage)
 			rock.position_y[i][j] = 0.0f;
 			rock.add_x[i][j] = 0.0f;
 
+			wood.add_anim_x[i][j] = 0;
+			wood.sway_anim[i][j] = 0;
+
 			if (stage->array[i][j] == 1)
 			{
 				wood.hit_count[i][j] = eHit0;
@@ -653,7 +660,7 @@ void WoodRockHitInit(const CreateStage* stage)
 		}
 	}
 }
-//モグラ外資を置いた場所のHitカウントを初期化する
+//モグラが岩を置いた場所のHitカウントを初期化する
 void GetMoleRockPosition(const Mole* mole)
 {
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
@@ -687,16 +694,18 @@ void WoodEffect(int x, int y)
 
 		}
 
-		ShakeWoodEfect();
+		SwayWoodAnim(x,y);
 	
 	}
 	else
 	{
 		wood.effect_count = 0;
 		wood.effect_flag = false;
+		wood.sway_anim[x][y] = 0;
+		wood.add_anim_x[x][y] = 0;
 	}
 
-	DrawRotaGraph(x * 80 + 200+ wood.add_efect_x, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
 }
 
 void RockEffect(int x, int y)
@@ -792,24 +801,24 @@ void Play_Sound_WoodRock(int sound, int volume)
 
 }
 
-void ShakeWoodEfect(void)
+void SwayWoodAnim(int x,int y)
 {
-	if (wood.add_efect_x > 5)
+	if (wood.add_anim_x[x][y] > 1)
 	{
-		wood.shake_efect = 1;
+		wood.sway_anim[x][y] = 1;
 	}
-	else if (wood.add_efect_x < -5)
+	else if (wood.add_anim_x[x][y] < -1)
 	{
-		wood.shake_efect = 0;
+		wood.sway_anim[x][y] = 0;
 	}
 
-	switch (wood.shake_efect)
+	switch (wood.sway_anim[x][y])
 	{
 	case 0:
-		wood.add_efect_x += 1;
+		wood.add_anim_x[x][y] += 1;
 		break;
 	case 1:
-		wood.add_efect_x -= 1;
+		wood.add_anim_x[x][y] -= 1;
 		break;
 	}
 	

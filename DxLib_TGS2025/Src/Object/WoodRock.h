@@ -40,8 +40,8 @@ struct Wood
 	int effect_num;
 	int effect_count;
 	int break_wood;
-	int add_efect_x;
-	int shake_efect;
+	int add_anim_x[12][7];
+	int sway_anim[12][7];
 
 
 };
@@ -104,7 +104,7 @@ void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
 void WoodRockEffectDraw(void);
 void PutRockEffect(int x, int y);
-void ShakeWoodEfect(void);
+void SwayWoodAnim(int x, int y);
 
 
 
