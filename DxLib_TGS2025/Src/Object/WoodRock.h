@@ -27,6 +27,8 @@ struct Wood
 	int count_y;
 	bool delete_flag[12][7];
 
+	
+
 	bool move_flag[12][7];
 	int move_count[12][7];
 	float add_x[12][7];
@@ -38,6 +40,8 @@ struct Wood
 	int effect_num;
 	int effect_count;
 	int break_wood;
+	int add_efect_x;
+	int shake_efect;
 
 
 };
@@ -100,6 +104,7 @@ void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
 void WoodRockEffectDraw(void);
 void PutRockEffect(int x, int y);
+void ShakeWoodEfect(void);
 
 
 

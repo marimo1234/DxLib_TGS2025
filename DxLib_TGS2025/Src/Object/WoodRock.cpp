@@ -66,6 +66,9 @@ void WoodRockInit(void)
 	rock.effect_count = 0;
 	wood.effect_flag = false;
 	rock.effect_flag = false;
+
+	wood.add_efect_x = 0;
+	wood.shake_efect = 0;
 }
 
 void WoodRockResourceInit(void)
@@ -189,7 +192,7 @@ void WoodRockDraw(void)
 	WoodRockEffectDraw();	
 
 	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
-	/*	DrawFormatString(200, 200, GetColor(255, 255, 255), "%f\n%f", rock.add_x[8][4], rock.add_x[1][2]);*/
+		//DrawFormatString(200, 200, GetColor(255, 255, 255), "%f\n%f\n%d", rock.add_x[8][4], rock.add_x[1][2],wood.effect_count);
 
 }
 
@@ -683,6 +686,9 @@ void WoodEffect(int x, int y)
 			wood.effect_count = 0;
 
 		}
+
+		ShakeWoodEfect();
+	
 	}
 	else
 	{
@@ -690,7 +696,7 @@ void WoodEffect(int x, int y)
 		wood.effect_flag = false;
 	}
 
-	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
+	DrawRotaGraph(x * 80 + 200+ wood.add_efect_x, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
 }
 
 void RockEffect(int x, int y)
@@ -784,6 +790,29 @@ void Play_Sound_WoodRock(int sound, int volume)
 		ChangeVolumeSoundMem(volume, sound);
 	}
 
+}
+
+void ShakeWoodEfect(void)
+{
+	if (wood.add_efect_x > 5)
+	{
+		wood.shake_efect = 1;
+	}
+	else if (wood.add_efect_x < -5)
+	{
+		wood.shake_efect = 0;
+	}
+
+	switch (wood.shake_efect)
+	{
+	case 0:
+		wood.add_efect_x += 1;
+		break;
+	case 1:
+		wood.add_efect_x -= 1;
+		break;
+	}
+	
 }
 
 
