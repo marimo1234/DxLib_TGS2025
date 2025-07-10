@@ -66,6 +66,8 @@ void CursorResourceInit(void)
 	cursor_hasi = LoadGraph("Resource/Images/Log_cursol.png");
 	//カーソル音の読み込み
 	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
+
+	cursor.possible_rock= LoadGraph("Resource/Images/impossible.png");
 }
 //カーソルの更新
 void CursorUpdate(void)
@@ -133,7 +135,7 @@ void CursorUpdate(void)
 void CursorDraw(const Tool*tool)
 {
 
-	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
+	
 	
 	
 	// もしitem_numberがePickaxeなら
@@ -211,6 +213,8 @@ void CursorDraw(const Tool*tool)
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->wood_road_num);
 	}
+
+	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor_image, TRUE);// カーソルの描画
 }
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)

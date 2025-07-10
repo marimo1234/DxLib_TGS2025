@@ -22,7 +22,8 @@ struct Cursor
 	int array_y_max;
 
 
-
+	//仮
+	int possible_rock;
 };
 
 void CursorInit(void);
