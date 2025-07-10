@@ -134,9 +134,7 @@ void CursorUpdate(void)
 //カーソルの描画
 void CursorDraw(const Tool*tool)
 {
-
-	
-	
+	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor_image, TRUE);// カーソルの描画
 	
 	// もしitem_numberがePickaxeなら
 	if (tool->item_number == ePickaxe)
@@ -213,8 +211,6 @@ void CursorDraw(const Tool*tool)
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->wood_road_num);
 	}
-
-	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor_image, TRUE);// カーソルの描画
 }
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)
