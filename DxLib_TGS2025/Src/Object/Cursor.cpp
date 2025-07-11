@@ -66,6 +66,8 @@ void CursorResourceInit(void)
 	cursor_hasi = LoadGraph("Resource/Images/Log_cursol.png");
 	//カーソル音の読み込み
 	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
+
+	cursor.possible_rock= LoadGraph("Resource/Images/impossible.png");
 }
 //カーソルの更新
 void CursorUpdate(void)
@@ -132,9 +134,7 @@ void CursorUpdate(void)
 //カーソルの描画
 void CursorDraw(const Tool*tool)
 {
-
-	DrawRotaGraphF(cursor.position.x, cursor.position.y,1.0,0.0 ,cursor_image, TRUE);// カーソルの描画
-	
+	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor_image, TRUE);// カーソルの描画
 	
 	// もしitem_numberがePickaxeなら
 	if (tool->item_number == ePickaxe)
