@@ -485,9 +485,6 @@ void Img_Num_Change(const CreateStage*stage,int map)
 		case 5:
 			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
 			break;
-		case 6:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
-			break;
 		default:
 			break;
 		}
