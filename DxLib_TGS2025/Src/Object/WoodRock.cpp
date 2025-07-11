@@ -12,19 +12,20 @@
 
 #include <math.h>
 
-#define WOODROCK_X_MAX (12)
-#define WOODROCK_Y_MAX (7)
+#define WOODROCK_X_MAX (12)//X配列のMAX
+#define WOODROCK_Y_MAX (7)//Y配列のMAX
 
-#define WOOD_ITEM_X (1170.0f)
-#define WOOD_ITEM_Y (110.0f)
-#define ROCK_ITEM_X (1170.0f)
-#define ROCK_ITEM_Y (50.0f)
-#define HIT_COOLTIME (27)
+#define WOOD_ITEM_X (960.0f)//アイテム表示の座標
+#define WOOD_ITEM_Y (660.0f)
+#define ROCK_ITEM_X (880.0f)
+#define ROCK_ITEM_Y (660.0f)
+
+#define HIT_COOLTIME (27)//Hitクールタイム
 
 
-bool woodrock_start;
-bool woodrock_menu_flag;
-bool woodrock_operable_flag;
+bool woodrock_start;//処理スタートするフラグ
+bool woodrock_menu_flag;//メニューが開かれたときのフラグ
+bool woodrock_operable_flag;//Goal、GameOverが開かれたときのフラグ
 
 Wood wood;
 Rock rock;
@@ -59,7 +60,7 @@ void WoodRockInit(void)
 	wood.item_num = 0;
 	rock.item_num = 0;
 
-	
+	//エフェクト変数の初期化
 	wood.effect_num = 0;
 	wood.effect_count = 0;
 	rock.effect_num = 0;
@@ -70,6 +71,7 @@ void WoodRockInit(void)
 	
 }
 
+//画像読み込み
 void WoodRockResourceInit(void)
 {
 	//画像の読み込み
@@ -140,17 +142,18 @@ void WoodRockUpdate(void)
 	}
 
 	//ムーブフラグがtrueのとき
-
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
 		for (int i = 0; i < WOODROCK_X_MAX; i++)
 		{
 			if (wood.move_flag[i][j] == true)
 			{
+				//アイテム表示位置まで放物線を描く
 				WoodMove(i,j);
 			}
 			if (rock.move_flag[i][j] == true)
 			{
+				//アイテム表示位置まで放物線を描く
 				RockMove(i,j);
 
 			}
@@ -163,8 +166,6 @@ void WoodRockUpdate(void)
 //描画処理
 void WoodRockDraw(void)
 {
-	//画像の描画
-	// 
 	//ItemNumの透過カラー
 	DrawRotaGraphF(1190.0f, 80.0f, 1.0, 0.0, rock.itemnum_bg_image, TRUE);
 
@@ -202,13 +203,13 @@ void WoodAnimation(int x, int y)
 	{
 	case eHit0:// Hit数0
 		wood.animation[x][y] = wood.image[0];
-
+		//ヒットフラグがtrueなら
 		if (wood.hit_flag[x][y] == true)
 		{
-			wood.animation[x][y] = wood.image[1];
+			wood.animation[x][y] = wood.image[1];//画像を変える
 			wood.effect_flag = true;
 			wood.fps[x][y]++;
-			if (wood.fps[x][y] > HIT_COOLTIME)
+			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 				wood.hit_count[x][y] = eHit1;
 				wood.effect_flag = false;
@@ -220,12 +221,13 @@ void WoodAnimation(int x, int y)
 		break;
 
 	case eHit1:// Hit数1
+		//ヒットフラグがtrueなら
 		if (wood.hit_flag[x][y] == true)
 		{
-			wood.animation[x][y] = wood.image[2];
+			wood.animation[x][y] = wood.image[2];//画像を変える
 			wood.effect_flag = true;
 			wood.fps[x][y]++;
-			if (wood.fps[x][y] > HIT_COOLTIME)
+			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 				wood.hit_count[x][y] = eHit2;
 				wood.effect_flag = false;
@@ -237,14 +239,14 @@ void WoodAnimation(int x, int y)
 		break;
 
 	case eHit2:// Hit数2
-		
+		//ヒットフラグがtrueなら
 		if (wood.hit_flag[x][y] == true)
 		{
-			wood.animation[x][y] = wood.image[3];
+			wood.animation[x][y] = wood.image[3];//画像を変える
 			wood.fps[x][y]++;
 			wood.effect_flag = true;
 			
-			if (wood.fps[x][y] > HIT_COOLTIME)
+			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 				wood.hit_count[x][y] = eHit3;
 				wood.effect_flag = false;
@@ -279,12 +281,13 @@ void RockAnimation(int x, int y)
 	{
 	case eHit0:// Hit数0
 		rock.animation[x][y] = rock.image[0];
+		//ヒットフラグがtrueなら
 		if (rock.hit_flag[x][y] == true)
 		{
-			rock.animation[x][y] = rock.image[1];
+			rock.animation[x][y] = rock.image[1];//画像を変える
 			rock.effect_flag = true;
 			rock.fps[x][y]++;
-			if (rock.fps[x][y] > HIT_COOLTIME)
+			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 
 				rock.hit_count[x][y] = eHit1;
@@ -296,12 +299,13 @@ void RockAnimation(int x, int y)
 		break;
 
 	case eHit1:// Hit数1
+		//ヒットフラグがtrueなら
 		if (rock.hit_flag[x][y] == true)
 		{
-			rock.animation[x][y] = rock.image[2];
+			rock.animation[x][y] = rock.image[2];//画像を変える
 			rock.effect_flag = true;
 			rock.fps[x][y]++;
-			if (rock.fps[x][y] > HIT_COOLTIME)
+			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 				rock.hit_count[x][y] = eHit2;
 				rock.effect_flag = false;
@@ -313,13 +317,13 @@ void RockAnimation(int x, int y)
 		break;
 
 	case eHit2:// Hit数2
-		
+		//ヒットフラグがtrueなら
 		if (rock.hit_flag[x][y] == true)
 		{
-			rock.animation[x][y] = rock.image[3];
+			rock.animation[x][y] = rock.image[3];//画像を変える
 			rock.fps[x][y]++;
 			rock.effect_flag = true;
-			if (rock.fps[x][y] > HIT_COOLTIME)
+			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
 			{
 				rock.hit_count[x][y] = eHit3;
 				rock.effect_flag = false;
@@ -358,19 +362,22 @@ const Rock* GetRock(void)
 //処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover ,const Car*car)
 {
+	//処理をスタート
 	if (ingame->start == true&& ingame->menu_flag == false && ingame->mitibiki_flag == false)
 	{
 		woodrock_start = true;
 		woodrock_operable_flag = true;
 
 	}
+	//処理を止める
 	else if(ingame->start == false && ingame->menu_flag == false)
 	{
 		woodrock_start = false;
 	}
-
+	//メニューフラグを見る
 	woodrock_menu_flag = ingame->menu_flag;
 
+	//処理を止める
 	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true||
 		ingame->mitibiki_flag==true|| car->direction == eStop)
 	{
@@ -436,6 +443,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						Play_Sound_WoodRock(wood.break_wood, 150);
 				}
 			}
+			//空振りの音を入れる
 			else if (stage->array[cursor->array_x][cursor->array_y] != 1)
 			{
 				Play_Sound_WoodRock(woodrock_se.swing, 120);
@@ -479,6 +487,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 				}
 
 			}
+			//空振りの音を入れる
 			else if (stage->array[cursor->array_x][cursor->array_y] != 2)
 			{
 				Play_Sound_WoodRock(woodrock_se.swing, 120);
@@ -519,9 +528,10 @@ void WoodRockReset(void)
 //アイテム化した時の木の挙動
 void WoodMove(int x, int y)
 {
+	//二次関数のグラフの公式”y=a(x-p)^2+q"
 	wood.move_count[x][y]++;
 	float mx = WOOD_ITEM_X; //Xの最大値
-	float my = WOOD_ITEM_Y; // Yの最小値
+	float my = WOOD_ITEM_Y; // Yの最大値
 	float bx = wood.position_x[x][y];//ポジションの格納
 	float by = wood.position_y[x][y];
 
@@ -538,13 +548,21 @@ void WoodMove(int x, int y)
 	//xが1増加した時のyの増加量を求める
 	float fy = fabsf(y2 - y1);
 
+	//20フレーム経ったら移動開始する
 	if (wood.move_count[x][y] > 20)
 	{
 		wood.position_x[x][y] += wood.add_x[x][y] * 2.0f;
-		wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * -fy;
+		if (ba > 0)
+		{
+			wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * -fy;
+		}
+		else if (ba < 0)
+		{
+			wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * fy;
+		}
 	}
-
-	if (wood.position_y[x][y] < my)
+	//Yの最小値を下回ったら終了
+	if (wood.position_x[x][y] > mx)
 	{
 		wood.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
 		wood.move_count[x][y] = 0;
@@ -560,7 +578,7 @@ void RockMove(int x, int y)
 	rock.move_count[x][y]++;
 
 	float mx = ROCK_ITEM_X; //Xの最大値
-	float my = ROCK_ITEM_Y; // Yの最小値
+	float my = ROCK_ITEM_Y; // Yの最大値
 	float bx = rock.position_x[x][y];//ポジションの格納
 	float by = rock.position_y[x][y];
 
@@ -577,13 +595,13 @@ void RockMove(int x, int y)
 	//xが1増加した時のyの増加量を求める
 	float fy = fabsf(y2 - y1);
 
+	//20フレーム経ったら移動開始する
 	if (rock.move_count[x][y] > 20)
 	{
 		rock.position_x[x][y] += rock.add_x[x][y] * 2.0f;
 		rock.position_y[x][y] += rock.add_x[x][y] * 2.0f * -fy;
 	}
-
-
+	//Yの最小値を下回ったら終了
 	if (rock.position_y[x][y] < my)
 	{
 		rock.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
@@ -613,23 +631,23 @@ void WoodRockHitInit(const CreateStage* stage)
 		for (int i = 0; i < WOODROCK_X_MAX; i++)
 		{
 
+			//ヒット変数の初期化
 			wood.hit_flag[i][j] = false;
 			wood.animation[i][j] = wood.image[0];
 			wood.delete_flag[i][j] = false;
 			wood.fps[i][j] = 0;
 
-
 			rock.hit_flag[i][j] = false;
 			rock.animation[i][j] = rock.image[0];
 			rock.delete_flag[i][j] = false;
 			rock.fps[i][j] = 0;
-			//ムーブフラグの初期化
+
+			//ムーブ変数の初期化
 			wood.move_flag[i][j] = false;
 			wood.move_count[i][j] = 0;
 			wood.position_x[i][j] = 0.0f;
 			wood.position_y[i][j] = 0.0f;
 			wood.add_x[i][j] = 0.0f;
-
 
 			rock.move_flag[i][j] = false;
 			rock.move_count[i][j] = 0;
@@ -637,9 +655,11 @@ void WoodRockHitInit(const CreateStage* stage)
 			rock.position_y[i][j] = 0.0f;
 			rock.add_x[i][j] = 0.0f;
 
+			//木の揺れるアニメーション変数の初期化
 			wood.add_anim_x[i][j] = 0;
 			wood.sway_anim[i][j] = 0;
 
+			//Hit数の初期化
 			if (stage->array[i][j] == 1)
 			{
 				wood.hit_count[i][j] = eHit0;
@@ -653,7 +673,7 @@ void WoodRockHitInit(const CreateStage* stage)
 				wood.hit_count[i][j] = eHitEnd;
 				rock.hit_count[i][j] = eHitEnd;
 			}
-
+			//モグラが岩を置くエフェクトの変数初期化
 			rock.put_effect_num[i][j] = -1;
 			rock.put_effect_count[i][j] = 0;
 
@@ -680,7 +700,7 @@ void GetMoleRockPosition(const Mole* mole)
 	
 	
 }
-
+//木のエフェクト
 void WoodEffect(int x, int y)
 {
 	if (wood.effect_num < 4)
@@ -708,6 +728,7 @@ void WoodEffect(int x, int y)
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
 }
 
+//岩のエフェクト
 void RockEffect(int x, int y)
 {
 	
@@ -731,6 +752,7 @@ void RockEffect(int x, int y)
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.effect_image[rock.effect_num],TRUE);
 }
 
+//モグラが岩を置くときのエフェクト
 void PutRockEffect(int x, int y)
 {
 
@@ -753,7 +775,7 @@ void PutRockEffect(int x, int y)
 
 
 }
-
+//エフェクトの描画
 void WoodRockEffectDraw(void) 
 {
 	if (wood.effect_flag == true)
@@ -791,6 +813,7 @@ void WoodRockEffectDraw(void)
 	}
 }
 
+//BGM、SE再生関数
 void Play_Sound_WoodRock(int sound, int volume)
 {
 	if (CheckSoundMem(sound) == 0)
@@ -801,6 +824,7 @@ void Play_Sound_WoodRock(int sound, int volume)
 
 }
 
+//木が揺れるアニメーション関数
 void SwayWoodAnim(int x,int y)
 {
 	if (wood.add_anim_x[x][y] > 1)
