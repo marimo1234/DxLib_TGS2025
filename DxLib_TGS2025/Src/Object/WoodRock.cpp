@@ -538,7 +538,7 @@ void WoodMove(int x, int y)
 	float ba = (bx - mx) / bp;
 	float x1 = ba * bp + mx;
 
-	//二次関数（x+1の座標を求める）
+	//二次関数（y+1の座標を求める）
 	float by2 = by + 1.0f;
 	float bp2 = pow(by2 - my, 2);
 	float x2 = ba * bp2 + mx;
@@ -585,7 +585,7 @@ void RockMove(int x, int y)
 	float ba = (bx - mx) / bp;
 	float x1 = ba * bp + mx;
 
-	//二次関数（x+1の座標を求める）
+	//二次関数（y+1の座標を求める）
 	float by2 = by + 1.0f;
 	float bp2 = pow(by2 - my, 2);
 	float x2 = ba * bp2 + mx;
