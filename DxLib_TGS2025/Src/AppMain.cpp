@@ -16,7 +16,8 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		return -1;
 	}
 
-	//アイコンの設定
+	//アイコンの設定方法メモ
+	/*アイコンファイル（.rcファイル）は rcファイル選択後F7を押すと開ける 色々書かれてる場合は消してID等を書く*/
 	SetWindowIconID(123);
 	// ウィンドウタイトルを設定
 	SetMainWindowText("Go!Go! RoadMaker");
