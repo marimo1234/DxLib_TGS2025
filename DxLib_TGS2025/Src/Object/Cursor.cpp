@@ -33,6 +33,7 @@ void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
 void CursolButtonMovement(const Tool* tool, const InGame* ingame, const Wood* wood, const Rock* rock);       // 十字キーの移動
 void CursorRange_eOne(const InGame* ingame);
+void Img_Num_Change(const CreateStage* stage,int map);
 
 
 //カーソルの初期化
@@ -45,9 +46,12 @@ void CursorInit(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
+	cursor.img_fps = 0;
+	cursor.img_num = 0;
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
+	
 
 	//ステージごとの初期化とステージ番号の取得
 	GetCursorStageNum(GetInGame());
@@ -67,11 +71,12 @@ void CursorResourceInit(void)
 	//カーソル音の読み込み
 	cursor_se = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
 
-	cursor.possible_rock= LoadGraph("Resource/Images/impossible.png");
+	LoadDivGraph("Resource/Images/impossible.png",6,6,1,160,160, cursor.impossible);
 }
 //カーソルの更新
 void CursorUpdate(void)
 {
+	FPS_Reset();
 	CursorStart(GetInGame(),GetGoal(),GetGameOver(),GetCar());
 	
 	
@@ -139,6 +144,8 @@ void CursorDraw(const Tool*tool)
 	// もしitem_numberがePickaxeなら
 	if (tool->item_number == ePickaxe)
 	{
+		Img_Num_Change(GetStage(),1);
+
 		// ツルハシのアニメーションを動かす
 		if (is_animating_pickaxe)
 		{
@@ -160,6 +167,8 @@ void CursorDraw(const Tool*tool)
 	// もしitem_numberがeAxなら
 	else if (tool->item_number == eAx) 
 	{
+		Img_Num_Change(GetStage(),2);
+
 		// 斧のアニメーションを動かす
 		if (is_animating_ax)
 		{
@@ -204,13 +213,17 @@ void CursorDraw(const Tool*tool)
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->road_num);
+		cursor.img_fps = 0;
 	}
 	else if (tool->item_number == eWoodRoad)
 	{
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->wood_road_num);
+		cursor.img_fps = 0;
 	}
+
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", cursor.img_num);
 }
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)
@@ -372,6 +385,7 @@ void CursorReset(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
+	cursor.img_fps = 0;
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
@@ -431,5 +445,55 @@ void CursorRange_eOne(const InGame* ingame)
 		{
 			cursor.array_x_min = 1;
 		}
+	}
+}
+
+//fpsのリセット
+void FPS_Reset(void)
+{
+	cursor.img_num = cursor.img_fps / 10;
+	if (cursor.img_fps > 60)
+	{
+		cursor.img_fps = 0;
+	}
+}
+
+//掘れないマークの画像変更
+void Img_Num_Change(const CreateStage*stage,int map)
+{
+	//掘れないマーク表示
+	if (stage->array[cursor.array_x][cursor.array_y] == map)
+	{
+		cursor.img_fps++;
+		switch (cursor.img_num)
+		{
+		case 0:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 1:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 2:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 3:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 4:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 5:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		case 6:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		cursor.img_fps = 0;
 	}
 }

@@ -3,6 +3,7 @@
 #include "../Utility/Geometry.h"
 #include"../Utility/PadInputManager.h"
 #include"../Object/Tool.h"
+#include"../Object/map.h"
 
 
 struct Cursor
@@ -23,7 +24,9 @@ struct Cursor
 
 
 	//仮
-	int possible_rock;
+	int impossible[6];
+	int img_fps;
+	int img_num;
 };
 
 void CursorInit(void);
@@ -32,3 +35,4 @@ void CursorDraw(const Tool* tool);
 const Cursor* GetCursor1(void);
 void CursorReset(void);
 void CursorResourceInit(void);
+void FPS_Reset(void);
