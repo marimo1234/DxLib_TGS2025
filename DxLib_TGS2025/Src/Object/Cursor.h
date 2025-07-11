@@ -21,12 +21,9 @@ struct Cursor
 	int array_x_max;
 	int array_y_min;
 	int array_y_max;
-
-
-	//仮
-	int impossible[6];
-	int img_fps;
-	int img_num;
+	int impossible[12];		//置けないマーク画像
+	int img_count;			//画像のカウント
+	int img_num;			//カウントに対応した変数
 };
 
 void CursorInit(void);

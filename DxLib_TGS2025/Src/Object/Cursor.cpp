@@ -46,7 +46,7 @@ void CursorInit(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
-	cursor.img_fps = 0;
+	cursor.img_count = 0;
 	cursor.img_num = 0;
 	cursorstart = false;
 	cursor.menu_flag = false;
@@ -213,14 +213,14 @@ void CursorDraw(const Tool*tool)
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->road_num);
-		cursor.img_fps = 0;
+		cursor.img_count = 0;
 	}
 	else if (tool->item_number == eWoodRoad)
 	{
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
 		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
 			tool->wood_road_num);
-		cursor.img_fps = 0;
+		cursor.img_count = 0;
 	}
 
 	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", cursor.img_num);
@@ -385,7 +385,7 @@ void CursorReset(void)
 	cursor.box_size.y = 128.0f;				//矩形の大きさ（Ｙ）
 	cursor.velocity.x = 0.0f;	            //プレイヤーの横移動	
 	cursor.velocity.y = 0.0f;				//プレイヤーの縦移動
-	cursor.img_fps = 0;
+	cursor.img_count = 0;
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
@@ -451,10 +451,10 @@ void CursorRange_eOne(const InGame* ingame)
 //fpsのリセット
 void FPS_Reset(void)
 {
-	cursor.img_num = cursor.img_fps / 10;
-	if (cursor.img_fps > 60)
+	cursor.img_num = cursor.img_count / 6;
+	if (cursor.img_count > 108)
 	{
-		cursor.img_fps = 0;
+		cursor.img_count = 0;
 	}
 }
 
@@ -464,26 +464,38 @@ void Img_Num_Change(const CreateStage*stage,int map)
 	//掘れないマーク表示
 	if (stage->array[cursor.array_x][cursor.array_y] == map)
 	{
-		cursor.img_fps++;
+		cursor.img_count++;
 		switch (cursor.img_num)
 		{
 		case 0:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[0], TRUE);
 			break;
-		case 1:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+		case 1:case 18:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[1], TRUE);
 			break;
-		case 2:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+		case 2:case 17:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[2], TRUE);
 			break;
-		case 3:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+		case 3:case 16:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[3], TRUE);
 			break;
-		case 4:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+		case 4:case 15:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[4], TRUE);
 			break;
-		case 5:
-			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[cursor.img_num], TRUE);
+		case 5:case 14:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[5], TRUE);
+			break;
+		case 6:case 13:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[6], TRUE);
+			break;
+		case 7:case 12:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[7], TRUE);
+			break;
+		case 8:case 11:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[8], TRUE);
+			break;
+		case 9:case 10:
+			DrawRotaGraphF(cursor.position.x, cursor.position.y, 0.5, 0.0, cursor.impossible[9], TRUE);
 			break;
 		default:
 			break;
@@ -491,6 +503,6 @@ void Img_Num_Change(const CreateStage*stage,int map)
 	}
 	else
 	{
-		cursor.img_fps = 0;
+		cursor.img_count = 0;
 	}
 }

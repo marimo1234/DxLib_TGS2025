@@ -722,56 +722,48 @@ const Tool_Img* Get_Tool_Img(void)
 }
 
 //道の数を増やす
-void const Road_Add_Num(const Rock* rock,const Car*car)
+void const Road_Add_Num(const Rock* rock, const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//アイテムが道路なら
-	if (tool.item_number == eRoad)
+
+	//岩の所持数が1以上なら
+	if (rock->item_num >= 1)
 	{
-		
-		//岩の所持数が1以上なら
-		if (rock->item_num >= 1)
+		//ゴールとゲームオーバーじゃないじゃら
+		if (car->goal_flag == false && car->direction != eStop)
 		{
-			//ゴールとゲームオーバーじゃないじゃら
-			if (car->goal_flag == false && car->direction != eStop)
-			{
-				//Ｂボタンが押されたら
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
-				{
-					tool.road_num++;
-					tool.rock_sub_flag = true;
-					Play_Sound_Tool2(tool_se.make_road, 100);
-				}
-			}
+			//Ｂボタンが押されたら
+
+			tool.road_num++;
+			tool.rock_sub_flag = true;
+			Play_Sound_Tool2(tool_se.make_road, 100);
+
 		}
 	}
+
 }
 
 //木の道の数を増やす
-void const WoodRoad_Add_Num(const Wood* wood,const Car*car)
+void const WoodRoad_Add_Num(const Wood* wood, const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//アイテムが木の道路なら
-	if (tool.item_number == eWoodRoad)
+	//木の所持数が1以上なら
+	if (wood->item_num >= 1)
 	{
-		//木の所持数が1以上なら
-		if (wood->item_num >= 1)
+		//ゴールとゲームオーバーじゃないじゃら
+		if (car->goal_flag == false && car->direction != eStop)
 		{
-			//ゴールとゲームオーバーじゃないじゃら
-			if (car->goal_flag == false&&car->direction!=eStop)
-			{
-				//Ｂボタンが押されたら
-				if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
-				{
-					tool.wood_road_num++;
-					tool.wood_sub_flag = true;
-					Play_Sound_Tool2(tool_se.make_woodroad, 100); // 木の道を作ったときの音
-				}
-			}
+			////Ｂボタンが押されたら
+
+			tool.wood_road_num++;
+			tool.wood_sub_flag = true;
+			Play_Sound_Tool2(tool_se.make_woodroad, 100); // 木の道を作ったときの音
+
 		}
 	}
+
 }
 
 //道の所持数を増やした後にフラグを戻す
