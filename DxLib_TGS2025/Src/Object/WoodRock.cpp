@@ -167,18 +167,18 @@ void WoodRockUpdate(void)
 void WoodRockDraw(void)
 {
 	//ItemNumの透過カラー
-	DrawRotaGraphF(1190.0f, 80.0f, 1.0, 0.0, rock.itemnum_bg_image, TRUE);
+	//DrawRotaGraphF(1190.0f, 80.0f, 1.0, 0.0, rock.itemnum_bg_image, TRUE);
 
 	//ムーブフラグがtrueのとき
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
 		for (int i = 0; i < WOODROCK_X_MAX; i++)
 		{
-			if (wood.move_flag[i][j] == true)
+			if (wood.move_flag[i][j] == true && woodrock_operable_flag == true)
 			{
 				DrawRotaGraphF(wood.position_x[i][j], wood.position_y[i][j], 1.0, 0.0, wood.image[3], TRUE);
 			}
-			if (rock.move_flag[i][j] == true)
+			if (rock.move_flag[i][j] == true && woodrock_operable_flag == true)
 			{
 				DrawRotaGraphF(rock.position_x[i][j], rock.position_y[i][j], 1.0, 0.0, rock.image[3], TRUE);
 			}
@@ -263,7 +263,7 @@ void WoodAnimation(int x, int y)
 		wood.delete_flag[x][y] = true;//削除フラグをtrueにする
 		wood.position_x[x][y] = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
 		wood.position_y[x][y] = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
-		wood.add_x[x][y] = fabs((12.0f - (float)x) * 0.8f);
+		wood.add_y[x][y] = fabs((7.0f - (float)y) * 0.8f);
 		wood.move_flag[x][y] = true;//ムーブフラグをtrueにする
 		wood.hit_count[x][y] = eHitEnd;
 
@@ -337,7 +337,7 @@ void RockAnimation(int x, int y)
 		rock.delete_flag[x][y] = true; //削除フラグをtrueにする
 		rock.position_x[x][y] = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
 		rock.position_y[x][y] = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
-		rock.add_x[x][y] = fabs((12.0f - (float)x )* 0.8f);
+		rock.add_y[x][y] = fabs((7.0f - (float)y )* 0.8f);
 		rock.move_flag[x][y] = true;//ムーブフラグをtrueにする
 		rock.hit_count[x][y] = eHitEnd;//0に戻す
 		
@@ -346,7 +346,6 @@ void RockAnimation(int x, int y)
 	default:
 		break;
 	}
-
 }
 //木の情報を取得
 const Wood* GetWood(void)
@@ -499,11 +498,10 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 //アイテム化したアイテムをカウントする位置
 void WoodRockItemCount(void)
 {
-	
-	DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
-	DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);
-	DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
-	DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);
+	//DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
+	///*DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);*/
+	//DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
+	///*DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);*/
 }
 //リセット
 void WoodRockReset(void)
@@ -530,39 +528,41 @@ void WoodMove(int x, int y)
 {
 	//二次関数のグラフの公式”y=a(x-p)^2+q"
 	wood.move_count[x][y]++;
-	float mx = WOOD_ITEM_X; //Xの最大値
+	float mx = WOOD_ITEM_X; //Xの目的地
 	float my = WOOD_ITEM_Y; // Yの最大値
 	float bx = wood.position_x[x][y];//ポジションの格納
 	float by = wood.position_y[x][y];
 
 	//二次関数（アイテムカウントしている位置を頂点と考える）
-	float bp = pow(bx - mx, 2);
-	float ba = (by - my) / bp;
-	float y1 = ba * bp + my;
+	float bp = pow(by - my, 2);
+	float ba = (bx - mx) / bp;
+	float x1 = ba * bp + mx;
 
 	//二次関数（x+1の座標を求める）
-	float bx2 = bx + 1.0f;
-	float bp2 = pow(bx2 - mx, 2);
-	float y2 = ba * bp2 + my;
+	float by2 = by + 1.0f;
+	float bp2 = pow(by2 - my, 2);
+	float x2 = ba * bp2 + mx;
 
 	//xが1増加した時のyの増加量を求める
-	float fy = fabsf(y2 - y1);
+	float fx = fabsf(x2 - x1);
 
 	//20フレーム経ったら移動開始する
 	if (wood.move_count[x][y] > 20)
 	{
-		wood.position_x[x][y] += wood.add_x[x][y] * 2.0f;
+		//切った木のX座標が左か右か
 		if (ba > 0)
 		{
-			wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * -fy;
+			wood.position_x[x][y] += wood.add_y[x][y]*1.5 * -fx;
 		}
 		else if (ba < 0)
 		{
-			wood.position_y[x][y] += wood.add_x[x][y] * 2.0f * fy;
+			wood.position_x[x][y] += wood.add_y[x][y]*1.5 * fx;
 		}
+
+		wood.position_y[x][y] += wood.add_y[x][y]*1.5;
 	}
-	//Yの最小値を下回ったら終了
-	if (wood.position_x[x][y] > mx)
+	//Yの最小値を上回ったら終了
+	if (wood.position_y[x][y] > my)
 	{
 		wood.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
 		wood.move_count[x][y] = 0;
@@ -573,36 +573,43 @@ void WoodMove(int x, int y)
 //アイテム化した時の岩の挙動
 void RockMove(int x, int y)
 {
-
-
+	//二次関数のグラフの公式”y=a(x-p)^2+q"
 	rock.move_count[x][y]++;
-
-	float mx = ROCK_ITEM_X; //Xの最大値
+	float mx = ROCK_ITEM_X; //Xの目的地
 	float my = ROCK_ITEM_Y; // Yの最大値
 	float bx = rock.position_x[x][y];//ポジションの格納
 	float by = rock.position_y[x][y];
 
 	//二次関数（アイテムカウントしている位置を頂点と考える）
-	float bp = pow(bx - mx, 2);
-	float ba = (by - my) / bp;
-	float y1 = ba * bp + my;
+	float bp = pow(by - my, 2);
+	float ba = (bx - mx) / bp;
+	float x1 = ba * bp + mx;
 
 	//二次関数（x+1の座標を求める）
-	float bx2 = bx + 1.0f;
-	float bp2 = pow(bx2 - mx, 2);
-	float y2 = ba * bp2 + my;
+	float by2 = by + 1.0f;
+	float bp2 = pow(by2 - my, 2);
+	float x2 = ba * bp2 + mx;
 
 	//xが1増加した時のyの増加量を求める
-	float fy = fabsf(y2 - y1);
+	float fx = fabsf(x2 - x1);
 
 	//20フレーム経ったら移動開始する
 	if (rock.move_count[x][y] > 20)
 	{
-		rock.position_x[x][y] += rock.add_x[x][y] * 2.0f;
-		rock.position_y[x][y] += rock.add_x[x][y] * 2.0f * -fy;
+		//掘った岩のX座標が左か右か
+		if (ba > 0)
+		{
+			rock.position_x[x][y] += rock.add_y[x][y] * 1.5 * -fx;
+		}
+		else if (ba < 0)
+		{
+			rock.position_x[x][y] += rock.add_y[x][y] * 1.5 * fx;
+		}
+
+		rock.position_y[x][y] += rock.add_y[x][y] * 1.5;
 	}
-	//Yの最小値を下回ったら終了
-	if (rock.position_y[x][y] < my)
+	//Yの最小値を上回ったら終了
+	if (rock.position_y[x][y] > my)
 	{
 		rock.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
 		rock.move_count[x][y] = 0;
@@ -647,13 +654,13 @@ void WoodRockHitInit(const CreateStage* stage)
 			wood.move_count[i][j] = 0;
 			wood.position_x[i][j] = 0.0f;
 			wood.position_y[i][j] = 0.0f;
-			wood.add_x[i][j] = 0.0f;
+			wood.add_y[i][j] = 0.0f;
 
 			rock.move_flag[i][j] = false;
 			rock.move_count[i][j] = 0;
 			rock.position_x[i][j] = 0.0f;
 			rock.position_y[i][j] = 0.0f;
-			rock.add_x[i][j] = 0.0f;
+			rock.add_y[i][j] = 0.0f;
 
 			//木の揺れるアニメーション変数の初期化
 			wood.add_anim_x[i][j] = 0;

@@ -31,7 +31,7 @@ struct Wood
 
 	bool move_flag[12][7];
 	int move_count[12][7];
-	float add_x[12][7];
+	float add_y[12][7];
 
 	int fps[12][7];
 
@@ -62,7 +62,7 @@ struct Rock
 
 	bool move_flag[12][7];
 	int move_count[12][7];
-	float add_x[12][7];
+	float add_y[12][7];
 
 	int fps[12][7];
 
