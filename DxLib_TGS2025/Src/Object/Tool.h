@@ -61,20 +61,12 @@ struct Tool
 	bool wood_sub_flag;				//木の所持数数を引くフラグ
 	bool rock_add_flag;				//岩の所持数を足すフラグ
 	bool wood_add_flag;				//木の所持数を足すフラグ
-	bool road_break_flag[12][7];	//道を壊したことを伝えるフラグ
 
-
-	int break_x;
-	int break_y;
 	int put_road_fps;
 	int put_woodroad_fps;
-	int break_road_fps;
-	int break_woodroad_fps;
 
 	bool put_road_flag;
 	bool put_woodroad_flag;
-	bool break_road_flag;
-	bool break_woodroad_flag;
 
 	bool menu_flag;
 	bool mitibiki_flag;
@@ -85,7 +77,6 @@ struct Tool_Img
 	int pickaxe;				//つるはしの画像ハンドル
 	int itemframe;				//枠の画像ハンドル
 	int ax;						//斧の画像ハンドル
-	int drill;					//ドリルの画像ハンドル
 	int item_select;			//選択枠（アイテム）の画像ハンドル
 	int item_select_inner;		//選択枠（アイテム）の内側の画像ハンドル
 	int wood_road_img;			//木の道の画像ハンドル
@@ -110,7 +101,6 @@ struct Tool_Img
 	int possible_roadV;			//設置可能位置の道の画像ハンドル(縦
 	int possible_wood_roadB;	//設置可能位置の木の道の画像ハンドル(横
 	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
-	int possible_break;			//破壊可能位置の画像ハンドル
 	
 	int put_road[3];
 	int put_woodroad[3];
@@ -118,7 +108,7 @@ struct Tool_Img
 	float item_frame_ex_rate;	//アイテム枠の拡大率
 	float pickaxe_ex_rate;		//つるはしの拡大率
 	float ax_ex_rate;			//斧の拡大率
-	float drill_ex_rate;		//ドリルの拡大率
+
 	float woodroad_ex_rate;		//木の道の拡大率
 	float road_ex_rate;			//道の拡大率
 	float road_num_ex_rate;		//道の所持数の拡大率
@@ -127,7 +117,6 @@ struct Tool_Img
 
 struct Tool_SE
 {
-	int break_se;               //破壊時のSE
 	int wood_road;				//木の道のSE
 	int road;					//道のSE
 	int make_road;				//道の数を増やすときのSE
@@ -146,7 +135,5 @@ void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
 void Search_Old_Position(void);
-
-
 
 const Tool* Get_Tool(void);

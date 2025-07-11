@@ -22,7 +22,6 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
-void Break_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void MolePutRock(const Mole* mole, const Rock* rock, int x, int y);
 void GetStageNum(const InGame* ingame);
 void MapTroutDraw(const InGame* ingame);
@@ -73,8 +72,6 @@ void MapUpdate(void)
 		{
 			for (int i = 0; i < 12; i++)
 			{
-				//道を壊す
-				Break_Road(Get_Tool(), GetCursor1(), i, j);
 				//道を置く
 				Put_Road(Get_Tool(), GetCursor1(), i, j);
 				//橋を置く
@@ -249,21 +246,7 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 	}
 }
 
-//カーソルの位置と対応しているベースの道を壊す
-void Break_Road(const Tool* tool, const Cursor* cursor, int x, int y)
-{
-	if (tool->road_break_flag[x][y] == true)
-	{
-		if (tool->stage_begin_array[x][y] == 6)
-		{
-			stage.array[x][y] = 6;
-		}
-		else
-		{
-			stage.array[x][y] = 0;
-		}
-	}
-}
+
 
 //岩を消すフラグがtrueなら消す
 void Delete_WoodRock(const Wood* wood,const Rock* rock)

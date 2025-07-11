@@ -52,8 +52,6 @@ void Put_WoodRoad_Animation(int x, int y);
 void RB_Draw(const Car*car);
 void LB_Draw(const Car*car);
 
-
-
 void Play_Sound_Tool(int sound,int volume);
 void Play_Sound_Tool2(int sound,int volume);
 
@@ -87,26 +85,18 @@ void ToolInit(void)
 	tool_img.item_frame_ex_rate = 1.0f;
 	tool_img.pickaxe_ex_rate = 0.4f;
 	tool_img.ax_ex_rate = 0.8f;
-	tool_img.drill_ex_rate = 0.8f;
 	tool_img.woodroad_ex_rate = 0.6f;
 	tool_img.road_ex_rate = 0.6f;
 	tool_img.road_num_ex_rate = 1.0f;
 	tool_img.woodroad_num_ex_rate = 1.0f;
 
 	//アニメーション関係
-	tool.break_x=0;
-	tool.break_y = 0;
-
 	tool.put_road_fps = 0;
 	tool.put_woodroad_fps = 0;
-	tool.break_road_fps = 0;
-	tool.break_woodroad_fps = 0;
 	tool.possible_fps = 0;
 
 	tool.put_woodroad_flag = false;
 	tool.put_road_flag = false;
-	tool.break_road_flag = false;
-	tool.break_woodroad_flag = false;
 
 
 	for (int j = 0; j < 7; j++)
@@ -115,7 +105,6 @@ void ToolInit(void)
 		{				
 			tool.road_flag[i][j] = false;
 			tool.wood_road_flag[i][j] = false;
-			tool.road_break_flag[i][j] = false;
 			tool.road_img_array[i][j] = -1;
 			tool.old_base_array[i][j] = 0;
 		}
@@ -129,8 +118,6 @@ void ToolResourceInit(void)
 	/**********サウンド***********/
 	//アイテムセレクトSE
 	tool_se.select_se = LoadSoundMem("Resource/Sounds/item_select_se2.mp3");
-	//道を壊したときの音
-	tool_se.break_se = LoadSoundMem("Resource/Sounds/break.mp3");
 	//道や木の橋等を増やすときのSE
 	tool_se.make_road = LoadSoundMem("Resource/Sounds/make_road.mp3");
 	tool_se.make_woodroad = LoadSoundMem("Resource/Sounds/make_woodroad.mp3");
@@ -164,8 +151,6 @@ void ToolResourceInit(void)
 
 	//斧
 	tool_img.ax = LoadGraph("Resource/images/ax2.0.png");
-	//ハンマー
-	tool_img.drill = LoadGraph("Resource/images/Drill.png");
 	//選択枠(アイテム)
 	tool_img.item_select = LoadGraph("Resource/images/frameselect.png");
 	//選択枠の内側(アイテム)
@@ -183,8 +168,6 @@ void ToolResourceInit(void)
 	tool_img.possible_roadV = LoadGraph("Resource/images/Possible_Vertical.png");
 	tool_img.possible_wood_roadB = LoadGraph("Resource/images/Possible_wood_roadB.png");
 	tool_img.possible_wood_roadV = LoadGraph("Resource/images/Possible_wood_roadV.png");
-	//破壊可能を示す色(赤
-	tool_img.possible_break = LoadGraph("Resource/images/possible_break.png");
 	//道を置いた時のアニメーション
 	tool_img.put_road[0] = LoadGraph("Resource/images/dust1.png");
 	tool_img.put_road[1] = LoadGraph("Resource/images/dust2.png");
@@ -555,16 +538,6 @@ void Road_FLAG_OFF(void)
 	{
 		tool.wood_road_flag[tool.base_x][tool.base_y] = false;
 	}
-	for (int j = 0; j < 7; j++)
-	{
-		for (int i = 0; i < 12; i++)
-		{
-			if (tool.road_break_flag[i][j] == true)
-			{
-				tool.road_break_flag[i][j] = false;
-			}
-		}
-	}
 } 
 
 //ゲームスタート受け取り
@@ -690,7 +663,6 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 	tool_img.item_frame_ex_rate = 1.0;
 	tool_img.pickaxe_ex_rate = 0.4;
 	tool_img.ax_ex_rate = 0.8;
-	tool_img.drill_ex_rate = 0.8;
 	tool_img.woodroad_ex_rate = 0.6;
 	tool_img.road_ex_rate = 0.6;
 	tool_img.road_num_ex_rate = 1.0;

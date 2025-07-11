@@ -16,7 +16,6 @@ void CarDetectPosition(const CreateStage* stage);
 void GetNextDestination(const Tool* tool,int x,int y);
 void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
-void GetBreakRoadPosition(const Tool* tool,int x,int y);
 void Play_Sound_Car(int sound, int volume);
 void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
@@ -170,7 +169,6 @@ void CarManagerUpdate(void)
 		{
 			//次の進行場所を取得する
 			GetNextDestination(Get_Tool(),i,j);
-			GetBreakRoadPosition(Get_Tool(),i,j);
 
 		}
 	}
@@ -312,18 +310,6 @@ void GetNextDestination(const Tool* tool, int x, int y)
 		car.next_y[car.road_count] = y;
 
 
-	}
-}
-
-//壊すポジションを取得
-void GetBreakRoadPosition(const Tool* tool, int x, int y)
-{
-	if (tool->road_break_flag[x][y] == true)
-	{
-
-		car.next_x[car.road_count] = -1;
-		car.next_y[car.road_count] = -1;
-		car.road_count--;
 	}
 }
 
