@@ -496,6 +496,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 }
 
 //アイテム化したアイテムをカウントする位置
+
 void WoodRockItemCount(void)
 {
 	//DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
@@ -523,6 +524,7 @@ void WoodRockReset(void)
 	WoodRockHitInit(GetStage());
 
 }
+
 //アイテム化した時の木の挙動
 void WoodMove(int x, int y)
 {
@@ -617,7 +619,6 @@ void RockMove(int x, int y)
 	}
 }
 
-
 //Deleteフラグがtrueになったらfalseにする
 void WR_Delete_Flag(void)
 {
@@ -687,6 +688,7 @@ void WoodRockHitInit(const CreateStage* stage)
 		}
 	}
 }
+
 //モグラが岩を置いた場所のHitカウントを初期化する
 void GetMoleRockPosition(const Mole* mole)
 {
@@ -707,6 +709,7 @@ void GetMoleRockPosition(const Mole* mole)
 	
 	
 }
+
 //木のエフェクト
 void WoodEffect(int x, int y)
 {
