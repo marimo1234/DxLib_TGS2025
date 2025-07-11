@@ -222,8 +222,6 @@ void CursorDraw(const Tool*tool)
 			tool->wood_road_num);
 		cursor.img_count = 0;
 	}
-
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", cursor.img_num);
 }
 
 void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,const Car*car)

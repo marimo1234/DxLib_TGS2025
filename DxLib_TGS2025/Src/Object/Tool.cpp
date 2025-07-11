@@ -605,67 +605,6 @@ void Put_Road_Process(bool* flag, int* sub_num,  int array[][7], int array_x, in
 	Play_Sound_Tool(sound, val);
 }
 
-//道を壊す
-void Break_Road_FLAG(const Cursor*cursor,const CreateStage*stage,const Car*car)
-{
-	PadInputManager* pad_input = PadInputManager::GetInstance();
-	//Aボタン押されたら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
-	{
-
-		//アイテムがハンマーなら
-		if (tool.item_number == eHammer)
-		{
-			//ゴールとつながっていないなら
-			if (car->goal_flag==false)
-			{
-				//カーソルの位置がベースでcarのnextではなければ
-				if ((cursor->array_x == tool.base_x && cursor->array_y == tool.base_y) &&
-					(cursor->array_x != car->next_x[car->next_count] || cursor->array_y != car->next_y[car->next_count]) &&
-					(cursor->array_x != car->current_x || cursor->array_y != car->current_y))
-				{
-					//道だったら
-					if (stage->array[tool.base_x][tool.base_y] == 4)
-					{
-						tool.break_road_flag = true;
-						tool.rock_add_flag = true;
-						Play_Sound_Tool(tool_se.break_se, 125);
-					}
-					//木の道だったら
-					else if (stage->array[tool.base_x][tool.base_y] == 5)
-					{
-						tool.break_woodroad_flag = true;
-						tool.wood_add_flag = true;
-						Play_Sound_Tool(tool_se.break_se, 125);
-					}
-
-					tool.road_break_flag[tool.base_x][tool.base_y] = true;
-					tool.road_img_array[tool.base_x][tool.base_y] = -1;
-					for (int j = 0; j < 7; j++)
-					{
-						for (int i = 0; i < 12; i++)
-						{
-
-							if (tool.old_base_array[i][j] == 1)
-							{
-								tool.base_x = i;
-								tool.base_y = j;
-							}
-							if (tool.old_base_array[i][j] > 0)
-							{
-								tool.old_base_array[i][j]--;
-							}
-						}
-					}
-				}
-			}
-			if (tool.road_break_flag[cursor->array_x][cursor->array_y] == false)
-			{
-				Play_Sound_Tool2(tool_se.swing, 150);
-			}
-		}
-	}
-}
 
 //道と木の道のフラグをFALSEにする
 void Road_FLAG_OFF(void)
