@@ -494,7 +494,7 @@ void Put_Road(const Cursor* cursor,const CreateStage*stage,const Mole*mole,const
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	
 	//Aボタンが押されたら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 
 		//アイテムが道路なら
@@ -546,7 +546,7 @@ void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car*car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Aボタンが押されたら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 
 		//アイテムが木の道路なら
