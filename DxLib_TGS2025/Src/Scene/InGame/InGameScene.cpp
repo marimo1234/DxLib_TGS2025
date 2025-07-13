@@ -386,7 +386,7 @@ void InGameSceneDraw(void)
 	CursorDraw(Get_Tool());
 
 	//スタートボタン
-	DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);
+	/*DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);*/
 
 	//ゴールの描画
 	GoalDraw();

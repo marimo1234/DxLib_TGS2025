@@ -9,14 +9,20 @@ struct StageSelect
 	int car_fps;
 	int move_fps;
 	bool flag;
+
 	int background_image;
 	int Abutton;
 	float Abutton_rate;
 	float rate_num;
+
 	int car_image1;
 	int car_image2;
-	int trout_image[3];
+	int trout_image[5];
 	int number_image[6];
+	int arrow_image[2];
+	int stage_image[6];
+	int back_minimap;
+
 	int b_back;
 	bool car_flag;
 	float car_x;
@@ -38,7 +44,7 @@ struct StageSelect
 void StageSelectSceneInit(void);
 eSceneType StageSelectSceneUpdate(void);
 void StageSelectSceneDraw(void);
-void StageSelectCarMove(void);
+void StageSelectCursorMove(void);
 void StageSelectNumber(void);
 void StageSelectGetNumber(void);
 void NumTroutDraw(void);
