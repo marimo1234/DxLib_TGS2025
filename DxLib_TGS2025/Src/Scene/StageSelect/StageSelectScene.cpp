@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 #define CAR_SPEED		(1.5f)
-#define SELECT_TROUT_X (380.0)
+#define SELECT_TROUT_X (390.0)
 
 int stageselect_init_step = 0;;
 static Fade fade;
@@ -100,7 +100,7 @@ void StageSelectResourceInit(void)
 	case 6:
 		//画像の取得
 	//背景
-		stageselect.background_image = LoadGraph("Resource/images/StageSelect2.png");
+		stageselect.background_image = LoadGraph("Resource/images/StageSelect3.png");
 		//マスの画像
 		stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
 		stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
