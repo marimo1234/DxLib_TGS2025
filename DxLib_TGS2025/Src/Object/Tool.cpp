@@ -1599,11 +1599,11 @@ void Put_Road_Animation(int x,int y)
 	}
 	else if (tool.put_road_fps < 10)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 5*(3.14/180), tool_img.put_road[1], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.4, 5*(3.14/180), tool_img.put_road[1], TRUE);
 	}
 	else if (tool.put_road_fps < 15)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 10 * (3.14 / 180), tool_img.put_road[2], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.4, 10 * (3.14 / 180), tool_img.put_road[2], TRUE);
 	}
 	else
 	{
