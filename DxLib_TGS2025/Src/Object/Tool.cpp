@@ -666,8 +666,8 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 	tool.frameselect_x = ITEM_SELECT_BASE_X + 80 * 3;
 	tool.frameselect_y = ITEM_SELECT_BASE_Y;
 	tool.item_number = ePickaxe;
-	tool.road_num = 100;
-	tool.wood_road_num = 100;
+	tool.road_num = 0;
+	tool.wood_road_num = 0;
 	tool.menu_flag = false;
 	tool.mitibiki_flag = false;
 	tool.rock_sub_flag = false;
