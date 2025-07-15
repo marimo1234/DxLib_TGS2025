@@ -223,15 +223,39 @@ void CursorDraw(const Tool*tool)
 	else if (tool->item_number == eRoad)
 	{
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
-		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-			tool->road_num);
+		if (tool->road_num < 10)
+		{
+			DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+				tool->road_num);
+		}
+		else if(tool->road_num>99)
+		{
+			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
+		}
+		else
+		{
+			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+				tool->road_num);
+		}
 		cursor.img_count = 0;
 	}
 	else if (tool->item_number == eWoodRoad)
 	{
 		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
-		DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-			tool->wood_road_num);
+		if (tool->wood_road_num < 10)
+		{
+			DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+				tool->wood_road_num);
+		}
+		else if(tool->wood_road_num > 99)
+		{
+			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
+		}
+		else
+		{
+			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+				tool->wood_road_num);
+		}
 		cursor.img_count = 0;
 	}
 }
