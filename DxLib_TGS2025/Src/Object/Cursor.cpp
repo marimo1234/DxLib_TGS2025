@@ -62,7 +62,7 @@ void CursorInit(void)
 void CursorResourceInit(void)
 {
 	// カーソル画像の読み込み
-	cursor_image = LoadGraph("Resource/Images/cursor.png");
+	cursor_image = LoadGraph("Resource/Images/cursor1.png");
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
