@@ -520,11 +520,11 @@ void Img_Num_Change(const CreateStage*stage,int map)
 void CursorAnimation(void)
 {
 	cursor.anim_count++;
-	if (cursor.anim_count % 12 == 0 && cursor.anim_num < 5)
+	if (cursor.anim_count % 15 == 0 )
 	{
 		cursor.anim_num++;
 	}
-	if (cursor.anim_count > 150)
+	if ( cursor.anim_num > 3 )
 	{
 		cursor.anim_count = 0;
 		cursor.anim_num = 0;
