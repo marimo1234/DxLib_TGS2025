@@ -155,9 +155,9 @@ void MoleRandomDirection(const CreateStage* stage)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
-			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
+			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);//ランダム方向を格納
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-			mole.warn_flag = true;
+			mole.warn_flag = true;// マスを赤くする警告
 		}
 
 	}
@@ -184,7 +184,7 @@ void MoleRandomDirection(const CreateStage* stage)
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-			mole.warn_flag = false;
+			mole.warn_flag = false;// マスを赤くする警告
 		}
 		MolePutRockFlag(GetStage());
 		mole.image_count = 0;
@@ -228,25 +228,25 @@ void MolePutRockFlag(const CreateStage* stage)
 
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 		{
-		case 0:
+		case 0://　下
 			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
 			}
 			break;
-		case 1:
+		case 1://　上
 			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
 			}
 			break;
-		case 2:
+		case 2://　左
 			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
 			}
 			break;
-		case 3:
+		case 3://　右
 			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] + 1][stage->mole_y[i]] = true;
@@ -267,25 +267,25 @@ void MolePutWarnDraw(const CreateStage* stage)
 	{
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 		{
-		case 0:
+		case 0://　下
 			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
 				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] + 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
-		case 1:
+		case 1://　上
 			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
 			{
 				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] - 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
-		case 2:
+		case 2://　左
 			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
 			{
 				DrawRotaGraph((stage->mole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
-		case 3:
+		case 3://　右
 			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
 			{
 				DrawRotaGraph((stage->mole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
