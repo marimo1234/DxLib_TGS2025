@@ -36,6 +36,10 @@ struct Mole
 	int image_count;
 	bool put_rock_flag[12][7];
 
+	int warn_image;
+	bool warn_flag;
+
+
 	int rock_x_max;
 	int rock_x_min;
 	int rock_y_min;

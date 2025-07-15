@@ -12,7 +12,7 @@
 
 #include <math.h>
 
-#define ITEM_NUM	(9)		//アイテムの要素
+#define OBSTACLE_TROUT_LENGTH (80)
 
 void ObstacleAnimationControl(const Cursor* cursor);
 
@@ -20,12 +20,18 @@ Obstacle obstacle[D_OBSTACLE_MAX];
 Mole mole;
 Lake lake;
 
-void MoleStart(const InGame* ingame);
-void MolePutRockFlag(const CreateStage* stage);
-void MoleRandomDirection(const CreateStage* stage);
-void MoleInit(const CreateStage* stage);
-void GetMoleStageNum(const InGame* ingame);
+//	モグラの処理スタート
 void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
+//　岩を置くフラグ
+void MolePutRockFlag(const CreateStage* stage);
+// 岩を置く警告
+void MolePutWarnDraw(const CreateStage* stage);
+//　ランダムに向く方向を決める
+void MoleRandomDirection(const CreateStage* stage);
+//　初期化
+void MoleInit(const CreateStage* stage);
+//　ステージ番号の取得と置ける範囲の指定
+void GetMoleStageNum(const InGame* ingame);
 
 
 int obstacle_images[7];
@@ -42,6 +48,7 @@ void ObstacleManagerInit(void)
 	mole.start = false;
 	mole.menu_flag = false;
 	mole.operable_flag = false;
+	mole.warn_flag = false;
 
 }
 
@@ -60,6 +67,8 @@ void ObstacleManagerResourceInit(void)
 	mole.rock2_image[1] = LoadGraph("Resource/images/mole_up_rock2.png");
 	mole.rock2_image[2] = LoadGraph("Resource/images/mole_left_rock2.png");
 	mole.rock2_image[3] = LoadGraph("Resource/images/mole_right_rock2.png");
+
+	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
 
 	lake.image = LoadGraph("Resource/images/lake.png");
 }
@@ -86,7 +95,10 @@ void ObstacleManagerUpdate(void)
 //障害物の描画
 void ObstacleManagerDraw(void)
 {
-
+	if (mole.warn_flag == true && mole.operable_flag == true)
+	{
+		MolePutWarnDraw(GetStage());
+	}
 }
 
 //構造体Obstacle
@@ -138,6 +150,18 @@ void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
 
+	//　ランダム方向に向く
+	if (mole.image_count == 120)
+	{
+		for (int i = 0; i < stage->mole_count; i++)
+		{
+			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.warn_flag = true;
+		}
+
+	}
+	//　手を挙げるアニメーション
 	if (mole.image_count / 60 > 2)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
@@ -145,6 +169,7 @@ void MoleRandomDirection(const CreateStage* stage)
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock1_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
+	//　岩を持つアニメーション
 	if (mole.image_count / 60 > 3)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
@@ -152,19 +177,18 @@ void MoleRandomDirection(const CreateStage* stage)
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
+	// アニメーションを戻して岩を置く
 	if (mole.image_count / 60 > 4)
 	{
+		MolePutFlagReset();
 		for (int i = 0; i < stage->mole_count; i++)
 		{
-			MolePutFlagReset();
-			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-
-			MolePutRockFlag(GetStage());
-
-			mole.image_count = 0;
-
+			mole.warn_flag = false;
 		}
+		MolePutRockFlag(GetStage());
+		mole.image_count = 0;
+
 	}
 }
 
@@ -174,13 +198,14 @@ void MoleReset(void)
 	mole.start = false;
 	mole.menu_flag = false;
 	mole.operable_flag = false;
+	mole.warn_flag = false;
 	mole.image_count = 0;
 
 	MoleInit(GetStage());
 	GetMoleStageNum(GetInGame());
 }
 
-//石を置くフラグのリセット
+//　石を置くフラグのリセット
 void MolePutFlagReset(void)
 {
 	for (int j = 0; j < 7; j++)
@@ -195,8 +220,7 @@ void MolePutFlagReset(void)
 	}
 }
 
-//石を置く条件
-//最初の方向のマスがtrueになるのをどうにかしないといけない
+//　岩を置くフラグ
 void MolePutRockFlag(const CreateStage* stage)
 {
 	for (int i = 0; i < stage->mole_count; i++)
@@ -236,6 +260,44 @@ void MolePutRockFlag(const CreateStage* stage)
 
 }
 
+void MolePutWarnDraw(const CreateStage* stage)
+{
+
+	for (int i = 0; i < stage->mole_count; i++)
+	{
+		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
+		{
+		case 0:
+			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
+			{
+				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] + 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 1:
+			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+			{
+				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] - 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 2:
+			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+			{
+				DrawRotaGraph((stage->mole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 3:
+			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+			{
+				DrawRotaGraph((stage->mole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+//　モグラ変数の初期化
 void MoleInit(const CreateStage* stage)
 {
 	for (int j = 0; j < 7; j++)
