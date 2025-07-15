@@ -51,6 +51,8 @@ void CursorInit(void)
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
+	cursor.anim_count = 0;
+	cursor.anim_num = 0;
 	
 
 	//ステージごとの初期化とステージ番号の取得
@@ -62,7 +64,18 @@ void CursorInit(void)
 void CursorResourceInit(void)
 {
 	// カーソル画像の読み込み
-	cursor_image = LoadGraph("Resource/Images/cursor1.png");
+	//cursor_image = LoadGraph("Resource/Images/cursor1.png");
+	cursor.cursor_anim[0] = LoadGraph("Resource/Images/cursor_anim0.png");
+	cursor.cursor_anim[1] = LoadGraph("Resource/Images/cursor_anim1.png");
+	cursor.cursor_anim[2] = LoadGraph("Resource/Images/cursor_anim2.png");
+	cursor.cursor_anim[3] = LoadGraph("Resource/Images/cursor_anim3.png");
+	cursor.cursor_anim[4] = LoadGraph("Resource/Images/cursor_anim4.png");
+	cursor.cursor_anim[5] = LoadGraph("Resource/Images/cursor_anim5.png");
+	cursor.cursor_anim[6] = LoadGraph("Resource/Images/cursor_anim6.png");
+	cursor.cursor_anim[7] = LoadGraph("Resource/Images/cursor_anim7.png");
+	cursor.cursor_anim[8] = LoadGraph("Resource/Images/cursor_anim8.png");
+	cursor.cursor_anim[9] = LoadGraph("Resource/Images/cursor_anim9.png");
+
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");
@@ -83,6 +96,9 @@ void CursorUpdate(void)
 	if (cursorstart == true&& cursor.menu_flag == false&& cursor.operable_flag == true)
 	{
         CursolButtonMovement(Get_Tool(),GetInGame(),GetWood(),GetRock());
+
+		CursorAnimation(); //アニメーション進行
+
 		// ツルハシのアニメーション
 		if (is_animating_pickaxe)
 		{
@@ -139,7 +155,7 @@ void CursorUpdate(void)
 //カーソルの描画
 void CursorDraw(const Tool*tool)
 {
-	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor_image, TRUE);// カーソルの描画
+	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor.cursor_anim[cursor.anim_num], TRUE);// カーソルの描画
 	
 	// もしitem_numberがePickaxeなら
 	if (tool->item_number == ePickaxe)
@@ -502,5 +518,19 @@ void Img_Num_Change(const CreateStage*stage,int map)
 	else
 	{
 		cursor.img_count = 0;
+	}
+}
+
+void CursorAnimation(void)
+{
+	cursor.anim_count++;
+	if (cursor.anim_count % 14 == 0 && cursor.anim_num < 9)
+	{
+		cursor.anim_num++;
+	}
+	if (cursor.anim_count > 120)
+	{
+		cursor.anim_count = 0;
+		cursor.anim_num = 0;
 	}
 }
