@@ -65,16 +65,12 @@ void CursorResourceInit(void)
 {
 	// カーソル画像の読み込み
 	//cursor_image = LoadGraph("Resource/Images/cursor1.png");
-	cursor.cursor_anim[0] = LoadGraph("Resource/Images/cursor_anim0.png");
-	cursor.cursor_anim[1] = LoadGraph("Resource/Images/cursor_anim1.png");
-	cursor.cursor_anim[2] = LoadGraph("Resource/Images/cursor_anim2.png");
-	cursor.cursor_anim[3] = LoadGraph("Resource/Images/cursor_anim3.png");
-	cursor.cursor_anim[4] = LoadGraph("Resource/Images/cursor_anim4.png");
-	cursor.cursor_anim[5] = LoadGraph("Resource/Images/cursor_anim5.png");
-	cursor.cursor_anim[6] = LoadGraph("Resource/Images/cursor_anim6.png");
-	cursor.cursor_anim[7] = LoadGraph("Resource/Images/cursor_anim7.png");
-	cursor.cursor_anim[8] = LoadGraph("Resource/Images/cursor_anim8.png");
-	cursor.cursor_anim[9] = LoadGraph("Resource/Images/cursor_anim9.png");
+	cursor.cursor_anim[0] = LoadGraph("Resource/Images/cursor_anim01.png");
+	cursor.cursor_anim[1] = LoadGraph("Resource/Images/cursor_anim02.png");
+	cursor.cursor_anim[2] = LoadGraph("Resource/Images/cursor_anim03.png");
+	cursor.cursor_anim[3] = LoadGraph("Resource/Images/cursor_anim04.png");
+	cursor.cursor_anim[4] = LoadGraph("Resource/Images/cursor_anim05.png");
+	cursor.cursor_anim[5] = LoadGraph("Resource/Images/cursor_anim06.png");
 
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
@@ -524,11 +520,11 @@ void Img_Num_Change(const CreateStage*stage,int map)
 void CursorAnimation(void)
 {
 	cursor.anim_count++;
-	if (cursor.anim_count % 14 == 0 && cursor.anim_num < 9)
+	if (cursor.anim_count % 12 == 0 && cursor.anim_num < 5)
 	{
 		cursor.anim_num++;
 	}
-	if (cursor.anim_count > 120)
+	if (cursor.anim_count > 150)
 	{
 		cursor.anim_count = 0;
 		cursor.anim_num = 0;
