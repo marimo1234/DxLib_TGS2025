@@ -216,7 +216,7 @@ void StageSelectSceneDraw(void)
 	//スピード枠の描画
 	DrawRotaGraph(510,510,0.7,0.0,stageselect.speed_frame,TRUE);
 	//スピードの文字描画
-	DrawRotaGraph(470, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
+	DrawRotaGraph(450, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
 
 	//枠の描画
 	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
