@@ -41,6 +41,8 @@ struct Tool
 	int item_frame_y;				//枠のｙ座標
 
 	int item_number;				//選択しているアイテムの種類
+	int road_add_Acount[6];			//道の加算アニメーションカウント
+	int woodroad_add_Acount;		//木の道の加算アニメーションカウント
 	int road_num;					//道の所持数
 	int road_flag[12][7];			//道を置いたことを知らせるフラグ
 	int wood_road_num;				//木の道の所持数
@@ -57,6 +59,7 @@ struct Tool
 	int now_base_state;
 	int possible_fps;				//設置可能位置の点滅fps
 
+	
 	bool rock_sub_flag;				//岩の所持数を引くフラグ
 	bool wood_sub_flag;				//木の所持数数を引くフラグ
 	bool rock_add_flag;				//岩の所持数を足すフラグ

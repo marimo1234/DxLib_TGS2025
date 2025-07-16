@@ -67,6 +67,8 @@ void ToolInit(void)
 	tool.item_number = ePickaxe;
 	tool.old_position_direction = eLP;
 	tool.now_base_state = eBlank;
+	tool.road_add_Acount[6] = {};
+	tool.woodroad_add_Acount = 0;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -598,15 +600,21 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 		//ゴールとゲームオーバーじゃないじゃら
 		if (car->goal_flag == false && car->direction != eStop)
 		{
-			//Ｂボタンが押されたら
-
 			tool.road_num++;
 			tool.rock_sub_flag = true;
 			Play_Sound_Tool2(tool_se.make_road, 100);
-
+			
+			tool.road_add_Acount[0]++;
 		}
 	}
+}
 
+void Road_Add_Animation(void)
+{
+	/*if (tool.road_add_Acount[0] > 0)
+	{
+		DrawFormatString
+	}*/
 }
 
 //木の道の数を増やす
