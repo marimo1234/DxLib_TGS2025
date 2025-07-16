@@ -11,6 +11,7 @@ struct StageSelect
 	bool flag;
 
 	int background_image;
+	int speed_frame;
 	int Abutton;
 	float Abutton_rate;
 	float rate_num;

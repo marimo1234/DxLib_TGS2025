@@ -345,9 +345,25 @@ void Item_Frame_Draw(const Car*car)
 		DrawRotaGraph(ITEM_SELECT_BASE_X, ITEM_SELECT_BASE_Y, tool_img.road_ex_rate, 0.0, tool_img.road_vertical, TRUE);
 
 		//道路の所持数
-		DrawExtendFormatString(ITEM_SELECT_BASE_X - 10, ITEM_SELECT_BASE_Y + 10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.road_num);
+		if (tool.road_num>99)
+		{
+			DrawExtendFormatString(ITEM_SELECT_BASE_X - 10, ITEM_SELECT_BASE_Y + 10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "99+");
+		}
+		else
+		{
+			DrawExtendFormatString(ITEM_SELECT_BASE_X - 10, ITEM_SELECT_BASE_Y + 10, tool_img.road_num_ex_rate, tool_img.road_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.road_num);
+		}
+		
 		//木の道の所持数
-		DrawExtendFormatString(ITEM_SELECT_BASE_X + 70, ITEM_SELECT_BASE_Y + 10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.wood_road_num);
+		if (tool.wood_road_num > 99)
+		{
+			DrawExtendFormatString(ITEM_SELECT_BASE_X + 70, ITEM_SELECT_BASE_Y + 10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "99+");
+		}
+		else
+		{
+			DrawExtendFormatString(ITEM_SELECT_BASE_X + 70, ITEM_SELECT_BASE_Y + 10, tool_img.woodroad_num_ex_rate, tool_img.woodroad_num_ex_rate, GetColor(0, 0, 0), "×%d", tool.wood_road_num);
+		}
+		
 
 		//選択枠
 		DrawRotaGraph(tool.frameselect_x, tool.frameselect_y, 1.0, 0.0, tool_img.item_select, TRUE);
@@ -1583,11 +1599,11 @@ void Put_Road_Animation(int x,int y)
 	}
 	else if (tool.put_road_fps < 10)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 5*(3.14/180), tool_img.put_road[1], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.4, 5*(3.14/180), tool_img.put_road[1], TRUE);
 	}
 	else if (tool.put_road_fps < 15)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 10 * (3.14 / 180), tool_img.put_road[2], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.4, 10 * (3.14 / 180), tool_img.put_road[2], TRUE);
 	}
 	else
 	{

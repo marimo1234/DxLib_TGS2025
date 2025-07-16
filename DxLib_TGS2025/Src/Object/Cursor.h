@@ -24,7 +24,7 @@ struct Cursor
 	int impossible[12];		//置けないマーク画像
 	int img_count;			//画像のカウント
 	int img_num;			//カウントに対応した変数
-	int cursor_anim[9];     //カーソル本体が拡大縮小したりするアニメーション配列
+	int cursor_anim[6];     //カーソル本体が拡大縮小したりするアニメーション配列
 	int anim_num;    //カーソルのアニメーション用変数たち
 	int anim_count;
 };
