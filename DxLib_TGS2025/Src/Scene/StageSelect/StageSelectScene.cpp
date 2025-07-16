@@ -212,7 +212,7 @@ void StageSelectSceneDraw(void)
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 
 	//スピードの描画
-	DrawRotaGraph(685,500,0.7,0.0,stageselect.speed_frame,TRUE);
+	DrawRotaGraph(725,500,0.7,0.0,stageselect.speed_frame,TRUE);
 	//枠の描画
 	DrawRotaGraph(SELECT_TROUT_X, 420.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
 	DrawRotaGraph(SELECT_TROUT_X, 300.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
