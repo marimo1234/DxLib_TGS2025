@@ -102,7 +102,9 @@ void StageSelectResourceInit(void)
 	//背景
 		stageselect.background_image = LoadGraph("Resource/images/StageSelect3.png");
 		// スピードの画像
-		stageselect.speed_frame = LoadGraph("Resource/images/Speedframe.png");
+		stageselect.speed_frame = LoadGraph("Resource/images/Speedframe1.png");
+		//スピードの文字画像
+		stageselect.speed_char = LoadGraph("Resource/images/SpeedCharImage.png");
 		//マスの画像
 		stageselect.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
 		stageselect.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
@@ -211,14 +213,17 @@ void StageSelectSceneDraw(void)
 	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
 	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
 
-	//スピードの描画
-	DrawRotaGraph(725,500,0.7,0.0,stageselect.speed_frame,TRUE);
+	//スピード枠の描画
+	DrawRotaGraph(510,510,0.7,0.0,stageselect.speed_frame,TRUE);
+	//スピードの文字描画
+	DrawRotaGraph(470, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
+
 	//枠の描画
-	DrawRotaGraph(SELECT_TROUT_X, 420.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 300.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 540.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
+	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
+	DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
+	DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
 	//数字の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 420.0f, 0.4, 0.0, stageselect.number_image[stageselect.number], TRUE);
+	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.4, 0.0, stageselect.number_image[stageselect.number], TRUE);
 
 	//ミニマップの描画
 	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.stage_image[stageselect.number], TRUE);
