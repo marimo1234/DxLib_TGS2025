@@ -67,7 +67,10 @@ void ToolInit(void)
 	tool.item_number = ePickaxe;
 	tool.old_position_direction = eLP;
 	tool.now_base_state = eBlank;
-	tool.road_add_Acount[6] = {};
+	for (int i = 0; i < 6; i++)
+	{
+		tool.road_add_Acount[i] = 0;
+	}
 	tool.woodroad_add_Acount = 0;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
@@ -177,6 +180,8 @@ void ToolResourceInit(void)
 	//木の道を置いた時のアニメーション
 	tool_img.put_woodroad[0] = LoadGraph("Resource/images/put1.png");
 	tool_img.put_woodroad[1] = LoadGraph("Resource/images/put2.png");
+	//道が増えた時のアニメーション
+	LoadDivGraph("Resource/images/make_effect.png", 7, 7, 1, 60, 60, tool_img.make_animation);
 }
 
 //更新
@@ -213,6 +218,7 @@ void ToolDraw(void)
 	RB_Draw(GetCar());
 	LB_Draw(GetCar());
 
+	Road_Add_Animation();
 	
 
 	//アニメーション
@@ -228,6 +234,8 @@ void ToolDraw(void)
 
 	//設置可能位置表示
 	Possible_Prace(GetStage(), GetCar());
+
+	DrawFormatString(100, 200, GetColor(255, 255, 255), "%d", tool.road_add_Acount[0]);
 }
 
 //アイテムセレクトの動き
@@ -604,17 +612,47 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 			tool.rock_sub_flag = true;
 			Play_Sound_Tool2(tool_se.make_road, 100);
 			
-			tool.road_add_Acount[0]++;
+			if (tool.rock_sub_flag)
+			{
+				if (tool.road_add_Acount[0] > 0)
+				{
+					tool.road_add_Acount[1]++;
+				}
+				else if (tool.road_add_Acount[0] == 0)
+				{
+					tool.road_add_Acount[0]++;
+				}
+			}
 		}
 	}
 }
 
 void Road_Add_Animation(void)
 {
-	/*if (tool.road_add_Acount[0] > 0)
+	int num;
+	int num2;
+	num = tool.road_add_Acount[0] / 10;
+	num2 = tool.road_add_Acount[1] / 10;
+
+
+	if (tool.road_add_Acount[0] > 70)
 	{
-		DrawFormatString
-	}*/
+		tool.road_add_Acount[0] = 0;
+	}
+	if (tool.road_add_Acount[0] > 0)
+	{
+		DrawRotaGraph(100, 100-tool.road_add_Acount[0], 1.0, 0.0, tool_img.make_animation[num], TRUE);
+		tool.road_add_Acount[0]++;
+	}
+	if (tool.road_add_Acount[1] > 70)
+	{
+		tool.road_add_Acount[1] = 0;
+	}
+	if (tool.road_add_Acount[1] > 0)
+	{
+		DrawRotaGraph(50, 100 - tool.road_add_Acount[1], 1.0, 0.0, tool_img.make_animation[num2], TRUE);
+		tool.road_add_Acount[1]++;
+	}
 }
 
 //木の道の数を増やす

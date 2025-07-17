@@ -107,6 +107,7 @@ struct Tool_Img
 	
 	int put_road[3];
 	int put_woodroad[3];
+	int make_animation[7];
 
 	float item_frame_ex_rate;	//アイテム枠の拡大率
 	float pickaxe_ex_rate;		//つるはしの拡大率
@@ -138,5 +139,7 @@ void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
 void Search_Old_Position(void);
+
+void Road_Add_Animation(void);
 
 const Tool* Get_Tool(void);
