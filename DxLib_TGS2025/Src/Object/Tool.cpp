@@ -69,17 +69,6 @@ void ToolInit(void)
 	tool.item_number = ePickaxe;
 	tool.old_position_direction = eLP;
 	tool.now_base_state = eBlank;
-	for (int i = 0; i < 6; i++)
-	{
-		tool_img.make_rx[i] = 0;
-		tool_img.make_ry[i] = 0;
-		tool.road_add_Acount[i] = 0;
-		tool_img.makeR_Anum[i] = 0;
-		tool_img.make_wrx[i] = 0;
-		tool_img.make_wry[i] = 0;
-		tool.woodroad_add_Acount[i] = 0;
-		tool_img.makeWR_Anum[i] = 0;
-	}
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -781,6 +770,17 @@ void Tool_Reset(const CreateStage*stage,const InGame*ingame)
 	tool_img.road_ex_rate = 0.6;
 	tool_img.road_num_ex_rate = 1.0;
 	tool_img.woodroad_num_ex_rate = 1.0;
+	for (int i = 0; i < 6; i++)
+	{
+		tool_img.make_rx[i] = 0;
+		tool_img.make_ry[i] = 0;
+		tool.road_add_Acount[i] = 0;
+		tool_img.makeR_Anum[i] = 0;
+		tool_img.make_wrx[i] = 0;
+		tool_img.make_wry[i] = 0;
+		tool.woodroad_add_Acount[i] = 0;
+		tool_img.makeWR_Anum[i] = 0;
+	}
 	
 	for (int j = 0; j < 7; j++)
 	{
