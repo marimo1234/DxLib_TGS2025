@@ -58,7 +58,7 @@ void ObstacleManagerResourceInit(void)
 	LoadDivGraph("Resource/images/mole_animation1.png", 4, 4, 1, 80, 80, mole.rock1_image);
 	LoadDivGraph("Resource/images/mole_animation2.png", 4, 4, 1, 80, 80, mole.rock2_image);
 
-	LoadDivGraph("Resource/images/woodmole_animation2.png", 4, 4, 1, 80, 80, mole.wood_image);
+	LoadDivGraph("Resource/images/woodmole_animation0.png", 4, 4, 1, 80, 80, mole.wood_image);
 
 	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
 

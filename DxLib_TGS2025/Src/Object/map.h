@@ -10,6 +10,7 @@ struct CreateStage
 	int beside;		//横
 	int vertical;		//縦
 	int kinds;		//ステージの種類
+	int char_count;
 	int stage_x;
 	int stage_y;
 	bool start;

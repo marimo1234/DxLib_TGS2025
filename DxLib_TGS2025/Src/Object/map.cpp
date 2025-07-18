@@ -7,6 +7,7 @@
 #include "../Object/Cursor.h"
 #include "../Scene/InGame/InGameScene.h"
 
+#include <math.h>
 #define MAP_TROUT_LENGTH (80)
 
 CreateStage stage;
@@ -96,7 +97,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 
-	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.number);
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
 }
 
 const CreateStage* GetStage(void)
@@ -111,6 +112,7 @@ void StageLoad(void)
 	stage.beside = 0;
 	stage.vertical = 0;
 	stage.kinds = 0;
+	stage.char_count = 1;
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < 12; i++)
@@ -145,14 +147,25 @@ void StageLoad(void)
 		}
 		else if (stage.kinds == ',')
 		{
+			stage.beside++;
+			stage.char_count = 0;
 			continue;
 		}
 		else
 		{
 			if (stage.beside < 12 && stage.vertical < 7)
 			{
-				stage.array[stage.beside][stage.vertical] = stage.kinds - '0';
-				stage.beside++;
+				switch (stage.char_count)
+				{
+				case 0:
+					stage.array[stage.beside][stage.vertical] = stage.kinds - '0';
+					stage.char_count++;
+					break;
+				case 1:
+					stage.array[stage.beside][stage.vertical] = stage.array[stage.beside][stage.vertical] * 10 + stage.kinds - '0';
+					break;
+				}
+				
 			}
 		}
 	}
@@ -178,7 +191,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 			case 2://石
 					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
 				break;
-			case 3://穴
+			case 3://ロックモグラ
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, mole->animation[x][y], TRUE);
 				break;
 			case 4://道
@@ -198,6 +211,9 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				break;
 			case 9://山
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
+				break;
+			case 10://ウッドモグラ
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 1.0, 0.0, mole->wood_image[0], TRUE);
 				break;
 			}
 
