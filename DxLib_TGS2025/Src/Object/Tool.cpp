@@ -599,7 +599,7 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//岩の所持数が1以上なら
-	if (rock->item_num >= 1|| pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
+	if (rock->item_num >= 1)
 	{
 		//ゴールとゲームオーバーじゃないじゃら
 		if (car->goal_flag == false && car->direction != eStop)
