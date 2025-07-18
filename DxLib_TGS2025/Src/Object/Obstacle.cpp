@@ -151,6 +151,11 @@ void MoleRandomDirection(const CreateStage* stage)
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 			mole.warn_flag = true;// マスを赤くする警告
 		}
+		for (int i = 0; i < stage->woodmole_count; i++)
+		{
+			mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]] = GetRand(3);//ランダム方向を格納
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
+		}
 
 	}
 	//　手を挙げるアニメーション
@@ -208,6 +213,10 @@ void MolePutFlagReset(void)
 			{
 				mole.put_rock_flag[i][j] = false;
 			}
+			if (mole.put_wood_flag[i][j] == true)
+			{
+				mole.put_wood_flag[i][j] = false;
+			}
 		}
 	}
 }
@@ -217,31 +226,63 @@ void MolePutRockFlag(const CreateStage* stage)
 {
 	for (int i = 0; i < stage->mole_count; i++)
 	{
-
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 		{
 		case 0://　下
-			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
+			if (stage->mole_y[i] != mole.put_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] + 1] = true;
 			}
 			break;
 		case 1://　上
-			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+			if (stage->mole_y[i] != mole.put_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i]][stage->mole_y[i] - 1] = true;
 			}
 			break;
 		case 2://　左
-			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.put_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] - 1][stage->mole_y[i]] = true;
 			}
 			break;
 		case 3://　右
-			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.put_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
 			{
 				mole.put_rock_flag[stage->mole_x[i] + 1][stage->mole_y[i]] = true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < stage->woodmole_count; i++)
+	{
+		switch (mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]])
+		{
+		case 0://　下
+			if (stage->woodmole_y[i] != mole.put_y_max && stage->array[stage->woodmole_x[i]][stage->woodmole_y[i] + 1] == 0)
+			{
+				mole.put_wood_flag[stage->woodmole_x[i]][stage->woodmole_y[i] + 1] = true;
+			}
+			break;
+		case 1://　上
+			if (stage->woodmole_y[i] != mole.put_y_min && stage->array[stage->woodmole_x[i]][stage->woodmole_y[i] - 1] == 0)
+			{
+				mole.put_wood_flag[stage->woodmole_x[i]][stage->woodmole_y[i] - 1] = true;
+			}
+			break;
+		case 2://　左
+			if (stage->woodmole_x[i] != mole.put_x_min && stage->array[stage->woodmole_x[i] - 1][stage->woodmole_y[i]] == 0)
+			{
+				mole.put_wood_flag[stage->woodmole_x[i] - 1][stage->woodmole_y[i]] = true;
+			}
+			break;
+		case 3://　右
+			if (stage->woodmole_x[i] != mole.put_x_max && stage->array[stage->woodmole_x[i] + 1][stage->woodmole_y[i]] == 0)
+			{
+				mole.put_wood_flag[stage->woodmole_x[i] + 1][stage->woodmole_y[i]] = true;
 			}
 			break;
 		default:
@@ -260,25 +301,25 @@ void MolePutWarnDraw(const CreateStage* stage)
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
 		{
 		case 0://　下
-			if (stage->mole_y[i] != mole.rock_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
+			if (stage->mole_y[i] != mole.put_y_max && stage->array[stage->mole_x[i]][stage->mole_y[i] + 1] == 0)
 			{
 				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] + 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
 		case 1://　上
-			if (stage->mole_y[i] != mole.rock_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
+			if (stage->mole_y[i] != mole.put_y_min && stage->array[stage->mole_x[i]][stage->mole_y[i] - 1] == 0)
 			{
 				DrawRotaGraph(stage->mole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->mole_y[i] - 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
 		case 2://　左
-			if (stage->mole_x[i] != mole.rock_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.put_x_min && stage->array[stage->mole_x[i] - 1][stage->mole_y[i]] == 0)
 			{
 				DrawRotaGraph((stage->mole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
 		case 3://　右
-			if (stage->mole_x[i] != mole.rock_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
+			if (stage->mole_x[i] != mole.put_x_max && stage->array[stage->mole_x[i] + 1][stage->mole_y[i]] == 0)
 			{
 				DrawRotaGraph((stage->mole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, stage->mole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
@@ -287,6 +328,41 @@ void MolePutWarnDraw(const CreateStage* stage)
 			break;
 		}
 	}
+
+	for (int i = 0; i < stage->woodmole_count; i++)
+	{
+		switch (mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]])
+		{
+		case 0://　下
+			if (stage->woodmole_y[i] != mole.put_y_max && stage->array[stage->woodmole_x[i]][stage->woodmole_y[i] + 1] == 0)
+			{
+				DrawRotaGraph(stage->woodmole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i] + 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 1://　上
+			if (stage->woodmole_y[i] != mole.put_y_min && stage->array[stage->woodmole_x[i]][stage->woodmole_y[i] - 1] == 0)
+			{
+				DrawRotaGraph(stage->woodmole_x[i] * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i] - 1) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 2://　左
+			if (stage->woodmole_x[i] != mole.put_x_min && stage->array[stage->woodmole_x[i] - 1][stage->woodmole_y[i]] == 0)
+			{
+				DrawRotaGraph((stage->woodmole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i]) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		case 3://　右
+			if (stage->woodmole_x[i] != mole.put_x_max && stage->array[stage->woodmole_x[i] + 1][stage->woodmole_y[i]] == 0)
+			{
+				DrawRotaGraph((stage->woodmole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i]) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+			}
+			break;
+		default:
+			break;
+		}
+
+	}
+
 }
 
 //　モグラ変数の初期化
@@ -301,12 +377,20 @@ void MoleInit(const CreateStage* stage)
 				mole.image_num[i][j] = 0;
 				mole.animation[i][j] = mole.image[mole.image_num[i][j]];
 			}
+			if (stage->array[i][j] == 10)
+			{
+				mole.wood_image_num[i][j] = 0;
+				mole.wood_anim[i][j] = mole.wood_image[mole.wood_image_num[i][j]];
+			}
 			else
 			{
 				mole.image_num[i][j] = -1;
 				mole.animation[i][j] = -1;
+				mole.wood_image_num[i][j] = -1;
+				mole.wood_anim[i][j] = -1;
 			}
 			mole.put_rock_flag[i][j] = false;
+			mole.put_wood_flag[i][j] = false;
 		}
 	}
 }
@@ -317,16 +401,16 @@ void GetMoleStageNum(const InGame* ingame)
 	switch (ingame->stage_num)
 	{
 	case eOne:
-		mole.rock_x_min = 1;
-		mole.rock_x_max = 9;
-		mole.rock_y_min = 3;
-		mole.rock_y_max = 4;
+		mole.put_x_min = 1;
+		mole.put_x_max = 9;
+		mole.put_y_min = 3;
+		mole.put_y_max = 4;
 		break;
 	default:
-		mole.rock_x_min = 0;
-		mole.rock_x_max = 11;
-		mole.rock_y_min = 0;
-		mole.rock_y_max = 6;
+		mole.put_x_min = 0;
+		mole.put_x_max = 11;
+		mole.put_y_min = 0;
+		mole.put_y_max = 6;
 		break;
 	}
 }

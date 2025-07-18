@@ -213,7 +213,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
 				break;
 			case 10://ウッドモグラ
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 1.0, 0.0, mole->wood_image[0], TRUE);
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
 				break;
 			}
 
@@ -313,6 +313,38 @@ void MolePutRock(const Mole* mole, const Rock* rock, int x, int y)
 		//フラグの初期化
 		stage.rock_count_flag = false;
 	}
+
+	//置くフラグがtrueなら
+	if (mole->put_wood_flag[x][y] == true)
+	{
+		//岩を描画
+		stage.array[x][y] = 1;
+		//置かれた岩が何番目の岩か数えるフラグ
+		stage.wood_count_flag = true;
+
+		//今まで岩があった場所と被っているか
+		for (int k = 0; k < stage.wood_count; k++)
+		{
+			//被っていないなら新しい番目に配列番号を入れる
+			if (stage.wood_x[k] != x || stage.wood_y[k] != y)
+			{
+				stage.wood_x[stage.wood_count] = x;
+				stage.wood_y[stage.wood_count] = y;
+			}
+			//もし場所が被っているなら番号を更新しない
+			else if (stage.wood_x[k] == x && stage.wood_y[k] == y)
+			{
+				stage.wood_count_flag = false;
+			}
+		}
+		//新しい番目に入れたときに番号を更新
+		if (stage.wood_count_flag == true)
+		{
+			stage.wood_count++;
+		}
+		//フラグの初期化
+		stage.wood_count_flag = false;
+	}
 }
 
 
@@ -322,12 +354,13 @@ void MapValueInit(void)
 	int i = 0;	//木
 	stage.rock_count = 0;	//岩
 	stage.rock_count_flag = 0;
-	stage.mole_count = 0;	//穴
+	stage.mole_count = 0;	//モグラ
 	int g = 0;		//道
 	int h = 0;		//丸太の道
 	//int k = 0;      //湖の画像
 	int l = 0;      //ゴールの画像  
 	int m = 0;      //動けないマスの画像
+	stage.woodmole_count = 0;    //ウッドモグラ
 
 	for (int y = 0; y < 7; y++)
 	{
@@ -360,16 +393,15 @@ void MapValueInit(void)
 				stage.wood_road_y[h] = y;
 				h++;
 				break;
-			case 6:
-				/*stage.lake_x[k] = x;
-				stage.lake_y[k] = y;
-				k++;*/
-				break;
 			case 7:
 				stage.goal_x[l] = x;
 				stage.goal_y[l] = y;
 				l++;
 				break;
+			case 10:
+				stage.woodmole_x[stage.woodmole_count] = x;
+				stage.woodmole_y[stage.woodmole_count] = y;
+				stage.woodmole_count++;
 			}
 		}
 	}

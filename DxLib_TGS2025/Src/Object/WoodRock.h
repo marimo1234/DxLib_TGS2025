@@ -43,7 +43,10 @@ struct Wood
 	int add_anim_x[12][7];
 	int sway_anim[12][7];
 
-
+	int put_effect_image[7];
+	bool put_effect_flag[12][7];
+	int put_effect_num[12][7];
+	int put_effect_count[12][7];
 };
 
 struct Rock
