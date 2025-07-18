@@ -97,7 +97,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
+	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
 }
 
 const CreateStage* GetStage(void)
