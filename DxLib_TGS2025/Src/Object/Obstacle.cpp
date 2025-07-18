@@ -54,19 +54,9 @@ void ObstacleManagerInit(void)
 
 void ObstacleManagerResourceInit(void)
 {
-	mole.image[0] = LoadGraph("Resource/images/mole_down.png");
-	mole.image[1] = LoadGraph("Resource/images/mole_up.png");
-	mole.image[2] = LoadGraph("Resource/images/mole_left.png");
-	mole.image[3] = LoadGraph("Resource/images/mole_right.png");
-	mole.rock1_image[0] = LoadGraph("Resource/images/mole_down_rock1.png");
-	mole.rock1_image[1] = LoadGraph("Resource/images/mole_up_rock1.png");
-	mole.rock1_image[2] = LoadGraph("Resource/images/mole_left_rock1.png");
-	mole.rock1_image[3] = LoadGraph("Resource/images/mole_right_rock1.png");
-
-	mole.rock2_image[0] = LoadGraph("Resource/images/mole_down_rock2.png");
-	mole.rock2_image[1] = LoadGraph("Resource/images/mole_up_rock2.png");
-	mole.rock2_image[2] = LoadGraph("Resource/images/mole_left_rock2.png");
-	mole.rock2_image[3] = LoadGraph("Resource/images/mole_right_rock2.png");
+	LoadDivGraph("Resource/images/mole_animation.png", 4, 4, 1, 80, 80, mole.image);
+	LoadDivGraph("Resource/images/mole_animation1.png", 4, 4, 1, 80, 80, mole.rock1_image);
+	LoadDivGraph("Resource/images/mole_animation2.png", 4, 4, 1, 80, 80, mole.rock2_image);
 
 	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
 
