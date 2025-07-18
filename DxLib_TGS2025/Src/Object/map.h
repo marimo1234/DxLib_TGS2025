@@ -33,11 +33,16 @@ struct CreateStage
 	int lake_y[84];*/
 	int goal_x[5];
 	int goal_y[5];
+	int woodmole_x[84];
+	int woodmole_y[84];
 
 	int wood_count;
 	int rock_count;
 	int rock_count_flag;
 	int mole_count;
+	int woodmole_count;
+	int wood_count_flag;
+	
 
 	bool mitibiki_flag;
 	

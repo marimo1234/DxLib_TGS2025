@@ -28,23 +28,30 @@ struct Mole
 	bool start;
 	bool menu_flag;
 	bool operable_flag;
+
 	int image[4];
 	int rock1_image[4];
 	int rock2_image[4];
-	int wood_image[4];
 	int image_num[12][7];
 	int animation[12][7];
 	int image_count;
 	bool put_rock_flag[12][7];
 
+	int wood_image[4];
+	int wood_image_num[12][7];
+	int wood_anim[12][7];
+	int wood_image_count;
+	bool put_wood_flag[12][7];
+
+
 	int warn_image;
 	bool warn_flag;
 
 
-	int rock_x_max;
-	int rock_x_min;
-	int rock_y_min;
-	int rock_y_max;
+	int put_x_max;
+	int put_x_min;
+	int put_y_min;
+	int put_y_max;
 	
 };
 
