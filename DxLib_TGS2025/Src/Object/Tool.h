@@ -107,7 +107,11 @@ struct Tool_Img
 	
 	int put_road[3];
 	int put_woodroad[3];
+
+	int make_rx[6];
+	int make_ry[6];		
 	int make_animation[7];
+	int make_Anum[6];
 
 	float item_frame_ex_rate;	//アイテム枠の拡大率
 	float pickaxe_ex_rate;		//つるはしの拡大率

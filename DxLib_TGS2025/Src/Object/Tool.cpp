@@ -69,7 +69,10 @@ void ToolInit(void)
 	tool.now_base_state = eBlank;
 	for (int i = 0; i < 6; i++)
 	{
+		tool_img.make_rx[i] = 0.0f;
+		tool_img.make_ry[i] = 0.0f;
 		tool.road_add_Acount[i] = 0;
+		tool_img.make_Anum[i] = 0;
 	}
 	tool.woodroad_add_Acount = 0;
 	tool.road_num = 0;
@@ -236,6 +239,11 @@ void ToolDraw(void)
 	Possible_Prace(GetStage(), GetCar());
 
 	DrawFormatString(100, 200, GetColor(255, 255, 255), "%d", tool.road_add_Acount[0]);
+	DrawFormatString(100, 220, GetColor(255, 255, 255), "%d", tool.road_add_Acount[1]);
+	DrawFormatString(100, 240, GetColor(255, 255, 255), "%d", tool.road_add_Acount[2]);
+	DrawFormatString(100, 260, GetColor(255, 255, 255), "%d", tool.road_add_Acount[3]);
+	DrawFormatString(100, 280, GetColor(255, 255, 255), "%d", tool.road_add_Acount[4]);
+	DrawFormatString(100, 300, GetColor(255, 255, 255), "%d", tool.road_add_Acount[5]);
 }
 
 //アイテムセレクトの動き
@@ -611,16 +619,26 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 			tool.road_num++;
 			tool.rock_sub_flag = true;
 			Play_Sound_Tool2(tool_se.make_road, 100);
-			
-			if (tool.rock_sub_flag)
+
+			for (int i = 0; i < 6; i++)
 			{
-				if (tool.road_add_Acount[0] > 0)
+				if (i == 0&&tool.road_add_Acount[0]==0)
 				{
-					tool.road_add_Acount[1]++;
+					tool_img.make_rx[i] = GetRand(400) % (900 - 860 + 1) + 860;
+					tool_img.make_ry[i] = 650;
+					tool.road_add_Acount[i]++;
+					break;
 				}
-				else if (tool.road_add_Acount[0] == 0)
+				else if (i != 0 && tool.road_add_Acount[i] == 0)
 				{
-					tool.road_add_Acount[0]++;
+					tool_img.make_rx[i] = GetRand(400) % (900 - 860 + 1) + 860;
+					tool_img.make_ry[i] = 650;
+					tool.road_add_Acount[i]++;
+					break;
+				}
+				else
+				{
+					continue;
 				}
 			}
 		}
@@ -629,29 +647,20 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 
 void Road_Add_Animation(void)
 {
-	int num;
-	int num2;
-	num = tool.road_add_Acount[0] / 10;
-	num2 = tool.road_add_Acount[1] / 10;
-
-
-	if (tool.road_add_Acount[0] > 70)
+	for (int i = 0; i < 6; i++)
 	{
-		tool.road_add_Acount[0] = 0;
-	}
-	if (tool.road_add_Acount[0] > 0)
-	{
-		DrawRotaGraph(100, 100-tool.road_add_Acount[0], 1.0, 0.0, tool_img.make_animation[num], TRUE);
-		tool.road_add_Acount[0]++;
-	}
-	if (tool.road_add_Acount[1] > 70)
-	{
-		tool.road_add_Acount[1] = 0;
-	}
-	if (tool.road_add_Acount[1] > 0)
-	{
-		DrawRotaGraph(50, 100 - tool.road_add_Acount[1], 1.0, 0.0, tool_img.make_animation[num2], TRUE);
-		tool.road_add_Acount[1]++;
+		
+		if (tool.road_add_Acount[i] > 69)
+		{
+			tool.road_add_Acount[i] = 0;
+			continue;
+		}
+		if (tool.road_add_Acount[i]>0)
+		{
+			tool_img.make_Anum[i] = tool.road_add_Acount[i] / 10;
+			DrawRotaGraph(tool_img.make_rx[i], tool_img.make_ry[i] - tool.road_add_Acount[i], 0.5, 0.0, tool_img.make_animation[tool_img.make_Anum[i]], TRUE);
+			tool.road_add_Acount[i]++;
+		}
 	}
 }
 
