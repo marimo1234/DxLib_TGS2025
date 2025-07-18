@@ -42,7 +42,7 @@ struct Tool
 
 	int item_number;				//選択しているアイテムの種類
 	int road_add_Acount[6];			//道の加算アニメーションカウント
-	int woodroad_add_Acount;		//木の道の加算アニメーションカウント
+	int woodroad_add_Acount[6];		//木の道の加算アニメーションカウント
 	int road_num;					//道の所持数
 	int road_flag[12][7];			//道を置いたことを知らせるフラグ
 	int wood_road_num;				//木の道の所持数
@@ -108,10 +108,14 @@ struct Tool_Img
 	int put_road[3];
 	int put_woodroad[3];
 
-	int make_rx[6];
-	int make_ry[6];		
 	int make_animation[7];
-	int make_Anum[6];
+	int make_animation2[7];
+	int make_rx[6];				//道の数を増やしたときのアニメーション描画位置（ｘ
+	int make_ry[6];				//道の数を増やしたときのアニメーション描画位置（ｙ
+	int makeR_Anum[6];			//道の数を増やしたときのアニメーション描画画像番号
+	int make_wrx[6];			//木の道の数を増やしたときのアニメーション描画位置（ｘ
+	int make_wry[6];			//木の道の数を増やしたときのアニメーション描画位置（ｙ
+	int makeWR_Anum[6];			//木の道の数を増やしたときのアニメーション描画画像番号
 
 	float item_frame_ex_rate;	//アイテム枠の拡大率
 	float pickaxe_ex_rate;		//つるはしの拡大率
@@ -143,7 +147,5 @@ void Base_Chenge(void);
 void Road_FLAG_OFF(void);
 void Add_Road_Num(void);
 void Search_Old_Position(void);
-
-void Road_Add_Animation(void);
 
 const Tool* Get_Tool(void);

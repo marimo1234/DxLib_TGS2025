@@ -51,6 +51,8 @@ void Put_Road_Animation(int x, int y);
 void Put_WoodRoad_Animation(int x, int y);
 void RB_Draw(const Car*car);
 void LB_Draw(const Car*car);
+void Road_Add_Animation(const Car*car);
+void WoodRoad_Add_Animation(const Car*car);
 
 void Play_Sound_Tool(int sound,int volume);
 void Play_Sound_Tool2(int sound,int volume);
@@ -69,12 +71,15 @@ void ToolInit(void)
 	tool.now_base_state = eBlank;
 	for (int i = 0; i < 6; i++)
 	{
-		tool_img.make_rx[i] = 0.0f;
-		tool_img.make_ry[i] = 0.0f;
+		tool_img.make_rx[i] = 0;
+		tool_img.make_ry[i] = 0;
 		tool.road_add_Acount[i] = 0;
-		tool_img.make_Anum[i] = 0;
+		tool_img.makeR_Anum[i] = 0;
+		tool_img.make_wrx[i] = 0;
+		tool_img.make_wry[i] = 0;
+		tool.woodroad_add_Acount[i] = 0;
+		tool_img.makeWR_Anum[i] = 0;
 	}
-	tool.woodroad_add_Acount = 0;
 	tool.road_num = 0;
 	tool.wood_road_num = 0;
 	tool_start = false;
@@ -185,6 +190,7 @@ void ToolResourceInit(void)
 	tool_img.put_woodroad[1] = LoadGraph("Resource/images/put2.png");
 	//道が増えた時のアニメーション
 	LoadDivGraph("Resource/images/make_effect.png", 7, 7, 1, 60, 60, tool_img.make_animation);
+	LoadDivGraph("Resource/images/make_effect2.png", 7, 7, 1, 60, 60, tool_img.make_animation2);
 }
 
 //更新
@@ -221,8 +227,9 @@ void ToolDraw(void)
 	RB_Draw(GetCar());
 	LB_Draw(GetCar());
 
-	Road_Add_Animation();
-	
+	//数アニメーション
+	Road_Add_Animation(GetCar());
+	WoodRoad_Add_Animation(GetCar());
 
 	//アニメーション
 	if (tool.put_road_flag == true)
@@ -234,16 +241,8 @@ void ToolDraw(void)
 		Put_WoodRoad_Animation(tool.base_x, tool.base_y);
 	}
 
-
 	//設置可能位置表示
 	Possible_Prace(GetStage(), GetCar());
-
-	DrawFormatString(100, 200, GetColor(255, 255, 255), "%d", tool.road_add_Acount[0]);
-	DrawFormatString(100, 220, GetColor(255, 255, 255), "%d", tool.road_add_Acount[1]);
-	DrawFormatString(100, 240, GetColor(255, 255, 255), "%d", tool.road_add_Acount[2]);
-	DrawFormatString(100, 260, GetColor(255, 255, 255), "%d", tool.road_add_Acount[3]);
-	DrawFormatString(100, 280, GetColor(255, 255, 255), "%d", tool.road_add_Acount[4]);
-	DrawFormatString(100, 300, GetColor(255, 255, 255), "%d", tool.road_add_Acount[5]);
 }
 
 //アイテムセレクトの動き
@@ -611,7 +610,7 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//岩の所持数が1以上なら
-	if (rock->item_num >= 1)
+	if (rock->item_num >= 1|| pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress)
 	{
 		//ゴールとゲームオーバーじゃないじゃら
 		if (car->goal_flag == false && car->direction != eStop)
@@ -636,30 +635,30 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 					tool.road_add_Acount[i]++;
 					break;
 				}
-				else
-				{
-					continue;
-				}
 			}
 		}
 	}
 }
 
-void Road_Add_Animation(void)
+//道が増えた時の+1を描画する
+void Road_Add_Animation(const Car*car)
 {
-	for (int i = 0; i < 6; i++)
+	if (tool_start == true && car->direction != eStop && car->goal_flag == false)
 	{
-		
-		if (tool.road_add_Acount[i] > 69)
+		for (int i = 0; i < 6; i++)
 		{
-			tool.road_add_Acount[i] = 0;
-			continue;
-		}
-		if (tool.road_add_Acount[i]>0)
-		{
-			tool_img.make_Anum[i] = tool.road_add_Acount[i] / 10;
-			DrawRotaGraph(tool_img.make_rx[i], tool_img.make_ry[i] - tool.road_add_Acount[i], 0.5, 0.0, tool_img.make_animation[tool_img.make_Anum[i]], TRUE);
-			tool.road_add_Acount[i]++;
+
+			if (tool.road_add_Acount[i] > 69)
+			{
+				tool.road_add_Acount[i] = 0;
+				continue;
+			}
+			if (tool.road_add_Acount[i] > 0)
+			{
+				tool_img.makeR_Anum[i] = tool.road_add_Acount[i] / 10;
+				DrawRotaGraph(tool_img.make_rx[i], tool_img.make_ry[i] - tool.road_add_Acount[i], 0.8, 0.0, tool_img.make_animation2[tool_img.makeR_Anum[i]], TRUE);
+				tool.road_add_Acount[i]++;
+			}
 		}
 	}
 }
@@ -681,6 +680,50 @@ void const WoodRoad_Add_Num(const Wood* wood, const Car* car)
 			tool.wood_sub_flag = true;
 			Play_Sound_Tool2(tool_se.make_woodroad, 100); // 木の道を作ったときの音
 
+			for (int i = 0; i < 6; i++)
+			{
+				if (i == 0 && tool.woodroad_add_Acount[0] == 0)
+				{
+					tool_img.make_wrx[i] = GetRand(400) % (980 - 940 + 1) + 940;
+					tool_img.make_wry[i] = 650;
+					tool.woodroad_add_Acount[i]++;
+					break;
+				}
+				else if (i != 0 && tool.woodroad_add_Acount[i] == 0)
+				{
+					tool_img.make_wrx[i] = GetRand(400) % (980 - 940 + 1) + 940;
+					tool_img.make_wry[i] = 650;
+					tool.woodroad_add_Acount[i]++;
+					break;
+				}
+				else
+				{
+					continue;
+				}
+			}
+		}
+	}
+}
+
+//木の道が増えた時の+1を描画する
+void WoodRoad_Add_Animation(const Car*car)
+{
+	if (tool_start == true && car->direction != eStop && car->goal_flag == false)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+
+			if (tool.woodroad_add_Acount[i] > 69)
+			{
+				tool.woodroad_add_Acount[i] = 0;
+				continue;
+			}
+			if (tool.woodroad_add_Acount[i] > 0)
+			{
+				tool_img.makeWR_Anum[i] = tool.woodroad_add_Acount[i] / 10;
+				DrawRotaGraph(tool_img.make_wrx[i], tool_img.make_wry[i] - tool.woodroad_add_Acount[i], 0.8, 0.0, tool_img.make_animation[tool_img.makeWR_Anum[i]], TRUE);
+				tool.woodroad_add_Acount[i]++;
+			}
 		}
 	}
 }
