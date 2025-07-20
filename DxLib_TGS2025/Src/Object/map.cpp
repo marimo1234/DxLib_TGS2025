@@ -317,12 +317,12 @@ void MolePutRock(const Mole* mole, const Rock* rock, int x, int y)
 	//置くフラグがtrueなら
 	if (mole->put_wood_flag[x][y] == true)
 	{
-		//岩を描画
+		//木を描画
 		stage.array[x][y] = 1;
-		//置かれた岩が何番目の岩か数えるフラグ
+		//置かれた木が何番目の木か数えるフラグ
 		stage.wood_count_flag = true;
 
-		//今まで岩があった場所と被っているか
+		//今まで木があった場所と被っているか
 		for (int k = 0; k < stage.wood_count; k++)
 		{
 			//被っていないなら新しい番目に配列番号を入れる
