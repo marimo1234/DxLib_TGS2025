@@ -712,7 +712,7 @@ void GetMolePutPosition(const Mole* mole)
 				rock.hit_count[i][j] = eHit0;
 				rock.animation[i][j] = rock.image[0];
 			}
-			if (mole->put_wood_flag[i][j] == true)
+			else if (mole->put_wood_flag[i][j] == true)
 			{
 				wood.put_effect_flag[i][j] = true;
 				wood.hit_flag[i][j] = false;

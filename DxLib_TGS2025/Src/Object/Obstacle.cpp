@@ -213,7 +213,7 @@ void MolePutFlagReset(void)
 			{
 				mole.put_rock_flag[i][j] = false;
 			}
-			if (mole.put_wood_flag[i][j] == true)
+			else if (mole.put_wood_flag[i][j] == true)
 			{
 				mole.put_wood_flag[i][j] = false;
 			}
@@ -224,6 +224,7 @@ void MolePutFlagReset(void)
 //　岩を置くフラグ
 void MolePutRockFlag(const CreateStage* stage)
 {
+	//ロックモグラ
 	for (int i = 0; i < stage->mole_count; i++)
 	{
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
@@ -257,6 +258,7 @@ void MolePutRockFlag(const CreateStage* stage)
 		}
 	}
 
+	//ウッドモグラ
 	for (int i = 0; i < stage->woodmole_count; i++)
 	{
 		switch (mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]])
@@ -295,7 +297,7 @@ void MolePutRockFlag(const CreateStage* stage)
 
 void MolePutWarnDraw(const CreateStage* stage)
 {
-
+	//　ロックモグラ描画
 	for (int i = 0; i < stage->mole_count; i++)
 	{
 		switch (mole.image_num[stage->mole_x[i]][stage->mole_y[i]])
@@ -329,6 +331,7 @@ void MolePutWarnDraw(const CreateStage* stage)
 		}
 	}
 
+	//ウッドモグラ描画
 	for (int i = 0; i < stage->woodmole_count; i++)
 	{
 		switch (mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]])
@@ -377,7 +380,7 @@ void MoleInit(const CreateStage* stage)
 				mole.image_num[i][j] = 0;
 				mole.animation[i][j] = mole.image[mole.image_num[i][j]];
 			}
-			if (stage->array[i][j] == 10)
+			else if (stage->array[i][j] == 10)
 			{
 				mole.wood_image_num[i][j] = 0;
 				mole.wood_anim[i][j] = mole.wood_image[mole.wood_image_num[i][j]];
