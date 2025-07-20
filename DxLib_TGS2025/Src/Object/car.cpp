@@ -26,6 +26,8 @@ void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
 void CarLakeAnimation(void);
 void CarLakeDraw(int carx, int cary,const InGame*ingame);
+void CarBoomAnimation(void);
+void CarBoomDraw(int carx, int cary);
 
 Car car;
 GameOver gameover;
@@ -54,6 +56,10 @@ void CarInit(void)
 	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
 	car.lake_num = 0;//湖の中に落ちるアニメーションナンバー
 	car.lake_mul = 0;//湖の中に落ちるアニメーション**
+
+	car.boom_flag = false;//爆発のアニメーションフラグ
+	car.boom_count = 0;//爆発のアニメーションカウント
+	car.boom_num = 0;//爆発のアニメーションナンバー
 
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
@@ -149,6 +155,11 @@ void CarResourceInit(void)
 	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
 	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
+	car.boom_animtion[0] = LoadGraph("Resource/images/boom0.png");
+	car.boom_animtion[1] = LoadGraph("Resource/images/boom1.png");
+	car.boom_animtion[2] = LoadGraph("Resource/images/boom2.png");
+	car.boom_animtion[3] = LoadGraph("Resource/images/boom3.png");
+
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
@@ -183,8 +194,7 @@ void CarManagerUpdate(void)
 		CarMovePosition(GetStage());
 		CarIvyAnimation();
 		CarLakeAnimation();
-	
-
+		CarBoomAnimation();
 	}
 	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
@@ -207,6 +217,7 @@ void CarDraw(void)
 	//ツタの描画
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y,GetInGame());
+	CarBoomDraw(car.position.x, car.position.y);
 	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
 		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
 		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
@@ -216,7 +227,7 @@ void CarDraw(void)
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
-	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d",car.warn_image_flag);*/
+	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d %d",car.boom_count,car.boom_flag);*/
 }
 
 
@@ -287,7 +298,9 @@ void CarReset(void)
 	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
 	car.lake_num = 0;//湖の中に落ちるアニメーションナンバー
 
-
+	car.boom_flag = false;//爆発するアニメーションフラグ
+	car.boom_count = 0;//爆発するアニメーションカウント
+	car.boom_num = 0;//爆発するアニメーションナンバー
 
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
@@ -558,6 +571,10 @@ void CarDetectPosition(const CreateStage* stage)
 					{
 						car.lake_flag = true;
 					}
+					else if (stage->array[car.current_x][car.current_y - 1] == 2 && car.next_y[car.road_count] != 0)
+					{
+						car.boom_flag = true;
+					}
 					else
 					{
 						car.ivy_flag = true;
@@ -575,6 +592,10 @@ void CarDetectPosition(const CreateStage* stage)
 					{
 						car.lake_flag = true;
 					}
+					else if (stage->array[car.current_x][car.current_y + 1] == 2 && car.next_y[car.road_count] != 6)
+					{
+						car.boom_flag = true;
+					}
 					else
 					{
 						car.ivy_flag = true;
@@ -591,6 +612,10 @@ void CarDetectPosition(const CreateStage* stage)
 					{
 						car.lake_flag = true;
 					}
+					else if (stage->array[car.current_x + 1][car.current_y] == 2 && car.next_x[car.road_count] != 11)
+					{
+						car.boom_flag = true;
+					}
 					else
 					{
 						car.ivy_flag = true;
@@ -606,6 +631,10 @@ void CarDetectPosition(const CreateStage* stage)
 					if (stage->array[car.current_x - 1][car.current_y] == 6 && car.next_x[car.road_count] != 0)
 					{
 						car.lake_flag = true;
+					}
+					else if (stage->array[car.current_x - 1][car.current_y] == 2 && car.next_x[car.road_count] != 0)
+					{
+						car.boom_flag = true;
 					}
 					else
 					{
@@ -873,6 +902,42 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 else if (car.lake_flag == false)
 	 {
 		 StopSoundMem(car.lake_se);
+	 }
+ }
+
+ void CarBoomAnimation(void)
+ {
+	 if (car.boom_flag == true)
+	 {
+		 car.boom_count++;
+		 if (car.boom_count > 30 && car.boom_count % 10 == 0 && car.boom_num < 4)
+		 {
+			 car.boom_num++;
+		 }
+		 if (car.start == false)
+		 {
+			 car.boom_flag = false;
+			 car.boom_count = 0;
+			 car.boom_num = 0;
+		 }
+	 }
+ }
+
+ void CarBoomDraw(int carx,int cary)
+ {
+	 if (car.boom_flag == true)
+	 {
+		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+		 if (car.boom_count > 30)
+		 {
+
+			 DrawRotaGraphF(carx+4.0f, cary-4.0f, 0.3, 0.0, car.boom_animtion[car.boom_num], TRUE);
+
+			 /*if (car.boom_count < 60)
+			 {
+				 Play_Sound_Car(car.boom_se, 150);
+			 }*/
+		 }
 	 }
  }
 
