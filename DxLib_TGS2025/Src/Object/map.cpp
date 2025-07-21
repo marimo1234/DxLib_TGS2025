@@ -101,13 +101,15 @@ void MapDraw(void)
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
 
 	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
-	for (int j = 0; j < 7; j++) 
+	
+	//csvの中身を見るString
+	/*for (int j = 0; j < 7; j++) 
 	{
 		for (int i = 0; i < 12; i++)
 		{
 			DrawFormatString(200+i*30, 200+j*30, GetColor(0, 255, 255), "%d", stage.array[i][j]);
 		}
-	}
+	}*/
 }
 
 const CreateStage* GetStage(void)
