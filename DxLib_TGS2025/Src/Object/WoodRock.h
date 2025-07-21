@@ -97,16 +97,15 @@ void RockAnimation(int x, int y);//岩のアニメーション
 const Wood* GetWood(void);
 const Rock* GetRock(void);
 
-void WoodRockItemCount(void);
-
 void WoodRockReset(void);
 void WoodMove(int x, int y);
 void RockMove(int x, int y);
 void WR_Delete_Flag(void);
 void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
-void WoodRockEffectDraw(void);
 void PutRockEffect(int x, int y);
+void PutWoodEffect(int x, int y);
+void WoodRockEffectDraw(void);
 void SwayWoodAnim(int x, int y);
 
 

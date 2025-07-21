@@ -56,10 +56,12 @@ void ObstacleManagerInit(void)
 
 void ObstacleManagerResourceInit(void)
 {
+	//ロックモグラ
 	LoadDivGraph("Resource/images/mole_animation.png", 4, 4, 1, 80, 80, mole.image);
 	LoadDivGraph("Resource/images/mole_animation1.png", 4, 4, 1, 80, 80, mole.rock1_image);
 	LoadDivGraph("Resource/images/mole_animation2.png", 4, 4, 1, 80, 80, mole.rock2_image);
-
+	
+	//ウッドモグラ
 	LoadDivGraph("Resource/images/woodmole_animation0.png", 4, 4, 1, 80, 80, mole.wood_image);
 
 	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
@@ -74,8 +76,10 @@ void ObstacleManagerUpdate(void)
 	
 	if (mole.start == true && mole.menu_flag == false && mole.operable_flag == true)
 	{
-		//石を置くフラグ
-		MoleRockFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
+		//岩を置くフラグ
+		MoleRockFlagReset();    
+		//木を置くフラグ
+		MoleWoodFlagReset();
 		//モグラの向きをランダムで変える
 		MoleRandomDirection(GetStage());
 
@@ -143,21 +147,17 @@ void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,
 void MoleRandomDirection(const CreateStage* stage)
 {
 	mole.image_count++;
+	mole.wood_image_count++;
 
-	//　ランダム方向に向く
+	//　ランダム方向に向く(ロックモグラ）
 	if (mole.image_count == 120)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);//ランダム方向を格納
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-			mole.warn_flag = true;// マスを赤くする警告
 		}
-		for (int i = 0; i < stage->woodmole_count; i++)
-		{
-			mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]] = GetRand(3);//ランダム方向を格納
-			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
-		}
+		mole.warn_flag = true;// マスを赤くする警告
 
 	}
 	//　手を挙げるアニメーション
@@ -180,16 +180,33 @@ void MoleRandomDirection(const CreateStage* stage)
 	if (mole.image_count / 60 > 4)
 	{
 		MoleRockFlagReset();
-		MoleWoodFlagReset();
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
-			mole.warn_flag = false;// マスを赤くする警告
 		}
+		mole.warn_flag = false;// マスを赤くする警告
 		MolePutRockFlag(GetStage());
-		MolePutWoodFlag(GetStage());
 		mole.image_count = 0;
 
+	}
+
+	//　ランダム方向に向く(ウッドモグラ）
+	if (mole.wood_image_count == 120)
+	{
+		for (int i = 0; i < stage->woodmole_count; i++)
+		{
+			mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]] = GetRand(3);//ランダム方向を格納
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
+		}
+		mole.warn_flag = true;// マスを赤くする警告
+	}
+	// アニメーションを戻して岩を置く
+	if (mole.wood_image_count / 60 > 4)
+	{
+		MoleWoodFlagReset();
+		mole.warn_flag = false;// マスを赤くする警告
+		MolePutWoodFlag(GetStage());
+		mole.wood_image_count = 0;
 	}
 }
 
@@ -370,13 +387,13 @@ void MolePutWarnDraw(const CreateStage* stage)
 		case 2://　左
 			if (stage->woodmole_x[i] != mole.put_x_min && stage->array[stage->woodmole_x[i] - 1][stage->woodmole_y[i]] == 0)
 			{
-				DrawRotaGraph((stage->woodmole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i]) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+				DrawRotaGraph((stage->woodmole_x[i] - 1) * OBSTACLE_TROUT_LENGTH + 200, stage->woodmole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
 		case 3://　右
 			if (stage->woodmole_x[i] != mole.put_x_max && stage->array[stage->woodmole_x[i] + 1][stage->woodmole_y[i]] == 0)
 			{
-				DrawRotaGraph((stage->woodmole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, (stage->woodmole_y[i]) * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
+				DrawRotaGraph((stage->woodmole_x[i] + 1) * OBSTACLE_TROUT_LENGTH + 200, stage->woodmole_y[i] * OBSTACLE_TROUT_LENGTH + 120, 1.0, 0.0, mole.warn_image, TRUE);
 			}
 			break;
 		default:
@@ -399,18 +416,23 @@ void MoleInit(const CreateStage* stage)
 				mole.image_num[i][j] = 0;
 				mole.animation[i][j] = mole.image[mole.image_num[i][j]];
 			}
-			else if (stage->array[i][j] == 10)
+			else
+			{
+				mole.image_num[i][j] = -1;
+				mole.animation[i][j] = -1;
+			}
+
+			if (stage->array[i][j] == 10)
 			{
 				mole.wood_image_num[i][j] = 0;
 				mole.wood_anim[i][j] = mole.wood_image[mole.wood_image_num[i][j]];
 			}
 			else
 			{
-				mole.image_num[i][j] = -1;
-				mole.animation[i][j] = -1;
 				mole.wood_image_num[i][j] = -1;
 				mole.wood_anim[i][j] = -1;
 			}
+
 			mole.put_rock_flag[i][j] = false;
 			mole.put_wood_flag[i][j] = false;
 		}

@@ -38,8 +38,8 @@ void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameo
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
-void GetMoleRockPosition(const Mole* mole);
-void GetMoleWoodPosition(const Mole* mole);
+void GetMoleRockPosition(const Mole* mole, int x, int y);
+void GetMoleWoodPosition(const Mole* mole, int x, int y);
 void Play_Sound_WoodRock(int sound, int volume);
 
 
@@ -96,6 +96,13 @@ void WoodRockResourceInit(void)
 	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment3.png");
 	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment4.png");
 
+	wood.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
+	wood.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
+	wood.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
+	wood.put_effect_image[3] = LoadGraph("Resource/images/put_rock_3.png");
+	wood.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
+	wood.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
+	
 	rock.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
 	rock.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
 	rock.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
@@ -103,12 +110,7 @@ void WoodRockResourceInit(void)
 	rock.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
 	rock.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
 
-	wood.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
-	wood.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
-	wood.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
-	wood.put_effect_image[3] = LoadGraph("Resource/images/put_rock_3.png");
-	wood.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
-	wood.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
+	
 	//サウンド読み込み
 	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
@@ -126,7 +128,7 @@ void WoodRockUpdate(void)
 	if (woodrock_start == true && woodrock_menu_flag == false && woodrock_operable_flag == true)
 	{
 		//木,岩のアニメーション
-		WoodAnimation(wood.count_x,wood.count_y);
+		WoodAnimation(wood.count_x, wood.count_y);
 		RockAnimation(rock.count_x, rock.count_y);
 
 		//ツールとカーソルとのHitチェック
@@ -137,45 +139,40 @@ void WoodRockUpdate(void)
 		WoodRockSub(Get_Tool());
 		WoodRockAdd(Get_Tool());
 
-		//モグラが岩を置く場所を取得
-		GetMoleRockPosition(GetMole());
 
-		
+		//ムーブフラグがtrueのとき
+		for (int j = 0; j < WOODROCK_Y_MAX; j++)
+		{
+			for (int i = 0; i < WOODROCK_X_MAX; i++)
+			{
+				if (wood.move_flag[i][j] == true)
+				{
+					//アイテム表示位置まで放物線を描く
+					WoodMove(i, j);
+				}
+				if (rock.move_flag[i][j] == true)
+				{
+					//アイテム表示位置まで放物線を描く
+					RockMove(i, j);
+
+				}
+				//モグラが岩を置く場所を取得
+				GetMoleRockPosition(GetMole(), i, j);
+				//モグラが木を置く場所を取得
+				GetMoleWoodPosition(GetMole(), i, j);
+			}
+		}
 	}
 	else if(woodrock_start == false && woodrock_menu_flag == false)
 	{
 		//初期化
 		WoodRockReset();
 	}
-
-	//ムーブフラグがtrueのとき
-	for (int j = 0; j < WOODROCK_Y_MAX; j++)
-	{
-		for (int i = 0; i < WOODROCK_X_MAX; i++)
-		{
-			if (wood.move_flag[i][j] == true)
-			{
-				//アイテム表示位置まで放物線を描く
-				WoodMove(i,j);
-			}
-			if (rock.move_flag[i][j] == true)
-			{
-				//アイテム表示位置まで放物線を描く
-				RockMove(i,j);
-
-			}
-		}
-	}
-
-	
 }
 
 //描画処理
 void WoodRockDraw(void)
 {
-	//ItemNumの透過カラー
-	//DrawRotaGraphF(1190.0f, 80.0f, 1.0, 0.0, rock.itemnum_bg_image, TRUE);
-
 	//ムーブフラグがtrueのとき
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
@@ -192,9 +189,6 @@ void WoodRockDraw(void)
 		}
 	}
 	
-	//アイテム化した木と岩の数の描画
-	WoodRockItemCount();
-
 	//エフェクトの描画
 	WoodRockEffectDraw();	
 
@@ -504,13 +498,6 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 
 //アイテム化したアイテムをカウントする位置
 
-void WoodRockItemCount(void)
-{
-	//DrawRotaGraphF(WOOD_ITEM_X, WOOD_ITEM_Y, 1.0, 0.0, wood.image[3], TRUE);
-	///*DrawExtendFormatString(1210, 115, 2.0, 2.0, GetColor(255, 255, 255), "%d", wood.item_num);*/
-	//DrawRotaGraphF(ROCK_ITEM_X, ROCK_ITEM_Y, 1.0, 0.0, rock.image[3], TRUE);
-	///*DrawExtendFormatString(1210, 55, 2.0, 2.0, GetColor(255, 255, 255), "%d", rock.item_num);*/
-}
 //リセット
 void WoodRockReset(void)
 {
@@ -700,43 +687,26 @@ void WoodRockHitInit(const CreateStage* stage)
 }
 
 //モグラが岩を置いた場所のHitカウントを初期化する
-void GetMoleRockPosition(const Mole* mole)
+void GetMoleRockPosition(const Mole* mole, int x, int y)
 {
-	for (int j = 0; j < WOODROCK_Y_MAX; j++)
+	if (mole->put_rock_flag[x][y] == true)
 	{
-		for (int i = 0; i < WOODROCK_X_MAX; i++)
-		{
-			if (mole->put_rock_flag[i][j] == true)
-			{
-				rock.put_effect_flag[i][j] = true;
-				rock.hit_flag[i][j] = false;
-				rock.hit_count[i][j] = eHit0;
-				rock.animation[i][j] = rock.image[0];
-			}
-		}
+		rock.put_effect_flag[x][y] = true;
+		rock.hit_flag[x][y] = false;
+		rock.hit_count[x][y] = eHit0;
+		rock.animation[x][y] = rock.image[0];
 	}
-	
-	
 }
 //モグラが岩を置いた場所のHitカウントを初期化する
-void GetMoleWoodPosition(const Mole* mole)
+void GetMoleWoodPosition(const Mole* mole, int x, int y)
 {
-	for (int j = 0; j < WOODROCK_Y_MAX; j++)
+	if (mole->put_wood_flag[x][y] == true)
 	{
-		for (int i = 0; i < WOODROCK_X_MAX; i++)
-		{
-			if (mole->put_wood_flag[i][j] == true)
-			{
-				wood.put_effect_flag[i][j] = true;
-				wood.hit_flag[i][j] = false;
-				wood.hit_count[i][j] = eHit0;
-				wood.animation[i][j] = wood.image[0];
-			}
-
-		}
+		wood.put_effect_flag[x][y] = true;
+		wood.hit_flag[x][y] = false;
+		wood.hit_count[x][y] = eHit0;
+		wood.animation[x][y] = wood.image[0];
 	}
-
-
 }
 
 //木のエフェクト
