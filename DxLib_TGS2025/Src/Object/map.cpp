@@ -23,7 +23,8 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal);
-void MolePutRock(const Mole* mole, const Rock* rock, int x, int y);
+void MolePutRock(const Mole* mole, int x, int y);
+void MolePutWood(const Mole* mole, int x, int y);
 void GetStageNum(const InGame* ingame);
 void MapTroutDraw(const InGame* ingame);
 
@@ -78,7 +79,8 @@ void MapUpdate(void)
 				//橋を置く
 				Put_Wood_Road(Get_Tool(), GetCursor1(), i, j);
 				//モグラが石を置く
-				MolePutRock(GetMole(), GetRock(), i, j);
+				MolePutRock(GetMole(), i, j);
+				MolePutWood(GetMole(), i, j);
 			}
 		}
 	}
@@ -280,7 +282,7 @@ void Delete_WoodRock(const Wood* wood,const Rock* rock)
 }
 
 //モグラが岩を置くフラグがtrueなら岩を置く
-void MolePutRock(const Mole* mole, const Rock* rock, int x, int y)
+void MolePutRock(const Mole* mole, int x, int y)
 {
 	//置くフラグがtrueなら
 	if (mole->put_rock_flag[x][y] == true)
@@ -314,6 +316,10 @@ void MolePutRock(const Mole* mole, const Rock* rock, int x, int y)
 		stage.rock_count_flag = false;
 	}
 
+}
+
+void MolePutWood(const Mole* mole,int x, int y)
+{
 	//置くフラグがtrueなら
 	if (mole->put_wood_flag[x][y] == true)
 	{

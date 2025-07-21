@@ -70,4 +70,5 @@ const Lake* GetLake(void);
 
 
 void MoleReset(void);
-void MolePutFlagReset(void);
+void MoleRockFlagReset(void);
+void MoleWoodFlagReset(void);

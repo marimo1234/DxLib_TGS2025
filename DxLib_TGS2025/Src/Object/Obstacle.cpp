@@ -24,6 +24,8 @@ Lake lake;
 void MoleStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 //　岩を置くフラグ
 void MolePutRockFlag(const CreateStage* stage);
+//　木を置くフラグ
+void MolePutWoodFlag(const CreateStage* stage);
 // 岩を置く警告
 void MolePutWarnDraw(const CreateStage* stage);
 //　ランダムに向く方向を決める
@@ -73,7 +75,7 @@ void ObstacleManagerUpdate(void)
 	if (mole.start == true && mole.menu_flag == false && mole.operable_flag == true)
 	{
 		//石を置くフラグ
-		MolePutFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
+		MoleRockFlagReset();        //trueにする関数より前に置けば1フレーム後にfalseになってくれるかも（検証中）
 		//モグラの向きをランダムで変える
 		MoleRandomDirection(GetStage());
 
@@ -177,13 +179,15 @@ void MoleRandomDirection(const CreateStage* stage)
 	// アニメーションを戻して岩を置く
 	if (mole.image_count / 60 > 4)
 	{
-		MolePutFlagReset();
+		MoleRockFlagReset();
+		MoleWoodFlagReset();
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 			mole.warn_flag = false;// マスを赤くする警告
 		}
 		MolePutRockFlag(GetStage());
+		MolePutWoodFlag(GetStage());
 		mole.image_count = 0;
 
 	}
@@ -202,8 +206,8 @@ void MoleReset(void)
 	GetMoleStageNum(GetInGame());
 }
 
-//　石を置くフラグのリセット
-void MolePutFlagReset(void)
+//　岩を置くフラグのリセット
+void MoleRockFlagReset(void)
 {
 	for (int j = 0; j < 7; j++)
 	{
@@ -213,7 +217,19 @@ void MolePutFlagReset(void)
 			{
 				mole.put_rock_flag[i][j] = false;
 			}
-			else if (mole.put_wood_flag[i][j] == true)
+			
+		}
+	}
+}
+
+//木を置くフラグのリセット
+void MoleWoodFlagReset(void) 
+{
+	for (int j = 0; j < 7; j++)
+	{
+		for (int i = 0; i < 12; i++)
+		{
+			if (mole.put_wood_flag[i][j] == true)
 			{
 				mole.put_wood_flag[i][j] = false;
 			}
@@ -257,7 +273,11 @@ void MolePutRockFlag(const CreateStage* stage)
 			break;
 		}
 	}
+}
 
+//　木を置くフラグ
+void MolePutWoodFlag(const CreateStage* stage)
+{
 	//ウッドモグラ
 	for (int i = 0; i < stage->woodmole_count; i++)
 	{
@@ -292,7 +312,6 @@ void MolePutRockFlag(const CreateStage* stage)
 		}
 
 	}
-
 }
 
 void MolePutWarnDraw(const CreateStage* stage)

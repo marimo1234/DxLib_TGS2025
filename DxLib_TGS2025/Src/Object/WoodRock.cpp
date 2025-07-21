@@ -38,7 +38,8 @@ void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameo
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
 void WoodRockHitInit(const CreateStage* stage);
-void GetMolePutPosition(const Mole* mole);
+void GetMoleRockPosition(const Mole* mole);
+void GetMoleWoodPosition(const Mole* mole);
 void Play_Sound_WoodRock(int sound, int volume);
 
 
@@ -137,7 +138,7 @@ void WoodRockUpdate(void)
 		WoodRockAdd(Get_Tool());
 
 		//モグラが岩を置く場所を取得
-		GetMolePutPosition(GetMole());
+		GetMoleRockPosition(GetMole());
 
 		
 	}
@@ -698,8 +699,8 @@ void WoodRockHitInit(const CreateStage* stage)
 	}
 }
 
-//モグラが岩・木を置いた場所のHitカウントを初期化する
-void GetMolePutPosition(const Mole* mole)
+//モグラが岩を置いた場所のHitカウントを初期化する
+void GetMoleRockPosition(const Mole* mole)
 {
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
@@ -712,18 +713,30 @@ void GetMolePutPosition(const Mole* mole)
 				rock.hit_count[i][j] = eHit0;
 				rock.animation[i][j] = rock.image[0];
 			}
-			else if (mole->put_wood_flag[i][j] == true)
+		}
+	}
+	
+	
+}
+//モグラが岩を置いた場所のHitカウントを初期化する
+void GetMoleWoodPosition(const Mole* mole)
+{
+	for (int j = 0; j < WOODROCK_Y_MAX; j++)
+	{
+		for (int i = 0; i < WOODROCK_X_MAX; i++)
+		{
+			if (mole->put_wood_flag[i][j] == true)
 			{
 				wood.put_effect_flag[i][j] = true;
 				wood.hit_flag[i][j] = false;
 				wood.hit_count[i][j] = eHit0;
 				wood.animation[i][j] = wood.image[0];
 			}
-			
+
 		}
 	}
-	
-	
+
+
 }
 
 //木のエフェクト
@@ -852,11 +865,18 @@ void WoodRockEffectDraw(void)
 			if (rock.put_effect_flag[i][j] == true)
 			{
 				PutRockEffect(i, j);
-				PutWoodEffect(i, j);
 			}
 			else
 			{
 				rock.put_effect_num[i][j] = -1;
+			}
+
+			if (wood.put_effect_flag[i][j] == true)
+			{
+				PutWoodEffect(i, j);
+			}
+			else
+			{
 				wood.put_effect_num[i][j] = -1;
 			}
 		}
