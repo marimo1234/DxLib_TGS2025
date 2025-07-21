@@ -931,7 +931,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.boom_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx+4.0f, cary-4.0f, 0.3, 0.0, car.boom_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx+20.0f, cary-50.0f, 0.3, 0.0, car.boom_animtion[car.boom_num], TRUE);
 
 			 /*if (car.boom_count < 60)
 			 {
