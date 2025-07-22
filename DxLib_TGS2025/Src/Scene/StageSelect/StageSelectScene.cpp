@@ -246,8 +246,15 @@ void NumTroutDraw(void)
 
 	//枠の描画
 	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
+	//矢印の描画（上または下にない時は描画しない）
+	if (stageselect.number != 0)
+	{
+		DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
+	}
+	if (stageselect.number != 5)
+	{
+		DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
+	}
 	//数字の描画
 	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.4, 0.0, stageselect.number_image[stageselect.number], TRUE);
 
