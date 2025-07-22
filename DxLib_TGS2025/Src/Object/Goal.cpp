@@ -33,6 +33,9 @@ void GoalInit(void)
 
 	goal.print_flag = false;
 	
+	goal.firework_count = 0;
+	goal.add_y = 0.0f;
+	goal.firework_rate = 0.0f;
 }
 
 
@@ -45,6 +48,7 @@ void GoalResourceInit(void)
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
 	goal.gameover_image = LoadGraph("Resource/images/GAMEOVER.png");
+	LoadDivGraph("Resource/images/firework.png", 12, 6, 2, 300, 300, goal.firework_image);
 }
 //更新
 void GoalUpdate(void)
@@ -59,6 +63,29 @@ void GoalUpdate(void)
 		GoalReset();
 	}
 
+	//仮
+	if (goal.print_flag == true)
+	{
+		goal.firework_count++;
+		if (goal.firework_count > 90)
+		{
+			goal.firework_count = 0;
+			goal.add_y = 0.0f;
+		}
+		if (goal.firework_count < 35)
+		{
+			goal.add_y+=5.0f;
+		}
+		if (goal.firework_count > 35)
+		{
+			goal.firework_rate = 2.0f;
+		}
+		else
+		{
+			goal.firework_rate = 1.0f;
+		}
+		goal.firework_num = goal.firework_count /5;
+	}
 }
 
 //描画
@@ -68,6 +95,7 @@ void GoalDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
+		DrawRotaGraphF(150.0f, 570.0f - goal.add_y, goal.firework_rate, 0.0, goal.firework_image[goal.firework_num], TRUE);
 		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.print_image, TRUE);
 	}
 
