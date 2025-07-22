@@ -800,7 +800,8 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log5, TRUE);
 					break;
 				case 7:
-					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log6, TRUE);
+					//DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log6, TRUE);
+					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
 					break;
 				case 8:
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
@@ -836,15 +837,15 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 			ItemTutorial();
 			if (ingame.tutorial_log_num == 6)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
+				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
 			}
 			else if (ingame.itembarcomentswitch == false)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment2, TRUE);
+				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment2, TRUE);
 			}
 			else if (ingame.itembarcomentswitch == true)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment3, TRUE);
+				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment3, TRUE);
 			}
 		}
 		if (ingame.tutorial_log_num == 5 || ingame.tutorial_log_num == 7 || ingame.tutorial_log_num == 8 || ingame.tutorial_log_num == 9 || ingame.tutorial_log_num == 10)
@@ -885,6 +886,10 @@ void TutorialUpdate(void)
 				ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 			{
 				ingame.tutorial_log_num++;
+				if (ingame.tutorial_log_num==6)
+				{
+					ingame.tutorial_log_num = 7;
+				}
 			}
 		}
 
@@ -1012,16 +1017,11 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.tutorial_log_num--;
 			ingame.tutorial_achievements--;
 		}
-		if (tool->road_num > 0)
-		{
-
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
-			animetion_num = 0;
-
-			break;
-
-		}
+		ingame.tutorial_log_num++;
+		ingame.tutorial_achievements++;
+		animetion_num = 0;
+		ingame.itemtutorial_num = 1;
+		break;
 		break;
 
 	case 5:
@@ -1034,6 +1034,11 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.woodrodamakeswitch = false;
 			ingame.madewoodswitch = false;
 			break;
+		}
+		else if (tool->item_number != eRoad)
+		{
+			ingame.tutorial_log_num-=2;
+			ingame.tutorial_achievements-=2;
 		}
 		if (stage->array[5][4] == 4)
 		{
@@ -1239,7 +1244,7 @@ void BlinkingAnimation(void)
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion1, TRUE);
 		}
 	}
-	else if (ingame.tutorial_log_num == 7)
+	/*else if (ingame.tutorial_log_num == 7)
 	{
 		if (ingame.menu_flag == false)
 		{
@@ -1258,7 +1263,7 @@ void BlinkingAnimation(void)
 		{
 			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.makeroda1, TRUE);
 		}
-	}
+	}*/
 	else if (ingame.tutorial_log_num == 8)
 	{
 		if (ingame.menu_flag == false)
@@ -1321,7 +1326,7 @@ void BlinkingAnimation(void)
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood1, TRUE);
 				}
 			}
-			else if (ingame.woodrodamakeswitch == true && ingame.tutorial_log_num == 9)
+			/*else if (ingame.woodrodamakeswitch == true && ingame.tutorial_log_num == 9)
 			{
 				if (ingame.brakewoodcount > 105)
 				{
@@ -1336,7 +1341,7 @@ void BlinkingAnimation(void)
 				{
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
 				}
-			}
+			}*/
 		}
 	}
 	else if (ingame.tutorial_log_num == 10)
