@@ -41,17 +41,6 @@ void StageSelectSceneInit(void)
 	stageselect.position.y = 255.0f;
 	//ステージ番号の初期化
 	stageselect.number = 0;
-	stageselect.number_count = 0;
-
-	//ステージ配列の初期化
-	stageselect.array_number = 0;
-	//ステージ配列の添字の初期化
-	stageselect.array_x = 0;
-	stageselect.array_y = 0;
-
-	//ボタンの画像拡大率の初期化
-	stageselect.Abutton_rate = 0.5f;
-	stageselect.rate_num = 0.1;
 
 	//車の描画座標
 	stageselect.car_x = 0.0f;
@@ -63,26 +52,10 @@ void StageSelectSceneInit(void)
 
 	stageselect.flag = true;
 
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			stageselect.number_extrate[i][j] = 0.3f;
-		}
-	}
 	fade.Initialize(true);
 	is_fading = true;
 
 	Play_StageSelect_BGM(GetTitle());
-
-	//配列にデフォルトの枠を入れる
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			stageselect.trout_array[i][j] = stageselect.trout_image[0];
-		}
-	} 
 }
 
 void StageSelectResourceInit(void)
@@ -90,8 +63,6 @@ void StageSelectResourceInit(void)
 	switch (stageselect_init_step)
 	{
 	case 2:
-		//ボタンの画像
-		stageselect.Abutton = LoadGraph("Resource/images/Abutton.png");
 		stageselect.b_back = LoadGraph("Resource/images/Bback3.png");
 		//カーソルとボタンのSE
 		stageselect.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
@@ -141,18 +112,9 @@ void StageSelectResourceInit(void)
 
 //ステージセレクトシーンの更新
 eSceneType StageSelectSceneUpdate(void)
-{
-//車がいる場所の配列番号でステージ番号を取得
-	StageSelectGetNumber();
-	
-	//数字の拡大率更新
-	ChangeNumberExtrate();
-
+{	
 	//車のムーブ更新
 	Move_Car(GetCar());
-
-	//Aボタン更新
-	SelectButtonDraw();
 
 	//フェード処理
 	if (is_fading)
@@ -205,31 +167,10 @@ void StageSelectSceneDraw(void)
 	//車描画
 	Draw_Select_Car();
 
-	////数字、枠、ボタンの描画
-	//NumTroutDraw();
-	
-	//Aボタンの描画
-	DrawRotaGraph(1142.0, 730.0, 0.1, 0.0, stageselect.Abutton, TRUE);
-	/*DrawExtendFormatString(470, 360, 2.0, 2.0, GetColor(255, 255, 255), "Aボタンでインゲーム画面へ");*/
-	/*DrawFormatString(100, 100, GetColor(255, 255, 255), "zでタイトル画面へ");*/
+	//数字、枠、ボタンの描画
+	NumTroutDraw();
 
-	//スピード枠の描画
-	DrawRotaGraph(510,510,0.7,0.0,stageselect.speed_frame,TRUE);
-	//スピードの文字描画
-	DrawRotaGraph(450, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
-
-	//枠の描画
-	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
-	DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
-	//数字の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.4, 0.0, stageselect.number_image[stageselect.number], TRUE);
-
-	//ミニマップの描画
-	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.stage_image[stageselect.number], TRUE);
-	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.trout_image[4], TRUE);
 	fade.Draw();
-
 
 }
 
@@ -245,82 +186,6 @@ void StageSelectCursorMove(void)
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::ePress)
-	//{
-	//		// 十字ボタンの左を押したとき
-	//		if (stageselect.array_x > 0)
-	//		{
-	//			stageselect.array_x--;
-	//			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-
-	//		}
-	//		else if (stageselect.array_x == 0)
-	//		{
-	//			stageselect.array_x = 2;
-	//			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-	//		}
-	//		// 移動のSE（もし使うならここに入れてね）
-	//		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
-	//		stageselect.number_count = 0;
-	//}
-	//else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::ePress)
-	//{	
-	//		// 十字ボタンの右を押したとき
-	//		if (stageselect.array_x < 2)
-	//		{
-	//			stageselect.array_x++;
-	//			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-
-	//		}
-	//		else if (stageselect.array_x == 2)
-	//		{
-	//			stageselect.array_x = 0;
-	//			stageselect.position.x = 240.0f * stageselect.array_x + 400.0f;
-	//		}
-	//		// 移動のSE（左とおんなじ音入れてね）
-	//		Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
-	//		stageselect.number_count = 0;
-	//	
-	//}
-	//else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
-	//{
-
-	//	// 十字ボタンの上を押したとき
-	//	if (stageselect.array_y > 0)
-	//	{
-	//		stageselect.array_y--;
-	//		stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
-
-	//	}
-	//	else if (stageselect.array_y == 0)
-	//	{
-	//		stageselect.array_y = 1;
-	//		stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
-	//	}
-
-	//	// 移動のSE（左とおんなじ音入れてね）
-	//	Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
-	//	stageselect.number_count = 0;
-	//}
-	//else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
-	//{
-
-	//	// 十字ボタンの下を押したとき
-	//	if (stageselect.array_y < 1)
-	//	{
-	//		stageselect.array_y++;
-	//		stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
-
-	//	}
-	//	else if (stageselect.array_y == 1)
-	//	{
-	//		stageselect.array_y = 0;
-	//		stageselect.position.y = 200.0f * stageselect.array_y + 255.0f;
-	//	}
-	//	// 移動のSE（左とおんなじ音入れてね）
-	//	Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
-	//	stageselect.number_count = 0;
-	//}
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
@@ -331,7 +196,7 @@ void StageSelectCursorMove(void)
 			// 移動のSE（左とおんなじ音入れてね）
 			Play_Sound_StageSelect_NC(stageselect.cursor_se, 80);
 		}
-		
+
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
@@ -370,87 +235,25 @@ void StageSelectNumber(void)
 	}
 }
 
-//ステージ番号を持っている時
-void StageSelectGetNumber(void)
-{
-	////0～2までの番号
-	//if (stageselect.array_y == 0)
-	//{
-	//	stageselect.number = stageselect.array_x;
-	//}
-	////3～5までの番号
-	//else if (stageselect.array_y == 1)
-	//{
-	//	stageselect.number = stageselect.array_x + 3;
-	//}
-	//else 
-	//{
-	//	stageselect.number = -1;
-	//}
-}
 
 //数字、枠、車の描画
 void NumTroutDraw(void)
 {
-	//数字と枠の描画
-	stageselect.array_number = 0;
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			//X座標が280.0ｆ（余白）+端から中心までの120.0ｆ
-			//Y座標が135.0ｆ（余白）+端から中心までの100.0f
-			//枠の描画
-			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 255.0f, 0.4, 0.0, stageselect.trout_array[i][j], TRUE);
-			//数字の描画
-			DrawRotaGraphF(i * 240.0f + 400.0f, j * 200.0f + 230.0f, stageselect.number_extrate[i][j], 0.0, stageselect.number_image[stageselect.array_number], TRUE);
-			stageselect.array_number++;
-		}
-	}
+	//スピード枠の描画
+	DrawRotaGraph(510, 510, 0.7, 0.0, stageselect.speed_frame, TRUE);
+	//スピードの文字描画
+	DrawRotaGraph(450, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
 
-	//車のいる枠が葉っぱつきになる描画
-	if (stageselect.array_y != 2)
-	{
-		DrawRotaGraphF(stageselect.position.x, stageselect.position.y, 0.4, 0.0, stageselect.trout_image[1], TRUE);
-		DrawRotaGraphF(stageselect.position.x, stageselect.position.y + 60.0f, stageselect.Abutton_rate, 0.0, stageselect.Abutton, TRUE);
-	}
+	//枠の描画
+	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
+	DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stageselect.arrow_image[0], TRUE);
+	DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stageselect.arrow_image[1], TRUE);
+	//数字の描画
+	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.4, 0.0, stageselect.number_image[stageselect.number], TRUE);
 
-	DrawRotaGraphF(900.0f, 620.0f, 1.0, 0.0, stageselect.b_back, TRUE);
-}
-
-//ボタンの描画　大きさが変わる
-void SelectButtonDraw(void)
-{
-	//ボタンの点滅処理
-	stageselect.number_count++;
-
-	if (stageselect.number_count % 60 < 30)
-	{
-		stageselect.Abutton_rate = 0.4f;
-	}
-	else
-	{
-		stageselect.Abutton_rate = 0.0f;
-	}
-
-	if (stageselect.number_count > 60)
-	{
-		stageselect.number_count = 0;
-	}
-}
-
-void ChangeNumberExtrate(void)
-{
-	//数字の拡大率　
-	for (int j = 0; j < 2; j++)
-	{
-		for (int i = 0; i < 3; i++)
-		{
-			stageselect.number_extrate[i][j] = 0.3f;
-		}
-	}
-	stageselect.number_extrate[stageselect.array_x][stageselect.array_y] = 0.4f;
-	
+	//ミニマップの描画
+	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.stage_image[stageselect.number], TRUE);
+	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.trout_image[4], TRUE);
 }
 
 //音がなっていないなら鳴らす
