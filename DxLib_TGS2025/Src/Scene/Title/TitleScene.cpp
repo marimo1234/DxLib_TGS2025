@@ -36,13 +36,8 @@ void TitleResourceInit(void)
 		title.control_image = LoadGraph("Resource/Images/control_img.png");
 		break;
 	case 6:
-		title.mole_image[0] = LoadGraph("Resource/Images/title_mole00.png");
-		title.mole_image[1] = LoadGraph("Resource/Images/title_mole01.png");
-		title.mole_image[2] = LoadGraph("Resource/Images/title_mole02.png");
-		title.mole_image[3] = LoadGraph("Resource/Images/title_mole03.png");
-		title.mole_image[4] = LoadGraph("Resource/Images/title_mole04.png");
-		title.mole_image[5] = LoadGraph("Resource/Images/title_mole05.png");
-		title.mole_image[6] = LoadGraph("Resource/Images/title_mole06.png");
+		LoadDivGraph("Resource/images/title_mole_anim.png", 8, 8, 1, 80, 80, title.mole_image);
+
 		break;
 	case 7:
 		title.name_image[0] = LoadGraph("Resource/Images/Title_Text_Anim0.png");	//タイトル画像
