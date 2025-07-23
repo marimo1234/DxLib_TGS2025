@@ -419,7 +419,7 @@ void InGameSceneDraw(void)
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
-	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ",ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
+	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
 }
@@ -888,7 +888,7 @@ void TutorialUpdate(void)
 				ingame.tutorial_log_num++;
 				if (ingame.tutorial_log_num==6)
 				{
-					ingame.tutorial_log_num = 7;
+					ingame.tutorial_log_num = 8;
 				}
 			}
 		}
@@ -900,6 +900,10 @@ void TutorialUpdate(void)
 				ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 			{
 				ingame.tutorial_log_num--;
+				if (ingame.tutorial_log_num == 7)
+				{
+					ingame.tutorial_log_num = 5;
+				}
 			}
 		}
 
@@ -1022,7 +1026,6 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		animetion_num = 0;
 		ingame.itemtutorial_num = 1;
 		break;
-		break;
 
 	case 5:
 		if (stage->array[6][4] == 5)
@@ -1040,10 +1043,16 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.tutorial_log_num-=2;
 			ingame.tutorial_achievements-=2;
 		}
-		if (stage->array[5][4] == 4)
+		if (stage->array[5][4] == 4&& tool->wood_road_num == 1)
 		{
+			ingame.tutorial_log_num++;
+			ingame.tutorial_achievements++;
+			animetion_num = 0;
+			break;
 
-
+		}
+		else if (stage->array[5][4] == 4)
+		{
 			ingame.tutorial_log_num++;
 			ingame.tutorial_achievements++;
 			animetion_num = 0;
@@ -1081,12 +1090,12 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			}
 			
 		}
-		if (wood->item_num > 0 && tool->item_number == eWoodRoad)
+		/*if (wood->item_num > 0 && tool->item_number == eWoodRoad)
 		{
 			ingame.menuanimationflag = false;
 			ingame.woodtutorial = false;
 			ingame.woodrodamakeswitch = true;
-		}
+		}*/
 		if (tool->wood_road_num == 1)
 		{
 			ingame.menuanimationflag = false;
