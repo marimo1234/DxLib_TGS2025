@@ -83,14 +83,8 @@ void StageSelectResourceInit(void)
 
 		stageselect.trout_image[3] = LoadGraph("Resource/images/StageTrout1.png");
 		stageselect.trout_image[4] = LoadGraph("Resource/images/StageTrout3.png");
-		////数字の画像
-		//stageselect.number_image[0] = LoadGraph("Resource/images/1.png");
-		//stageselect.number_image[1] = LoadGraph("Resource/images/2.png");
-		//stageselect.number_image[2] = LoadGraph("Resource/images/3.png");
-		//stageselect.number_image[3] = LoadGraph("Resource/images/4.png");
-		//stageselect.number_image[4] = LoadGraph("Resource/images/5.png");
-		//stageselect.number_image[5] = LoadGraph("Resource/images/6.png");
 
+		//数字の画像
 		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, stageselect.number_image);
 
 		//ステージの画像
