@@ -159,6 +159,7 @@ void CarResourceInit(void)
 	car.boom_animtion[1] = LoadGraph("Resource/images/boom1.png");
 	car.boom_animtion[2] = LoadGraph("Resource/images/boom2.png");
 	car.boom_animtion[3] = LoadGraph("Resource/images/boom3.png");
+	car.boom_animtion[4] = LoadGraph("Resource/images/boom4.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -910,7 +911,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.boom_flag == true)
 	 {
 		 car.boom_count++;
-		 if (car.boom_count > 30 && car.boom_count % 10 == 0 && car.boom_num < 4)
+		 if (car.boom_count > 30 && car.boom_count % 12 == 0 && car.boom_num < 5)
 		 {
 			 car.boom_num++;
 		 }
@@ -931,7 +932,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.boom_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx+20.0f, cary-50.0f, 0.3, 0.0, car.boom_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx+20, cary-50, 0.2, 0.0, car.boom_animtion[car.boom_num], TRUE);
 
 			 /*if (car.boom_count < 60)
 			 {

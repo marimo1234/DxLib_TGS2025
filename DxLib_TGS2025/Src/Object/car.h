@@ -30,7 +30,7 @@ struct Car
     int ivy_num;
     int ivy_se;
 
-    int boom_animtion[4];
+    int boom_animtion[5];
     bool boom_flag;
     int boom_count;
     int boom_num;
