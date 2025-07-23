@@ -34,8 +34,18 @@ void GoalInit(void)
 	goal.print_flag = false;
 	
 	goal.firework_count = 0;
-	goal.add_y = 0.0f;
-	goal.firework_rate = 0.0f;
+	goal.add_y[0] = 0.0f;
+	goal.add_y[1] = 0.0f;
+	goal.add_y[2] = 0.0f;
+	goal.firework_rate[0] = 0.0f;
+	goal.firework_rate[1] = 0.0f;
+	goal.firework_rate[2] = 0.0f;
+	goal.firework_num[0] = 0;
+	goal.firework_num[1] = 0;
+	goal.firework_num[2] = 0;
+	goal.firework_x[0] = 150.0f;
+	goal.firework_x[1] = 1100.0f;
+	goal.firework_x[2] = 650.0f;
 }
 
 
@@ -49,6 +59,8 @@ void GoalResourceInit(void)
 
 	goal.gameover_image = LoadGraph("Resource/images/GAMEOVER.png");
 	LoadDivGraph("Resource/images/firework.png", 12, 6, 2, 300, 300, goal.firework_image);
+	LoadDivGraph("Resource/images/firework2.png", 12, 6, 2, 300, 300, goal.firework_image2);
+	LoadDivGraph("Resource/images/firework3.png", 12, 6, 2, 300, 300, goal.firework_image3);
 }
 //更新
 void GoalUpdate(void)
@@ -63,28 +75,41 @@ void GoalUpdate(void)
 		GoalReset();
 	}
 
-	//仮
+	//花火処理
 	if (goal.print_flag == true)
 	{
 		goal.firework_count++;
-		if (goal.firework_count > 90)
+		if (goal.firework_count > 150)
 		{
 			goal.firework_count = 0;
-			goal.add_y = 0.0f;
+			goal.add_y[0] = 0.0f;
+			goal.add_y[1] = 0.0f;
+			goal.add_y[2] = 0.0f;
+			goal.firework_x[0] = GetRand(1000) % (200 - 100 + 1) + 100;
+			goal.firework_x[1] = GetRand(1000) % (1150 - 1050 + 1) + 1050;
+			goal.firework_x[2] = GetRand(1000) % (700 - 600 + 1) + 600;
 		}
-		if (goal.firework_count < 35)
+		for (int i = 0; i < 3; i++)
 		{
-			goal.add_y+=5.0f;
+			if (goal.firework_count - i * 25 < 35&& goal.firework_count - i * 25 > 0)
+			{
+				goal.add_y[i] += 5.0f;
+			}
 		}
-		if (goal.firework_count > 35)
+		for (int i = 0; i < 3; i++)
 		{
-			goal.firework_rate = 2.0f;
+			if (goal.firework_count - i * 25 > 35)
+			{
+				goal.firework_rate[i] = 2.0f;
+			}
+			else
+			{
+				goal.firework_rate[i] = 1.0f;
+			}
 		}
-		else
-		{
-			goal.firework_rate = 1.0f;
-		}
-		goal.firework_num = goal.firework_count /5;
+		goal.firework_num[0] = goal.firework_count / 5;
+		goal.firework_num[1] = (goal.firework_count - 25) / 5;
+		goal.firework_num[2] = (goal.firework_count - 50) / 5;
 	}
 }
 
@@ -95,10 +120,22 @@ void GoalDraw(void)
 	{
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, goal.whiteback_image, TRUE);
-		DrawRotaGraphF(150.0f, 570.0f - goal.add_y, goal.firework_rate, 0.0, goal.firework_image[goal.firework_num], TRUE);
+		//花火描画
+		if (goal.firework_num[0] < 12&& goal.firework_num[0] > 0)
+		{
+			DrawRotaGraphF(goal.firework_x[0], 570.0f - goal.add_y[0], goal.firework_rate[0] - 0.2f, 0.0, goal.firework_image[goal.firework_num[0]], TRUE);
+		}
+		if (goal.firework_num[1] < 12 && goal.firework_num[1] > 0)
+		{
+			DrawRotaGraphF(goal.firework_x[1], 750.0f - goal.add_y[1], goal.firework_rate[1], 0.0, goal.firework_image2[goal.firework_num[1]], TRUE);
+		}
+		if (goal.firework_num[2] < 12 && goal.firework_num[2] > 0)
+		{
+			DrawRotaGraphF(goal.firework_x[2], 500.0f - goal.add_y[2], goal.firework_rate[2], 0.0, goal.firework_image3[goal.firework_num[2]], TRUE);
+		}
+		//ここまで
 		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.print_image, TRUE);
 	}
-
 	GameOverDraw(GetGameOver());
 }
 	
@@ -176,7 +213,3 @@ void GameOverDraw(const GameOver* gameover)
 		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.gameover_image, TRUE);
 	}
 }
-
-
-
-
