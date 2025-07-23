@@ -129,6 +129,7 @@ void CarResourceInit(void)
 	car.ivy_animation[5] = LoadGraph("Resource/images/PlantAnim5.png");
 	car.ivy_animation[6] = LoadGraph("Resource/images/PlantAnim6.png");
 	car.ivy_animation[7] = LoadGraph("Resource/images/PlantAnim7.png");
+	car.ivy_animation[8] = LoadGraph("Resource/images/PlantAnim8.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -810,7 +811,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count>30&&car.ivy_count % 10 == 0 && car.ivy_num < 7)
+		 if (car.ivy_count>30&&car.ivy_count % 6 == 0 && car.ivy_num < 8)
 		 {
 			 car.ivy_num++;
 		 }
@@ -832,7 +833,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.ivy_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx, cary, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx-30, cary-60, 0.25, 0.0, car.ivy_animation[car.ivy_num], TRUE);
 
 			 if (car.ivy_count < 60)
 			 {
