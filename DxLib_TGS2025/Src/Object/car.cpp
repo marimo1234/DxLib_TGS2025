@@ -671,19 +671,19 @@ void OverRoad(void)
 	switch (car.old_direction)
 	{
 	case eUp://上に
-		car.position.y -= 0.1f;
+		/*car.position.y -= 0.1f;*/
 		overroad += 2;
 		break;
 	case eDown://下に
-		car.position.y += 0.1f;
+		/*car.position.y += 0.1f;*/
 		overroad += 2;
 		break;
 	case eRight://右に
-		car.position.x += 0.1f;
+		/*car.position.x += 0.1f;*/
 		overroad += 2;
 		break;
 	case eLeft:
-		car.position.x -= 0.1f;
+		/*car.position.x -= 0.1f;*/
 		overroad += 2;
 		break;
 
