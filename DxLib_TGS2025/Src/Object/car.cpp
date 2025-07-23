@@ -114,13 +114,21 @@ void CarResourceInit(void)
 	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
 	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 
-	car.ivy_animation[0] = LoadGraph("Resource/images/ivy00.png");
+	/*car.ivy_animation[0] = LoadGraph("Resource/images/ivy00.png");
 	car.ivy_animation[1] = LoadGraph("Resource/images/ivy01.png");
 	car.ivy_animation[2] = LoadGraph("Resource/images/ivy02.png");
 	car.ivy_animation[3] = LoadGraph("Resource/images/ivy03.png");
 	car.ivy_animation[4] = LoadGraph("Resource/images/ivy04.png");
 	car.ivy_animation[5] = LoadGraph("Resource/images/ivy05.png");
-	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");
+	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");*/
+	car.ivy_animation[0] = LoadGraph("Resource/images/PlantAnim0.png");
+	car.ivy_animation[1] = LoadGraph("Resource/images/PlantAnim1.png");
+	car.ivy_animation[2] = LoadGraph("Resource/images/PlantAnim2.png");
+	car.ivy_animation[3] = LoadGraph("Resource/images/PlantAnim3.png");
+	car.ivy_animation[4] = LoadGraph("Resource/images/PlantAnim4.png");
+	car.ivy_animation[5] = LoadGraph("Resource/images/PlantAnim5.png");
+	car.ivy_animation[6] = LoadGraph("Resource/images/PlantAnim6.png");
+	car.ivy_animation[7] = LoadGraph("Resource/images/PlantAnim7.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -802,7 +810,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count>30&&car.ivy_count % 10 == 0 && car.ivy_num < 5)
+		 if (car.ivy_count>30&&car.ivy_count % 10 == 0 && car.ivy_num < 7)
 		 {
 			 car.ivy_num++;
 		 }
@@ -824,7 +832,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.ivy_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
 
 			 if (car.ivy_count < 60)
 			 {

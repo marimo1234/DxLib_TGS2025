@@ -24,7 +24,7 @@ struct Car
     int animation_count;
 
     int ivy_image[4];
-    int ivy_animation[7];
+    int ivy_animation[10];
     bool ivy_flag;
     int ivy_count;
     int ivy_num;
