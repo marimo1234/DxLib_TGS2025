@@ -785,9 +785,11 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 				switch (ingame.tutorial_log_num)
 				{
 				case 2:
+					ingame.tutoriallog_select = LoadGraph("Resource/images/logselectionA.png");
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log1, TRUE);
 					break;
 				case 3:
+					ingame.tutoriallog_select = LoadGraph("Resource/images/logselection.png");
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log2, TRUE);
 					break;
 				case 4:
@@ -923,7 +925,7 @@ void TutorialUpdate(void)
 		}
 	}
 }
-
+//チュートリアルの説明順番設定
 void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
 	const CreateStage* stage)
 {
@@ -944,7 +946,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (cursor->array_x == 5)
 			{
-
+				ingame.tutoriallog_select = LoadGraph("Resource/images/logselectionA.png");
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				animetion_num = 0;
@@ -973,7 +975,6 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (rock->item_num > 0)
 			{
-
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				animetion_num = 0;
