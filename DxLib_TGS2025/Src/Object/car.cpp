@@ -834,14 +834,14 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.ivy_flag == true)
 	 {
-		 DrawRotaGraphF(carx, cary, 1.0, 0.0,gameover.circle, TRUE);
-			 DrawRotaGraphF(carx-14, cary-44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
-			 if (car.ivy_count < 60)
-			 {
-				 Play_Sound_Car(car.ivy_se, 150);
-			 }
+		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+		 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+		 if (car.ivy_count < 60)
+		 {
+			 Play_Sound_Car(car.ivy_se, 150);
+		 }
 	 }
-	 else if(car.ivy_flag == false)
+	 else if (car.ivy_flag == false)
 	 {
 		 StopSoundMem(car.ivy_se);
 	 }
