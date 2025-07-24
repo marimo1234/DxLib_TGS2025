@@ -34,18 +34,15 @@ void GoalInit(void)
 	goal.print_flag = false;
 	
 	goal.firework_count = 0;
-	goal.add_y[0] = 0.0f;
-	goal.add_y[1] = 0.0f;
-	goal.add_y[2] = 0.0f;
-	goal.firework_rate[0] = 0.0f;
-	goal.firework_rate[1] = 0.0f;
-	goal.firework_rate[2] = 0.0f;
-	goal.firework_num[0] = 0;
-	goal.firework_num[1] = 0;
-	goal.firework_num[2] = 0;
 	goal.firework_x[0] = 150.0f;
 	goal.firework_x[1] = 1100.0f;
 	goal.firework_x[2] = 650.0f;
+	for (int i = 0; i < 3; i++)
+	{
+		goal.add_y[i] = 0.0f;
+		goal.firework_rate[i] = 0.0f;
+		goal.firework_num[i] = 0;
+	}
 }
 
 
@@ -203,6 +200,14 @@ void GoalReset(void)
 	goal.menu_flag = false;
 	goal.count = 0;
 	goal.print_count = 0;
+
+	goal.firework_count = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		goal.add_y[i] = 0.0f;
+		goal.firework_rate[i] = 0.0f;
+		goal.firework_num[i] = 0;
+	}
 }
 
 void GameOverDraw(const GameOver* gameover)
