@@ -237,7 +237,7 @@ void CarDraw(void)
 	CarBoomDraw(car.position.x, car.position.y);
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%f", car.position.x);*/
-	DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
+	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -816,7 +816,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count % 4 == 0 && car.ivy_num < 15)
+		 if (car.ivy_count > 20&&car.ivy_count % 4 == 0 && car.ivy_num < 15)
 		 {
 			 car.ivy_num++;
 		 }
@@ -835,16 +835,11 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 DrawRotaGraphF(carx, cary, 1.0, 0.0,gameover.circle, TRUE);
-		 if (car.ivy_count > 30)
-		 {
-
 			 DrawRotaGraphF(carx-14, cary-44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
-
 			 if (car.ivy_count < 60)
 			 {
 				 Play_Sound_Car(car.ivy_se, 150);
 			 }
-		 }
 	 }
 	 else if(car.ivy_flag == false)
 	 {
