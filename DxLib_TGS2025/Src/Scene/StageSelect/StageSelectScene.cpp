@@ -73,7 +73,7 @@ void StageSelectResourceInit(void)
 	//背景
 		stageselect.background_image = LoadGraph("Resource/images/StageSelect3.png");
 		// スピードの画像
-		stageselect.speed_frame = LoadGraph("Resource/images/Speedframe1.png");
+		stageselect.speed_frame = LoadGraph("Resource/images/Speedframe2.png");
 		//スピードの文字画像
 		stageselect.speed_char = LoadGraph("Resource/images/SpeedCharImage.png");
 		//マスの画像
@@ -236,10 +236,40 @@ void StageSelectNumber(void)
 void NumTroutDraw(void)
 {
 	//スピード枠の描画
-	DrawRotaGraph(510, 510, 0.7, 0.0, stageselect.speed_frame, TRUE);
+	//DrawRotaGraph(510, 510, 0.7, 0.0, stageselect.speed_frame, TRUE);
+	DrawRotaGraph(630, 550, 0.7, 0.0, stageselect.speed_frame, TRUE);
 	//スピードの文字描画
-	DrawRotaGraph(450, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
-
+	DrawRotaGraph(470, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
+	//説明文のサイズ
+	SetFontSize(24);
+	//ステージの概要コメント
+	switch (stageselect.number)
+	{
+	case 0:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "チュートリアルステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "はじめてはこのステージからやろう！ ");
+		break;
+	case 1:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "初心者向けステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "チュートリアルステージの次はこのステージをやろう！ ");
+		break;
+	case 2:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "資材集めのステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "車に追いつかれないように気を付けて資材を集めよう！ ");
+		break;
+	case 3:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "陸と水辺が交互のステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "作る道の切り替えが重要！混乱しないで道を繋げよう！ ");
+		break;
+	case 4:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "水の多いステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "車が早くなってるからミスをしないよう気を付けよう！ ");
+		break;
+	case 5:
+		DrawFormatString(325, 540, GetColor(0, 0, 0), "最難関ステージ ");
+		DrawFormatString(325, 575, GetColor(0, 0, 0), "車がとても速いから道繋ぎと資材集めを交互にやろう！ ");
+		break;
+	}
 	//枠の描画
 	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stageselect.trout_image[3], TRUE);
 	//矢印の描画（上または下にない時は描画しない）
