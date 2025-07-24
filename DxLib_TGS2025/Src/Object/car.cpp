@@ -130,6 +130,13 @@ void CarResourceInit(void)
 	car.ivy_animation[6] = LoadGraph("Resource/images/PlantAnim6.png");
 	car.ivy_animation[7] = LoadGraph("Resource/images/PlantAnim7.png");
 	car.ivy_animation[8] = LoadGraph("Resource/images/PlantAnim8.png");
+	car.ivy_animation[9] = LoadGraph("Resource/images/PlantAnim9.png");
+	car.ivy_animation[10] = LoadGraph("Resource/images/PlantAnim10.png");
+	car.ivy_animation[11] = LoadGraph("Resource/images/PlantAnim11.png");
+	car.ivy_animation[12] = LoadGraph("Resource/images/PlantAnim12.png");
+	car.ivy_animation[13] = LoadGraph("Resource/images/PlantAnim13.png");
+	car.ivy_animation[14] = LoadGraph("Resource/images/PlantAnim14.png");
+	car.ivy_animation[15] = LoadGraph("Resource/images/PlantAnim15.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -216,23 +223,21 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false)
+	if (car.lake_flag == false && car.ivy_flag == false)
 	{
 		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 	}
 	//警告マークの描画
-	CarWarnDraw(); 
+	CarWarnDraw();
 	CarWarnSE();
 
 	//ツタの描画
 	CarIvyDraw(car.position.x, car.position.y);
-	CarLakeDraw(car.position.x, car.position.y,GetInGame());
+	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
-	/*	DrawFormatString(930, 300, GetColor(255, 255, 255), "%f",car.position.x);
-		DrawFormatString(930, 200, GetColor(255, 255, 255), "%f", car.position.y);
-		DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.x);
-		DrawFormatString(930, 150, GetColor(255, 255, 255), "%d", car.direction);*/
-	
+
+	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%f", car.position.x);*/
+	DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -811,7 +816,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count>30&&car.ivy_count % 6 == 0 && car.ivy_num < 8)
+		 if (car.ivy_count % 4 == 0 && car.ivy_num < 15)
 		 {
 			 car.ivy_num++;
 		 }
@@ -833,7 +838,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.ivy_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx-30, cary-60, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx-14, cary-44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
 
 			 if (car.ivy_count < 60)
 			 {
