@@ -143,6 +143,7 @@ void InGameResourceInit(void)
 		ingame.mitibikikun = LoadGraph("Resource/images/mitibikikunn.png");
 		//チュートリアル中のログの選択画像
 		ingame.tutoriallog_select = LoadGraph("Resource/images/logselection.png");
+		ingame.tutoriallog_selectA = LoadGraph("Resource/images/logselectionA.png");
 		//メニューのボタン
 		ingame.start_button_image = LoadGraph("Resource/images/STARTbutton.png");
 		//チュートリアル中のコントローラアニメーション
@@ -785,11 +786,9 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 				switch (ingame.tutorial_log_num)
 				{
 				case 2:
-					ingame.tutoriallog_select = LoadGraph("Resource/images/logselectionA.png");
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log1, TRUE);
 					break;
 				case 3:
-					ingame.tutoriallog_select = LoadGraph("Resource/images/logselection.png");
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log2, TRUE);
 					break;
 				case 4:
@@ -802,7 +801,6 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log5, TRUE);
 					break;
 				case 7:
-					//DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log6, TRUE);
 					DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
 					break;
 				case 8:
@@ -826,10 +824,13 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover)
 				default:
 					break;
 				}
-				//DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, tutorial_log, TRUE);
 			}
 		}
-		if (ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
+		if (ingame.mitibiki_flag == true && ingame.tutorial_count == 80 && ingame.tutorial_log_num==2)
+		{
+			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_selectA, TRUE);
+		}
+		else if(ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 		{
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
