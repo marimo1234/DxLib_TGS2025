@@ -57,6 +57,7 @@ struct InGame
 	int tutorial_controol_right;
 	int tutorial_controol_down;
 	int tutoriallog_select;
+	int tutoriallog_selectA;
 	int itemtutorial1;
 	int itemtutorial2;
 	int itemtutorial3;
