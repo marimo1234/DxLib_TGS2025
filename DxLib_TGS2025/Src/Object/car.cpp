@@ -833,7 +833,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 if (car.ivy_count > 30)
 		 {
 
-			 DrawRotaGraphF(carx-30, cary-60, 0.25, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx-30, cary-60, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
 
 			 if (car.ivy_count < 60)
 			 {
