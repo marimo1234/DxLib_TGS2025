@@ -39,6 +39,7 @@ void GoalInit(void)
 	goal.firework_x[2] = 650.0f;
 	for (int i = 0; i < 3; i++)
 	{
+		goal.old_num[i] = 0;
 		goal.add_y[i] = 0.0f;
 		goal.firework_rate[i] = 0.0f;
 		goal.firework_num[i] = 0;
@@ -58,6 +59,9 @@ void GoalResourceInit(void)
 	LoadDivGraph("Resource/images/firework.png", 12, 6, 2, 300, 300, goal.firework_image);
 	LoadDivGraph("Resource/images/firework2.png", 12, 6, 2, 300, 300, goal.firework_image2);
 	LoadDivGraph("Resource/images/firework3.png", 12, 6, 2, 300, 300, goal.firework_image3);
+
+	//音読み込み
+	goal.firework_se = LoadSoundMem("Resource/Sounds/firework.mp3"); 
 }
 //更新
 void GoalUpdate(void)
@@ -75,6 +79,12 @@ void GoalUpdate(void)
 	//花火処理
 	if (goal.print_flag == true)
 	{
+		//１フレーム前の画像番号を格納
+		for (int i = 0; i < 3; i++)
+		{
+			goal.old_num[i] = goal.firework_num[i];
+		}
+
 		goal.firework_count++;
 		if (goal.firework_count > 150)
 		{
@@ -86,15 +96,14 @@ void GoalUpdate(void)
 			goal.firework_x[1] = GetRand(1000) % (1150 - 1050 + 1) + 1050;
 			goal.firework_x[2] = GetRand(1000) % (700 - 600 + 1) + 600;
 		}
+
 		for (int i = 0; i < 3; i++)
 		{
 			if (goal.firework_count - i * 25 < 35&& goal.firework_count - i * 25 > 0)
 			{
 				goal.add_y[i] += 5.0f;
 			}
-		}
-		for (int i = 0; i < 3; i++)
-		{
+
 			if (goal.firework_count - i * 25 > 35)
 			{
 				goal.firework_rate[i] = 2.0f;
@@ -107,6 +116,15 @@ void GoalUpdate(void)
 		goal.firework_num[0] = goal.firework_count / 5;
 		goal.firework_num[1] = (goal.firework_count - 25) / 5;
 		goal.firework_num[2] = (goal.firework_count - 50) / 5;
+
+		for (int i = 0; i < 3; i++)
+		{
+			if (goal.old_num[i] == 6 && goal.firework_num[i] == 7)
+			{
+				PlaySoundMem(goal.firework_se, DX_PLAYTYPE_BACK);
+				ChangeVolumeSoundMem(255 * 60 / 100, goal.firework_se);
+			}
+		}
 	}
 }
 
@@ -204,6 +222,7 @@ void GoalReset(void)
 	goal.firework_count = 0;
 	for (int i = 0; i < 3; i++)
 	{
+		goal.old_num[i] = 0;
 		goal.add_y[i] = 0.0f;
 		goal.firework_rate[i] = 0.0f;
 		goal.firework_num[i] = 0;
