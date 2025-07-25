@@ -305,7 +305,7 @@ void CarReset(void)
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
 
-	car.ivy_flag = false;
+	car.ivy_flag = true;
 	car.ivy_count = 0;
 	car.ivy_num = 0;
 
