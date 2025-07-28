@@ -947,7 +947,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		{
 			if (cursor->array_x == 5)
 			{
-				ingame.tutoriallog_select = LoadGraph("Resource/images/logselectionA.png");
+				//ingame.tutoriallog_select = LoadGraph("Resource/images/logselectionA.png");
 				ingame.tutorial_log_num++;
 				ingame.tutorial_achievements++;
 				animetion_num = 0;
