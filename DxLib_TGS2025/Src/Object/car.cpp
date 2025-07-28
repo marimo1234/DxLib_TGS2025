@@ -170,11 +170,19 @@ void CarResourceInit(void)
 	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
 	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
-	car.boom_animtion[0] = LoadGraph("Resource/images/boom0.png");
-	car.boom_animtion[1] = LoadGraph("Resource/images/boom1.png");
-	car.boom_animtion[2] = LoadGraph("Resource/images/boom2.png");
-	//car.boom_animtion[3] = LoadGraph("Resource/images/boom3.png");
-	//car.boom_animtion[4] = LoadGraph("Resource/images/boom4.png");
+	car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom0.png");
+	car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom1.png");
+	car.boom_right_animtion[2] = LoadGraph("Resource/images/car2_right_boom2.png");
+	car.boom_right_animtion[3] = LoadGraph("Resource/images/fire_car_right_0.png");
+	car.boom_right_animtion[4] = LoadGraph("Resource/images/fire_car_right_1.png");
+	car.boom_right_animtion[5] = LoadGraph("Resource/images/fire_car_right_2.png");
+
+	car.boom_left_animtion[0] = LoadGraph("Resource/images/car2_left_boom0.png");
+	car.boom_left_animtion[1] = LoadGraph("Resource/images/car2_left_boom1.png");
+	car.boom_left_animtion[2] = LoadGraph("Resource/images/car2_left_boom2.png");
+	car.boom_left_animtion[3] = LoadGraph("Resource/images/fire_car2_left0.png");
+	car.boom_left_animtion[4] = LoadGraph("Resource/images/fire_car2_left1.png");
+	car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left2.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -950,7 +958,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.boom_flag == true)
 	 {
 		 car.boom_count++;
-		 if (car.boom_count > 30 && car.boom_count % 12 == 0 && car.boom_num < 3)
+		 if (car.boom_count > 30 && car.boom_count % 10 == 0 && car.boom_num < 5)
 		 {
 			 car.boom_num++;
 		 }
@@ -967,17 +975,32 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.boom_flag == true)
 	 {
-		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-		 if (car.boom_count > 30)
+		 switch (car.old_direction)
 		 {
-
-			 DrawRotaGraphF(carx, cary, 0.3, 0.0, car.boom_animtion[car.boom_num], TRUE);
-
-			 /*if (car.boom_count < 60)
-			 {
-				 Play_Sound_Car(car.boom_se, 150);
-			 }*/
+		 case eRight:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.12, 0.0, car.boom_right_animtion[car.boom_num], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_left_animtion[car.boom_num], TRUE);
+			 break;
+		 case eUp:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_up_animtion[car.boom_num], TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_down_animtion[car.boom_num], TRUE);
+			 break;
 		 }
+		 //if (car.boom_count > 30)
+		 //{
+			 //if (car.boom_count < 60)
+			 //{
+				// Play_Sound_Car(car.boom_se, 150);
+			 //}
+		 //}
 	 }
  }
 
