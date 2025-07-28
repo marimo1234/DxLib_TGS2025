@@ -137,6 +137,9 @@ void CarResourceInit(void)
 	car.ivy_animation[13] = LoadGraph("Resource/images/PlantAnim13.png");
 	car.ivy_animation[14] = LoadGraph("Resource/images/PlantAnim14.png");
 	car.ivy_animation[15] = LoadGraph("Resource/images/PlantAnim15.png");
+	car.ivy_animation[16] = LoadGraph("Resource/images/PlantAnim16.png");
+	car.ivy_animation[17] = LoadGraph("Resource/images/PlantAnim17.png");
+	car.ivy_animation[18] = LoadGraph("Resource/images/PlantAnim18.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -305,7 +308,7 @@ void CarReset(void)
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
 
-	car.ivy_flag = true;
+	car.ivy_flag = false;
 	car.ivy_count = 0;
 	car.ivy_num = 0;
 
@@ -816,7 +819,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count > 20&&car.ivy_count % 4 == 0 && car.ivy_num < 15)
+		 if (car.ivy_count > 20&&car.ivy_count % 3 == 0 && car.ivy_num < 18)
 		 {
 			 car.ivy_num++;
 		 }
