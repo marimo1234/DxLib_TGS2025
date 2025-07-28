@@ -114,32 +114,8 @@ void CarResourceInit(void)
 	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
 	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 
-	/*car.ivy_animation[0] = LoadGraph("Resource/images/ivy00.png");
-	car.ivy_animation[1] = LoadGraph("Resource/images/ivy01.png");
-	car.ivy_animation[2] = LoadGraph("Resource/images/ivy02.png");
-	car.ivy_animation[3] = LoadGraph("Resource/images/ivy03.png");
-	car.ivy_animation[4] = LoadGraph("Resource/images/ivy04.png");
-	car.ivy_animation[5] = LoadGraph("Resource/images/ivy05.png");
-	car.ivy_animation[6] = LoadGraph("Resource/images/ivy06.png");*/
-	car.ivy_animation[0] = LoadGraph("Resource/images/PlantAnim0.png");
-	car.ivy_animation[1] = LoadGraph("Resource/images/PlantAnim1.png");
-	car.ivy_animation[2] = LoadGraph("Resource/images/PlantAnim2.png");
-	car.ivy_animation[3] = LoadGraph("Resource/images/PlantAnim3.png");
-	car.ivy_animation[4] = LoadGraph("Resource/images/PlantAnim4.png");
-	car.ivy_animation[5] = LoadGraph("Resource/images/PlantAnim5.png");
-	car.ivy_animation[6] = LoadGraph("Resource/images/PlantAnim6.png");
-	car.ivy_animation[7] = LoadGraph("Resource/images/PlantAnim7.png");
-	car.ivy_animation[8] = LoadGraph("Resource/images/PlantAnim8.png");
-	car.ivy_animation[9] = LoadGraph("Resource/images/PlantAnim9.png");
-	car.ivy_animation[10] = LoadGraph("Resource/images/PlantAnim10.png");
-	car.ivy_animation[11] = LoadGraph("Resource/images/PlantAnim11.png");
-	car.ivy_animation[12] = LoadGraph("Resource/images/PlantAnim12.png");
-	car.ivy_animation[13] = LoadGraph("Resource/images/PlantAnim13.png");
-	car.ivy_animation[14] = LoadGraph("Resource/images/PlantAnim14.png");
-	car.ivy_animation[15] = LoadGraph("Resource/images/PlantAnim15.png");
-	car.ivy_animation[16] = LoadGraph("Resource/images/PlantAnim16.png");
-	car.ivy_animation[17] = LoadGraph("Resource/images/PlantAnim17.png");
-	car.ivy_animation[18] = LoadGraph("Resource/images/PlantAnim18.png");
+	// GameOverの食虫植物の画像
+	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -837,8 +813,27 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.ivy_flag == true)
 	 {
-		 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-		 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);
+		 switch (car.old_direction)
+		 {
+		 case eUp:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_up[car.ivy_num], TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
+			 break;
+		 case eRight:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[car.ivy_num], TRUE);
+			 break;
+		 }
+		/* DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+		 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);*/
 		 if (car.ivy_count < 60)
 		 {
 			 Play_Sound_Car(car.ivy_se, 150);

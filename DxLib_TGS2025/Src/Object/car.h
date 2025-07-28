@@ -24,7 +24,10 @@ struct Car
     int animation_count;
 
     int ivy_image[4];
-    int ivy_animation[20];
+    int ivy_anim_left[20];
+    int ivy_anim_right[20];
+    int ivy_anim_up[20];
+    int ivy_anim_down[20];
     bool ivy_flag;
     int ivy_count;
     int ivy_num;
