@@ -838,6 +838,10 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 case eUp:
 			 DrawRotaGraphF(carx+18 , cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx+18, cary - 55, 0.4, 0.0, car.ivy_anim_up[car.ivy_num], TRUE);
+			 if (car.ivy_num < 18)
+			 {
+				 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[0], TRUE);
+			 }
 			 break;
 		 case eDown:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
@@ -846,10 +850,18 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 case eRight:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
+			 if (car.ivy_num < 18)
+			 {
+				 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[0], TRUE);
+			 }
 			 break;
 		 case eLeft:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[car.ivy_num], TRUE);
+			 if (car.ivy_num < 18)
+			 {
+				 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[0], TRUE);
+			 }
 			 break;
 		 }
 		/* DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
