@@ -115,8 +115,9 @@ void CarResourceInit(void)
 	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 
 	// GameOverの食虫植物の画像
-	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);
-	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");
+	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);    // 左
+	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
+	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
 	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
@@ -825,7 +826,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 case eRight:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
 			 break;
 		 case eLeft:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
