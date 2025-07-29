@@ -286,6 +286,9 @@ void NumTroutDraw(void)
 	//ミニマップの描画
 	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.stage_image[stageselect.number], TRUE);
 	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stageselect.trout_image[4], TRUE);
+
+	//Bで戻る画像の描画
+	DrawRotaGraph(1170.0, 670.0, 0.8, 0.0, stageselect.b_back, TRUE);
 }
 
 //音がなっていないなら鳴らす
