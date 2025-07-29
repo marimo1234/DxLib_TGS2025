@@ -117,25 +117,8 @@ void CarResourceInit(void)
 	// GameOverの食虫植物の画像
 	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);    // 左
 	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
-	car.ivy_anim_up[0] = LoadGraph("Resource/images/PlantAnim0_U.png");
-	car.ivy_anim_up[1] = LoadGraph("Resource/images/PlantAnim1_U.png");
-	car.ivy_anim_up[2] = LoadGraph("Resource/images/PlantAnim2_U.png");
-	car.ivy_anim_up[3] = LoadGraph("Resource/images/PlantAnim3_U.png");
-	car.ivy_anim_up[4] = LoadGraph("Resource/images/PlantAnim4_U.png");
-	car.ivy_anim_up[5] = LoadGraph("Resource/images/PlantAnim5_U.png");
-	car.ivy_anim_up[6] = LoadGraph("Resource/images/PlantAnim6_U.png");
-	car.ivy_anim_up[7] = LoadGraph("Resource/images/PlantAnim7_U.png");
-	car.ivy_anim_up[8] = LoadGraph("Resource/images/PlantAnim8_U.png");
-	car.ivy_anim_up[9] = LoadGraph("Resource/images/PlantAnim9_U.png");
-	car.ivy_anim_up[10] = LoadGraph("Resource/images/PlantAnim10_U.png");
-	car.ivy_anim_up[11] = LoadGraph("Resource/images/PlantAnim11_U.png");
-	car.ivy_anim_up[12] = LoadGraph("Resource/images/PlantAnim12_U.png");
-	car.ivy_anim_up[13] = LoadGraph("Resource/images/PlantAnim13_U.png");
-	car.ivy_anim_up[14] = LoadGraph("Resource/images/PlantAnim14_U.png");
-	car.ivy_anim_up[15] = LoadGraph("Resource/images/PlantAnim15_U.png");
-	car.ivy_anim_up[16] = LoadGraph("Resource/images/PlantAnim16_U.png");
-	car.ivy_anim_up[17] = LoadGraph("Resource/images/PlantAnim17_U.png");
-	car.ivy_anim_up[18] = LoadGraph("Resource/images/PlantAnim18_U.png");
+	LoadDivGraph("Resource/images/PlantAnim_U.png", 19, 4, 5, 400, 400, car.ivy_anim_up);   // 上
+	
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
