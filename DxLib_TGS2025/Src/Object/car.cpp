@@ -81,6 +81,7 @@ void CarInit(void)
 	car.start = false;//車の処理フラグ
 	car.menu_flag = false;
 	car.mitibiki_flag = false;
+	car.warntutorial_car_flag = false;
 	
 	//ステージ番号と車の初期位置を取得
 	GetCarStageNum(GetInGame());
@@ -119,7 +120,18 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
 	LoadDivGraph("Resource/images/PlantAnim_U.png", 19, 4, 5, 400, 400, car.ivy_anim_up);      // 上
 	
-	car.ivy_anim_down[0] = LoadGraph("Resource/images/PlantAnim11_D.png");
+	car.ivy_anim_down[0] = LoadGraph("Resource/images/PlantAnim0_D.png");
+	car.ivy_anim_down[1] = LoadGraph("Resource/images/PlantAnim1_D.png");
+	car.ivy_anim_down[2] = LoadGraph("Resource/images/PlantAnim2_D.png");
+	car.ivy_anim_down[3] = LoadGraph("Resource/images/PlantAnim3_D.png");
+	car.ivy_anim_down[4] = LoadGraph("Resource/images/PlantAnim4_D.png");
+	car.ivy_anim_down[5] = LoadGraph("Resource/images/PlantAnim5_D.png");
+	car.ivy_anim_down[6] = LoadGraph("Resource/images/PlantAnim6_D.png");
+	car.ivy_anim_down[7] = LoadGraph("Resource/images/PlantAnim7_D.png");
+	car.ivy_anim_down[8] = LoadGraph("Resource/images/PlantAnim8_D.png");
+	car.ivy_anim_down[9] = LoadGraph("Resource/images/PlantAnim9_D.png");
+	car.ivy_anim_down[10] = LoadGraph("Resource/images/PlantAnim10_D.png");
+	car.ivy_anim_down[11] = LoadGraph("Resource/images/PlantAnim11_D.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -286,6 +298,7 @@ void CarReset(void)
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
+	car.warntutorial_car_flag = false;
 	car.warn_image_flag = false;//警告マークのフラグ
 	car.warn_count = 0;//警告マークを表示する時間
 	car.warn_count_max = 40;//警告マークを表示する時間

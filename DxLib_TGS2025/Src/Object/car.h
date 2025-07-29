@@ -80,7 +80,7 @@ struct Car
 
     bool mitibiki_flag;
 
-    bool warntutorial_car_flag=false;
+    bool warntutorial_car_flag;
 };
 
 struct GameOver
