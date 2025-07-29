@@ -822,7 +822,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count > 20&&car.ivy_count % 3 == 0 && car.ivy_num < 0)
+		 if (car.ivy_count > 20&&car.ivy_count % 3 == 0 && car.ivy_num < 11)
 		 {
 			 car.ivy_num++;
 		 }
@@ -851,12 +851,13 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 }
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx - 18, cary + 50, 1.7, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx - 18, cary + 55, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx - 18, cary + 55, 0.4, 0.0, car.ivy_anim_down[0], TRUE);
 			 }
+			 DrawRotaGraphF(carx - 18, cary + 50, 1.7, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 18, cary + 55, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
+			 
 			 break;
 		 case eRight:
 			 DrawRotaGraphF(carx + 22, cary - 25, 1.7, 0.0, gameover.circle, TRUE);
