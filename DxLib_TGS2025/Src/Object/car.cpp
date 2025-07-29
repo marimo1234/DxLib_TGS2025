@@ -827,19 +827,19 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eUp:
-			 DrawRotaGraphF(carx+18 , cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx+18, cary - 55, 0.4, 0.0, car.ivy_anim_up[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx + 18, cary - 50, 1.7, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[car.ivy_num], TRUE);
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[0], TRUE);
 			 }
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
 			 break;
 		 case eRight:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx + 22, cary - 25, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
 			 if (car.ivy_num < 18)
 			 {
@@ -847,7 +847,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 }
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - 22, cary - 25, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[car.ivy_num], TRUE);
 			 if (car.ivy_num < 18)
 			 {
@@ -855,8 +855,8 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 }
 			 break;
 		 }
-		/* DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-		 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);*/
+		 /* DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+		  DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);*/
 		 if (car.ivy_count < 60)
 		 {
 			 Play_Sound_Car(car.ivy_se, 150);
