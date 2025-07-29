@@ -790,8 +790,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 				{
 				case 2:
 
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -808,8 +807,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 3:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 					    ingame.warntutorial_flag_public = true;
@@ -826,8 +824,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 4:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -844,8 +841,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 5:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -862,8 +858,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 6:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -880,8 +875,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 7:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -898,8 +892,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					break;
 				case 8:
-					DrawFormatString(150, 100, GetColor(255, 255, 255), "%d ", car->warn_image_flag);
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -910,11 +903,6 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 							ingame.warntutorial_flag_public = false;
 						}
 					}
-					if (car->warn_image_flag == false)
-					{
-						ingame.mitibiki_flag = false;
-						ingame.warntutorial_flag_public = false;
-					}
 				    if (ingame.warntutorial_flag_public == false)
 					{
 						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
@@ -922,7 +910,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					break;
 				case 9:
 
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -940,7 +928,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					break;
 				case 10:
 
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -958,7 +946,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					break;
 				case 11:
 
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -976,7 +964,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					break;
 				case 12:
 
-					if (ingame.warntutorial_flag == true && car->warn_image_flag == true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -994,7 +982,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					break;
 				case 13:
 
-					if (ingame.warntutorial_flag == true && car->warn_image_flag==true)
+					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
 						ingame.warntutorial_flag_public = true;
@@ -1560,17 +1548,9 @@ void BlinkingAnimation(void)
 }
 void WarnTutorial(const Car*car) 
 {
-	int i=0;
-	while(car->warn_image_flag == true && i < 60)
-	{
-		i++;
-	}
-	if (car->warn_image_flag == true && i > 59)
-	{
-		DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.warntutorial, TRUE);
-		ingame.mitibiki_flag = true;
-		
-	}
+	
+	DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.warntutorial, TRUE);
+	ingame.mitibiki_flag = true;
 }
 void TutorialReset(void)
 {

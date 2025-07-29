@@ -79,6 +79,8 @@ struct Car
     float warn_range;
 
     bool mitibiki_flag;
+
+    bool warntutorial_car_flag=false;
 };
 
 struct GameOver

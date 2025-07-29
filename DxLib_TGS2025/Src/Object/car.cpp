@@ -792,9 +792,11 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 {
 			 case eUp: case eDown:
 				 DrawRotaGraphF(car.position.x - 80.0f, car.position.y, 1.0, 0.0, car.warn_image[car.warn_num], TRUE);
+				 car.warntutorial_car_flag = true;
 				 break;
 			 case eRight: case eLeft:
 				 DrawRotaGraphF(car.position.x, car.position.y - 80.0f, 1.0, 0.0, car.warn_image[car.warn_num], TRUE);
+				 car.warntutorial_car_flag = true;
 				 break;
 			 }
 		 }
