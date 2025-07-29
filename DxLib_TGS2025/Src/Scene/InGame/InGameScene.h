@@ -112,7 +112,9 @@ struct InGame
 	int itembarcoment2;
 	int itembarcoment3;
 	int itembarcomentswitch = false;
-
+	int warntutorial;
+	int warntutorial_flag=true;
+	int warntutorial_flag_public = false;
 };
 
 struct InGame_Sound
