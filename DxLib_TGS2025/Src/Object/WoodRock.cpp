@@ -734,7 +734,7 @@ void WoodEffect(int x, int y)
 		wood.add_anim_x[x][y] = 0;
 	}
 
-	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, wood.effect_image[wood.effect_num], TRUE);
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, wood.effect_image[wood.effect_num], TRUE);
 }
 
 //岩のエフェクト
@@ -758,7 +758,7 @@ void RockEffect(int x, int y)
 		rock.effect_flag = false;
 	}
 	
-	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.effect_image[rock.effect_num],TRUE);
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, rock.effect_image[rock.effect_num],TRUE);
 }
 
 //モグラが木を置くときのエフェクト
@@ -802,7 +802,7 @@ void PutRockEffect(int x, int y)
 		rock.put_effect_count[x][y] = 0;
 		rock.put_effect_flag[x][y] = false;
 	}
-	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.0, 0.0, rock.put_effect_image[rock.put_effect_num[x][y]], TRUE);
+	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.5, 0.0, rock.put_effect_image[rock.put_effect_num[x][y]], TRUE);
 
 
 }
