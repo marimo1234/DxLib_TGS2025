@@ -107,10 +107,12 @@ struct InGame
 	int madewoodswitch = false;
 	int itembaraxcount;
 	int itembarwoodroadcount;
+	int itembarbridgecount;
 	int tutorial_count;
 	int itembarcoment1;
 	int itembarcoment2;
 	int itembarcoment3;
+	int itembarcoment4;
 	int itembarcomentswitch = false;
 	int warntutorial;
 	int warntutorial_flag=true;
