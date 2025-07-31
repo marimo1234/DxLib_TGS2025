@@ -200,6 +200,7 @@ void InGameResourceInit(void)
 		ingame.itembarcoment1 = LoadGraph("Resource/images/itemtutorialcoment1.png");
 		ingame.itembarcoment2 = LoadGraph("Resource/images/itemtutorialcoment2.png");
 		ingame.itembarcoment3 = LoadGraph("Resource/images/itemtutorialcoment3.png");
+		ingame.itembarcoment4 = LoadGraph("Resource/images/itemtutorialcoment4.png");
 		//BGMの初期化
 		PlayBgm();
 		break;
@@ -422,7 +423,7 @@ void InGameSceneDraw(void)
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
+	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
 }
@@ -1015,7 +1016,12 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 		if (ingame.tutorial_log_num == 6 || ingame.menuanimationflag == true)
 		{
 			ItemTutorial();
-			if (ingame.tutorial_log_num == 6)
+			
+			 if(ingame.tutorial_achievements==2)
+			{
+				DrawRotaGraphF(855.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment4, TRUE);
+			}
+			 else if (ingame.tutorial_log_num == 6)
 			{
 				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
 			}
@@ -1148,11 +1154,21 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		//{
 			if (rock->item_num > 0)
 			{
-				ingame.tutorial_log_num++;
-				ingame.tutorial_achievements++;
+				ingame.tutorial_log_num=6;
+				ingame.tutorial_achievements=3;
 				animetion_num = 0;
 				break;
 
+			}
+			else if (tool->item_number != ePickaxe&&ingame.tutorial_log_num<6)
+			{
+				ingame.tutorial_log_num = 6;
+				/*ingame.tutorial_achievements += 1;*/
+			}
+			else if (tool->item_number == ePickaxe && ingame.tutorial_log_num ==6)
+			{
+				ingame.tutorial_log_num = 5;
+				/*ingame.tutorial_achievements += 1;*/
 			}
 		//}
 		break;
@@ -1171,8 +1187,8 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		if (tool->item_number == eRoad)
 		{
 
-			ingame.tutorial_log_num++;
-			ingame.tutorial_achievements++;
+			ingame.tutorial_log_num=7;
+			ingame.tutorial_achievements=4;
 			animetion_num = 0;
 			ingame.itemtutorial_num = 1;
 			break;
@@ -1212,7 +1228,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.madewoodswitch = false;
 			break;
 		}
-		else if (tool->item_number != eRoad)
+		else if (tool->item_number != eRoad&& stage->array[4][4] != 4)
 		{
 			ingame.tutorial_log_num-=2;
 			ingame.tutorial_achievements-=2;
@@ -1339,15 +1355,26 @@ void ItemTutorial(void)
 				ingame.itembarwoodroadcount++;
 
 			}
+			else if (ingame.tutorial_achievements==2)
+			{
+				ingame.itemtutorial_num = 0;
+				ingame.itembaraxcount = 0; 
+				ingame.itembarwoodroadcount = 0;
+			}
 			else if (ingame.tutorial_log_num == 6)
 			{
 				ingame.itemtutorial_num++;
 
 			}
+			else if (ingame.tutorial_achievements == 7)
+			{
+				ingame.itembarbridgecount++;
+			}
 			else if (ingame.tutorial_log_num == 9 && ingame.woodtutorial == false)
 			{
 				ingame.itembaraxcount++;
 			}
+			
 
 		}
 		if (ingame.itemtutorial_num > 150)
@@ -1428,26 +1455,6 @@ void BlinkingAnimation(void)
 				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion1, TRUE);
 			}
 		}
-		/*else if (ingame.tutorial_log_num == 7)
-		{
-			if (ingame.menu_flag == false)
-			{
-				ingame.makerodacount++;
-			}
-
-			if (ingame.makerodacount > 105)
-			{
-				ingame.makerodacount = 0;
-			}
-			else if (ingame.makerodacount > 70)
-			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.makeroda2, TRUE);
-			}
-			else if (ingame.makerodacount > 35)
-			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.makeroda1, TRUE);
-			}
-		}*/
 		else if (ingame.tutorial_log_num == 8)
 		{
 			if (ingame.menu_flag == false)
