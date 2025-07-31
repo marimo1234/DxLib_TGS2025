@@ -132,6 +132,13 @@ void CarResourceInit(void)
 	car.ivy_anim_down[9] = LoadGraph("Resource/images/PlantAnim9_D.png");
 	car.ivy_anim_down[10] = LoadGraph("Resource/images/PlantAnim10_D.png");
 	car.ivy_anim_down[11] = LoadGraph("Resource/images/PlantAnim11_D.png");
+	car.ivy_anim_down[12] = LoadGraph("Resource/images/PlantAnim12_D.png");
+	car.ivy_anim_down[13] = LoadGraph("Resource/images/PlantAnim13_D.png");
+	car.ivy_anim_down[14] = LoadGraph("Resource/images/PlantAnim14_D.png");
+	car.ivy_anim_down[15] = LoadGraph("Resource/images/PlantAnim15_D.png");
+	car.ivy_anim_down[16] = LoadGraph("Resource/images/PlantAnim16_D.png");
+	car.ivy_anim_down[17] = LoadGraph("Resource/images/PlantAnim17_D.png");
+	car.ivy_anim_down[18] = LoadGraph("Resource/images/PlantAnim18_D.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
@@ -822,7 +829,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.ivy_flag == true)
 	 {
 		 car.ivy_count++;
-		 if (car.ivy_count > 20&&car.ivy_count % 4 == 0 && car.ivy_num < 11)
+		 if (car.ivy_count > 20&&car.ivy_count % 3 == 0 && car.ivy_num < 18)
 		 {
 			 car.ivy_num++;
 		 }
@@ -850,7 +857,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[0], TRUE);
 			 }
 			 break;
-		 case eDown:
+		 case eDown:// 車の方が先に描画される
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx - 18, cary + 50, 0.4, 0.0, car.ivy_anim_down[0], TRUE);
