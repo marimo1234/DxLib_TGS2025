@@ -857,13 +857,9 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[0], TRUE);
 			 }
 			 break;
-		 case eDown:// 車の方が先に描画される
-			 if (car.ivy_num < 18)
-			 {
-				 DrawRotaGraphF(carx - 18, cary + 50, 0.4, 0.0, car.ivy_anim_down[0], TRUE);
-			 }
+		 case eDown:
 			 DrawRotaGraphF(carx - 18, cary + 50, 1.7, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx - 18, cary + 50, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx - 18, cary + 30, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
 			 
 			 break;
 		 case eRight:
