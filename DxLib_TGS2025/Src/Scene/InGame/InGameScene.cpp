@@ -422,7 +422,7 @@ void InGameSceneDraw(void)
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
-	DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
+	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
 }
