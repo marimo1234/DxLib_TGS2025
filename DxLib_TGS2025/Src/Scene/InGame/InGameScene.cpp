@@ -1212,7 +1212,7 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 			ingame.madewoodswitch = false;
 			break;
 		}
-		else if (tool->item_number != eRoad)
+		else if (tool->item_number != eRoad&& stage->array[4][4] != 4)
 		{
 			ingame.tutorial_log_num-=2;
 			ingame.tutorial_achievements-=2;
