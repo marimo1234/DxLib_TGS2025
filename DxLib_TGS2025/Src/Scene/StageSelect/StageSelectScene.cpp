@@ -239,7 +239,7 @@ void NumTroutDraw(void)
 	//DrawRotaGraph(510, 510, 0.7, 0.0, stageselect.speed_frame, TRUE);
 	DrawRotaGraph(630, 550, 0.7, 0.0, stageselect.speed_frame, TRUE);
 	//スピードの文字描画
-	DrawRotaGraph(470, 510, 0.5, 0.0, stageselect.speed_char, TRUE);
+	DrawRotaGraph(470, 508, 0.5, 0.0, stageselect.speed_char, TRUE);
 	//ステージの概要コメント
 	switch (stageselect.number)
 	{
