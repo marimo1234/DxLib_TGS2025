@@ -119,26 +119,8 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);    // 左
 	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
 	LoadDivGraph("Resource/images/PlantAnim_U.png", 19, 4, 5, 400, 400, car.ivy_anim_up);      // 上
+	LoadDivGraph("Resource/images/PlantAnim_D.png", 19, 4, 5, 400, 400, car.ivy_anim_down);      // 下
 	
-	car.ivy_anim_down[0] = LoadGraph("Resource/images/PlantAnim0_D.png");
-	car.ivy_anim_down[1] = LoadGraph("Resource/images/PlantAnim1_D.png");
-	car.ivy_anim_down[2] = LoadGraph("Resource/images/PlantAnim2_D.png");
-	car.ivy_anim_down[3] = LoadGraph("Resource/images/PlantAnim3_D.png");
-	car.ivy_anim_down[4] = LoadGraph("Resource/images/PlantAnim4_D.png");
-	car.ivy_anim_down[5] = LoadGraph("Resource/images/PlantAnim5_D.png");
-	car.ivy_anim_down[6] = LoadGraph("Resource/images/PlantAnim6_D.png");
-	car.ivy_anim_down[7] = LoadGraph("Resource/images/PlantAnim7_D.png");
-	car.ivy_anim_down[8] = LoadGraph("Resource/images/PlantAnim8_D.png");
-	car.ivy_anim_down[9] = LoadGraph("Resource/images/PlantAnim9_D.png");
-	car.ivy_anim_down[10] = LoadGraph("Resource/images/PlantAnim10_D.png");
-	car.ivy_anim_down[11] = LoadGraph("Resource/images/PlantAnim11_D.png");
-	car.ivy_anim_down[12] = LoadGraph("Resource/images/PlantAnim12_D.png");
-	car.ivy_anim_down[13] = LoadGraph("Resource/images/PlantAnim13_D.png");
-	car.ivy_anim_down[14] = LoadGraph("Resource/images/PlantAnim14_D.png");
-	car.ivy_anim_down[15] = LoadGraph("Resource/images/PlantAnim15_D.png");
-	car.ivy_anim_down[16] = LoadGraph("Resource/images/PlantAnim16_D.png");
-	car.ivy_anim_down[17] = LoadGraph("Resource/images/PlantAnim17_D.png");
-	car.ivy_anim_down[18] = LoadGraph("Resource/images/PlantAnim18_D.png");
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
