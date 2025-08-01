@@ -163,12 +163,13 @@ void CarResourceInit(void)
 	car.boom_right_animtion[5] = LoadGraph("Resource/images/fire_car_right_1.png");
 	car.boom_right_animtion[6] = LoadGraph("Resource/images/fire_car_right_2.png");
 
-	car.boom_left_animtion[0] = LoadGraph("Resource/images/car2_left_boom0.png");
-	car.boom_left_animtion[1] = LoadGraph("Resource/images/car2_left_boom1.png");
-	car.boom_left_animtion[2] = LoadGraph("Resource/images/car2_left_boom2.png");
-	car.boom_left_animtion[3] = LoadGraph("Resource/images/fire_car2_left0.png");
-	car.boom_left_animtion[4] = LoadGraph("Resource/images/fire_car2_left1.png");
-	car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left2.png");
+	car.boom_left_animtion[0] = LoadGraph("Resource/images/car2_left_boom_base.png");
+	car.boom_left_animtion[1] = LoadGraph("Resource/images/car2_left_boom0.png");
+	car.boom_left_animtion[2] = LoadGraph("Resource/images/car2_left_boom1.png");
+	car.boom_left_animtion[3] = LoadGraph("Resource/images/car2_left_boom2.png");
+	car.boom_left_animtion[4] = LoadGraph("Resource/images/fire_car2_left0.png");
+	car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left1.png");
+	car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
