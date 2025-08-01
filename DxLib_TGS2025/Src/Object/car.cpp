@@ -119,7 +119,7 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);    // 左
 	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
 	LoadDivGraph("Resource/images/PlantAnim_U.png", 19, 4, 5, 400, 400, car.ivy_anim_up);      // 上
-	LoadDivGraph("Resource/images/PlantAnim_D.png", 19, 4, 5, 400, 400, car.ivy_anim_down);      // 下
+	LoadDivGraph("Resource/images/PlantAnim_D.png", 19, 4, 5, 400, 400, car.ivy_anim_down);    // 下
 	
 	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
