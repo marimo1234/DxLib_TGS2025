@@ -35,6 +35,17 @@ struct StageSelect
 	
 };
 
+struct SS_Star 
+{
+	//スピードスター
+	int img[2];
+	int num;
+	int x[5];
+	int y[5];
+	int cnt;
+	int idx;
+};
+
 void StageSelectSceneInit(void);
 eSceneType StageSelectSceneUpdate(void);
 void StageSelectSceneDraw(void);
@@ -44,6 +55,10 @@ void NumTroutDraw(void);
 void StageSelectResourceInit(void);
 //車描画
 void Draw_Select_Car(void);
+//スピードスタームーブ
+void StarMove(void);
+//スピードスター描画
+void DrawStar(void);
 
 
 
