@@ -295,7 +295,7 @@ void StarMove(void)
 	}
 
 	//200フレーム経った後にリセット
-	if (ss_star.cnt > 200)
+	if (ss_star.cnt > 150)
 	{
 		ss_star.cnt = 0;
 		ss_star.idx = 0;
