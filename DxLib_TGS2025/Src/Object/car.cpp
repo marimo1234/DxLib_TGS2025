@@ -155,12 +155,13 @@ void CarResourceInit(void)
 	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
 	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
-	car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom0.png");
-	car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom1.png");
-	car.boom_right_animtion[2] = LoadGraph("Resource/images/car2_right_boom2.png");
-	car.boom_right_animtion[3] = LoadGraph("Resource/images/fire_car_right_0.png");
-	car.boom_right_animtion[4] = LoadGraph("Resource/images/fire_car_right_1.png");
-	car.boom_right_animtion[5] = LoadGraph("Resource/images/fire_car_right_2.png");
+	car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom_base.png");
+	car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom0.png");
+	car.boom_right_animtion[2] = LoadGraph("Resource/images/car2_right_boom1.png");
+	car.boom_right_animtion[3] = LoadGraph("Resource/images/car2_right_boom2.png");
+	car.boom_right_animtion[4] = LoadGraph("Resource/images/fire_car_right_0.png");
+	car.boom_right_animtion[5] = LoadGraph("Resource/images/fire_car_right_1.png");
+	car.boom_right_animtion[6] = LoadGraph("Resource/images/fire_car_right_2.png");
 
 	car.boom_left_animtion[0] = LoadGraph("Resource/images/car2_left_boom0.png");
 	car.boom_left_animtion[1] = LoadGraph("Resource/images/car2_left_boom1.png");
@@ -215,7 +216,7 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false && car.ivy_flag == false)
+	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false)
 	{
 		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 	}
