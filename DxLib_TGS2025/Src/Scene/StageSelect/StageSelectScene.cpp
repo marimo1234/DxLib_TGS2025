@@ -109,6 +109,9 @@ void StageSelectResourceInit(void)
 		//数字の画像
 		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, ss_num.img);
 
+		//数字を隠す背景画像
+		ss_num.hide_img= LoadGraph("Resource/images/bg_hide_num02.png");
+
 		//ステージの画像
 		stg_sel.stage_image[0] = LoadGraph("Resource/images/stage1.png");
 		stg_sel.stage_image[1] = LoadGraph("Resource/images/stage2.png");
@@ -141,6 +144,7 @@ eSceneType StageSelectSceneUpdate(void)
 
 	//スピードスタームーブ
 	StarMove();
+	/*ss_num.y += 0.5;*/
 
 	//フェード処理
 	if (is_fading)
@@ -330,8 +334,26 @@ void StarMove(void)
 //数字、枠、車の描画
 void NumTroutDraw(void)
 {
+	//数字の描画
+	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[stg_sel.number + 1], TRUE);
+	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[stg_sel.number], TRUE);
+
+	//数字を隠す背景の描画
+	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 1.0, 0.0, ss_num.hide_img, TRUE);
+
+	//枠の描画
+	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
+	//矢印の描画（上または下にない時は描画しない）
+	if (stg_sel.number != 0)
+	{
+		DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stg_sel.arrow_image[0], TRUE);
+	}
+	if (stg_sel.number != 5)
+	{
+		DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stg_sel.arrow_image[1], TRUE);
+	}
+
 	//スピード枠の描画
-	//DrawRotaGraph(510, 510, 0.7, 0.0, stageselect.speed_frame, TRUE);
 	DrawRotaGraph(630, 550, 0.7, 0.0, stg_sel.speed_frame, TRUE);
 
 	//スピードの文字描画
@@ -344,8 +366,8 @@ void NumTroutDraw(void)
 	switch (stg_sel.number)
 	{
 	case 0:
-		
-		DrawExtendFormatString(325, 540,1.4,1.5, GetColor(0, 0, 0), "チュートリアルステージ ");
+
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "チュートリアルステージ ");
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "はじめてはこのステージからやろう！ ");
 		break;
 	case 1:
@@ -369,23 +391,6 @@ void NumTroutDraw(void)
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車がとても速いから道繋ぎと資材集めを交互にやろう！ ");
 		break;
 	}
-
-	//枠の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
-
-	//矢印の描画（上または下にない時は描画しない）
-	if (stg_sel.number != 0)
-	{
-		DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stg_sel.arrow_image[0], TRUE);
-	}
-	if (stg_sel.number != 5)
-	{
-		DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stg_sel.arrow_image[1], TRUE);
-	}
-
-	//数字の描画
-	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[stg_sel.number + 1], TRUE);
-	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[stg_sel.number], TRUE);
 
 
 	//ミニマップの描画

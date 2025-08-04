@@ -49,6 +49,7 @@ struct SS_Star
 struct SS_Num
 {
 	int img[7];
+	int hide_img;
 	int num;
 	float x;
 	float y;
