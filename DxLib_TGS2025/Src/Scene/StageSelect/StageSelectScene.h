@@ -18,7 +18,7 @@ struct StageSelect
 	int car_image1;
 	int car_image2;
 	int trout_image[5];
-	int number_image[6];
+	/*int number_image[6];*/
 	int arrow_image[2];
 	int stage_image[6];
 	int back_minimap;
@@ -42,6 +42,16 @@ struct SS_Star
 	int num;
 	int x[5];
 	int y[5];
+	int cnt;
+	int idx;
+};
+
+struct SS_Num
+{
+	int img[7];
+	int num;
+	float x;
+	float y;
 	int cnt;
 	int idx;
 };

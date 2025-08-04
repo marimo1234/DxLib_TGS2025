@@ -31,6 +31,8 @@ void Set_Coordinate(int img1, int img2, float x, float y);
 
 StageSelect stg_sel;
 SS_Star ss_star;
+SS_Num ss_num;
+
 //ステージセレクト画面初期化
 void StageSelectSceneInit(void)
 {
@@ -59,6 +61,11 @@ void StageSelectSceneInit(void)
 	ss_star.num = 0;
 	ss_star.cnt = 0;
 	ss_star.idx = 0;
+
+	//番号の初期化
+	ss_num.x = SELECT_TROUT_X;
+	ss_num.y = 350.0f;
+
 	for (int i = 0; i < 5; i++)
 	{
 		ss_star.x[i] = STAR_POS_X + i * 35;
@@ -100,7 +107,7 @@ void StageSelectResourceInit(void)
 		stg_sel.trout_image[4] = LoadGraph("Resource/images/StageTrout3.png");
 
 		//数字の画像
-		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, stg_sel.number_image);
+		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, ss_num.img);
 
 		//ステージの画像
 		stg_sel.stage_image[0] = LoadGraph("Resource/images/stage1.png");
@@ -364,7 +371,7 @@ void NumTroutDraw(void)
 	}
 
 	//枠の描画
-	DrawRotaGraph(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
+	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
 
 	//矢印の描画（上または下にない時は描画しない）
 	if (stg_sel.number != 0)
@@ -377,14 +384,16 @@ void NumTroutDraw(void)
 	}
 
 	//数字の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.4, 0.0, stg_sel.number_image[stg_sel.number], TRUE);
+	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[stg_sel.number + 1], TRUE);
+	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[stg_sel.number], TRUE);
+
 
 	//ミニマップの描画
-	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[stg_sel.number], TRUE);
-	DrawRotaGraph(760.0, 350.0, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
+	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[stg_sel.number], TRUE);
+	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
 
 	//Bで戻る画像の描画
-	DrawRotaGraph(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
+	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
 }
 
 //スピードスターの描画
