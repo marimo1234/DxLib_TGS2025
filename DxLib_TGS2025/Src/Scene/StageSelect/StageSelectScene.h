@@ -28,8 +28,9 @@ struct StageSelect
 	float car_x;
 	float car_y;
 	int car_num;
+
 	Vector2D position;
-	int number;
+	/*int num;*/
 	int cursor_se;
 	int button_se;
 	
@@ -55,6 +56,8 @@ struct SS_Num
 	float y;
 	int cnt;
 	int idx;
+	bool u_flag;
+	bool d_flag;
 };
 
 void StageSelectSceneInit(void);
@@ -75,3 +78,4 @@ void DrawStar(void);
 
 
 const StageSelect*GetStageSelect(void);
+const SS_Num*GetSS_Num(void);

@@ -33,7 +33,7 @@ InGame_Sound sound;
 void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
 void GameOverReset(const GameOver* gameover, const Car* car);
-void GetStageNumber(const StageSelect* stageselect);
+void GetStageNumber(const SS_Num* ss_num);
 void InGameMenuUpdate(const Goal* goal, const GameOver* gameover, const Car* car);
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
@@ -58,7 +58,7 @@ void InGameSceneInit(void)
 	//インゲームスタートのフラグ変数
 	ingame.start = false;
 	//ステージ番号を取得
-	GetStageNumber(GetStageSelect());
+	GetStageNumber(GetSS_Num());
 	/*ingame.stage_num = eOne;*/
 	//ステージ次のステージに変更するフラグ
 	ingame.next_stage_flag = false;
@@ -480,9 +480,9 @@ void GameStart(void)
 }
 
 //ステージの番号を取得
-void GetStageNumber(const StageSelect* stageselect)
+void GetStageNumber(const SS_Num* ss_num)
 {
-	ingame.stage_num = stageselect->number;
+	ingame.stage_num = ss_num->num;
 }
 
 //インゲームsound初期化

@@ -29,6 +29,14 @@ void Play_StageSelect_BGM(const Title* title);
 void Move_Car(const Car* car);
 void Set_Coordinate(int img1, int img2, float x, float y);
 
+//番号ムーブフラグ
+void SS_NumberFlag(bool &flag);
+
+//番号のムーブ
+void SS_NumberMove(void);
+
+
+
 StageSelect stg_sel;
 SS_Star ss_star;
 SS_Num ss_num;
@@ -45,7 +53,7 @@ void StageSelectSceneInit(void)
 	stg_sel.position.x = 400.0f;
 	stg_sel.position.y = 255.0f;
 	//ステージ番号の初期化
-	stg_sel.number = 0;
+	ss_num.num = 0;
 
 	//車の描画座標
 	stg_sel.car_x = 0.0f;
@@ -65,6 +73,9 @@ void StageSelectSceneInit(void)
 	//番号の初期化
 	ss_num.x = SELECT_TROUT_X;
 	ss_num.y = 350.0f;
+	ss_num.u_flag = false;
+	ss_num.d_flag = false;
+	ss_num.num = 0;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -146,6 +157,8 @@ eSceneType StageSelectSceneUpdate(void)
 	StarMove();
 	/*ss_num.y += 0.5;*/
 
+	SS_NumberMove();
+
 	//フェード処理
 	if (is_fading)
 	{
@@ -163,7 +176,7 @@ eSceneType StageSelectSceneUpdate(void)
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		//ステージ番号が-1じゃなければ
-		if (stg_sel.number != -1)
+		if (ss_num.num != -1)
 		{
 			stg_sel.flag = false;
 			Stop_Title_BGM(GetTitle());
@@ -210,6 +223,11 @@ const StageSelect* GetStageSelect(void)
 	return &stg_sel;
 }
 
+const SS_Num* GetSS_Num(void)
+{
+	return &ss_num;
+}
+
 //ステージセレクト画面のカーソルのムーブ
 void StageSelectCursorMove(void)
 {
@@ -219,13 +237,14 @@ void StageSelectCursorMove(void)
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
-		if (stg_sel.number > 0)
+		if (ss_num.num > 0)
 		{
-			stg_sel.number--;
-
 			//星のインデックスとカウントを初期化
 			ss_star.cnt = 0;
 			ss_star.idx = 0;
+
+			//Upフラグをtrueに
+			SS_NumberFlag(ss_num.u_flag);
 
 			// 移動のSE（左とおんなじ音入れてね）
 			Play_Sound_StageSelect_NC(stg_sel.cursor_se, 80);
@@ -234,15 +253,16 @@ void StageSelectCursorMove(void)
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
-		if (stg_sel.number < 5)
+		if (ss_num.num < 5)
 		{
-			stg_sel.number++;
-
 			//星のインデックスとカウントを初期化
 			ss_star.cnt = 0;
 			ss_star.idx = 0;
 
-			// 移動のSE（左とおんなじ音入れてね）
+			//Downフラグをtrueに
+		    SS_NumberFlag(ss_num.d_flag);
+
+			// 移動のSE（左とおんなじ音)入れてね）
 			Play_Sound_StageSelect_NC(stg_sel.cursor_se, 80);
 		}
 	}
@@ -250,25 +270,25 @@ void StageSelectCursorMove(void)
 //ステージ番号の分岐
 void StageSelectNumber(void)
 {
-	switch (stg_sel.number)
+	switch (ss_num.num)
 	{
 	case 0:
-		stg_sel.number = eOne;
+		ss_num.num = eOne;
 		break;
 	case 1:
-		stg_sel.number = eTwo;
+		ss_num.num = eTwo;
 		break;
 	case 2:
-		stg_sel.number = eThree;
+		ss_num.num = eThree;
 		break;
 	case 3:
-		stg_sel.number = eFour;
+		ss_num.num = eFour;
 		break;
 	case 4:
-		stg_sel.number = eFive;
+		ss_num.num = eFive;
 		break;
 	case 5:
-		stg_sel.number = eSix;
+		ss_num.num = eSix;
 		break;
 	}
 }
@@ -280,7 +300,7 @@ void StarMove(void)
 	ss_star.cnt++;
 
 	//インデックスが星の数を越えていなければ
-	if (ss_star.idx < ss_star.num && stg_sel.number)
+	if (ss_star.idx < ss_star.num && ss_num.num)
 	{
 		//余りが0以外の時
 		if (ss_star.cnt % 5 > 0)
@@ -314,7 +334,7 @@ void StarMove(void)
 
 
 	//ステージごとの色付きの星の数
-	switch (stg_sel.number)
+	switch (ss_num.num)
 	{
 	case 0:
 		ss_star.num = 0;
@@ -335,8 +355,8 @@ void StarMove(void)
 void NumTroutDraw(void)
 {
 	//数字の描画
-	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[stg_sel.number + 1], TRUE);
-	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[stg_sel.number], TRUE);
+	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[ss_num.num + 1], TRUE);
+	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[ss_num.num], TRUE);
 
 	//数字を隠す背景の描画
 	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 1.0, 0.0, ss_num.hide_img, TRUE);
@@ -344,11 +364,11 @@ void NumTroutDraw(void)
 	//枠の描画
 	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
 	//矢印の描画（上または下にない時は描画しない）
-	if (stg_sel.number != 0)
+	if (ss_num.num != 0)
 	{
 		DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stg_sel.arrow_image[0], TRUE);
 	}
-	if (stg_sel.number != 5)
+	if (ss_num.num != 5)
 	{
 		DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stg_sel.arrow_image[1], TRUE);
 	}
@@ -363,7 +383,7 @@ void NumTroutDraw(void)
 	DrawStar();
 
 	//ステージの概要コメント
-	switch (stg_sel.number)
+	switch (ss_num.num)
 	{
 	case 0:
 
@@ -394,11 +414,12 @@ void NumTroutDraw(void)
 
 
 	//ミニマップの描画
-	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[stg_sel.number], TRUE);
+	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[ss_num.num], TRUE);
 	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
 
 	//Bで戻る画像の描画
 	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
+	DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
 }
 
 //スピードスターの描画
@@ -416,6 +437,43 @@ void DrawStar(void)
 	}
 }
 
+void SS_NumberFlag(bool &flag)
+{
+	flag = true;
+}
+
+void SS_NumberMove(void)
+{
+	//上キーを押したとき数字を一つ減らして上方向にスライドする
+	if (ss_num.u_flag == true && ss_num.y < 458.0f)
+	{
+		ss_num.y += 6.0f;
+	}
+	//下キーを押したとき数字を一つ増やして下方向にスライドする
+	else if (ss_num.d_flag == true&& ss_num.y > 242.0f)
+	{
+		ss_num.y -= 6.0f;
+	}
+	//ボタンが押されていない時フラグをfalseにして座標を元に戻す
+	else
+	{
+		ss_num.d_flag = false;
+		ss_num.u_flag = false;
+		//数字が増えたらStageNumber変数もインクリメントする
+		if (ss_num.y <= 242.0f)
+		{
+			ss_num.num++;
+		}
+		//数字が減ったらStageNumber変数もデクリメントする
+		if (ss_num.y >= 458.0f)
+		{
+			ss_num.num--;
+		}
+		ss_num.y = 350.0f;
+		
+	}
+
+}
 //音がなっていないなら鳴らす
 void Play_Sound_StageSelect(int sound, int volume)
 {
