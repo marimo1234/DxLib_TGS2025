@@ -19,7 +19,6 @@ struct StageSelect
 	int car_image2;
 	int trout_image[5];
 	int arrow_image[2];
-	int stage_image[6];
 	int back_minimap;
 
 	int b_back;
@@ -34,9 +33,9 @@ struct StageSelect
 	
 };
 
+//スピードスター
 struct SS_Star 
 {
-	//スピードスター
 	int img[2];
 	int num;
 	int x[5];
@@ -45,6 +44,17 @@ struct SS_Star
 	int idx;
 };
 
+//スピードCar
+struct SS_SpeedCar
+{
+	int img[2];
+	int anim;
+	int cnt;
+	int cnt_max;
+	int idx;
+};
+
+//ステージ番号
 struct SS_Num
 {
 	int img[7];
@@ -56,6 +66,15 @@ struct SS_Num
 	int idx;
 	bool u_flag;
 	bool d_flag;
+};
+
+//ミニマップ
+struct SS_Map
+{
+	int img[7];
+	int hide_img;
+	float x;
+	float y;
 };
 
 void StageSelectSceneInit(void);
