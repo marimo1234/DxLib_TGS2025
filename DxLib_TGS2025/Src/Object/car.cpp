@@ -626,6 +626,10 @@ void CarDetectPosition(const CreateStage* stage)
 					{
 						car.boom_flag = true;
 					}
+					else if (stage->array[car.current_x + 1][car.current_y] == 1 && car.next_x[car.road_count] != 11)
+					{
+						car.boom_flag = true;
+					}
 					else
 					{
 						car.ivy_flag = true;
