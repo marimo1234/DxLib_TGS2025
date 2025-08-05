@@ -227,6 +227,7 @@ const StageSelect* GetStageSelect(void)
 	return &stg_sel;
 }
 
+//SS_Numを取得
 const SS_Num* GetSS_Num(void)
 {
 	return &ss_num;
@@ -329,7 +330,6 @@ void NumTroutDraw(void)
 	//現在のステージ番号
 	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[ss_num.stg_num], TRUE);
 
-
 	//数字を隠す背景の描画（数字の部分だけくりぬいてる）
 	DrawRotaGraphF(SELECT_TROUT_X, SELECT_TROUT_Y, 1.0, 0.0, ss_num.hide_img, TRUE);
 
@@ -392,7 +392,7 @@ void NumTroutDraw(void)
 
 	//Bで戻る画像の描画
 	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
-	DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
+	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
 }
 
 //スピードスタームーブ
