@@ -600,8 +600,10 @@ void SS_SpcarAnim(void)
 {
 	ss_spcar.cnt++;
 
+	//カウントがmax値を越えたら
 	if (ss_spcar.cnt > ss_spcar.cnt_max)
 	{
+		//0なら1に、1なら0に
 		if (ss_spcar.anim == ss_spcar.img[0])
 		{
 			ss_spcar.anim = ss_spcar.img[1];
@@ -613,7 +615,7 @@ void SS_SpcarAnim(void)
 		ss_spcar.cnt = 0;
 	}
 	
-	//ステージごとの色付きの星の数
+	//ステージごとのアニメーション速度の変化
 	switch (ss_num.stg_num)
 	{
 	case 0:
