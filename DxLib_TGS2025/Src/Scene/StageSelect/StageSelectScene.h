@@ -18,7 +18,6 @@ struct StageSelect
 	int car_image1;
 	int car_image2;
 	int trout_image[5];
-	/*int number_image[6];*/
 	int arrow_image[2];
 	int stage_image[6];
 	int back_minimap;
@@ -30,7 +29,6 @@ struct StageSelect
 	int car_num;
 
 	Vector2D position;
-	/*int num;*/
 	int cursor_se;
 	int button_se;
 	
@@ -51,7 +49,7 @@ struct SS_Num
 {
 	int img[7];
 	int hide_img;
-	int num;
+	int stg_num;
 	float x;
 	float y;
 	int cnt;

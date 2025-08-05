@@ -427,6 +427,7 @@ void InGameSceneDraw(void)
 	////////////////////
 
 }
+
 const InGame* GetInGame(void)
 {
 	return &ingame;
@@ -482,7 +483,7 @@ void GameStart(void)
 //ステージの番号を取得
 void GetStageNumber(const SS_Num* ss_num)
 {
-	ingame.stage_num = ss_num->num;
+	ingame.stage_num = ss_num->stg_num;
 }
 
 //インゲームsound初期化

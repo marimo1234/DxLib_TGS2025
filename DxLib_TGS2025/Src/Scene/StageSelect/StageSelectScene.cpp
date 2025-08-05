@@ -10,8 +10,12 @@
 
 #define CAR_SPEED		(1.5f)
 #define SELECT_TROUT_X (390.0)
+#define SELECT_TROUT_Y (350.0)
 #define STAR_POS_X (580)
 #define STAR_POS_Y (508)
+#define NUM_MOVE_VALUE (12.0f)
+#define SS_NUM_Y_MIN (242.0f)
+#define SS_NUM_Y_MAX (458.0f)
 
 int stageselect_init_step = 0;;
 static Fade fade;
@@ -29,10 +33,10 @@ void Play_StageSelect_BGM(const Title* title);
 void Move_Car(const Car* car);
 void Set_Coordinate(int img1, int img2, float x, float y);
 
-//番号ムーブフラグ
+//ステージ番号ムーブフラグ
 void SS_NumberFlag(bool &flag);
 
-//番号のムーブ
+//ステージ番号のムーブ
 void SS_NumberMove(void);
 
 
@@ -53,7 +57,7 @@ void StageSelectSceneInit(void)
 	stg_sel.position.x = 400.0f;
 	stg_sel.position.y = 255.0f;
 	//ステージ番号の初期化
-	ss_num.num = 0;
+	ss_num.stg_num = 0;
 
 	//車の描画座標
 	stg_sel.car_x = 0.0f;
@@ -72,10 +76,10 @@ void StageSelectSceneInit(void)
 
 	//番号の初期化
 	ss_num.x = SELECT_TROUT_X;
-	ss_num.y = 350.0f;
+	ss_num.y = SELECT_TROUT_Y;
 	ss_num.u_flag = false;
 	ss_num.d_flag = false;
-	ss_num.num = 0;
+	ss_num.stg_num = 0;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -155,7 +159,6 @@ eSceneType StageSelectSceneUpdate(void)
 
 	//スピードスタームーブ
 	StarMove();
-	/*ss_num.y += 0.5;*/
 
 	SS_NumberMove();
 
@@ -173,10 +176,11 @@ eSceneType StageSelectSceneUpdate(void)
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//Aボタンが押されたとき
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
+		ss_num.d_flag == false && ss_num.u_flag == false)
 	{
 		//ステージ番号が-1じゃなければ
-		if (ss_num.num != -1)
+		if (ss_num.stg_num != -1)
 		{
 			stg_sel.flag = false;
 			Stop_Title_BGM(GetTitle());
@@ -237,11 +241,17 @@ void StageSelectCursorMove(void)
 
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::ePress)
 	{
-		if (ss_num.num > 0)
+		if (ss_num.stg_num > 0)
 		{
+			//星の元の位置に戻す（空の星が跳ねたままになることを防ぐ）
+			for (int i = 0; i < 5; i++)
+			{
+				ss_star.y[i] = STAR_POS_Y;
+			}
+
 			//星のインデックスとカウントを初期化
-			ss_star.cnt = 0;
 			ss_star.idx = 0;
+			ss_star.cnt = 0;
 
 			//Upフラグをtrueに
 			SS_NumberFlag(ss_num.u_flag);
@@ -249,15 +259,20 @@ void StageSelectCursorMove(void)
 			// 移動のSE（左とおんなじ音入れてね）
 			Play_Sound_StageSelect_NC(stg_sel.cursor_se, 80);
 		}
-
 	}
 	else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
-		if (ss_num.num < 5)
+		if (ss_num.stg_num < 5)
 		{
+			//星の元の位置に戻す（空の星が跳ねたままになることを防ぐ）
+			for (int i = 0; i < 5; i++)
+			{
+				ss_star.y[i] = STAR_POS_Y;
+			}
+
 			//星のインデックスとカウントを初期化
-			ss_star.cnt = 0;
 			ss_star.idx = 0;
+			ss_star.cnt = 0;
 
 			//Downフラグをtrueに
 		    SS_NumberFlag(ss_num.d_flag);
@@ -267,108 +282,66 @@ void StageSelectCursorMove(void)
 		}
 	}
 }
+
 //ステージ番号の分岐
 void StageSelectNumber(void)
 {
-	switch (ss_num.num)
+	switch (ss_num.stg_num)
 	{
 	case 0:
-		ss_num.num = eOne;
+		ss_num.stg_num = eOne;
 		break;
 	case 1:
-		ss_num.num = eTwo;
+		ss_num.stg_num = eTwo;
 		break;
 	case 2:
-		ss_num.num = eThree;
+		ss_num.stg_num = eThree;
 		break;
 	case 3:
-		ss_num.num = eFour;
+		ss_num.stg_num = eFour;
 		break;
 	case 4:
-		ss_num.num = eFive;
+		ss_num.stg_num = eFive;
 		break;
 	case 5:
-		ss_num.num = eSix;
-		break;
-	}
-}
-
-//スピードスタームーブ
-void StarMove(void)
-{
-	//アニメーションカウント
-	ss_star.cnt++;
-
-	//インデックスが星の数を越えていなければ
-	if (ss_star.idx < ss_star.num && ss_num.num)
-	{
-		//余りが0以外の時
-		if (ss_star.cnt % 5 > 0)
-		{
-			//上に跳ねる
-			ss_star.y[ss_star.idx] -= 3;
-		}
-
-		//余りが0の時、横の星にうつる
-		if (ss_star.cnt % 5 == 0)
-		{
-			ss_star.idx++;
-		}
-	}
-
-	//インデックス以外の星を元の位置に戻す
-	for (int i = 0; i < 5; i++)
-	{
-		if (i != ss_star.idx && ss_star.y[i] < STAR_POS_Y)
-		{
-			ss_star.y[i] += 3;
-		}
-	}
-
-	//200フレーム経った後にリセット
-	if (ss_star.cnt > 150)
-	{
-		ss_star.cnt = 0;
-		ss_star.idx = 0;
-	}
-
-
-	//ステージごとの色付きの星の数
-	switch (ss_num.num)
-	{
-	case 0:
-		ss_star.num = 0;
-		break;
-	case 1: case 2:
-		ss_star.num = 1;
-		break;
-	case 3: case 4:
-		ss_star.num = 2;
-		break;
-	case 5:
-		ss_star.num = 3;
+		ss_num.stg_num = eSix;
 		break;
 	}
 }
 
 //数字、枠、車の描画
 void NumTroutDraw(void)
-{
+{	
+	//現在のステージの一つ前のステージ番号
+	int pre_num = ss_num.stg_num - 1;
+
 	//数字の描画
-	DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[ss_num.num + 1], TRUE);
-	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[ss_num.num], TRUE);
+	//一つ前のステージ番号
+	if (ss_num.d_flag == false)
+	{
+		DrawRotaGraphF(ss_num.x, ss_num.y - 108.0f, 0.4, 0.0, ss_num.img[pre_num], TRUE);
+	}
+	//一つ後のステージ番号
+	else if (ss_num.u_flag == false)
+	{
+		DrawRotaGraphF(ss_num.x, ss_num.y + 108.0f, 0.4, 0.0, ss_num.img[ss_num.stg_num + 1], TRUE);
+	}
+	//現在のステージ番号
+	DrawRotaGraphF(ss_num.x, ss_num.y, 0.4, 0.0, ss_num.img[ss_num.stg_num], TRUE);
 
-	//数字を隠す背景の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 1.0, 0.0, ss_num.hide_img, TRUE);
 
-	//枠の描画
-	DrawRotaGraphF(SELECT_TROUT_X, 350.0, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
+	//数字を隠す背景の描画（数字の部分だけくりぬいてる）
+	DrawRotaGraphF(SELECT_TROUT_X, SELECT_TROUT_Y, 1.0, 0.0, ss_num.hide_img, TRUE);
+
+
+	//数字枠の描画
+	DrawRotaGraphF(SELECT_TROUT_X, SELECT_TROUT_Y, 0.25, 0.0, stg_sel.trout_image[3], TRUE);
 	//矢印の描画（上または下にない時は描画しない）
-	if (ss_num.num != 0)
+	if (ss_num.stg_num != 0)
 	{
 		DrawRotaGraph(SELECT_TROUT_X, 250.0, 0.9, 0.0, stg_sel.arrow_image[0], TRUE);
 	}
-	if (ss_num.num != 5)
+	if (ss_num.stg_num != 5)
 	{
 		DrawRotaGraph(SELECT_TROUT_X, 450.0, 0.9, 0.0, stg_sel.arrow_image[1], TRUE);
 	}
@@ -383,7 +356,7 @@ void NumTroutDraw(void)
 	DrawStar();
 
 	//ステージの概要コメント
-	switch (ss_num.num)
+	switch (ss_num.stg_num)
 	{
 	case 0:
 
@@ -414,12 +387,74 @@ void NumTroutDraw(void)
 
 
 	//ミニマップの描画
-	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[ss_num.num], TRUE);
+	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[ss_num.stg_num], TRUE);
 	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
 
 	//Bで戻る画像の描画
 	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
 	DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
+}
+
+//スピードスタームーブ
+void StarMove(void)
+{
+	//アニメーションカウント
+	ss_star.cnt++;
+
+	//インデックス以外の星を元の位置に戻す(一つずつ元の位置に戻るように）
+	for (int i = 0; i < 5; i++)
+	{
+		if (i != ss_star.idx && ss_star.y[i] < STAR_POS_Y)
+		{
+			ss_star.y[i] += 3;
+		}
+	}
+
+	//UpフラグとDownフラグがfalseの時（ss_star.yの-値が残らないように）
+	if (ss_num.u_flag == false && ss_num.d_flag == false)
+	{
+		//インデックスが星の数を越えていなければ
+		if (ss_star.idx < ss_star.num)
+		{
+			//余りが0の時、横の星にうつる
+			if (ss_star.cnt % 5 == 0)
+			{
+				ss_star.idx++;
+			}
+
+			//余りが0以外の時
+			if (ss_star.cnt % 5 > 0 && ss_num.stg_num != 0)
+			{
+				//上に跳ねる
+				ss_star.y[ss_star.idx] -= 3;
+			}
+		}
+	}
+
+	//200フレーム経った後にリセット
+	if (ss_star.cnt > 150)
+	{
+		ss_star.cnt = 0;
+		ss_star.idx = 0;
+	}
+
+
+	//ステージごとの色付きの星の数
+	switch (ss_num.stg_num)
+	{
+	case 0:
+		ss_star.num = 0;
+		break;
+	case 1: case 2:
+		ss_star.num = 1;
+		break;
+	case 3: case 4:
+		ss_star.num = 2;
+		break;
+	case 5:
+		ss_star.num = 3;
+		break;
+	}
 }
 
 //スピードスターの描画
@@ -437,22 +472,24 @@ void DrawStar(void)
 	}
 }
 
+//ステージ番号ムーブフラグ
 void SS_NumberFlag(bool &flag)
 {
 	flag = true;
 }
 
+//ステージ番号ムーブ
 void SS_NumberMove(void)
 {
 	//上キーを押したとき数字を一つ減らして上方向にスライドする
-	if (ss_num.u_flag == true && ss_num.y < 458.0f)
+	if (ss_num.u_flag == true && ss_num.y < SS_NUM_Y_MAX)
 	{
-		ss_num.y += 6.0f;
+		ss_num.y += NUM_MOVE_VALUE;
 	}
 	//下キーを押したとき数字を一つ増やして下方向にスライドする
-	else if (ss_num.d_flag == true&& ss_num.y > 242.0f)
+	else if (ss_num.d_flag == true&& ss_num.y > SS_NUM_Y_MIN)
 	{
-		ss_num.y -= 6.0f;
+		ss_num.y -= NUM_MOVE_VALUE;
 	}
 	//ボタンが押されていない時フラグをfalseにして座標を元に戻す
 	else
@@ -460,16 +497,16 @@ void SS_NumberMove(void)
 		ss_num.d_flag = false;
 		ss_num.u_flag = false;
 		//数字が増えたらStageNumber変数もインクリメントする
-		if (ss_num.y <= 242.0f)
+		if (ss_num.y <= SS_NUM_Y_MIN)
 		{
-			ss_num.num++;
+			ss_num.stg_num++;
 		}
 		//数字が減ったらStageNumber変数もデクリメントする
-		if (ss_num.y >= 458.0f)
+		if (ss_num.y >= SS_NUM_Y_MAX)
 		{
-			ss_num.num--;
+			ss_num.stg_num--;
 		}
-		ss_num.y = 350.0f;
+		ss_num.y = SELECT_TROUT_Y;
 		
 	}
 
