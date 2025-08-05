@@ -298,8 +298,12 @@ void StageSelectCursorMove(void)
 			ss_star.idx = 0;
 			ss_star.cnt = 0;
 
-			//Upフラグをtrueに
-			SS_NumberFlag(ss_num.u_flag);
+			//Down中じゃなかったら
+			if (ss_num.d_flag == false)
+			{
+				//Upフラグをtrueに
+				SS_NumberFlag(ss_num.u_flag);
+			}
 
 			// 移動のSE（左とおんなじ音入れてね）
 			Play_Sound_StageSelect_NC(stg_sel.cursor_se, 80);
@@ -319,8 +323,12 @@ void StageSelectCursorMove(void)
 			ss_star.idx = 0;
 			ss_star.cnt = 0;
 
-			//Downフラグをtrueに
-		    SS_NumberFlag(ss_num.d_flag);
+			//Up中じゃなかったら
+			if (ss_num.u_flag == false)
+			{
+				//Downフラグをtrueに
+				SS_NumberFlag(ss_num.d_flag);
+			}
 
 			// 移動のSE（左とおんなじ音)入れてね）
 			Play_Sound_StageSelect_NC(stg_sel.cursor_se, 80);
