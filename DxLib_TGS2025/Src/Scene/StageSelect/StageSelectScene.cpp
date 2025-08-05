@@ -8,14 +8,33 @@
 #include "DxLib.h"
 #include <stdlib.h>
 
+
+//車のスピード
 #define CAR_SPEED		(1.5f)
-#define SELECT_TROUT_X (390.0)
-#define SELECT_TROUT_Y (350.0)
+
+//星のポジション
 #define STAR_POS_X (580)
 #define STAR_POS_Y (508)
-#define NUM_MOVE_VALUE (12.0f)
-#define SS_NUM_Y_MIN (242.0f)
-#define SS_NUM_Y_MAX (458.0f)
+
+//枠、数字の固定座標
+#define SELECT_TROUT_X (390.0)
+#define SELECT_TROUT_Y (350.0)
+//ステージ番号が動くときの枚フレームの変化量
+#define NUM_MOVE_VALUE (12.0)
+//ステージ番号が動く範囲
+#define SS_NUM_Y_MIN (242.0)
+#define SS_NUM_Y_MAX (458.0)
+
+
+//マップの固定座標
+#define SELECT_MAP_X (760.0)
+#define SELECT_MAP_Y (350.0)
+//ステージ番号が動くときの枚フレームの変化量
+#define MAP_MOVE_VALUE (26.4)
+//マップが動く範囲
+#define SS_MAP_Y_MIN (112.0)
+#define SS_MAP_Y_MAX (588.0)
+
 
 int stageselect_init_step = 0;;
 static Fade fade;
@@ -32,18 +51,21 @@ void Play_StageSelect_BGM(const Title* title);
 //車移動
 void Move_Car(const Car* car);
 void Set_Coordinate(int img1, int img2, float x, float y);
-
 //ステージ番号ムーブフラグ
 void SS_NumberFlag(bool &flag);
-
 //ステージ番号のムーブ
 void SS_NumberMove(void);
-
+//ミニマップのムーブ
+void SS_MapMove(void);
+//スピードCARのアニメーション
+void SS_SpcarAnim(void);
 
 
 StageSelect stg_sel;
 SS_Star ss_star;
 SS_Num ss_num;
+SS_Map ss_map;
+SS_SpeedCar ss_spcar;
 
 //ステージセレクト画面初期化
 void StageSelectSceneInit(void)
@@ -81,6 +103,13 @@ void StageSelectSceneInit(void)
 	ss_num.d_flag = false;
 	ss_num.stg_num = 0;
 
+	//ミニマップの初期化
+	ss_map.x = SELECT_MAP_X;
+	ss_map.y = SELECT_MAP_Y;
+
+	//スピードCARの初期化
+	ss_spcar.anim = ss_spcar.img[0];
+
 	for (int i = 0; i < 5; i++)
 	{
 		ss_star.x[i] = STAR_POS_X + i * 35;
@@ -114,6 +143,10 @@ void StageSelectResourceInit(void)
 		stg_sel.speed_frame = LoadGraph("Resource/images/Speedframe2.png");
 		//スピードの文字画像
 		stg_sel.speed_char = LoadGraph("Resource/images/SpeedCharImage.png");
+		//スピードCARの画像
+		ss_spcar.img[0]= LoadGraph("Resource/images/car2_right.png");
+		ss_spcar.img[1]= LoadGraph("Resource/images/car2_right2.png");
+
 		//マスの画像
 		stg_sel.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
 		stg_sel.trout_image[1] = LoadGraph("Resource/images/StageTrout2.png");
@@ -128,17 +161,20 @@ void StageSelectResourceInit(void)
 		ss_num.hide_img= LoadGraph("Resource/images/bg_hide_num02.png");
 
 		//ステージの画像
-		stg_sel.stage_image[0] = LoadGraph("Resource/images/stage1.png");
-		stg_sel.stage_image[1] = LoadGraph("Resource/images/stage2.png");
-		stg_sel.stage_image[2] = LoadGraph("Resource/images/stage3.png");
-		stg_sel.stage_image[3] = LoadGraph("Resource/images/stage4.png");
-		stg_sel.stage_image[4] = LoadGraph("Resource/images/stage5.png");
-		stg_sel.stage_image[5] = LoadGraph("Resource/images/stage6.png");
+		ss_map.img[0] = LoadGraph("Resource/images/stage1.png");
+		ss_map.img[1] = LoadGraph("Resource/images/stage2.png");
+		ss_map.img[2] = LoadGraph("Resource/images/stage3.png");
+		ss_map.img[3] = LoadGraph("Resource/images/stage4.png");
+		ss_map.img[4] = LoadGraph("Resource/images/stage5.png");
+		ss_map.img[5] = LoadGraph("Resource/images/stage6.png");
+		ss_map.hide_img = LoadGraph("Resource/images/bg_hide_map.png");
 
 		stg_sel.arrow_image[0] = LoadGraph("Resource/images/StageSelect_button.png");
 		stg_sel.arrow_image[1] = LoadGraph("Resource/images/StageSelect_button2.png");
 
+		//ミニマップの画像
 		stg_sel.back_minimap = LoadGraph("Resource/images/BG_MiniMap2.png");
+		
 
 		//　星の画像
 		ss_star.img[0] = LoadGraph("Resource/images/ss_star0.png");
@@ -160,7 +196,14 @@ eSceneType StageSelectSceneUpdate(void)
 	//スピードスタームーブ
 	StarMove();
 
+	//ステージ番号のムーブ
 	SS_NumberMove();
+
+	//ミニマップのムーブ
+	SS_MapMove();
+	
+	//スピードCARのアニメーション
+	SS_SpcarAnim();
 
 	//フェード処理
 	if (is_fading)
@@ -314,6 +357,26 @@ void StageSelectNumber(void)
 void NumTroutDraw(void)
 {	
 	//現在のステージの一つ前のステージ番号
+	int pre_map = ss_num.stg_num - 1;
+	//ミニマップの描画
+	//一つ前のミニマップ
+	if (ss_num.d_flag == false)
+	{
+		DrawRotaGraphF(ss_map.x, ss_map.y - 238.0f, 0.33, 0.0, ss_map.img[pre_map], TRUE);
+	}
+	//一つ後のミニマップ
+	else if (ss_num.u_flag == false)
+	{
+		DrawRotaGraphF(ss_map.x, ss_map.y + 238.0f, 0.33, 0.0, ss_map.img[ss_num.stg_num + 1], TRUE);
+	}
+	DrawRotaGraphF(ss_map.x, ss_map.y, 0.33, 0.0, ss_map.img[ss_num.stg_num], TRUE);
+	//ミニマップを隠す背景の描画（ミニマップの部分だけくりぬいてる）
+	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ss_map.hide_img, TRUE);
+	//ミニマップの枠の描画
+	DrawRotaGraphF(SELECT_MAP_X, SELECT_MAP_Y, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
+	
+
+	//現在のステージの一つ前のステージ番号
 	int pre_num = ss_num.stg_num - 1;
 
 	//数字の描画
@@ -352,6 +415,9 @@ void NumTroutDraw(void)
 	//スピードの文字描画
 	DrawRotaGraph(470, 508, 0.5, 0.0, stg_sel.speed_char, TRUE);
 
+	//スピードCARの描画
+	DrawRotaGraph(355, 508, 0.06, 0.0, ss_spcar.anim, TRUE);
+
 	//スピードスターの描画
 	DrawStar();
 
@@ -384,11 +450,6 @@ void NumTroutDraw(void)
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車がとても速いから道繋ぎと資材集めを交互にやろう！ ");
 		break;
 	}
-
-
-	//ミニマップの描画
-	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.stage_image[ss_num.stg_num], TRUE);
-	DrawRotaGraphF(760.0, 350.0, 0.33, 0.0, stg_sel.trout_image[4], TRUE);
 
 	//Bで戻る画像の描画
 	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
@@ -511,6 +572,48 @@ void SS_NumberMove(void)
 	}
 
 }
+
+//ミニマップムーブ
+void SS_MapMove(void)
+{
+	//上キーを押したとき数字を一つ減らして上方向にスライドする
+	if (ss_num.u_flag == true && ss_map.y < SS_MAP_Y_MAX)
+	{
+		ss_map.y += MAP_MOVE_VALUE;
+	}
+	//下キーを押したとき数字を一つ増やして下方向にスライドする
+	else if (ss_num.d_flag == true && ss_map.y > SS_MAP_Y_MIN)
+	{
+		ss_map.y -= MAP_MOVE_VALUE;
+	}
+	//ボタンが押されていない時フラグをfalseにして座標を元に戻す
+	else
+	{
+		ss_map.y = SELECT_MAP_Y;
+	}
+
+}
+
+//スピードCARのアニメーション
+void SS_SpcarAnim(void)
+{
+	ss_spcar.cnt++;
+
+	if (ss_spcar.cnt > 30)
+	{
+		if (ss_spcar.anim == ss_spcar.img[0])
+		{
+			ss_spcar.anim = ss_spcar.img[1];
+		}
+		else if (ss_spcar.anim == ss_spcar.img[1])
+		{
+			ss_spcar.anim = ss_spcar.img[0];
+		}
+		ss_spcar.cnt = 0;
+	}
+	
+}
+
 //音がなっていないなら鳴らす
 void Play_Sound_StageSelect(int sound, int volume)
 {
