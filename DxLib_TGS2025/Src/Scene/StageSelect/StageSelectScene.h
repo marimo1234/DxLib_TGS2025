@@ -49,9 +49,8 @@ struct SS_SpeedCar
 {
 	int img[2];
 	int anim;
-	int x;
-	int y;
 	int cnt;
+	int cnt_max;
 	int idx;
 };
 

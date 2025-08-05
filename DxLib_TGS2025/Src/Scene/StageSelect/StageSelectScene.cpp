@@ -109,6 +109,7 @@ void StageSelectSceneInit(void)
 
 	//スピードCARの初期化
 	ss_spcar.anim = ss_spcar.img[0];
+	ss_spcar.cnt_max = 30;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -599,7 +600,7 @@ void SS_SpcarAnim(void)
 {
 	ss_spcar.cnt++;
 
-	if (ss_spcar.cnt > 30)
+	if (ss_spcar.cnt > ss_spcar.cnt_max)
 	{
 		if (ss_spcar.anim == ss_spcar.img[0])
 		{
@@ -612,6 +613,22 @@ void SS_SpcarAnim(void)
 		ss_spcar.cnt = 0;
 	}
 	
+	//ステージごとの色付きの星の数
+	switch (ss_num.stg_num)
+	{
+	case 0:
+		ss_spcar.cnt_max = 40;
+		break;
+	case 1: case 2:
+		ss_spcar.cnt_max = 30;
+		break;
+	case 3: case 4:
+		ss_spcar.cnt_max = 20;
+		break;
+	case 5:
+		ss_spcar.cnt_max = 10;
+		break;
+	}
 }
 
 //音がなっていないなら鳴らす
