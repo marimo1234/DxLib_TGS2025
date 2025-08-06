@@ -47,10 +47,10 @@ struct SS_Star
 //スピードCar
 struct SS_SpeedCar
 {
-	int img[2];
+	int img[4];
 	int anim;
 	int cnt;
-	int cnt_max;
+	int sw_cnt;
 	int idx;
 };
 

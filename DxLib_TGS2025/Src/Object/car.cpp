@@ -31,6 +31,7 @@ void CarBoomDraw(int carx, int cary);
 
 Car car;
 GameOver gameover;
+CarAnimation car_anim[5];
 void CarInit(void)
 {
 
@@ -44,6 +45,7 @@ void CarInit(void)
 	car.direction = eRight;//進行方向
 	car.road_count = 0;//取得する道のカウント
 	car.next_count = 0;//取得した道の配列番号
+	car.img_idx = 0;
 
 	car.animation_count = 0;
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
@@ -85,7 +87,7 @@ void CarInit(void)
 	
 	//ステージ番号と車の初期位置を取得
 	GetCarStageNum(GetInGame());
-	car.animation = car.image[0];
+	car.animation = car_anim[eRight].img[0];
 
 	//次の目的地の初期化
 	for (int i = 0; i < 84; i++)
@@ -97,14 +99,22 @@ void CarInit(void)
 
 void CarResourceInit(void)
 {
-	car.image[0] = LoadGraph("Resource/images/car2_right.png");
-	car.image[1] = LoadGraph("Resource/images/car2_left.png");
-	car.image[2] = LoadGraph("Resource/images/car2_up.png");
-	car.image[3] = LoadGraph("Resource/images/car2_down.png");
-	car.move_image[0]= LoadGraph("Resource/images/car2_right2.png");
-	car.move_image[1]= LoadGraph("Resource/images/car2_left2.png");
-	car.move_image[2]= LoadGraph("Resource/images/car2_up2.png");
-	car.move_image[3]= LoadGraph("Resource/images/car2_down2.png");
+
+	car_anim[eRight].img[0] = LoadGraph("Resource/images/car2_right.png");
+	car_anim[eRight].img[1] = LoadGraph("Resource/images/car2_right2.png");
+	car_anim[eRight].img[2] = LoadGraph("Resource/images/car2_right3.png");
+	car_anim[eRight].img[3] = LoadGraph("Resource/images/car2_right4.png");
+
+	car_anim[eLeft].img[0] = LoadGraph("Resource/images/car2_left.png");
+	car_anim[eLeft].img[1] = LoadGraph("Resource/images/car2_left2.png");
+	car_anim[eLeft].img[2] = LoadGraph("Resource/images/car2_left3.png");
+	car_anim[eLeft].img[3] = LoadGraph("Resource/images/car2_left4.png");
+
+	car_anim[eUp].img[0] = LoadGraph("Resource/images/car2_up.png");
+	car_anim[eUp].img[1] = LoadGraph("Resource/images/car2_up2.png");
+
+	car_anim[eDown].img[0] = LoadGraph("Resource/images/car2_down.png");
+	car_anim[eDown].img[1] = LoadGraph("Resource/images/car2_down2.png");
 
 	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
 	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
@@ -285,7 +295,9 @@ void CarReset(void)
 	car.velocity.y = 0.2f;
 	car.road_count = 0;
 	car.next_count = 0;
+	car.img_idx = 0;// 画像番号
 	car.animation_count = 0;
+
 	car.goal_flag = false;//ゴールまで道がつながっているかどうか
 	overroad = 0;
 	car.start = false;//車の処理フラグ
@@ -295,7 +307,7 @@ void CarReset(void)
 	car.warn_count_max = 40;//警告マークを表示する時間
 	car.warn_num = 0;
 	car.menu_flag == false;//車のメニュー処理フラグ
-	car.animation = car.image[0];
+	car.animation = car_anim[eRight].img[0];
 	car.mitibiki_flag = false;
 	car.overcount.x = 0.0f;
 	car.overcount.y = 0.0f;
@@ -340,11 +352,15 @@ void GetNextDestination(const Tool* tool, int x, int y)
 //車の移動処理
 void CarMovePosition(const CreateStage* stage)
 {
+	//Carアニメーションカウントと画像番号
 	car.animation_count++;
+
 	if (car.animation_count > 60)
 	{
+		car.img_idx = 0;
 		car.animation_count = 0;
 	}
+
 	switch (car.direction)
 	{
 
@@ -387,13 +403,13 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition(GetStage());
 
 		}
-		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range*0.3&&
+		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range * 0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
-		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f+  car.warn_range &&
+		else if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.0f + car.warn_range &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -416,13 +432,13 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition(GetStage());
 
 		}
-		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range*0.3 &&
+		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range * 0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
-		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f- car.warn_range &&
+		else if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 120.0f - car.warn_range &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -430,15 +446,10 @@ void CarMovePosition(const CreateStage* stage)
 		}
 		break;
 	case eRight://右に
-		if (car.animation_count < 30)
-		{
-			car.animation = car.image[0];
-		}
-		else
-		{
-			car.animation = car.move_image[0];
-		}
-		
+
+		//carのアニメーション切り替え
+		car.animation = car_anim[eRight].img[car.img_idx];
+
 		car.position.x += car.velocity.x;
 		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から0.2引いている
 		{
@@ -446,13 +457,13 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition(GetStage());
 
 		}
-		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range*0.3&&
+		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range * 0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
-		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f- car.warn_range &&
+		else if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 200.0f - car.warn_range &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -461,14 +472,9 @@ void CarMovePosition(const CreateStage* stage)
 		break;
 
 	case eLeft:
-		if (car.animation_count < 30)
-		{
-			car.animation = car.image[1];
-		}
-		else
-		{
-			car.animation = car.move_image[1];
-		}
+		//carのアニメーション切り替え
+		car.animation = car_anim[eLeft].img[car.img_idx];
+
 		car.position.x -= car.velocity.x;
 		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
@@ -476,13 +482,13 @@ void CarMovePosition(const CreateStage* stage)
 			CarDetectPosition(GetStage());
 
 		}
-		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range*0.3 &&
+		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f + car.warn_range * 0.3 &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
 			car.warn_num = 1;
 		}
-		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f+ car.warn_range &&
+		else if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.0f + car.warn_range &&
 			car.goal_flag == false)
 		{
 			car.warn_image_flag = true;
@@ -492,6 +498,12 @@ void CarMovePosition(const CreateStage* stage)
 
 	default:
 		break;
+	}
+
+	//一番下に置いていないとフレーム飛びしてしまう
+	if (car.animation_count != 0 && car.animation_count % 15 == 0)
+	{
+		car.img_idx++;
 	}
 }
 
@@ -722,6 +734,7 @@ void CarGoalCheck(const CreateStage* stage)
 	}
 
 }
+
 void CarWarnSE(void) 
 {
 	if (car.warn_image_flag == true && car.next_x[car.next_count] == -1 && car.next_y[car.next_count] == -1)
@@ -941,7 +954,6 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 Play_Sound_Car(car.lake_se, 200);
 		 }
 	 }
-
 	 else if (car.lake_flag == false)
 	 {
 		 StopSoundMem(car.lake_se);

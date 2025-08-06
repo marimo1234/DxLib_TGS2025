@@ -109,7 +109,8 @@ void StageSelectSceneInit(void)
 
 	//スピードCARの初期化
 	ss_spcar.anim = ss_spcar.img[0];
-	ss_spcar.cnt_max = 30;
+	ss_spcar.sw_cnt = 30;
+	ss_spcar.idx = 0;
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -147,6 +148,8 @@ void StageSelectResourceInit(void)
 		//スピードCARの画像
 		ss_spcar.img[0]= LoadGraph("Resource/images/car2_right.png");
 		ss_spcar.img[1]= LoadGraph("Resource/images/car2_right2.png");
+		ss_spcar.img[2]= LoadGraph("Resource/images/car2_right3.png");
+		ss_spcar.img[3]= LoadGraph("Resource/images/car2_right4.png");
 
 		//マスの画像
 		stg_sel.trout_image[0] = LoadGraph("Resource/images/StageTrout.png");
@@ -607,19 +610,23 @@ void SS_MapMove(void)
 void SS_SpcarAnim(void)
 {
 	ss_spcar.cnt++;
+	
+	//スピードCARの画像切り替え
+	ss_spcar.anim = ss_spcar.img[ss_spcar.idx];
 
-	//カウントがmax値を越えたら
-	if (ss_spcar.cnt > ss_spcar.cnt_max)
+	//カウントが0じゃなければsw_cnt(sw → switch)経つたびに画像を切り替える
+	if (ss_spcar.cnt != 0 && ss_spcar.cnt % ss_spcar.sw_cnt == 0 
+		&& ss_spcar.idx < 4)
 	{
-		//0なら1に、1なら0に
-		if (ss_spcar.anim == ss_spcar.img[0])
-		{
-			ss_spcar.anim = ss_spcar.img[1];
-		}
-		else if (ss_spcar.anim == ss_spcar.img[1])
-		{
-			ss_spcar.anim = ss_spcar.img[0];
-		}
+		ss_spcar.idx++;
+	}
+
+	//画像が4枚だから sw_cnt*4 をMAXにする
+	int cnt_max = ss_spcar.sw_cnt * 4;
+
+	if (ss_spcar.cnt > cnt_max)
+	{
+		ss_spcar.idx = 0;
 		ss_spcar.cnt = 0;
 	}
 	
@@ -627,16 +634,16 @@ void SS_SpcarAnim(void)
 	switch (ss_num.stg_num)
 	{
 	case 0:
-		ss_spcar.cnt_max = 40;
+		ss_spcar.sw_cnt = 20;
 		break;
 	case 1: case 2:
-		ss_spcar.cnt_max = 30;
+		ss_spcar.sw_cnt = 15;
 		break;
 	case 3: case 4:
-		ss_spcar.cnt_max = 20;
+		ss_spcar.sw_cnt = 10;
 		break;
 	case 5:
-		ss_spcar.cnt_max = 10;
+		ss_spcar.sw_cnt = 5;
 		break;
 	}
 }

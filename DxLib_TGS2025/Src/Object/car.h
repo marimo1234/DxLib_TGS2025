@@ -20,6 +20,7 @@ struct Car
     Vector2D overcount;
     int animation;
     int image[4];
+    int img_idx;
     int move_image[4];
     int animation_count;
 
@@ -90,6 +91,11 @@ struct GameOver
     int image_count;
     bool flag;
     int circle;
+};
+
+struct CarAnimation
+{
+    int img[5];
 };
 
 void CarInit(void);
