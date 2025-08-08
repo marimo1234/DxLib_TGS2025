@@ -14,6 +14,7 @@ enum CarDirection
 
 struct Car
 {
+    //Car
     Vector2D position;
     Vector2D velocity;
     Vector2D speed;
@@ -24,6 +25,7 @@ struct Car
     int move_image[4];
     int animation_count;
 
+    //Ivy
     int ivy_image[4];
     int ivy_anim_left[20];
     int ivy_anim_right[20];
@@ -33,7 +35,8 @@ struct Car
     int ivy_count;
     int ivy_num;
     int ivy_se;
-
+    
+    //Boom
     int boom_right_animtion[7];
     int boom_left_animtion[7];
     int boom_up_animtion[7];
@@ -43,6 +46,7 @@ struct Car
     int boom_num;
     int boom_se;
 
+    //Lake
     int lake_right_anim[10];
     int lake_left_anim[10];
     int lake_up_anim[10];
@@ -53,8 +57,15 @@ struct Car
     int lake_se;
     int lake_mul;
 
+    //Smoke
+    int smo_img[4];
+    int smo_cnt;
+    int smo_idx;
+    
+
     int cutin_image[3];
 
+    //CarMove
     int x;
     int y;
     int direction;
@@ -70,7 +81,7 @@ struct Car
     bool goal_flag;
     bool menu_flag;
     
-    
+    //Warn
     int warn_image[2];
     int warn_se[2];
     bool warn_image_flag;

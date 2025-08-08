@@ -29,6 +29,11 @@ void CarLakeDraw(int carx, int cary,const InGame*ingame);
 void CarBoomAnimation(void);
 void CarBoomDraw(int carx, int cary);
 
+void CarSmokeAnimation(void);
+void CarSmokeDraw(int carx, int cary);
+
+
+
 Car car;
 GameOver gameover;
 CarAnimation car_anim[5];
@@ -181,6 +186,12 @@ void CarResourceInit(void)
 	car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left1.png");
 	car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
 
+
+	car.smo_img[0] = LoadGraph("Resource/images/car_smoke1.png");
+	car.smo_img[1] = LoadGraph("Resource/images/car_smoke2.png");
+	car.smo_img[2] = LoadGraph("Resource/images/car_smoke3.png");
+	car.smo_img[3] = LoadGraph("Resource/images/car_smoke4.png");
+
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
@@ -216,6 +227,7 @@ void CarManagerUpdate(void)
 		CarIvyAnimation();
 		CarLakeAnimation();
 		CarBoomAnimation();
+		CarSmokeAnimation();
 	}
 	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
@@ -239,6 +251,7 @@ void CarDraw(void)
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
+	CarSmokeDraw(car.position.x, car.position.y);
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%f", car.position.x);*/
 	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
@@ -324,6 +337,9 @@ void CarReset(void)
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
 
+	car.smo_cnt = 0;
+	car.smo_idx = 0;
+
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
@@ -390,11 +406,11 @@ void CarMovePosition(const CreateStage* stage)
 	case eUp://上に
 		if (car.animation_count < 30)
 		{
-			car.animation = car.image[2];
+			car.animation = car_anim[eUp].img[0];
 		}
 		else
 		{
-			car.animation = car.move_image[2];
+			car.animation = car_anim[eUp].img[1];
 		}
 		car.position.y -= car.velocity.y;
 		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に0.2足している
@@ -419,11 +435,11 @@ void CarMovePosition(const CreateStage* stage)
 	case eDown://下に
 		if (car.animation_count < 30)
 		{
-			car.animation = car.image[3];
+			car.animation = car_anim[eDown].img[0];
 		}
 		else
 		{
-			car.animation = car.move_image[3];
+			car.animation = car_anim[eDown].img[1];
 		}
 		car.position.y += car.velocity.y;
 		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
@@ -1011,7 +1027,25 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
  }
 
+ void CarSmokeAnimation(void)
+ {
+	 car.smo_cnt++;
+	 if (car.smo_cnt% 10 == 0)
+	 {
+		 car.smo_idx++;
+	 }
+	 
+	 if (car.smo_cnt > 60)
+	 {
+		 car.smo_cnt = 0;
+		 car.smo_idx = 0;
+	 }
+ }
 
+ void CarSmokeDraw(int carx, int cary)
+ {
+	 DrawRotaGraphF(carx-80, cary, 1.0, 0.0, car.smo_img[car.smo_idx], TRUE);
+ }
 //ステージ番号と車の初期位置を取得
 void GetCarStageNum(const InGame* ingame)
 {
