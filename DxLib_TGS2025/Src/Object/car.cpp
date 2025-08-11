@@ -985,6 +985,10 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 {
 			 car.boom_num++;
 		 }
+		 if (car.boom_num == 6)
+		 {
+			 car.boom_num = 4;
+		 }
 		 if (car.start == false)
 		 {
 			 car.boom_flag = false;
