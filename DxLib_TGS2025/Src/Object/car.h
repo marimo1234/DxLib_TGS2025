@@ -92,7 +92,8 @@ struct Car
 
     //goal
     int star_image[8];
-    int star_count;
+    int jet_count;
+    int jet_image;
 
     bool mitibiki_flag;
 
