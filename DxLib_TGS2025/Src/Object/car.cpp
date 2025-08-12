@@ -190,10 +190,11 @@ void CarResourceInit(void)
 	car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
 
 
-	car.smo_img[0] = LoadGraph("Resource/images/car_smoke1.png");
-	car.smo_img[1] = LoadGraph("Resource/images/car_smoke2.png");
-	car.smo_img[2] = LoadGraph("Resource/images/car_smoke3.png");
-	car.smo_img[3] = LoadGraph("Resource/images/car_smoke4.png");
+	car.smo_img[0] = LoadGraph("Resource/images/car_smoke0.png");
+	car.smo_img[1] = LoadGraph("Resource/images/car_smoke1.png");
+	car.smo_img[2] = LoadGraph("Resource/images/car_smoke2.png");
+	car.smo_img[3] = LoadGraph("Resource/images/car_smoke3.png");
+	car.smo_img[4] = LoadGraph("Resource/images/car_smoke4.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -1068,12 +1069,12 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  void CarSmokeAnimation(void)
  {
 	 car.smo_cnt++;
-	 if (car.smo_cnt% 10 == 0)
+	 if (car.smo_cnt% 12 == 0)
 	 {
 		 car.smo_idx++;
 	 }
 	 
-	 if (car.smo_cnt > 60)
+	 if (car.smo_cnt > 80)
 	 {
 		 car.smo_cnt = 0;
 		 car.smo_idx = 0;
