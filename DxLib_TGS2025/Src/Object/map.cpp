@@ -13,6 +13,8 @@
 CreateStage stage;
 int ground;
 int groundreef;
+int groundreef_top;
+//int groundreef_botom;
 int stage_start;
 int ikl;
 
@@ -51,7 +53,9 @@ void MapInit(void)
 void MapResourceInit(void)
 {
 	//画像の取得
-	groundreef = LoadGraph("Resource/images/MapOriginal7.png");
+	groundreef = LoadGraph("Resource/images/MapOriginal10.png");
+	groundreef_top = LoadGraph("Resource/images/MapOriginal10_top.png");
+	/*groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");*/
 	stage.trout_image = LoadGraph("Resource/images/trout.png");
 	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
 	ikl = LoadGraph("Resource/images/Back_Wood.png");
@@ -95,6 +99,8 @@ void MapDraw(void)
 {
 	//背景の描画
 	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef, TRUE);
+	/*DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef_botom, TRUE);*/
+	DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef_top, TRUE);
 	//マスの描画
 	MapTroutDraw(GetInGame());
 	//マップ作成
