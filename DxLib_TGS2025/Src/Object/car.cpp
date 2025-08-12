@@ -32,6 +32,8 @@ void CarBoomDraw(int carx, int cary);
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
+void StarAnimation(void);
+
 
 
 Car car;
@@ -198,6 +200,8 @@ void CarResourceInit(void)
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
 	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
 
+	LoadDivGraph("Resource/images/star.png", 8, 4, 2, 200, 200, car.star_image);
+
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
 
@@ -242,6 +246,17 @@ void CarDraw(void)
 	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false)
 	{
 		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
+		/*if (car.goal_flag == true)
+		{
+			if (car.star_count < 10)
+			{
+				DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.5, 0.0, car.star_image[0], TRUE);
+			}
+			else
+			{
+				DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.5, 0.0, car.star_image[1], TRUE);
+			}
+		}*/
 	}
 	//警告マークの描画
 	CarWarnDraw();
@@ -403,6 +418,7 @@ void CarMovePosition(const CreateStage* stage)
 			}
 		}
 		break;
+
 	case eUp://上に
 		if (car.animation_count < 30)
 		{
@@ -431,7 +447,12 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_image_flag = true;
 			car.warn_num = 0;
 		}
+
+		// ゴールした時の星のアニメーション
+		StarAnimation();
+
 		break;
+
 	case eDown://下に
 		if (car.animation_count < 30)
 		{
@@ -460,7 +481,12 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_image_flag = true;
 			car.warn_num = 0;
 		}
+
+		// ゴールした時の星のアニメーション
+		StarAnimation();
+
 		break;
+
 	case eRight://右に
 
 		//carのアニメーション切り替え
@@ -485,6 +511,10 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_image_flag = true;
 			car.warn_num = 0;
 		}
+
+		// ゴールした時の星のアニメーション
+		StarAnimation();
+
 		break;
 
 	case eLeft:
@@ -510,6 +540,10 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_image_flag = true;
 			car.warn_num = 0;
 		}
+
+		// ゴールした時の星のアニメーション
+		StarAnimation();
+
 		break;
 
 	default:
@@ -1043,6 +1077,19 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 {
 		 car.smo_cnt = 0;
 		 car.smo_idx = 0;
+	 }
+ }
+
+ void StarAnimation(void)
+ {
+	 if (car.goal_flag == true)
+	 {
+		 car.star_count++;
+	 }
+
+	 if (car.star_count > 20)
+	 {
+		 car.star_count = 0;
 	 }
  }
 

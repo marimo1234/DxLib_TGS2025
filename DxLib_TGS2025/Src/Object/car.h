@@ -90,6 +90,10 @@ struct Car
     int warn_num;
     float warn_range;
 
+    //goal
+    int star_image[8];
+    int star_count;
+
     bool mitibiki_flag;
 
     bool warntutorial_car_flag;
