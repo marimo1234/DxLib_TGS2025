@@ -16,6 +16,8 @@
 #include<stdio.h>
 
 #define D_SCROOL_SPEED		(200.0f)
+#define COUNT_NUM_INDEX		(2)       //スタートまでのカウントダウンの初期値（3から始まる）
+#define COUNT_MAX		(180)  //カウントダウンの秒数
 
 //確認用変数　後に消します
 int atr;
@@ -79,6 +81,9 @@ void InGameSceneInit(void)
 
 	ingame.gameover_se_flag = false;
 
+	ingame.num_idx = COUNT_NUM_INDEX;   //カウントダウンインデックス
+	ingame.cnt = 0;   //カウントダウン用変数
+
 	ingame.mitibiki_flag = false;
 	ingame.tutorial_achievements = 1;
 	ingame.menuanimationflag = false;
@@ -138,6 +143,8 @@ void InGameResourceInit(void)
 		ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
 		ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
 		ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+		//数字の画像
+		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, ingame.num_img);
 		//メニューのマニュアルで使う操作説明画像
 		ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 		//ミチビキ君
@@ -299,6 +306,8 @@ eSceneType InGameSceneUpdate()
 		{
 			Play_Sound_Ingame(sound.decision, 100);
 			ingame.menu_num = 0;
+			ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
+			ingame.cnt = 0;        //カウントダウンリセット
 			ingame.start = false;
 			TutorialReset();
 			ingame.menu_flag = false;
@@ -339,6 +348,8 @@ eSceneType InGameSceneUpdate()
 	if (ingame.goalmenu_num == 0 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
+		ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
+		ingame.cnt = 0;        //カウントダウンリセット
 		Play_Sound_Ingame(sound.decision, 100);
 		ingame.goalselect_flag = true;
 		ingame.start = false;
@@ -396,7 +407,7 @@ void InGameSceneDraw(void)
 	GoalDraw();
 
 	////////////////////
-	TutorialDraw(GetGoal(), GetGameOver(),GetCar());
+	TutorialDraw(GetGoal(), GetGameOver(), GetCar());
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
@@ -409,8 +420,13 @@ void InGameSceneDraw(void)
 	}
 	if (ingame.start == false && ingame.manual_open == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
-		DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
-		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);
+		/*DrawRotaGraphF(640.0f, 360.0f, 3.0, 0.0, ingame.back, TRUE);
+		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);*/
+	}
+
+	if (ingame.start == false && ingame.menu_flag == false && ingame.stage_num != eOne)
+	{
+		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
 	}
 
 	//Startボタンが押されたときにだすセレクト画面
@@ -426,6 +442,7 @@ void InGameSceneDraw(void)
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
+	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.cnt);*/
 }
 
 const InGame* GetInGame(void)
@@ -453,33 +470,55 @@ void GameStart(void)
 	}
 	else
 	{
+		//カウントダウンの後に始まる
 		if (ingame.start == false && ingame.menu_flag == false)
 		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_X) == ePadInputState::ePress && ingame.manual_open == false)
-			{
-				ingame.gameover_se_flag = false;
-				ingame.start = true;
-				ingame.manual_open = false;
-				Play_InGameBgm();
-			}
+			InGameStartCount();
+			InGameCountAnim();
 		}
-		if (ingame.manual_open == false && ingame.start == false && ingame.menu_flag == false)
-		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
-			{
-				ingame.manual_open = true;
-			}
-		}
-		else if (ingame.manual_open == true)
-		{
-			if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
-			{
-				ingame.manual_open = false;
-			}
-		}
+		////Yを押したら操作説明が出る
+		//if (ingame.manual_open == false && ingame.start == false && ingame.menu_flag == false)
+		//{
+		//	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
+		//	{
+		//		ingame.manual_open = true;
+		//	}
+		//}
+		////Bボタンで操作説明画面から戻る
+		//else if (ingame.manual_open == true)
+		//{
+		//	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
+		//	{
+		//		ingame.manual_open = false;
+		//	}
+		//}
 	}
 }
 
+//インゲーム前のカウントダウン
+void InGameStartCount(void)
+{
+	if (ingame.cnt <= COUNT_MAX)
+	{
+		ingame.cnt++;
+	}
+
+	if (ingame.cnt > COUNT_MAX)
+	{
+		ingame.gameover_se_flag = false;
+		ingame.start = true;
+		ingame.manual_open = false;
+		Play_InGameBgm();
+	}
+}
+
+void InGameCountAnim(void)
+{
+	if (ingame.cnt != 0 && ingame.cnt % 60 == 0)
+	{
+		ingame.num_idx--;
+	}
+}
 //ステージの番号を取得
 void GetStageNumber(const SS_Num* ss_num)
 {
@@ -568,6 +607,8 @@ void GameOverReset(const GameOver* gameover, const Car* car)
 {
 	if (gameover->flag == true)
 	{
+		ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
+		ingame.cnt = 0;        //カウントダウンリセット
 		ingame.start = false;
 	}
 	if (car->direction == eStop)

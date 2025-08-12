@@ -47,6 +47,10 @@ struct InGame
 
 	bool gameover_se_flag;
 
+	int cnt;
+	int num_img[6];
+	int num_idx;
+
 	int tutorial_log;
 	int tutorial_log_num;
 	int mitibikikun;
@@ -147,6 +151,11 @@ void MenuDraw(void);
 void GoalSelectMenuDraw(void);
 void Play_InGameBgm(void);
 void Stop_InGameBgm(void);
+
+//カウントダウン
+void InGameStartCount(void);
+//カウントダウンアニメーション
+void InGameCountAnim(void);
 
 
 //void StageChange(const Goal* goal);
