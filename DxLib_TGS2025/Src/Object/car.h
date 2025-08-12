@@ -58,7 +58,7 @@ struct Car
     int lake_mul;
 
     //Smoke
-    int smo_img[4];
+    int smo_img[5];
     int smo_cnt;
     int smo_idx;
     
