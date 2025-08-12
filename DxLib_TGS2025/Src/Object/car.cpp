@@ -32,7 +32,8 @@ void CarBoomDraw(int carx, int cary);
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
-void StarAnimation(void);
+void CarJetAnimation(void);
+void CarJetDraw(float x, float y,int direction);
 
 
 
@@ -201,6 +202,7 @@ void CarResourceInit(void)
 	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
 
 	LoadDivGraph("Resource/images/star.png", 8, 4, 2, 200, 200, car.star_image);
+	car.jet_image = LoadGraph("Resource/images/jet.png");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 }
@@ -245,18 +247,16 @@ void CarDraw(void)
 	//車の描画
 	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false)
 	{
-		DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
-		/*if (car.goal_flag == true)
+		if (car.direction == eUp)
 		{
-			if (car.star_count < 10)
-			{
-				DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.5, 0.0, car.star_image[0], TRUE);
-			}
-			else
-			{
-				DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.5, 0.0, car.star_image[1], TRUE);
-			}
-		}*/
+			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
+			CarJetDraw(car.position.x, car.position.y, car.direction);
+		}
+		else
+		{
+			CarJetDraw(car.position.x, car.position.y, car.direction);
+			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
+		}
 	}
 	//警告マークの描画
 	CarWarnDraw();
@@ -449,7 +449,7 @@ void CarMovePosition(const CreateStage* stage)
 		}
 
 		// ゴールした時の星のアニメーション
-		StarAnimation();
+		CarJetAnimation();
 
 		break;
 
@@ -483,7 +483,7 @@ void CarMovePosition(const CreateStage* stage)
 		}
 
 		// ゴールした時の星のアニメーション
-		StarAnimation();
+		CarJetAnimation();
 
 		break;
 
@@ -513,7 +513,7 @@ void CarMovePosition(const CreateStage* stage)
 		}
 
 		// ゴールした時の星のアニメーション
-		StarAnimation();
+		CarJetAnimation();
 
 		break;
 
@@ -542,7 +542,7 @@ void CarMovePosition(const CreateStage* stage)
 		}
 
 		// ゴールした時の星のアニメーション
-		StarAnimation();
+		CarJetAnimation();
 
 		break;
 
@@ -1080,23 +1080,85 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
  }
 
- void StarAnimation(void)
+ void CarSmokeDraw(int carx, int cary)
+ {
+	 if (car.goal_flag == false)
+	 {
+		 DrawRotaGraphF(carx - 80, cary, 1.0, 0.0, car.smo_img[car.smo_idx], TRUE);
+	 }
+ }
+
+ // ジェットアニメーション
+ void CarJetAnimation(void)
  {
 	 if (car.goal_flag == true)
 	 {
-		 car.star_count++;
+		 car.jet_count++;
 	 }
 
-	 if (car.star_count > 20)
+	 if (car.jet_count > 20)
 	 {
-		 car.star_count = 0;
+		 car.jet_count = 0;
 	 }
  }
 
- void CarSmokeDraw(int carx, int cary)
+ // ジェット描画
+ void CarJetDraw(float x,float y,int direction)
  {
-	 DrawRotaGraphF(carx-80, cary, 1.0, 0.0, car.smo_img[car.smo_idx], TRUE);
+	 if (car.goal_flag == true)
+	 {
+		 switch (direction)
+		 {
+		 case eUp:
+			 if (car.jet_count < 10)
+			 {
+				 DrawRotaGraph(car.position.x, car.position.y + 40.0f, 0.5, -1.57, car.jet_image, TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraph(car.position.x, car.position.y + 20.0f, 0.25, -1.57, car.jet_image, TRUE);
+			 }
+			 break;
+
+		 case eDown:
+			 if (car.jet_count < 10)
+			 {
+				 DrawRotaGraph(car.position.x, car.position.y - 50.0f, 0.5, 1.57, car.jet_image, TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraph(car.position.x, car.position.y - 30.0f, 0.25, 1.57, car.jet_image, TRUE);
+			 }
+			 break;
+
+		 case eRight:
+			 if (car.jet_count < 10)
+			 {
+				 DrawRotaGraph(car.position.x - 90.0f, car.position.y + 10.0f, 0.5, 0.0, car.jet_image, TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.25, 0.0, car.jet_image, TRUE);
+			 }
+			 break;
+
+		 case eLeft:
+			 if (car.jet_count < 10)
+			 {
+				 DrawRotaGraph(car.position.x + 90.0f, car.position.y + 10.0f, 0.5, 3.14, car.jet_image, TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraph(car.position.x + 60.0f, car.position.y + 10.0f, 0.25, 3.14, car.jet_image, TRUE);
+			 }
+			 break;
+
+		 default:
+			 break;
+		 }
+	 }
  }
+
 //ステージ番号と車の初期位置を取得
 void GetCarStageNum(const InGame* ingame)
 {
