@@ -10,6 +10,7 @@
 #define CAR_TROUT_LNEGTH (80.0f)
 
 int overroad;
+int groundreef_botom;
 
 void CarStart(const InGame* ingame);
 void CarDetectPosition(const CreateStage* stage);
@@ -206,6 +207,7 @@ void CarResourceInit(void)
 	car.jet_image = LoadGraph("Resource/images/jet.png");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
+	groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
 }
 
 void CarManagerUpdate(void)
@@ -942,6 +944,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 {
 		 StopSoundMem(car.ivy_se);
 	 }
+	 DrawRotaGraphF(640, 360, 1.0, 0.0, groundreef_botom, TRUE);
  }
 
  void CarLakeAnimation(void)
