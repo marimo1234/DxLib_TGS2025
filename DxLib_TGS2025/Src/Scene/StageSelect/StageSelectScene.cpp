@@ -165,12 +165,12 @@ void StageSelectResourceInit(void)
 		ss_num.hide_img= LoadGraph("Resource/images/bg_hide_num02.png");
 
 		//ステージの画像
-		ss_map.img[0] = LoadGraph("Resource/images/stage1.png");
-		ss_map.img[1] = LoadGraph("Resource/images/stage2.png");
-		ss_map.img[2] = LoadGraph("Resource/images/stage3.png");
-		ss_map.img[3] = LoadGraph("Resource/images/stage4.png");
-		ss_map.img[4] = LoadGraph("Resource/images/stage5.png");
-		ss_map.img[5] = LoadGraph("Resource/images/stage6.png");
+		ss_map.img[0] = LoadGraph("Resource/images/stage01.png");
+		ss_map.img[1] = LoadGraph("Resource/images/stage02.png");
+		ss_map.img[2] = LoadGraph("Resource/images/stage03.png");
+		ss_map.img[3] = LoadGraph("Resource/images/stage04.png");
+		ss_map.img[4] = LoadGraph("Resource/images/stage05.png");
+		ss_map.img[5] = LoadGraph("Resource/images/stage06.png");
 		ss_map.hide_img = LoadGraph("Resource/images/bg_hide_map.png");
 
 		stg_sel.arrow_image[0] = LoadGraph("Resource/images/StageSelect_button.png");
