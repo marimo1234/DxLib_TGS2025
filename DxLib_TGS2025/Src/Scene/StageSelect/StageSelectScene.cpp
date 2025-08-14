@@ -487,7 +487,7 @@ void StarMove(void)
 	if (ss_num.u_flag == false && ss_num.d_flag == false)
 	{
 		//インデックスが星の数を越えていなければ
-		if (ss_star.idx < ss_star.num)
+		if (ss_star.idx < 5)
 		{
 			//余りが0の時、横の星にうつる
 			if (ss_star.cnt % 5 == 0)
@@ -496,7 +496,7 @@ void StarMove(void)
 			}
 
 			//余りが0以外の時
-			if (ss_star.cnt % 5 > 0 && ss_num.stg_num != 0)
+			if (ss_star.cnt % 5 > 0)
 			{
 				//上に跳ねる
 				ss_star.y[ss_star.idx] -= 3;
@@ -516,16 +516,16 @@ void StarMove(void)
 	switch (ss_num.stg_num)
 	{
 	case 0:
-		ss_star.num = 0;
-		break;
-	case 1: case 2:
 		ss_star.num = 1;
 		break;
-	case 3: case 4:
+	case 1: case 2:
 		ss_star.num = 2;
 		break;
-	case 5:
+	case 3: case 4:
 		ss_star.num = 3;
+		break;
+	case 5:
+		ss_star.num = 4;
 		break;
 	}
 }
