@@ -51,6 +51,7 @@ void CursorInit(void)
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
+	cursor.draw_flag = true;
 	cursor.anim_count = 0;
 	cursor.anim_num = 0;
 	
@@ -151,112 +152,116 @@ void CursorUpdate(void)
 //カーソルの描画
 void CursorDraw(const Tool*tool)
 {
-	DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor.cursor_anim[cursor.anim_num], TRUE);// カーソルの描画
-	
-	// もしitem_numberがePickaxeなら
-	if (tool->item_number == ePickaxe)
+	if (cursor.draw_flag == true)
 	{
-		Img_Num_Change(GetStage(),1);
+		DrawRotaGraphF(cursor.position.x, cursor.position.y, 1.0, 0.0, cursor.cursor_anim[cursor.anim_num], TRUE);// カーソルの描画
 
-		// ツルハシのアニメーションを動かす
-		if (is_animating_pickaxe)
+
+		// もしitem_numberがePickaxeなら
+		if (tool->item_number == ePickaxe)
 		{
-			if (pickaxe_animation_num == 0)
+			Img_Num_Change(GetStage(), 1);
+
+			// ツルハシのアニメーションを動かす
+			if (is_animating_pickaxe)
+			{
+				if (pickaxe_animation_num == 0)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 0.0, cursor_image1, TRUE);
+				}
+				else if (pickaxe_animation_num == 1)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 30.0, cursor_image1, TRUE);
+				}
+			}
+			// アニメーションが動いてなければcursor_image1にする
+			else
 			{
 				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 0.0, cursor_image1, TRUE);
 			}
-			else if (pickaxe_animation_num == 1)
-			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 30.0, cursor_image1, TRUE);
-			}
 		}
-		// アニメーションが動いてなければcursor_image1にする
-		else
+		// もしitem_numberがeAxなら
+		else if (tool->item_number == eAx)
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.3, 0.0, cursor_image1, TRUE);
-		}
-	}
-	// もしitem_numberがeAxなら
-	else if (tool->item_number == eAx) 
-	{
-		Img_Num_Change(GetStage(),2);
+			Img_Num_Change(GetStage(), 2);
 
-		// 斧のアニメーションを動かす
-		if (is_animating_ax)
-		{
-			if (ax_anim_num == 0)
+			// 斧のアニメーションを動かす
+			if (is_animating_ax)
+			{
+				if (ax_anim_num == 0)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_ax, TRUE);
+				}
+				else if (ax_anim_num == 1)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, -90.0, cursor_ax, TRUE);
+				}
+			}
+			// アニメーションが動いていなければcursor_axにする
+			else
 			{
 				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_ax, TRUE);
 			}
-			else if (ax_anim_num == 1)
+		}
+		// もしitem_numberがeDrillなら
+		else if (tool->item_number == eHammer)
+		{
+			// ハンマーのアニメーションを動かす
+			if (is_animating_Hammer)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, -90.0, cursor_ax, TRUE);
+				if (hammer_anim_num == 0)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_drill, TRUE);
+				}
+				else if (hammer_anim_num == 1)
+				{
+					DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, -90.0, cursor_drill, TRUE);
+				}
 			}
-		}
-		// アニメーションが動いていなければcursor_axにする
-		else
-		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_ax, TRUE);
-		}
-	}
-	// もしitem_numberがeDrillなら
-	else if(tool->item_number==eHammer)
-	{
-		// ハンマーのアニメーションを動かす
-		if (is_animating_Hammer)
-		{
-			if (hammer_anim_num == 0)
+			// アニメーションが動いていなければこれにする
+			else
 			{
 				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_drill, TRUE);
 			}
-			else if (hammer_anim_num == 1)
+		}
+		else if (tool->item_number == eRoad)
+		{
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
+			if (tool->road_num < 10)
 			{
-				DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7,-90.0, cursor_drill, TRUE);
+				DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+					tool->road_num);
 			}
+			else if (tool->road_num > 99)
+			{
+				DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
+			}
+			else
+			{
+				DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+					tool->road_num);
+			}
+			cursor.img_count = 0;
 		}
-		// アニメーションが動いていなければこれにする
-		else
+		else if (tool->item_number == eWoodRoad)
 		{
-			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0, 0.7, 0.0, cursor_drill, TRUE);
+			DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
+			if (tool->wood_road_num < 10)
+			{
+				DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+					tool->wood_road_num);
+			}
+			else if (tool->wood_road_num > 99)
+			{
+				DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
+			}
+			else
+			{
+				DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
+					tool->wood_road_num);
+			}
+			cursor.img_count = 0;
 		}
-	}
-	else if (tool->item_number == eRoad)
-	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_road, TRUE);
-		if (tool->road_num < 10)
-		{
-			DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-				tool->road_num);
-		}
-		else if(tool->road_num>99)
-		{
-			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
-		}
-		else
-		{
-			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-				tool->road_num);
-		}
-		cursor.img_count = 0;
-	}
-	else if (tool->item_number == eWoodRoad)
-	{
-		DrawRotaGraphF(cursor.position.x, cursor.position.y - 40.0f, 0.5, 0.0, cursor_hasi, TRUE);
-		if (tool->wood_road_num < 10)
-		{
-			DrawExtendFormatString(cursor.position.x - 10.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-				tool->wood_road_num);
-		}
-		else if(tool->wood_road_num > 99)
-		{
-			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "99+");
-		}
-		else
-		{
-			DrawExtendFormatString(cursor.position.x - 25.0f, cursor.position.y - 60.0f, 2.8, 2.5, GetColor(0, 0, 0), "%d",
-				tool->wood_road_num);
-		}
-		cursor.img_count = 0;
 	}
 }
 
@@ -276,6 +281,11 @@ void CursorStart(const InGame* ingame , const Goal*goal,const GameOver*gameover,
 		|| gameover->image_flag == true||car->goal_flag==true)
 	{
 		cursor.operable_flag = false;
+	}
+
+	if (goal->print_flag == true || gameover->image_flag == true || car->goal_flag == true|| car->direction == eStop)
+	{
+		cursor.draw_flag = false;
 	}
 	cursor.menu_flag = ingame->menu_flag;
 }
@@ -423,6 +433,7 @@ void CursorReset(void)
 	cursorstart = false;
 	cursor.menu_flag = false;
 	cursor.operable_flag = false;
+	cursor.draw_flag = true;
 
 	GetCursorStageNum(GetInGame());
 	
