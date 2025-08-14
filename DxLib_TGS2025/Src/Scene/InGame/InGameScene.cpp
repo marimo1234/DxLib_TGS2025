@@ -399,6 +399,9 @@ void InGameSceneDraw(void)
 
 	//カーソルの描画
 	CursorDraw(Get_Tool());
+	
+	//木岩のエフェクト描画
+	WoodRockEffectDraw();
 
 	//スタートボタン
 	/*DrawRotaGraphF(60.0f, 60.0f, 0.6f, 0.0, ingame.start_button_image, TRUE);*/

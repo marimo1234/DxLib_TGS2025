@@ -190,7 +190,7 @@ void WoodRockDraw(void)
 	}
 	
 	//エフェクトの描画
-	WoodRockEffectDraw();	
+	/*WoodRockEffectDraw();	*/
 
 	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d %d %d", rock.fps[3][2],rock.fps[5][2], rock.fps[7][2]);
 		//DrawFormatString(200, 200, GetColor(255, 255, 255), "%f\n%f\n%d", rock.add_x[8][4], rock.add_x[1][2],wood.effect_count);
@@ -716,7 +716,7 @@ void WoodEffect(int x, int y)
 	{
 		wood.effect_count++;
 
-		if (wood.effect_count > 3)
+		if (wood.effect_count > 4)
 		{
 			wood.effect_num++;
 			wood.effect_count = 0;
@@ -745,7 +745,7 @@ void RockEffect(int x, int y)
 	{
 		rock.effect_count++;
 
-		if (rock.effect_count > 3)
+		if (rock.effect_count > 4)
 		{
 			rock.effect_num++;
 			rock.effect_count = 0;
