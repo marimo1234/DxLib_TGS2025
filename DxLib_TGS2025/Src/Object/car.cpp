@@ -34,7 +34,11 @@ void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
 void CarJetAnimation(void);
-void CarJetDraw(float x, float y,int direction);
+void CarJetDraw(float x, float y, int direction);
+
+
+void CarJetAnimation2(void);
+void CarJetDraw2(float x, float y,int direction);
 
 
 
@@ -104,6 +108,9 @@ void CarInit(void)
 		car.next_x[i] = -1;
 		car.next_y[i] = -1;
 	}
+
+	// 仮
+	car.goal_count = 0;
 }
 
 void CarResourceInit(void)
@@ -203,8 +210,8 @@ void CarResourceInit(void)
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
 	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
 
-	LoadDivGraph("Resource/images/star.png", 8, 4, 2, 200, 200, car.star_image);
-	car.jet_image = LoadGraph("Resource/images/jet.png");
+	LoadDivGraph("Resource/images/all_jet.png", 9, 9, 1, 200, 200, car.jet_image);
+	car.jet_image2 = LoadGraph("Resource/images/jet.png");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 	groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
@@ -253,11 +260,13 @@ void CarDraw(void)
 		if (car.direction == eUp)
 		{
 			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
-			CarJetDraw(car.position.x, car.position.y, car.direction);
+			/*CarJetDraw(car.position.x, car.position.y, car.direction);*/
+			//CarJetDraw2(car.position.x, car.position.y, car.direction);
 		}
 		else
 		{
-			CarJetDraw(car.position.x, car.position.y, car.direction);
+			/*CarJetDraw(car.position.x, car.position.y, car.direction);*/
+			//CarJetDraw2(car.position.x, car.position.y, car.direction);
 			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 		}
 	}
@@ -271,7 +280,7 @@ void CarDraw(void)
 	CarBoomDraw(car.position.x, car.position.y);
 	CarSmokeDraw(car.position.x, car.position.y);
 
-	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%f", car.position.x);*/
+	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
 	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
@@ -365,6 +374,7 @@ void CarReset(void)
 	//仮
 	/*DeleteSoundMem(car.lake_se);
 	car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");*/
+	car.goal_count = 0;
 }
 
 //次の進行場所を取得する
@@ -451,8 +461,8 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_num = 0;
 		}
 
-		// ゴールした時の星のアニメーション
-		CarJetAnimation();
+		// ゴールした時のアニメーション
+		/*CarJetAnimation2();*/
 
 		break;
 
@@ -485,8 +495,8 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_num = 0;
 		}
 
-		// ゴールした時の星のアニメーション
-		CarJetAnimation();
+		// ゴールした時のアニメーション
+		/*CarJetAnimation2();*/
 
 		break;
 
@@ -515,8 +525,8 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_num = 0;
 		}
 
-		// ゴールした時の星のアニメーション
-		CarJetAnimation();
+		// ゴールした時のアニメーション
+		//CarJetAnimation2();
 
 		break;
 
@@ -544,8 +554,8 @@ void CarMovePosition(const CreateStage* stage)
 			car.warn_num = 0;
 		}
 
-		// ゴールした時の星のアニメーション
-		CarJetAnimation();
+		// ゴールした時のアニメーション
+		//CarJetAnimation2();
 
 		break;
 
@@ -769,13 +779,23 @@ void CarGoalCheck(const CreateStage* stage)
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] - 1] == 7 && car.next_y[car.road_count] != 0 ||
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7 && car.next_y[car.road_count] != 6)
 	{
-		//車の速度を上げる
-		car.velocity.x = 5.0f;
-		car.velocity.y = 5.0f;
+		car.goal_count++;
+		if (car.goal_count > 50)
+		{
+			//車の速度を上げる
+			car.velocity.x = 5.0f;
+			car.velocity.y = 5.0f;
+		}
+		else
+		{
+			car.velocity.x = 0.0f;
+			car.velocity.y = 0.0f;
+		}
 
 		//ゴールの配列番号を一番先端に入れる
 		car.next_x[car.road_count + 1] = stage->goal_x[0];
 		car.next_y[car.road_count + 1] = stage->goal_y[0];
+
 		//ゴールまで道がつながったかどうか
 		car.goal_flag = true;
 	}
@@ -1093,67 +1113,67 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  }
 
  // ジェットアニメーション
- void CarJetAnimation(void)
+ void CarJetAnimation2(void)
  {
 	 if (car.goal_flag == true)
 	 {
-		 car.jet_count++;
+		 car.jet_count2++;
 	 }
 
-	 if (car.jet_count > 20)
+	 if (car.jet_count2 > 20)
 	 {
-		 car.jet_count = 0;
+		 car.jet_count2 = 0;
 	 }
  }
 
  // ジェット描画
- void CarJetDraw(float x,float y,int direction)
+ void CarJetDraw2(float x,float y,int direction)
  {
 	 if (car.goal_flag == true)
 	 {
 		 switch (direction)
 		 {
 		 case eUp:
-			 if (car.jet_count < 10)
+			 if (car.jet_count2 < 10)
 			 {
-				 DrawRotaGraph(car.position.x, car.position.y + 40.0f, 0.5, -1.57, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x, car.position.y + 40.0f, 0.5, -1.57, car.jet_image2, TRUE);
 			 }
 			 else
 			 {
-				 DrawRotaGraph(car.position.x, car.position.y + 20.0f, 0.25, -1.57, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x, car.position.y + 20.0f, 0.25, -1.57, car.jet_image2, TRUE);
 			 }
 			 break;
 
 		 case eDown:
-			 if (car.jet_count < 10)
+			 if (car.jet_count2 < 10)
 			 {
-				 DrawRotaGraph(car.position.x, car.position.y - 50.0f, 0.5, 1.57, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x, car.position.y - 50.0f, 0.5, 1.57, car.jet_image2, TRUE);
 			 }
 			 else
 			 {
-				 DrawRotaGraph(car.position.x, car.position.y - 30.0f, 0.25, 1.57, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x, car.position.y - 30.0f, 0.25, 1.57, car.jet_image2, TRUE);
 			 }
 			 break;
 
 		 case eRight:
-			 if (car.jet_count < 10)
+			 if (car.jet_count2 < 10)
 			 {
-				 DrawRotaGraph(car.position.x - 90.0f, car.position.y + 10.0f, 0.5, 0.0, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x - 90.0f, car.position.y + 10.0f, 0.5, 0.0, car.jet_image2, TRUE);
 			 }
 			 else
 			 {
-				 DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.25, 0.0, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x - 60.0f, car.position.y + 10.0f, 0.25, 0.0, car.jet_image2, TRUE);
 			 }
 			 break;
 
 		 case eLeft:
-			 if (car.jet_count < 10)
+			 if (car.jet_count2 < 10)
 			 {
-				 DrawRotaGraph(car.position.x + 90.0f, car.position.y + 10.0f, 0.5, 3.14, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x + 90.0f, car.position.y + 10.0f, 0.5, 3.14, car.jet_image2, TRUE);
 			 }
 			 else
 			 {
-				 DrawRotaGraph(car.position.x + 60.0f, car.position.y + 10.0f, 0.25, 3.14, car.jet_image, TRUE);
+				 DrawRotaGraph(car.position.x + 60.0f, car.position.y + 10.0f, 0.25, 3.14, car.jet_image2, TRUE);
 			 }
 			 break;
 
@@ -1161,6 +1181,22 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 }
 	 }
+ }
+
+ // 急発進アニメーション
+ void CarJetAnimation(void)
+ {
+	 
+ }
+
+ // 急発進描画
+ void CarJetDraw(float x, float y, int direction)
+ {
+	 /*if (car.goal_count < 30)
+	 {
+		 DrawRotaGraph(x+10.0f, y+10.0f, 1.0, 0.0, car.jet_image[4], TRUE);
+	 }*/
+	 DrawRotaGraph(x + 10.0f, y + 10.0f, 1.0, 0.0, car.jet_image[4], TRUE);
  }
 
 //ステージ番号と車の初期位置を取得

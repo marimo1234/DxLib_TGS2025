@@ -91,13 +91,18 @@ struct Car
     float warn_range;
 
     //goal
-    int star_image[8];
     int jet_count;
-    int jet_image;
+    int jet_image[9];
+
+    int jet_count2;
+    int jet_image2;
 
     bool mitibiki_flag;
 
     bool warntutorial_car_flag;
+
+    //仮
+    int goal_count;
 };
 
 struct GameOver
