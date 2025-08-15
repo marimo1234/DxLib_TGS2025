@@ -22,7 +22,6 @@ void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
-void CarWarnDraw(void);
 void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
 void CarLakeAnimation(void);
@@ -275,7 +274,7 @@ void CarDraw(void)
 		}
 	}
 	//警告マークの描画
-	CarWarnDraw();
+	/*CarWarnDraw();*///インゲームに移動
 	CarWarnSE();
 
 	//ツタの描画

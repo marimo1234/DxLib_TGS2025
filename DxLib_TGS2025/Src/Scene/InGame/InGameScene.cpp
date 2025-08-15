@@ -391,11 +391,15 @@ void InGameSceneDraw(void)
 	//木岩の描画
 	WoodRockDraw();
 
+	
+	//車の描画
+	CarDraw();
+	
 	//ツールの描画
 	ToolDraw();
 
-	//車の描画
-	CarDraw();
+	//警告マークの描画
+	CarWarnDraw();
 
 	//カーソルの描画
 	CursorDraw(Get_Tool());
