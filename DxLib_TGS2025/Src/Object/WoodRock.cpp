@@ -91,10 +91,10 @@ void WoodRockResourceInit(void)
 	wood.effect_image[2] = LoadGraph("Resource/images/reef_effect3.png");
 	wood.effect_image[3] = LoadGraph("Resource/images/reef_effect4.png");
 
-	rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment1.png");
-	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment2.png");
-	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment3.png");
-	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment4.png");
+	rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment5-1.png");
+	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment5-2.png");
+	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment5-3.png");
+	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment5-4.png");
 
 	wood.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
 	wood.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
