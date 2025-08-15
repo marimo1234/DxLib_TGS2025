@@ -111,6 +111,9 @@ void CarInit(void)
 
 	// 仮
 	car.goal_count = 0;
+	car.jet_angle = 0.0f;
+	car.jet_count = 0;
+	car.jet_num = 0;
 }
 
 void CarResourceInit(void)
@@ -244,6 +247,7 @@ void CarManagerUpdate(void)
 		CarLakeAnimation();
 		CarBoomAnimation();
 		CarSmokeAnimation();
+		CarJetAnimation();
 	}
 	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
@@ -260,12 +264,12 @@ void CarDraw(void)
 		if (car.direction == eUp)
 		{
 			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
-			/*CarJetDraw(car.position.x, car.position.y, car.direction);*/
+			CarJetDraw(car.position.x, car.position.y, car.direction);
 			//CarJetDraw2(car.position.x, car.position.y, car.direction);
 		}
 		else
 		{
-			/*CarJetDraw(car.position.x, car.position.y, car.direction);*/
+			CarJetDraw(car.position.x, car.position.y, car.direction);
 			//CarJetDraw2(car.position.x, car.position.y, car.direction);
 			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
 		}
@@ -780,7 +784,7 @@ void CarGoalCheck(const CreateStage* stage)
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7 && car.next_y[car.road_count] != 6)
 	{
 		car.goal_count++;
-		if (car.goal_count > 50)
+		if (car.goal_count > 150)
 		{
 			//車の速度を上げる
 			car.velocity.x = 5.0f;
@@ -1186,17 +1190,92 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  // 急発進アニメーション
  void CarJetAnimation(void)
  {
-	 
+	 if (car.goal_flag)
+	 {
+		 car.jet_angle = (3.14 / 180) * car.goal_count;
+	 }
+
+	 if (car.goal_count < 30)
+	 {
+		 car.jet_num = 0;
+	 }
+	 else if (car.goal_count < 60)
+	 {
+		 car.jet_num = 1;
+	 }
+	 else if (car.goal_count < 150)
+	 {
+		 car.jet_num = 2;
+	 }
+	 else if (car.goal_count < 170)
+	 {
+		 car.jet_num = 4;
+	 }
+	 else if (car.goal_count < 180)
+	 {
+		 car.jet_num = 6;
+	 }
+	 else if (car.goal_count < 190)
+	 {
+		 car.jet_num = 7;
+	 }
+	 else if (car.goal_count < 200)
+	 {
+		 car.jet_num = 8;
+	 }
  }
 
  // 急発進描画
  void CarJetDraw(float x, float y, int direction)
  {
-	 /*if (car.goal_count < 30)
+	 if (car.goal_flag)
 	 {
-		 DrawRotaGraph(x+10.0f, y+10.0f, 1.0, 0.0, car.jet_image[4], TRUE);
-	 }*/
-	 DrawRotaGraph(x + 10.0f, y + 10.0f, 1.0, 0.0, car.jet_image[4], TRUE);
+		 switch (direction)
+		 {
+		 case eUp:
+			 if (car.goal_count < 150)
+			 {
+				 DrawRotaGraph(x, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
+			 }
+			 else if (car.goal_count < 200)
+			 {
+				 DrawRotaGraph(x, y + 70.0f, 1.0, -1.57, car.jet_image[car.jet_num], TRUE);
+			 }
+			 break;
+		 case eDown:
+			 if (car.goal_count < 150)
+			 {
+				 DrawRotaGraph(x, y - 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
+			 }
+			 else if (car.goal_count < 200)
+			 {
+				 DrawRotaGraph(x, y - 70.0f, 1.0, 1.57, car.jet_image[car.jet_num], TRUE);
+			 }
+			 break;
+		 case eRight:
+			 if (car.goal_count < 150)
+			 {
+				 DrawRotaGraph(x - 50.0f, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
+			 }
+			 else if (car.goal_count < 200)
+			 {
+				 DrawRotaGraph(x - 100.0f, y + 10.0f, 1.0, 0.0, car.jet_image[car.jet_num], TRUE);
+			 }
+			 break;
+		 case eLeft:
+			 if (car.goal_count < 150)
+			 {
+				 DrawRotaGraph(x + 50.0f, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
+			 }
+			 else if (car.goal_count < 200)
+			 {
+				 DrawRotaGraph(x + 100.0f, y + 10.0f, 1.0, 3.14, car.jet_image[car.jet_num], TRUE);
+			 }
+			 break;
+		 default:
+			 break;
+		 }
+	 }
  }
 
 //ステージ番号と車の初期位置を取得

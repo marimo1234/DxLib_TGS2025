@@ -93,6 +93,8 @@ struct Car
     //goal
     int jet_count;
     int jet_image[9];
+    int jet_num;
+    float jet_angle;
 
     int jet_count2;
     int jet_image2;
