@@ -219,6 +219,7 @@ void CarResourceInit(void)
 	car.jet_image2[0] = LoadGraph("Resource/images/speed_up1.png");
 	car.jet_image2[1] = LoadGraph("Resource/images/speed_up2.png");
 	car.jet_se = LoadSoundMem("Resource/Sounds/jet.mp3");
+	ChangeVolumeSoundMem(100, car.jet_se);
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 	groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
@@ -289,7 +290,7 @@ void CarDraw(void)
 	CarBoomDraw(car.position.x, car.position.y);
 	CarSmokeDraw(car.position.x, car.position.y);
 
-	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
+	DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);
 	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
@@ -1315,6 +1316,23 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 default:
 			 break;
+		 }
+	 }
+
+	 if (car.goal_count > JET_START-20&& car.goal_count <200)
+	 {
+		 if (CheckSoundMem(car.jet_se) == 0)
+		 {
+			 PlaySoundMem(car.jet_se, DX_PLAYTYPE_BACK);
+		 }
+		 if (car.goal_count > 150)
+		 {
+			 int add = (car.goal_count-150)*2;
+			 if (add+100 > 255)
+			 {
+				 add = 155;
+			 }
+			 ChangeVolumeSoundMem(100+add, car.jet_se);
 		 }
 	 }
  }
