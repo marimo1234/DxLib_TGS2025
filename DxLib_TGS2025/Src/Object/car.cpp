@@ -5,6 +5,8 @@
 #include"../Object/map.h"
 #include"../Object/tool.h"
 #include"../Object/Goal.h"
+#include "../Utility/PadInputManager.h"
+#include "../Utility/InputManager.h"
 
 //1マスの大きさ
 #define CAR_TROUT_LNEGTH (80.0f)
@@ -19,7 +21,7 @@ void OverRoad(void);
 void CarGoalCheck(const CreateStage* stage);
 void Play_Sound_Car(int sound, int volume);
 void Play_Sound_Car_Loop(int sound, int volume);
-void CarMovePosition(const CreateStage*stage);
+void CarMovePosition(const CreateStage*stage, const InGame* ingame);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
 void CarIvyAnimation(void);
@@ -241,7 +243,7 @@ void CarManagerUpdate(void)
 	{
 		//車の移動処理
 		CarGoalCheck(GetStage());
-		CarMovePosition(GetStage());
+		CarMovePosition(GetStage(),GetInGame());
 		CarIvyAnimation();
 		CarLakeAnimation();
 		CarBoomAnimation();
@@ -398,8 +400,9 @@ void GetNextDestination(const Tool* tool, int x, int y)
 
 
 //車の移動処理
-void CarMovePosition(const CreateStage* stage)
+void CarMovePosition(const CreateStage* stage, const InGame* ingame)
 {
+	PadInputManager* pad_input = PadInputManager::GetInstance();
 	//Carアニメーションカウントと画像番号
 	car.animation_count++;
 
@@ -445,11 +448,15 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			car.animation = car_anim[eUp].img[1];
 		}
-		if (car.warntutorial_car_flag == true)
+		if (ingame->stage_num == eOne && car.warntutorial_car_flag == true)
 		{
 			car.position.y += 0;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && car.warn_image_flag == false)
+			{
+				car.warntutorial_car_flag = false;
+			}
 		}
-		else if (car.warntutorial_car_flag == false)
+		else if ((ingame->stage_num == eOne && car.warntutorial_car_flag == false) || ingame->stage_num != eOne)
 		{
 			car.position.y -= car.velocity.y;
 		}
@@ -482,11 +489,15 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			car.animation = car_anim[eDown].img[1];
 		}
-		if (car.warntutorial_car_flag==true)
+		if (ingame->stage_num == eOne && car.warntutorial_car_flag == true)
 		{
 			car.position.y +=0;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && car.warn_image_flag == false)
+			{
+				car.warntutorial_car_flag = false;
+			}
 		}
-		else if (car.warntutorial_car_flag == false)
+		else if ((ingame->stage_num == eOne && car.warntutorial_car_flag == false) || ingame->stage_num != eOne)
 		{
 			car.position.y += car.velocity.y;
 		}
@@ -517,11 +528,15 @@ void CarMovePosition(const CreateStage* stage)
 		//carのアニメーション切り替え
 		car.animation = car_anim[eRight].img[car.img_idx];
 
-		if (car.warntutorial_car_flag == true)
+		if (ingame->stage_num == eOne && car.warntutorial_car_flag == true)
 		{
 			car.position.x += 0;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress&&car.warn_image_flag==false)
+			{
+				car.warntutorial_car_flag = false;
+			}
 		}
-		else if (car.warntutorial_car_flag == false)
+		else if ((ingame->stage_num == eOne && car.warntutorial_car_flag == false) || ingame->stage_num != eOne)
 		{
 			car.position.x += car.velocity.x;
 		}
@@ -549,11 +564,15 @@ void CarMovePosition(const CreateStage* stage)
 		//carのアニメーション切り替え
 		car.animation = car_anim[eLeft].img[car.img_idx];
 
-		if (car.warntutorial_car_flag == true)
+		if (ingame->stage_num ==eOne &&car.warntutorial_car_flag == true)
 		{
 			car.position.x -= 0;
+			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress && car.warn_image_flag == false)
+			{
+				car.warntutorial_car_flag = false;
+			}
 		}
-		else if (car.warntutorial_car_flag == false)
+		else if ((ingame->stage_num == eOne && car.warntutorial_car_flag == false)|| ingame->stage_num != eOne)
 		{
 			car.position.x -= car.velocity.x;
 		}
@@ -911,7 +930,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 car.warntutorial_car_flag = true;
 				 break;
 			 }
-			 car.warntutorial_car_flag = false;
+			 //car.warntutorial_car_flag = false;
 		 }
 	 }
 	
