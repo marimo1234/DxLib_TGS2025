@@ -702,7 +702,7 @@ void InGameMenuUpdate(const Goal* goal, const GameOver* gameover,const Car*car)
 
 	//Goal,GameOver,Manualが開かれていない時
 	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false && ingame.mitibiki_flag == false
-		&&car->direction!=eStop&& pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
+		&& car->direction != eStop && car->goal_flag == false && pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame2(sound.select_move, 100);
 		ingame.menu_flag = true;
