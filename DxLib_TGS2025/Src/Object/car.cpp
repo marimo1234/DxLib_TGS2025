@@ -445,7 +445,14 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			car.animation = car_anim[eUp].img[1];
 		}
-		car.position.y -= car.velocity.y;
+		if (car.warntutorial_car_flag == true)
+		{
+			car.position.y += 0;
+		}
+		else if (car.warntutorial_car_flag == false)
+		{
+			car.position.y -= car.velocity.y;
+		}
 		if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 120.2f)//微調整で120に0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -475,7 +482,15 @@ void CarMovePosition(const CreateStage* stage)
 		{
 			car.animation = car_anim[eDown].img[1];
 		}
-		car.position.y += car.velocity.y;
+		if (car.warntutorial_car_flag==true)
+		{
+			car.position.y +=0;
+		}
+		else if (car.warntutorial_car_flag == false)
+		{
+			car.position.y += car.velocity.y;
+		}
+		
 		if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 119.8f)//微調整で120から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -502,7 +517,14 @@ void CarMovePosition(const CreateStage* stage)
 		//carのアニメーション切り替え
 		car.animation = car_anim[eRight].img[car.img_idx];
 
-		car.position.x += car.velocity.x;
+		if (car.warntutorial_car_flag == true)
+		{
+			car.position.x += 0;
+		}
+		else if (car.warntutorial_car_flag == false)
+		{
+			car.position.x += car.velocity.x;
+		}
 		if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 199.8f)//微調整で200から0.2引いている
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -527,7 +549,14 @@ void CarMovePosition(const CreateStage* stage)
 		//carのアニメーション切り替え
 		car.animation = car_anim[eLeft].img[car.img_idx];
 
-		car.position.x -= car.velocity.x;
+		if (car.warntutorial_car_flag == true)
+		{
+			car.position.x -= 0;
+		}
+		else if (car.warntutorial_car_flag == false)
+		{
+			car.position.x -= car.velocity.x;
+		}
 		if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 200.2f)//微調整で200から0.2足している
 		{
 			//車の現在位置を検知して次の進行方向を決める
@@ -882,6 +911,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 car.warntutorial_car_flag = true;
 				 break;
 			 }
+			 car.warntutorial_car_flag = false;
 		 }
 	 }
 	
@@ -1271,8 +1301,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eOne:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 4;
-		car.speed.x = 0.05f;
-		car.speed.y = 0.05f;
+		car.speed.x = 0.15f;
+		car.speed.y = 0.15f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 4;
 		car.warn_range = 20.0f;
