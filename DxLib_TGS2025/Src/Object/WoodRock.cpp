@@ -91,10 +91,13 @@ void WoodRockResourceInit(void)
 	wood.effect_image[2] = LoadGraph("Resource/images/reef_effect3.png");
 	wood.effect_image[3] = LoadGraph("Resource/images/reef_effect4.png");
 
-	rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment6-1.png");
-	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment6-2.png");
-	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment6-3.png");
-	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment6-4.png");
+	/*rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment7-1.png");
+	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment7-2.png");
+	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment7-3.png");
+	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment7-4.png");
+	rock.effect_image[4] = LoadGraph("Resource/images/rock_fragment7-5.png");*/
+	LoadDivGraph("Resource/images/Rock_FlagmentAnim.png", 5, 5, 1, 80, 80, rock.effect_image);   
+
 
 	wood.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
 	wood.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
@@ -741,7 +744,7 @@ void WoodEffect(int x, int y)
 void RockEffect(int x, int y)
 {
 	
-	if (rock.effect_num < 4)
+	if (rock.effect_num < 5)
 	{
 		rock.effect_count++;
 
