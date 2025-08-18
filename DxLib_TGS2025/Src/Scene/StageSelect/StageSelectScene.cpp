@@ -136,6 +136,11 @@ void StageSelectResourceInit(void)
 		//カーソルとボタンのSE
 		stg_sel.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 		stg_sel.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
+
+		stg_sel.car_up_img[0] = LoadGraph("Resource/images/car2_up.png");
+		stg_sel.car_up_img[1] = LoadGraph("Resource/images/car2_up2.png");
+		stg_sel.car_down_img[0] = LoadGraph("Resource/images/car2_down.png");
+		stg_sel.car_down_img[1] = LoadGraph("Resource/images/car2_down2.png");
 		break;
 	case 6:
 		//画像の取得
@@ -258,14 +263,18 @@ void StageSelectSceneDraw(void)
 
 	DrawRotaGraphF(635.0f, 420.0f, 0.78, 0.0, stg_sel.back_minimap, TRUE);
 	
+	//数字、枠の描画
+	NumTroutDraw();
+
 	//車描画
 	Draw_Select_Car();
 
-	//数字、枠、ボタンの描画
-	NumTroutDraw();
+	//Bで戻る画像の描画
+	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
 
 	fade.Draw();
 
+	//DrawFormatString(300, 300, GetColor(255, 0, 255), "%f\n%f\n%d\n%d\n", stg_sel.car_x,stg_sel.car_y, stg_sel.car_flag, stg_sel.move_fps);
 }
 
 //StageSelectを取得
@@ -462,9 +471,6 @@ void NumTroutDraw(void)
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車がとても速いから道繋ぎと資材集めを交互にやろう！ ");
 		break;
 	}
-
-	//Bで戻る画像の描画
-	DrawRotaGraphF(1170.0, 670.0, 0.8, 0.0, stg_sel.b_back, TRUE);
 	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
 }
 
@@ -730,16 +736,16 @@ void Move_Car(const Car*car)
 			switch (stg_sel.car_num)
 			{
 			case 0:
-				Set_Coordinate(car->image[3], car->move_image[3], 125.0f, -5.0f);//左上		
+				Set_Coordinate(stg_sel.car_down_img[0], stg_sel.car_down_img[1], 125.0f, -5.0f);//左上		
 				break;
 			case 1:
-				Set_Coordinate(car->image[3], car->move_image[3], 1142.0f, -5.0f);//右上
+				Set_Coordinate(stg_sel.car_down_img[0], stg_sel.car_down_img[1], 1142.0f, -5.0f);//右上
 				break;
 			case 2:
-				Set_Coordinate(car->image[2], car->move_image[2], 125.0f, 730.0f);//左下
+				Set_Coordinate(stg_sel.car_up_img[0], stg_sel.car_up_img[1], 125.0f, 730.0f);//左下
 				break;
 			case 3:
-				Set_Coordinate(car->image[2], car->move_image[2], 1142.0f, 730.0f);//右下
+				Set_Coordinate(stg_sel.car_up_img[0], stg_sel.car_up_img[1], 1142.0f, 730.0f);//右下
 				break;
 			default:
 				break;

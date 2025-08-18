@@ -26,6 +26,8 @@ struct StageSelect
 	float car_x;
 	float car_y;
 	int car_num;
+	int car_up_img[2];
+	int car_down_img[2];
 
 	Vector2D position;
 	int cursor_se;
