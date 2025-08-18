@@ -1062,7 +1062,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
 		TutorialCursor();
-		if (ingame.tutorial_log_num == 6 || ingame.menuanimationflag == true)
+		if ((ingame.tutorial_log_num == 6 || ingame.menuanimationflag == true)&& ingame.itemcoment_switch == true)
 		{
 			ItemTutorial();
 			
@@ -1607,6 +1607,7 @@ void WarnTutorial(const Car*car)
 	
 	DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.warntutorial, TRUE);
 	ingame.mitibiki_flag = true;
+	ingame.itemcoment_switch = false;
 }
 void TutorialReset(void)
 {
