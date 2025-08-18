@@ -74,6 +74,8 @@ struct Rock
 	int effect_num;
 	int effect_count;
 	int break_rock;
+	int add_anim_x[12][7];
+	int sway_anim[12][7];
 
 	int put_effect_image[7];
 	bool put_effect_flag[12][7];
@@ -107,6 +109,8 @@ void PutRockEffect(int x, int y);
 void PutWoodEffect(int x, int y);
 void WoodRockEffectDraw(void);
 void SwayWoodAnim(int x, int y);
+void SwayRockAnim(int x, int y);
+
 
 
 

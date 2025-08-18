@@ -207,7 +207,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200 + wood->add_anim_x[x][y], MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				break;
 			case 2://石
-					DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
+				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200 + rock->add_anim_x[x][y], MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
 				break;
 			case 3://ロックモグラ
 				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, mole->animation[x][y], TRUE);

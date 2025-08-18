@@ -664,6 +664,10 @@ void WoodRockHitInit(const CreateStage* stage)
 			wood.add_anim_x[i][j] = 0;
 			wood.sway_anim[i][j] = 0;
 
+			//岩の揺れるアニメーション変数の初期化
+			rock.sway_anim[i][j] = 0;
+			rock.add_anim_x[i][j] = 0;
+
 			//Hit数の初期化
 			if (stage->array[i][j] == 1)
 			{
@@ -754,11 +758,17 @@ void RockEffect(int x, int y)
 			rock.effect_count = 0;
 
 		}
+
+		SwayRockAnim(x,y);
+
+		
 	}
 	else
 	{
 		rock.effect_count = 0;
 		rock.effect_flag = false;
+		rock.sway_anim[x][y] = 0;
+		rock.add_anim_x[x][y] = 0;
 	}
 	
 	DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, rock.effect_image[rock.effect_num],TRUE);
@@ -889,6 +899,30 @@ void SwayWoodAnim(int x,int y)
 		break;
 	}
 	
+}
+
+//岩が揺れるアニメーション関数
+void SwayRockAnim(int x, int y)
+{
+	if (rock.add_anim_x[x][y] > 1)
+	{
+		rock.sway_anim[x][y] = 1;
+	}
+	else if (rock.add_anim_x[x][y] < -1)
+	{
+		rock.sway_anim[x][y] = 0;
+	}
+
+	switch (rock.sway_anim[x][y])
+	{
+	case 0:
+		rock.add_anim_x[x][y] += 1;
+		break;
+	case 1:
+		rock.add_anim_x[x][y] -= 1;
+		break;
+	}
+
 }
 
 
