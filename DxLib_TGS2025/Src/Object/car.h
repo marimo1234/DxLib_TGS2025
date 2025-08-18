@@ -35,6 +35,8 @@ struct Car
     int ivy_count;
     int ivy_num;
     int ivy_se;
+    int ivy_eff_img[7];
+    int ivy_eff_idx;
     
     //Boom
     int boom_right_animtion[7];

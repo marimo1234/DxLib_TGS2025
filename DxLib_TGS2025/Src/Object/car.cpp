@@ -69,6 +69,7 @@ void CarInit(void)
 	car.ivy_flag = false;//ツタのアニメーションフラグ
 	car.ivy_count = 0;//ツタのアニメーションカウント
 	car.ivy_num = 0;//ツタのアニメーションナンバー
+	car.ivy_eff_idx = 0;
 
 	car.lake_flag = false;//湖の中に落ちるアニメーションフラグ
 	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
@@ -146,13 +147,21 @@ void CarResourceInit(void)
 	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
 	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
 
+	
+	car.ivy_eff_img[1] = LoadGraph("Resource/images/put_rock_0.png");
+	car.ivy_eff_img[2] = LoadGraph("Resource/images/put_rock_1.png");
+	car.ivy_eff_img[3] = LoadGraph("Resource/images/put_rock_2.png");
+	car.ivy_eff_img[4] = LoadGraph("Resource/images/put_rock_3.png");
+	car.ivy_eff_img[5] = LoadGraph("Resource/images/put_rock_4.png");
+	car.ivy_eff_img[6] = LoadGraph("Resource/images/put_rock_5.png");
+
 	// GameOverの食虫植物の画像
 	LoadDivGraph("Resource/images/PlantAnim_L.png", 19, 4, 5, 400, 400, car.ivy_anim_left);    // 左
 	LoadDivGraph("Resource/images/PlantAnim_R.png", 19, 4, 5, 400, 400, car.ivy_anim_right);   // 右
 	LoadDivGraph("Resource/images/PlantAnim_U.png", 19, 4, 5, 400, 400, car.ivy_anim_up);      // 上
 	LoadDivGraph("Resource/images/PlantAnim_D.png", 19, 4, 5, 400, 400, car.ivy_anim_down);    // 下
-	
-	car.ivy_se= LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
+
+	car.ivy_se = LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
 	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
@@ -213,7 +222,7 @@ void CarResourceInit(void)
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
 	car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
 	car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
-	car.lake_se= LoadSoundMem("Resource/Sounds/water1.mp3");
+	car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");
 
 	LoadDivGraph("Resource/images/all_jet.png", 9, 9, 1, 200, 200, car.jet_image);
 	car.jet_image2[0] = LoadGraph("Resource/images/speed_up1.png");
@@ -221,7 +230,7 @@ void CarResourceInit(void)
 	car.jet_se = LoadSoundMem("Resource/Sounds/jet.mp3");
 	ChangeVolumeSoundMem(100, car.jet_se);
 
-	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
+	gameover.circle = LoadGraph("Resource/images/car_circle_black.png");
 	groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
 }
 
@@ -365,6 +374,7 @@ void CarReset(void)
 	car.ivy_flag = false;
 	car.ivy_count = 0;
 	car.ivy_num = 0;
+	car.ivy_eff_idx = 0;
 
 	car.lake_flag = false;//湖の中に落ちるアニメーションフラグ
 	car.lake_count = 0;//湖の中に落ちるアニメーションカウント
@@ -955,6 +965,11 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 car.ivy_num++;
 		 }
 
+		 if (car.ivy_count > 20 && car.ivy_count % 7 == 0 && car.ivy_eff_idx < 7)
+		 {
+			 car.ivy_eff_idx++;
+		 }
+
 		 if (car.start == false)
 		 {
 			 car.ivy_flag = false;
@@ -973,6 +988,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 case eUp:
 			 DrawRotaGraphF(carx + 18, cary - 50, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx + 40, cary - 75, 1.8, 0.0, car.ivy_eff_img[car.ivy_eff_idx], TRUE);
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx + 18, cary - 55, 0.4, 0.0, car.ivy_anim_up[0], TRUE);
@@ -981,11 +997,12 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 case eDown:
 			 DrawRotaGraphF(carx - 18, cary + 50, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx - 18, cary + 30, 0.4, 0.0, car.ivy_anim_down[car.ivy_num], TRUE);
-			 
+			 DrawRotaGraphF(carx - 40, cary + 35, 1.8, 0.0, car.ivy_eff_img[car.ivy_eff_idx], TRUE);
 			 break;
 		 case eRight:
 			 DrawRotaGraphF(carx + 22, cary - 25, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx + 50, cary - 44, 1.8, 0.0, car.ivy_eff_img[car.ivy_eff_idx], TRUE);
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx + 14, cary - 44, 0.4, 0.0, car.ivy_anim_right[0], TRUE);
@@ -994,6 +1011,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 case eLeft:
 			 DrawRotaGraphF(carx - 22, cary - 25, 1.7, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[car.ivy_num], TRUE);
+			 DrawRotaGraphF(carx - 50, cary - 44, 1.8, 0.0, car.ivy_eff_img[car.ivy_eff_idx], TRUE);
 			 if (car.ivy_num < 18)
 			 {
 				 DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_anim_left[0], TRUE);
