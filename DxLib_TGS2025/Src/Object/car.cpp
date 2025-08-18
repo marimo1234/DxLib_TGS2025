@@ -10,6 +10,8 @@
 
 //1マスの大きさ
 #define CAR_TROUT_LNEGTH (80.0f)
+#define JET_START	(100)
+#define JET_DRAW_START	(JET_START-30)
 
 int overroad;
 int groundreef_botom;
@@ -216,6 +218,7 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/all_jet.png", 9, 9, 1, 200, 200, car.jet_image);
 	car.jet_image2[0] = LoadGraph("Resource/images/speed_up1.png");
 	car.jet_image2[1] = LoadGraph("Resource/images/speed_up2.png");
+	car.jet_se = LoadSoundMem("Resource/Sounds/jet.mp3");
 
 	gameover.circle= LoadGraph("Resource/images/car_circle_black.png");
 	groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
@@ -369,6 +372,11 @@ void CarReset(void)
 	car.boom_flag = false;//爆発するアニメーションフラグ
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
+
+	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
+	car.jet_angle = 0.0f;	// ジェット画像の角度
+	car.jet_num = 0;		// 画像番号
+	car.jet_num2 = 0;		// 画像番号
 
 	car.smo_cnt = 0;
 	car.smo_idx = 0;
@@ -817,7 +825,7 @@ void CarGoalCheck(const CreateStage* stage)
 		stage->array[car.next_x[car.road_count]][car.next_y[car.road_count] + 1] == 7 && car.next_y[car.road_count] != 6)
 	{
 		car.goal_count++;
-		if (car.goal_count > 150)
+		if (car.goal_count > JET_START + 120)
 		{
 			//車の速度を上げる
 			car.velocity.x = 5.0f;
@@ -1167,7 +1175,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.goal_flag == true)
 	 {
-		 if(car.goal_count>=150)
+		 if(car.goal_count>= JET_START + 120)
 		 switch (direction)
 		 {
 		 case eUp:
@@ -1228,31 +1236,31 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 car.jet_angle = (3.14 / 180) * car.goal_count;
 	 }
 
-	 if (car.goal_count < 30)
+	 if (car.goal_count < JET_START)
 	 {
 		 car.jet_num = 0;
 	 }
-	 else if (car.goal_count < 60)
+	 else if (car.goal_count < JET_START+30)
 	 {
 		 car.jet_num = 1;
 	 }
-	 else if (car.goal_count < 150)
+	 else if (car.goal_count < JET_START+120)
 	 {
 		 car.jet_num = 2;
 	 }
-	 else if (car.goal_count < 170)
+	 else if (car.goal_count < JET_START+140)
 	 {
 		 car.jet_num = 4;
 	 }
-	 else if (car.goal_count < 180)
+	 else if (car.goal_count < JET_START+150)
 	 {
 		 car.jet_num = 6;
 	 }
-	 else if (car.goal_count < 190)
+	 else if (car.goal_count < JET_START+160)
 	 {
 		 car.jet_num = 7;
 	 }
-	 else if (car.goal_count < 200)
+	 else if (car.goal_count < JET_START+180)
 	 {
 		 car.jet_num = 8;
 	 }
@@ -1266,41 +1274,41 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (direction)
 		 {
 		 case eUp:
-			 if (car.goal_count < 150)
+			 if (car.goal_count < JET_START+120&&car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
 			 }
-			 else if (car.goal_count < 200)
+			 else if (car.goal_count < JET_START + 180 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x, y + 70.0f, 1.0, -1.57, car.jet_image[car.jet_num], TRUE);
 			 }
 			 break;
 		 case eDown:
-			 if (car.goal_count < 150)
+			 if (car.goal_count < JET_START + 120 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x, y - 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
 			 }
-			 else if (car.goal_count < 200)
+			 else if (car.goal_count < JET_START + 180 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x, y - 70.0f, 1.0, 1.57, car.jet_image[car.jet_num], TRUE);
 			 }
 			 break;
 		 case eRight:
-			 if (car.goal_count < 150)
+			 if (car.goal_count < JET_START + 120 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x - 50.0f, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
 			 }
-			 else if (car.goal_count < 200)
+			 else if (car.goal_count < JET_START + 180 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x - 100.0f, y + 10.0f, 1.0, 0.0, car.jet_image[car.jet_num], TRUE);
 			 }
 			 break;
 		 case eLeft:
-			 if (car.goal_count < 150)
+			 if (car.goal_count < JET_START + 120 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x + 50.0f, y + 10.0f, 1.0, car.jet_angle, car.jet_image[car.jet_num], TRUE);
 			 }
-			 else if (car.goal_count < 200)
+			 else if (car.goal_count < JET_START + 180 && car.goal_count>JET_DRAW_START)
 			 {
 				 DrawRotaGraph(x + 100.0f, y + 10.0f, 1.0, 3.14, car.jet_image[car.jet_num], TRUE);
 			 }

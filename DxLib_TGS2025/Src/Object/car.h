@@ -97,6 +97,7 @@ struct Car
     float jet_angle;
     int jet_num2;
     int jet_image2[2];
+    int jet_se;
 
     bool mitibiki_flag;
 
