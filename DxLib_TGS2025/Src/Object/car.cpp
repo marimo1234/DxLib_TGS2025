@@ -299,7 +299,7 @@ void CarDraw(void)
 	CarBoomDraw(car.position.x, car.position.y);
 	CarSmokeDraw(car.position.x, car.position.y);
 
-	DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);
+	//DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);
 	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
