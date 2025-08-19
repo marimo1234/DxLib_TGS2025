@@ -394,6 +394,7 @@ void CarReset(void)
 	car.jet_angle = 0.0f;	// ジェット画像の角度
 	car.jet_num = 0;		// 画像番号
 	car.jet_num2 = 0;		// 画像番号
+	ChangeVolumeSoundMem(100, car.jet_se);		//音量リセット
 
 	car.smo_cnt = 0;
 	car.smo_idx = 0;
