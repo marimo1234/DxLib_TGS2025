@@ -549,7 +549,7 @@ void GetStageNumber(const SS_Num* ss_num)
 
 void StartTextDraw(void)
 {
-	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX)
+	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX && ingame.stage_num != eOne)
 	{
 		DrawRotaGraphF(640.0f, 100.0f, 1.0, 0.0, ingame.start_img, TRUE);
 	}
