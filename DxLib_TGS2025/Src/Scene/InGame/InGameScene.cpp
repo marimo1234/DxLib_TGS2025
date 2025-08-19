@@ -846,6 +846,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -860,9 +861,10 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					if (ingame.warntutorial_flag == true && car->warntutorial_car_flag == true)
 					{
 						WarnTutorial(GetCar());
-					    ingame.warntutorial_flag_public = true;
+					    
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -880,6 +882,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -897,6 +900,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::eHold)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -914,6 +918,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::eHold)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -931,6 +936,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -948,6 +954,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -966,6 +973,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -984,6 +992,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -1002,6 +1011,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -1020,6 +1030,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -1038,6 +1049,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 						ingame.warntutorial_flag_public = true;
 						if (ingame.warntutorial_flag == true && pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 						{
+							ingame.itemcoment_switch = true;
 							ingame.mitibiki_flag = false;
 							ingame.warntutorial_flag = false;
 							ingame.warntutorial_flag_public = false;
@@ -1630,5 +1642,6 @@ void TutorialReset(void)
 		ingame.itembaraxcount = 1;
 		ingame.itembarwoodroadcount = 1;
 		ingame.warntutorial_flag = true;
+		ingame.itemcoment_switch = true;
 	}
 }
