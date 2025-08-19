@@ -64,7 +64,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		}
 		// ここで1つずつ初期化を進める（リソース系含む）
 		SceneManagerInitialize();
-		//DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", fps);
+		//
+		// 
+		// String(100, 100, GetColor(255, 255, 255), "%d", fps);
 		ScreenFlip();
 	}
 
