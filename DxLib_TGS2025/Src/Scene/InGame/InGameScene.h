@@ -50,6 +50,8 @@ struct InGame
 	int cnt;
 	int num_img[6];
 	int num_idx;
+	int start_img;
+	int start_cnt;
 
 	int tutorial_log;
 	int tutorial_log_num;
@@ -157,6 +159,9 @@ void Stop_InGameBgm(void);
 void InGameStartCount(void);
 //カウントダウンアニメーション
 void InGameCountAnim(void);
+//カウントダウン後のスタートテキストの描画
+void StartTextDraw(void);
+
 
 
 //void StageChange(const Goal* goal);

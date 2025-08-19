@@ -18,6 +18,7 @@
 #define D_SCROOL_SPEED		(200.0f)
 #define COUNT_NUM_INDEX		(2)       //スタートまでのカウントダウンの初期値（3から始まる）
 #define COUNT_MAX		(180)  //カウントダウンの秒数
+#define START_COUNT_MAX		(80)  //カウントダウンの秒数
 
 //確認用変数　後に消します
 int atr;
@@ -83,6 +84,7 @@ void InGameSceneInit(void)
 
 	ingame.num_idx = COUNT_NUM_INDEX;   //カウントダウンインデックス
 	ingame.cnt = 0;   //カウントダウン用変数
+	ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
 
 	ingame.mitibiki_flag = false;
 	ingame.tutorial_achievements = 1;
@@ -145,6 +147,8 @@ void InGameResourceInit(void)
 		ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
 		//数字の画像
 		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, ingame.num_img);
+		//カウントダウンの後のスタートの文字画像
+		ingame.start_img = LoadGraph("Resource/images/GameStart.png");
 		//メニューのマニュアルで使う操作説明画像
 		ingame.menu_manual_image = LoadGraph("Resource/images/manual_menu.png");
 		//ミチビキ君
@@ -277,7 +281,7 @@ eSceneType InGameSceneUpdate()
 	TutorialUpdate();
 	/////////////////////
 
-	InGameMenuUpdate(GetGoal(), GetGameOver(),GetCar());
+	InGameMenuUpdate(GetGoal(), GetGameOver(), GetCar());
 
 	NextSelectFlag(GetGoal());
 
@@ -288,6 +292,12 @@ eSceneType InGameSceneUpdate()
 	TutorialCursor();
 
 	TutorialReset();
+
+	//カウントダウンの後のスタートを描画する秒数
+	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX)
+	{
+		ingame.start_cnt++;
+	}
 	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.mitibiki_flag == false)
@@ -308,6 +318,7 @@ eSceneType InGameSceneUpdate()
 			ingame.menu_num = 0;
 			ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
 			ingame.cnt = 0;        //カウントダウンリセット
+			ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
 			ingame.start = false;
 			TutorialReset();
 			ingame.menu_flag = false;
@@ -350,6 +361,7 @@ eSceneType InGameSceneUpdate()
 	{
 		ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
 		ingame.cnt = 0;        //カウントダウンリセット
+		ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
 		Play_Sound_Ingame(sound.decision, 100);
 		ingame.goalselect_flag = true;
 		ingame.start = false;
@@ -391,10 +403,10 @@ void InGameSceneDraw(void)
 	//木岩の描画
 	WoodRockDraw();
 
-	
+
 	//車の描画
 	CarDraw();
-	
+
 	//ツールの描画
 	ToolDraw();
 
@@ -403,7 +415,7 @@ void InGameSceneDraw(void)
 
 	//カーソルの描画
 	CursorDraw(Get_Tool());
-	
+
 	//木岩のエフェクト描画
 	WoodRockEffectDraw();
 
@@ -437,7 +449,8 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
 		Play_Sound_Ingame(sound.count, 150);
 	}
-
+	//カウントダウン後のスタートテキストの描画
+	StartTextDraw();
 	//Startボタンが押されたときにだすセレクト画面
 	MenuDraw();
 
@@ -451,7 +464,7 @@ void InGameSceneDraw(void)
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
-	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.cnt);*/
+	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.start_cnt);*/
 }
 
 const InGame* GetInGame(void)
@@ -534,6 +547,13 @@ void GetStageNumber(const SS_Num* ss_num)
 	ingame.stage_num = ss_num->stg_num;
 }
 
+void StartTextDraw(void)
+{
+	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX)
+	{
+		DrawRotaGraphF(640.0f, 100.0f, 1.0, 0.0, ingame.start_img, TRUE);
+	}
+}
 //インゲームsound初期化
 void PlayBgm(void)
 {
@@ -619,6 +639,7 @@ void GameOverReset(const GameOver* gameover, const Car* car)
 	{
 		ingame.num_idx = COUNT_NUM_INDEX;    //カウントダウン画像番号のリセット
 		ingame.cnt = 0;        //カウントダウンリセット
+		ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
 		ingame.start = false;
 	}
 	if (car->direction == eStop)

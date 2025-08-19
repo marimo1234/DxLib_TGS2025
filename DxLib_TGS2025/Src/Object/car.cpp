@@ -1422,8 +1422,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eOne:
 		car.current_x = 1;//ステージ①の初期位置
 		car.current_y = 4;
-		car.speed.x = 0.15f;
-		car.speed.y = 0.15f;
+		car.speed.x = 0.05f;
+		car.speed.y = 0.05f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 4;
 		car.warn_range = 20.0f;
@@ -1449,8 +1449,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFour:
 		car.current_x = 0;//ステージ④の初期位置
 		car.current_y = 0;
-		car.speed.x = 0.4f;
-		car.speed.y = 0.4f;
+		car.speed.x = 0.2f;
+		car.speed.y = 0.2f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 0;
 		car.warn_range = 40.0f;
