@@ -447,7 +447,7 @@ void InGameSceneDraw(void)
 	if (ingame.start == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
 		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
-		Play_Sound_Ingame(sound.count, 150);
+		/*Play_Sound_Ingame(sound.count, 150);*/
 	}
 	//カウントダウン後のスタートテキストの描画
 	StartTextDraw();
