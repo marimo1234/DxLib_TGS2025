@@ -212,11 +212,17 @@ void CarResourceInit(void)
 	car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
 
 
-	car.smo_img[0] = LoadGraph("Resource/images/car_smoke0.png");
-	car.smo_img[1] = LoadGraph("Resource/images/car_smoke1.png");
-	car.smo_img[2] = LoadGraph("Resource/images/car_smoke2.png");
-	car.smo_img[3] = LoadGraph("Resource/images/car_smoke3.png");
-	car.smo_img[4] = LoadGraph("Resource/images/car_smoke4.png");
+	car.smo_img_R[0] = LoadGraph("Resource/images/car_smoke0.png");
+	car.smo_img_R[1] = LoadGraph("Resource/images/car_smoke_R1.png");
+	car.smo_img_R[2] = LoadGraph("Resource/images/car_smoke_R2.png");
+	car.smo_img_R[3] = LoadGraph("Resource/images/car_smoke_R3.png");
+	car.smo_img_R[4] = LoadGraph("Resource/images/car_smoke_R4.png");
+
+	car.smo_img_L[0] = LoadGraph("Resource/images/car_smoke0.png");
+	car.smo_img_L[1] = LoadGraph("Resource/images/car_smoke_L1.png");
+	car.smo_img_L[2] = LoadGraph("Resource/images/car_smoke_L2.png");
+	car.smo_img_L[3] = LoadGraph("Resource/images/car_smoke_L3.png");
+	car.smo_img_L[4] = LoadGraph("Resource/images/car_smoke_L4.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -1207,7 +1213,24 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.goal_flag == false)
 	 {
-		 DrawRotaGraphF(carx - 80, cary, 1.0, 0.0, car.smo_img[car.smo_idx], TRUE);
+		 switch (car.direction)
+		 {
+		 case eRight:
+			 DrawRotaGraphF(carx - 80, cary, 1.0, 0.0, car.smo_img_R[car.smo_idx], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx + 80, cary, 1.0, 0.0, car.smo_img_L[car.smo_idx], TRUE);
+			 break;
+		 case eUp:
+			
+			 break;
+		 case eDown:
+			
+			 break;
+		 default:
+			 break;
+		 }
+		 
 	 }
  }
 
