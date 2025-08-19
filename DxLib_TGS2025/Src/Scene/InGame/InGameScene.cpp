@@ -431,9 +431,11 @@ void InGameSceneDraw(void)
 		DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, ingame.space, TRUE);*/
 	}
 
+	// カウントダウン描画
 	if (ingame.start == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
 		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
+		Play_Sound_Ingame(sound.count, 150);
 	}
 
 	//Startボタンが押されたときにだすセレクト画面
@@ -541,6 +543,7 @@ void PlayBgm(void)
 	sound.pose = LoadSoundMem("Resource/Sounds/pose.mp3");
 	sound.select_move = LoadSoundMem("Resource/Sounds/select_move.mp3");
 	sound.decision = LoadSoundMem("Resource/Sounds/cursor_move_se.mp3");
+	sound.count = LoadSoundMem("Resource/Sounds/count.mp3");
 }
 
 //Goalした後のセレクト画面を出すフラグ

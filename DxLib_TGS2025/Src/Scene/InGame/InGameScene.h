@@ -132,7 +132,7 @@ struct InGame_Sound
 	int pose;
 	int select_move;
 	int decision;
-
+	int count;
 };
 
 void InGameSceneInit(void);
