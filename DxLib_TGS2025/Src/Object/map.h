@@ -58,6 +58,7 @@ void MapUpdate(void);
 void MapDraw(void);
 void MapResourceInit(void);
 //void StageLoad(void);
+void SnowBallMove(void);
 
 void MapValueInit(void);
 void MapReset(void);

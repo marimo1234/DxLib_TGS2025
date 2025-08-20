@@ -232,6 +232,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				break;
 			case 9://山
 				DrawRotaGraphF(length * x + 200, length * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 85, 0.05, 0.0, stage.sb_img, TRUE);
 				break;
 			case 10://ウッドモグラ
 				DrawRotaGraphF(length * x + 200, length * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
@@ -260,6 +261,12 @@ void Stage_Start(const InGame* ingame)
 
 	stage.menu_flag = ingame->menu_flag;
 	stage.mitibiki_flag= ingame->mitibiki_flag;
+}
+
+//スノーボールのムーブ
+void SnowBallMove(void)
+{
+
 }
 
 
