@@ -219,6 +219,14 @@ void CarResourceInit(void)
 	car.boom_up_animtion[5] = LoadGraph("Resource/images/car2_fire_up1.png");
 	car.boom_up_animtion[6] = LoadGraph("Resource/images/car2_fire_up2.png");
 
+	car.boom_down_animtion[0] = LoadGraph("Resource/images/car2_boom_down_base.png");
+	car.boom_down_animtion[1] = LoadGraph("Resource/images/car2_boom_down0.png");
+	car.boom_down_animtion[2] = LoadGraph("Resource/images/car2_boom_down1.png");
+	car.boom_down_animtion[3] = LoadGraph("Resource/images/car2_boom_down2.png");
+	car.boom_down_animtion[4] = LoadGraph("Resource/images/car2_fire_down0.png");
+	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
+	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
+
 	car.smo_img_R[0] = LoadGraph("Resource/images/car_smoke0.png");
 	car.smo_img_R[1] = LoadGraph("Resource/images/car_smoke_R1.png");
 	car.smo_img_R[2] = LoadGraph("Resource/images/car_smoke_R2.png");
@@ -1447,8 +1455,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eThree:
 		car.current_x = 1;//ステージ③の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.1f;
-		car.speed.y = 0.1f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 20.0f;
