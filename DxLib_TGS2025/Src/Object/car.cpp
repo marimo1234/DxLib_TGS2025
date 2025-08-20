@@ -1168,11 +1168,11 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 {
 		 case eRight:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.12, 0.0, car.boom_right_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.111, 0.0, car.boom_right_animtion[car.boom_num], TRUE);
 			 break;
 		 case eLeft:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_left_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.113, 0.0, car.boom_left_animtion[car.boom_num], TRUE);
 			 break;
 		 case eUp:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
@@ -1449,8 +1449,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFour:
 		car.current_x = 0;//ステージ④の初期位置
 		car.current_y = 0;
-		car.speed.x = 0.2f;
-		car.speed.y = 0.2f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 0;
 		car.warn_range = 40.0f;
