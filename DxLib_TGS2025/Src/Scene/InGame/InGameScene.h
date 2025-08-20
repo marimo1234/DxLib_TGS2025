@@ -134,7 +134,8 @@ struct InGame_Sound
 	int pose;
 	int select_move;
 	int decision;
-	int count;
+	int count;	// カウントのサウンドハンドル
+	int stop_p;	// カウントの音を途中で止めた時の位置
 };
 
 void InGameSceneInit(void);

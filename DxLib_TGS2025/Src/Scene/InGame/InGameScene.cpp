@@ -85,6 +85,7 @@ void InGameSceneInit(void)
 	ingame.num_idx = COUNT_NUM_INDEX;   //カウントダウンインデックス
 	ingame.cnt = 0;   //カウントダウン用変数
 	ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
+	sound.stop_p = 0;
 
 	ingame.mitibiki_flag = false;
 	ingame.tutorial_achievements = 1;
@@ -323,6 +324,7 @@ eSceneType InGameSceneUpdate()
 			TutorialReset();
 			ingame.menu_flag = false;
 			ingame.tutorial_log_num = 2;
+			sound.stop_p = 0;		// カウントダウンのサウンドのストップ位置リセット
 			Stop_InGameBgm();
 		}
 		if (ingame.menu_num == 2 &&
@@ -447,7 +449,12 @@ void InGameSceneDraw(void)
 	if (ingame.start == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
 		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
-		/*Play_Sound_Ingame(sound.count, 150);*/
+		if (CheckSoundMem(sound.count) == 0)
+		{
+			SetCurrentPositionSoundMem(sound.stop_p, sound.count);
+			PlaySoundMem(sound.count, DX_PLAYTYPE_BACK, FALSE);
+			ChangeVolumeSoundMem(150, sound.count);
+		}
 	}
 	//カウントダウン後のスタートテキストの描画
 	StartTextDraw();
@@ -729,6 +736,8 @@ void InGameMenuUpdate(const Goal* goal, const GameOver* gameover,const Car*car)
 		&& car->direction != eStop && car->goal_flag == false && pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame2(sound.select_move, 100);
+		sound.stop_p = GetCurrentPositionSoundMem(sound.count);
+		StopSoundMem(sound.count);
 		ingame.menu_flag = true;
 	}
 
