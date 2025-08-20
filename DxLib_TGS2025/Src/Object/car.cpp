@@ -211,6 +211,13 @@ void CarResourceInit(void)
 	car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left1.png");
 	car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
 
+	car.boom_up_animtion[0] = LoadGraph("Resource/images/car2_up_base.png");
+	car.boom_up_animtion[1] = LoadGraph("Resource/images/car2_boom_up0.png");
+	car.boom_up_animtion[2] = LoadGraph("Resource/images/car2_boom_up1.png");
+	car.boom_up_animtion[3] = LoadGraph("Resource/images/car2_boom_up2.png");
+	car.boom_up_animtion[4] = LoadGraph("Resource/images/car2_fire_up0.png");
+	car.boom_up_animtion[5] = LoadGraph("Resource/images/car2_fire_up1.png");
+	car.boom_up_animtion[6] = LoadGraph("Resource/images/car2_fire_up2.png");
 
 	car.smo_img_R[0] = LoadGraph("Resource/images/car_smoke0.png");
 	car.smo_img_R[1] = LoadGraph("Resource/images/car_smoke_R1.png");
@@ -1176,7 +1183,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 case eUp:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_up_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.128, 0.0, car.boom_up_animtion[car.boom_num], TRUE);
 			 break;
 		 case eDown:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
@@ -1449,8 +1456,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFour:
 		car.current_x = 0;//ステージ④の初期位置
 		car.current_y = 0;
-		car.speed.x = 0.4f;
-		car.speed.y = 0.4f;
+		car.speed.x = 0.2f;
+		car.speed.y = 0.2f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 0;
 		car.warn_range = 40.0f;
