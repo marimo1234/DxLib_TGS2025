@@ -459,16 +459,16 @@ void NumTroutDraw(void)
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車に追いつかれないように気を付けて資材を集めよう！ ");
 		break;
 	case 3:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "陸と水辺が交互のステージ ");
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水陸交互のステージ ");
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "作る道の切り替えが重要！混乱しないで道を繋げよう！ ");
 		break;
 	case 4:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水の多いステージ ");
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水辺のステージ ");
 		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車が早くなってるからミスをしないよう気を付けよう！ ");
 		break;
 	case 5:
 		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "最難関ステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車がとても速いから道繋ぎと資材集めを交互にやろう！ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車が最速で走るから、道繋ぎと資材集めを交互にやろう！ ");
 		break;
 	}
 	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
