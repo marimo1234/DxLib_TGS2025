@@ -24,7 +24,7 @@ void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y);
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
-	const Lake* lake, const Goal* goal);
+	const Lake* lake, const Goal* goal,int length);
 void MolePutRock(const Mole* mole, int x, int y);
 void MolePutWood(const Mole* mole, int x, int y);
 void GetStageNum(const InGame* ingame);
@@ -59,7 +59,10 @@ void MapResourceInit(void)
 	stage.trout_image = LoadGraph("Resource/images/trout.png");
 	stage.no_admittance = LoadGraph("Resource/images/No_admittance.png");
 	ikl = LoadGraph("Resource/images/Back_Wood.png");
+	//　氷山の画像
 	stage.mountain_image = LoadGraph("Resource/images/mountain.png");
+	//　スノーボールの画像
+	stage.sb_img = LoadGraph("Resource/images/snowball.png");
 }
 //更新
 void MapUpdate(void)
@@ -104,7 +107,7 @@ void MapDraw(void)
 	//マスの描画
 	MapTroutDraw(GetInGame());
 	//マップ作成
-	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal());
+	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal(), MAP_TROUT_LENGTH);
 
 	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
 	
@@ -195,7 +198,7 @@ void StageLoad(void)
 
 //マップ作成
 void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
-	const Lake* lake, const Goal* goal)
+	const Lake* lake, const Goal* goal, int length)
 {
 	for (int y = 0; y < 7; y++)
 	{
@@ -204,34 +207,34 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 			switch (stage.array[x][y])
 			{
 			case 1://木
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200 + wood->add_anim_x[x][y], MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200 + wood->add_anim_x[x][y], length * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				break;
 			case 2://石
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200 + rock->add_anim_x[x][y], MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200 + rock->add_anim_x[x][y], length * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
 				break;
 			case 3://ロックモグラ
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, mole->animation[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, mole->animation[x][y], TRUE);
 				break;
 			case 4://道
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
 				break;
 			case 5://橋
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, tool->road_img_array[x][y], TRUE);
 				break;
 			case 6://湖
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, lake->image, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, lake->image, TRUE);
 				break;
 			case 7://ゴール
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 0.1, 0.0, goal->flag_image, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 0.1, 0.0, goal->flag_image, TRUE);
 				break;
 			case 8://動けないマス
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 120, 1.0, 0.0, stage.no_admittance, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, stage.no_admittance, TRUE);
 				break;
 			case 9://山
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
 				break;
 			case 10://ウッドモグラ
-				DrawRotaGraphF(MAP_TROUT_LENGTH * x + 200, MAP_TROUT_LENGTH * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
 				break;
 			}
 

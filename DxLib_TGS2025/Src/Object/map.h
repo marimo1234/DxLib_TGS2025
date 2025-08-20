@@ -18,6 +18,7 @@ struct CreateStage
 
 	int trout_image;
 	int mountain_image;		//崖画像
+	int sb_img;        //スノーボール画像
 	int no_admittance;
 	int wood_x[84];
 	int wood_y[84];
