@@ -54,12 +54,12 @@ struct CreateStage
 struct SnowBall
 {
 	int img;        //スノーボール画像
-	float vec_x;    
-	float vec_y;
-	float add_x;
-	float add_y;
+	float vec_x[10];    
+	float vec_y[10];
+	float add_x[10];
+	float add_y[10];
 	int cnt;
-	int dir;
+	int dir[10];
 };
 
 void MapInit(void);
