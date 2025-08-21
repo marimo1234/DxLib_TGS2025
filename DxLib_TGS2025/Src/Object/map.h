@@ -18,7 +18,6 @@ struct CreateStage
 
 	int trout_image;
 	int mountain_image;		//崖画像
-	int sb_img;        //スノーボール画像
 	int no_admittance;
 	int wood_x[84];
 	int wood_y[84];
@@ -52,6 +51,16 @@ struct CreateStage
 	
 };
 
+struct SnowBall
+{
+	int img;        //スノーボール画像
+	float vec_x;    
+	float vec_y;
+	float add_x;
+	float add_y;
+	int cnt;
+	int dir;
+};
 
 void MapInit(void);
 void MapUpdate(void);

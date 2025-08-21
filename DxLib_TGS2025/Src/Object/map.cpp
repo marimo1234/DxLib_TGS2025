@@ -5,12 +5,14 @@
 #include "../Object/Tool.h"
 #include "../Object/Goal.h"
 #include "../Object/Cursor.h"
+#include "../Object/Car.h"
 #include "../Scene/InGame/InGameScene.h"
 
 #include <math.h>
 #define MAP_TROUT_LENGTH (80)
 
 CreateStage stage;
+SnowBall snow;
 int ground;
 int groundreef;
 int groundreef_top;
@@ -62,14 +64,14 @@ void MapResourceInit(void)
 	//　氷山の画像
 	stage.mountain_image = LoadGraph("Resource/images/mountain.png");
 	//　スノーボールの画像
-	stage.sb_img = LoadGraph("Resource/images/snowball.png");
+	snow.img = LoadGraph("Resource/images/snowball.png");
 }
 //更新
 void MapUpdate(void)
 {
 	//ステージ処理開始
 	Stage_Start(GetInGame());
-	
+	SnowBallMove();
 
 	if (stage.start == true && stage.menu_flag == false&& stage.mitibiki_flag==false)
 	{
@@ -109,7 +111,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal(), MAP_TROUT_LENGTH);
 
-	//DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.array[6][5]);
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", snow.dir);
 	
 	//csvの中身を見るString
 	/*for (int j = 0; j < 7; j++) 
@@ -232,7 +234,7 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				break;
 			case 9://山
 				DrawRotaGraphF(length * x + 200, length * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
-				DrawRotaGraphF(length * x + 200, length * y + 85, 0.05, 0.0, stage.sb_img, TRUE);
+				DrawRotaGraphF(length * x + 200, length * y + 85 + snow.add_y, 0.05, 0.0, snow.img, TRUE);
 				break;
 			case 10://ウッドモグラ
 				DrawRotaGraphF(length * x + 200, length * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
@@ -266,7 +268,16 @@ void Stage_Start(const InGame* ingame)
 //スノーボールのムーブ
 void SnowBallMove(void)
 {
+	snow.cnt++;
 
+	if (snow.cnt > 60)
+	{
+		//eRight(2)だから+2
+		snow.dir = GetRand(1) + 2;
+		snow.cnt = 0;
+	}
+	snow.vec_y = 0.5f;
+	snow.add_y += snow.vec_y;
 }
 
 
@@ -394,6 +405,14 @@ void MapValueInit(void)
 	int l = 0;      //ゴールの画像  
 	int m = 0;      //動けないマスの画像
 	stage.woodmole_count = 0;    //ウッドモグラ
+	
+	//SnowBall変数
+	snow.add_x = 0.0f;
+	snow.add_y = 0.0f;
+	snow.vec_x = 0.0f;
+	snow.vec_y = 0.0f;
+	snow.cnt = 0;
+	snow.dir = eRight;
 
 	for (int y = 0; y < 7; y++)
 	{

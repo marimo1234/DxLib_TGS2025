@@ -3,7 +3,7 @@
 
 #include "../Utility/Geometry.h"
 
-enum CarDirection
+enum Direction
 {
     eUp,
     eDown,
