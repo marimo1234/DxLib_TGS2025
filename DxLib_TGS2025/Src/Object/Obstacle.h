@@ -32,6 +32,7 @@ struct Mole
 	int image[4];
 	int rock1_image[4];
 	int rock2_image[4];
+	int rock3_image[4];
 	int image_num[12][7];
 	int animation[12][7];
 	int image_count;

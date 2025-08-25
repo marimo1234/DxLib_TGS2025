@@ -60,7 +60,7 @@ void ObstacleManagerResourceInit(void)
 	LoadDivGraph("Resource/images/mole_animation.png", 4, 4, 1, 80, 80, mole.image);
 	LoadDivGraph("Resource/images/mole_animation1.png", 4, 4, 1, 80, 80, mole.rock1_image);
 	LoadDivGraph("Resource/images/mole_animation2.png", 4, 4, 1, 80, 80, mole.rock2_image);
-	
+	LoadDivGraph("Resource/images/mole_animation3.png", 4, 4, 1, 80, 80, mole.rock3_image);
 	//ウッドモグラ
 	LoadDivGraph("Resource/images/woodmole_animation0.png", 4, 4, 1, 80, 80, mole.wood_image);
 
@@ -150,7 +150,7 @@ void MoleRandomDirection(const CreateStage* stage)
 	mole.wood_image_count++;
 
 	//　ランダム方向に向く(ロックモグラ）
-	if (mole.image_count == 120)
+	if (mole.image_count == 60)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
@@ -176,13 +176,13 @@ void MoleRandomDirection(const CreateStage* stage)
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 	}
-	// アニメーションを戻して岩を置く
+	//　岩を置くアニメーション
 	if (mole.image_count / 60 > 4)
 	{
 		MoleRockFlagReset();
 		for (int i = 0; i < stage->mole_count; i++)
 		{
-			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock3_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
 		}
 		mole.warn_flag = false;// マスを赤くする警告
 		MolePutRockFlag(GetStage());
