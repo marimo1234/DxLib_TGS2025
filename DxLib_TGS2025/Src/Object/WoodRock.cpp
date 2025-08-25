@@ -86,16 +86,9 @@ void WoodRockResourceInit(void)
 	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
 	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
 
-	wood.effect_image[0] = LoadGraph("Resource/images/reef_effect5-1.png");
-	wood.effect_image[1] = LoadGraph("Resource/images/reef_effect5-2.png");
-	wood.effect_image[2] = LoadGraph("Resource/images/reef_effect5-3.png");
-	wood.effect_image[3] = LoadGraph("Resource/images/reef_effect5-4.png");
-
-	/*rock.effect_image[0] = LoadGraph("Resource/images/rock_fragment7-1.png");
-	rock.effect_image[1] = LoadGraph("Resource/images/rock_fragment7-2.png");
-	rock.effect_image[2] = LoadGraph("Resource/images/rock_fragment7-3.png");
-	rock.effect_image[3] = LoadGraph("Resource/images/rock_fragment7-4.png");
-	rock.effect_image[4] = LoadGraph("Resource/images/rock_fragment7-5.png");*/
+	//木のエフェクト
+	LoadDivGraph("Resource/images/Reef_EffectAnim.png", 5, 5, 1, 80, 80, wood.effect_image);
+	//岩のエフェクト
 	LoadDivGraph("Resource/images/Rock_FragmentAnim.png", 5, 5, 1, 80, 80, rock.effect_image);   
 
 
@@ -719,7 +712,7 @@ void GetMoleWoodPosition(const Mole* mole, int x, int y)
 //木のエフェクト
 void WoodEffect(int x, int y)
 {
-	if (wood.effect_num < 4)
+	if (wood.effect_num < 5)
 	{
 		wood.effect_count++;
 

@@ -35,7 +35,7 @@ struct Wood
 
 	int fps[12][7];
 
-	int effect_image[5];
+	int effect_image[6];
 	bool effect_flag;
 	int effect_num;
 	int effect_count;
