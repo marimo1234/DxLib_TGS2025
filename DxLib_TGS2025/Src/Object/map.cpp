@@ -10,6 +10,7 @@
 
 #include <math.h>
 #define MAP_TROUT_LENGTH (80)
+#define SNOW_BALL_MAX  (6)
 
 CreateStage stage;
 SnowBall snow;
@@ -111,12 +112,12 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal(), MAP_TROUT_LENGTH);
 
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%f",  snow.vec_x);
+	/*DrawFormatString(200, 200, GetColor(255, 255, 255), "%f",  snow.vec_x);*/
 
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		DrawFormatString(200, 230 + i * 30, GetColor(255, 255, 255), "%d", snow.dir[i]);
-	}
+	}*/
 	
 	//csvの中身を見るString
 	/*for (int j = 0; j < 7; j++) 
@@ -240,9 +241,13 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 			case 9://山
 				DrawRotaGraphF(length * x + 200, length * y + 125, 0.15, 0.0, stage.mountain_image, TRUE);
 
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < SNOW_BALL_MAX; i++)
 				{
-					DrawRotaGraphF(length * x + 160 + snow.add_x[i], length * y + 85 + snow.add_y[i], 0.05, 0.0, snow.img, TRUE);
+					if (snow.add_y[i] < 70.0f && snow.add_y[i]>10.0f&&
+						snow.add_x[i] < 75.0f && snow.add_x[i]>5.0f)
+					{
+						DrawRotaGraphF(length * x + 160 + snow.add_x[i], length * y + 85 + snow.add_y[i], 0.05, 0.0, snow.img, TRUE);
+					}
 				}
 
 				break;
@@ -281,10 +286,10 @@ void SnowBallMove(void)
 	snow.cnt++;
 
 
-	if (snow.cnt > 30)
+	if (snow.cnt > 90)
 	{
 		//eRight(2)だから+2　eRight または　eLeft が入る
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < SNOW_BALL_MAX; i++)
 		{
 			snow.dir[i] = GetRand(1) + 2;
 		}
@@ -292,7 +297,7 @@ void SnowBallMove(void)
 	}
 
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < SNOW_BALL_MAX; i++)
 	{
 		//方向
 		if (snow.dir[i] == eRight)
@@ -304,9 +309,15 @@ void SnowBallMove(void)
 			snow.vec_x[i] = -0.1f;
 		}
 
-		snow.vec_y[i] = 0.3f;
+		snow.vec_y[i] = 0.1f;
 		snow.add_x[i] += snow.vec_x[i];
 		snow.add_y[i] += snow.vec_y[i];
+
+		if (snow.add_y[i] > 70.0f)
+		{
+			snow.add_x[i] = i * 10.0f + 10.0f;
+			snow.add_y[i] = -10.0f;
+		}
 	}
 }
 
@@ -437,11 +448,13 @@ void MapValueInit(void)
 	int m = 0;      //動けないマスの画像
 	stage.woodmole_count = 0;    //ウッドモグラ
 	
+	float positions_y[SNOW_BALL_MAX] = { 36.0f,24.0f,0.0f,
+										 48.0f,12.0f,60.0f };
 	//SnowBall変数
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < SNOW_BALL_MAX; i++)
 	{
-		snow.add_x[i] = 0.0f + i * 8.0;
-		snow.add_y[i] = 0.0f;
+		snow.add_x[i] = i * 10.0f + 10.0f;
+		snow.add_y[i] = -positions_y[i];
 		snow.vec_x[i] = 0.0f;
 		snow.vec_y[i] = 0.0f;
 		snow.cnt = 0;
