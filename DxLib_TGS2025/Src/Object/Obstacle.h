@@ -39,6 +39,9 @@ struct Mole
 	bool put_rock_flag[12][7];
 
 	int wood_image[4];
+	int wood1_image[4];
+	int wood2_image[4];
+	int wood3_image[4];
 	int wood_image_num[12][7];
 	int wood_anim[12][7];
 	int wood_image_count;

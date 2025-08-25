@@ -62,7 +62,10 @@ void ObstacleManagerResourceInit(void)
 	LoadDivGraph("Resource/images/mole_animation2.png", 4, 4, 1, 80, 80, mole.rock2_image);
 	LoadDivGraph("Resource/images/mole_animation3.png", 4, 4, 1, 80, 80, mole.rock3_image);
 	//ウッドモグラ
-	LoadDivGraph("Resource/images/woodmole_animation0.png", 4, 4, 1, 80, 80, mole.wood_image);
+	LoadDivGraph("Resource/images/woodmole_anim0.png", 4, 4, 1, 80, 80, mole.wood_image);
+	LoadDivGraph("Resource/images/woodmole_anim1.png", 4, 4, 1, 80, 80, mole.wood1_image);
+	LoadDivGraph("Resource/images/woodmole_anim2.png", 4, 4, 1, 80, 80, mole.wood2_image);
+	LoadDivGraph("Resource/images/woodmole_anim3.png", 4, 4, 1, 80, 80, mole.wood3_image);
 
 	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
 
@@ -331,6 +334,7 @@ void MolePutWoodFlag(const CreateStage* stage)
 	}
 }
 
+//モグラが置く赤いマスの描画
 void MolePutWarnDraw(const CreateStage* stage)
 {
 	//　ロックモグラ描画
