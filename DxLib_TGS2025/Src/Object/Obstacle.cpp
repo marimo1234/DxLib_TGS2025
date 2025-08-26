@@ -157,8 +157,12 @@ void MoleRandomDirection(const CreateStage* stage)
 	{
 		for (int i = 0; i < stage->mole_count; i++)
 		{
+			//ロックモグラ
 			mole.image_num[stage->mole_x[i]][stage->mole_y[i]] = GetRand(3);//ランダム方向を格納
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			//ウッドモグラ
+			mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]] = GetRand(3);//ランダム方向を格納
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
 		}
 		mole.warn_flag = true;// マスを赤くする警告
 
@@ -169,6 +173,7 @@ void MoleRandomDirection(const CreateStage* stage)
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock1_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood1_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
 		}
 	}
 	//　岩を持つアニメーション
@@ -177,40 +182,25 @@ void MoleRandomDirection(const CreateStage* stage)
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock2_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood2_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
 		}
 	}
 	//　岩を置くアニメーション
 	if (mole.image_count / 60 > 4)
 	{
 		MoleRockFlagReset();
+		MoleWoodFlagReset();
 		for (int i = 0; i < stage->mole_count; i++)
 		{
 			mole.animation[stage->mole_x[i]][stage->mole_y[i]] = mole.rock3_image[mole.image_num[stage->mole_x[i]][stage->mole_y[i]]];
+			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood3_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
 		}
 		mole.warn_flag = false;// マスを赤くする警告
 		MolePutRockFlag(GetStage());
-		mole.image_count = 0;
-
-	}
-
-	//　ランダム方向に向く(ウッドモグラ）
-	if (mole.wood_image_count == 120)
-	{
-		for (int i = 0; i < stage->woodmole_count; i++)
-		{
-			mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]] = GetRand(3);//ランダム方向を格納
-			mole.wood_anim[stage->woodmole_x[i]][stage->woodmole_y[i]] = mole.wood_image[mole.wood_image_num[stage->woodmole_x[i]][stage->woodmole_y[i]]];
-		}
-		mole.warn_flag = true;// マスを赤くする警告
-	}
-	// アニメーションを戻して岩を置く
-	if (mole.wood_image_count / 60 > 4)
-	{
-		MoleWoodFlagReset();
-		mole.warn_flag = false;// マスを赤くする警告
 		MolePutWoodFlag(GetStage());
-		mole.wood_image_count = 0;
+		mole.image_count = 0;
 	}
+
 }
 
 //モグラのリセット
