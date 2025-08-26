@@ -6,7 +6,6 @@
 #include"../Object/tool.h"
 #include"../Object/Goal.h"
 #include "../Utility/PadInputManager.h"
-#include "../Utility/InputManager.h"
 
 //1マスの大きさ
 #define CAR_TROUT_LNEGTH (80.0f)
@@ -1152,7 +1151,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
  }
 
- //GameOverの爆発アニメーション
+ //爆発アニメーション
  void CarBoomAnimation(void)
  {
 	 if (car.boom_flag == true)
@@ -1196,7 +1195,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 break;
 		 case eDown:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.boom_down_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.12, 0.0, car.boom_down_animtion[car.boom_num], TRUE);
 			 break;
 		 }
 		 //if (car.boom_count > 30)
@@ -1465,8 +1464,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFour:
 		car.current_x = 0;//ステージ④の初期位置
 		car.current_y = 0;
-		car.speed.x = 0.2f;
-		car.speed.y = 0.2f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 2;
 		car.next_y[0] = 0;
 		car.warn_range = 40.0f;
