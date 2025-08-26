@@ -1,6 +1,4 @@
 ﻿#pragma once
-
-
 #include "../Utility/Geometry.h"
 
 enum Direction
