@@ -1455,8 +1455,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eThree:
 		car.current_x = 1;//ステージ③の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.4f;
-		car.speed.y = 0.4f;
+		car.speed.x = 0.1f;
+		car.speed.y = 0.1f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 20.0f;
