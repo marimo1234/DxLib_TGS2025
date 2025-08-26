@@ -26,7 +26,6 @@ struct Car
     int animation_count;
 
     //Ivy
-    int ivy_image[4];
     int ivy_anim_left[20];
     int ivy_anim_right[20];
     int ivy_anim_up[20];
@@ -62,6 +61,8 @@ struct Car
     //Smoke
     int smo_img_R[5];
     int smo_img_L[5];
+    int smo_img_U[5];
+    int smo_img_D[5];
     int smo_cnt;
     int smo_idx;
     

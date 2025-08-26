@@ -138,16 +138,6 @@ void CarResourceInit(void)
 	car_anim[eDown].img[0] = LoadGraph("Resource/images/car2_down.png");
 	car_anim[eDown].img[1] = LoadGraph("Resource/images/car2_down2.png");
 
-	car.cutin_image[0] = LoadGraph("Resource/images/cutin.png");
-	car.cutin_image[1] = LoadGraph("Resource/images/cutin2.png");
-	car.cutin_image[2] = LoadGraph("Resource/images/cutin3.png");
-
-	car.ivy_image[0] = LoadGraph("Resource/images/ivy_car_right.png");
-	car.ivy_image[1] = LoadGraph("Resource/images/ivy_car_left.png");
-	car.ivy_image[2] = LoadGraph("Resource/images/ivy_car_up.png");
-	car.ivy_image[3] = LoadGraph("Resource/images/ivy_car_down.png");
-
-	
 	car.ivy_eff_img[1] = LoadGraph("Resource/images/put_rock_0.png");
 	car.ivy_eff_img[2] = LoadGraph("Resource/images/put_rock_1.png");
 	car.ivy_eff_img[3] = LoadGraph("Resource/images/put_rock_2.png");
@@ -231,13 +221,23 @@ void CarResourceInit(void)
 	car.smo_img_R[1] = LoadGraph("Resource/images/car_smoke_R1.png");
 	car.smo_img_R[2] = LoadGraph("Resource/images/car_smoke_R2.png");
 	car.smo_img_R[3] = LoadGraph("Resource/images/car_smoke_R3.png");
-	car.smo_img_R[4] = LoadGraph("Resource/images/car_smoke_R4.png");
+	/*car.smo_img_R[4] = LoadGraph("Resource/images/car_smoke_R4.png");*/
 
 	car.smo_img_L[0] = LoadGraph("Resource/images/car_smoke0.png");
 	car.smo_img_L[1] = LoadGraph("Resource/images/car_smoke_L1.png");
 	car.smo_img_L[2] = LoadGraph("Resource/images/car_smoke_L2.png");
 	car.smo_img_L[3] = LoadGraph("Resource/images/car_smoke_L3.png");
-	car.smo_img_L[4] = LoadGraph("Resource/images/car_smoke_L4.png");
+	//car.smo_img_L[4] = LoadGraph("Resource/images/car_smoke_L4.png");
+
+	car.smo_img_U[0] = LoadGraph("Resource/images/car_smoke0.png");
+	car.smo_img_U[1] = LoadGraph("Resource/images/car_smoke_U1.png");
+	car.smo_img_U[2] = LoadGraph("Resource/images/car_smoke_U2.png");
+	car.smo_img_U[3] = LoadGraph("Resource/images/car_smoke_U3.png");
+
+	car.smo_img_D[0] = LoadGraph("Resource/images/car_smoke0.png");
+	car.smo_img_D[1] = LoadGraph("Resource/images/car_smoke_D1.png");
+	car.smo_img_D[2] = LoadGraph("Resource/images/car_smoke_D2.png");
+	car.smo_img_D[3] = LoadGraph("Resource/images/car_smoke_D3.png");
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
@@ -297,6 +297,7 @@ void CarDraw(void)
 	//車の描画
 	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false)
 	{
+		CarSmokeDraw(car.position.x, car.position.y);
 		if (car.direction == eUp)
 		{
 			DrawRotaGraph(car.position.x, car.position.y, 0.1, 0.0, car.animation, TRUE);
@@ -318,7 +319,7 @@ void CarDraw(void)
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
-	CarSmokeDraw(car.position.x, car.position.y);
+	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
 	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
@@ -1212,12 +1213,12 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  void CarSmokeAnimation(void)
  {
 	 car.smo_cnt++;
-	 if (car.smo_cnt% 12 == 0)
+	 if (car.smo_cnt != 0 && car.smo_cnt % 20 == 0)
 	 {
 		 car.smo_idx++;
 	 }
 	 
-	 if (car.smo_cnt > 80)
+	 if (car.smo_cnt > 71)
 	 {
 		 car.smo_cnt = 0;
 		 car.smo_idx = 0;
@@ -1238,10 +1239,10 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx + 80, cary, 1.0, 0.0, car.smo_img_L[car.smo_idx], TRUE);
 			 break;
 		 case eUp:
-			
+			 DrawRotaGraphF(carx-10 , cary+ 60, 1.0, 0.0, car.smo_img_U[car.smo_idx], TRUE);
 			 break;
 		 case eDown:
-			
+			 DrawRotaGraphF(carx + 10, cary - 60, 1.0, 0.0, car.smo_img_D[car.smo_idx], TRUE);
 			 break;
 		 default:
 			 break;
