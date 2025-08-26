@@ -684,7 +684,7 @@ void Play_StageSelect_BGM(const Title* title)
 	if (CheckSoundMem(title->bgm) == 0)
 	{
 		ChangeVolumeSoundMem(100, title->bgm);
-		PlaySoundMem(title->bgm, DX_PLAYTYPE_BACK);
+		PlaySoundMem(title->bgm, DX_PLAYTYPE_LOOP);
 	}
 }
 
