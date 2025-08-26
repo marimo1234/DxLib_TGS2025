@@ -217,27 +217,11 @@ void CarResourceInit(void)
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
 
-	car.smo_img_R[0] = LoadGraph("Resource/images/car_smoke0.png");
-	car.smo_img_R[1] = LoadGraph("Resource/images/car_smoke_R1.png");
-	car.smo_img_R[2] = LoadGraph("Resource/images/car_smoke_R2.png");
-	car.smo_img_R[3] = LoadGraph("Resource/images/car_smoke_R3.png");
-	/*car.smo_img_R[4] = LoadGraph("Resource/images/car_smoke_R4.png");*/
-
-	car.smo_img_L[0] = LoadGraph("Resource/images/car_smoke0.png");
-	car.smo_img_L[1] = LoadGraph("Resource/images/car_smoke_L1.png");
-	car.smo_img_L[2] = LoadGraph("Resource/images/car_smoke_L2.png");
-	car.smo_img_L[3] = LoadGraph("Resource/images/car_smoke_L3.png");
-	//car.smo_img_L[4] = LoadGraph("Resource/images/car_smoke_L4.png");
-
-	car.smo_img_U[0] = LoadGraph("Resource/images/car_smoke0.png");
-	car.smo_img_U[1] = LoadGraph("Resource/images/car_smoke_U1.png");
-	car.smo_img_U[2] = LoadGraph("Resource/images/car_smoke_U2.png");
-	car.smo_img_U[3] = LoadGraph("Resource/images/car_smoke_U3.png");
-
-	car.smo_img_D[0] = LoadGraph("Resource/images/car_smoke0.png");
-	car.smo_img_D[1] = LoadGraph("Resource/images/car_smoke_D1.png");
-	car.smo_img_D[2] = LoadGraph("Resource/images/car_smoke_D2.png");
-	car.smo_img_D[3] = LoadGraph("Resource/images/car_smoke_D3.png");
+	// 排気ガスの画像
+	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
+	LoadDivGraph("Resource/images/car_SmokeAnim_R.png", 4, 4, 1, 75, 75, car.smo_img_R);   // 右
+	LoadDivGraph("Resource/images/car_SmokeAnim_U.png", 4, 4, 1, 75, 75, car.smo_img_U);   // 上
+	LoadDivGraph("Resource/images/car_SmokeAnim_D.png", 4, 4, 1, 75, 75, car.smo_img_D);   // 下
 
 	car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
 	car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
