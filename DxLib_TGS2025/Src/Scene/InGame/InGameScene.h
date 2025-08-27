@@ -119,8 +119,8 @@ struct InGame
 	int itembarcoment2;
 	int itembarcoment3;
 	int itembarcoment4;
-	int itemcoment_switch = false;
-	int itembarcomentswitch = false;
+	int itemcoment_switch = true;
+	int itembarcomentswitch = true;
 	int warntutorial;
 	int warntutorial_flag=true;
 	int warntutorial_flag_public = false;
