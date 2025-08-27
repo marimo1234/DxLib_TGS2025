@@ -15,6 +15,8 @@ int i=255;
 void GoalStart(const InGame* ingame);
 void GoalFlag(const InGame* ingame, const Car* car,const CreateStage*stage);
 void GameOverDraw(const GameOver* gameover);
+//Goalの旗を揺らすアニメーション
+void GoalFlagAnim(const Car* car);
 
 
 
@@ -30,6 +32,8 @@ void GoalInit(void)
 	goal.menu_flag = false;
 	goal.count = 0;
 	goal.print_count = 0;
+	goal.flag_idx = 0;
+	goal.flag_cnt = 0;
 
 	goal.print_flag = false;
 	
@@ -52,7 +56,10 @@ void GoalResourceInit(void)
 	//画像の読み込み
 	goal.whiteback_image = LoadGraph("Resource/images/white_back.png");
 	goal.blackback_image = LoadGraph("Resource/images/black_back.png");
-	goal.flag_image = LoadGraph("Resource/images/goal_image.png");
+	goal.flag_image[0] = LoadGraph("Resource/images/goal_image1.png");
+	goal.flag_image[1] = LoadGraph("Resource/images/goal_image2.png");
+	goal.flag_image[2] = LoadGraph("Resource/images/goal_image3.png");
+	goal.flag_image[3] = LoadGraph("Resource/images/goal_image4.png");
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
 	goal.gameover_image = LoadGraph("Resource/images/GAMEOVER.png");
@@ -76,9 +83,15 @@ void GoalUpdate(void)
 		GoalReset();
 	}
 
+
+	if (goal.start == true)
+	{
+		GoalFlagAnim(GetCar());
+	}
 	//花火処理
 	if (goal.print_flag == true)
 	{
+
 		//１フレーム前の画像番号を格納
 		for (int i = 0; i < 3; i++)
 		{
@@ -152,8 +165,11 @@ void GoalDraw(void)
 		DrawRotaGraphF(615.0f, 380.0f, 1.0, 0.0, goal.print_image, TRUE);
 	}
 	GameOverDraw(GetGameOver());
+
+	DrawFormatString(100, 100, GetColor(255, 255, 0), "%d\n%d", goal.flag_cnt, goal.flag_idx);
 }
 	
+
 
 //ゴール処理スタート
 void GoalStart(const InGame* ingame)
@@ -169,7 +185,25 @@ void GoalStart(const InGame* ingame)
 	goal.menu_flag = ingame->menu_flag;
 }
 
+//Goalの旗を揺らすアニメーション
+void GoalFlagAnim(const Car*car)
+{
+	if (car->direction != eStop)
+	{
+		goal.flag_cnt++;
 
+		if (goal.flag_cnt > 20)
+		{
+			goal.flag_idx++;
+			goal.flag_cnt = 0;
+		}
+
+		if (goal.flag_idx > 3)
+		{
+			goal.flag_idx = 0;
+		}
+	}
+}
 
 const Goal* GetGoal(void)
 {

@@ -9,7 +9,10 @@ struct Goal
 	bool start;
 	bool menu_flag;
 	int print_image;
-	int flag_image;
+	int flag_image[5];
+	int flag_idx;
+	int flag_cnt;
+
 	bool print_flag;
 	int count;
 	int print_count;
@@ -37,6 +40,7 @@ void GoalUpdate(void);
 void GoalDraw(void);
 void GoalReset(void);
 void GoalResourceInit(void);
+
 
 
 const Goal* GetGoal(void);
