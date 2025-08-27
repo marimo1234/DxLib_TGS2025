@@ -1428,7 +1428,7 @@ void GetCarStageNum(const InGame* ingame)
 		car.speed.y = 0.25f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
-		car.warn_range = 40.0f;
+		car.warn_range = 50.0f;
 		break;
 	case eSix:
 		car.current_x = 0;//ステージ⑥の初期位置
