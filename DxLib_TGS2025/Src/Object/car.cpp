@@ -25,6 +25,10 @@ void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage, const InGame* ingame);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
+
+//GameOverでどの演出にするかの分岐
+void GameOverBranch(int stg_arr);
+
 void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
 void CarLakeAnimation(void);
@@ -305,7 +309,7 @@ void CarDraw(void)
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
-	//DrawFormatString(930, 100, GetColor(255, 255, 255), "%d", car.ivy_num);
+	DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -714,24 +718,7 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.y += car.speed.y;
 				if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 90.0f)
 				{
-					if (stage->array[car.current_x][car.current_y - 1] == 6 && car.next_y[car.road_count] != 0)
-					{
-						car.lake_flag = true;
-					}
-					else if (stage->array[car.current_x][car.current_y - 1] == 1 ||
-						stage->array[car.current_x][car.current_y - 1] == 2 ||
-						stage->array[car.current_x][car.current_y - 1] == 3 ||
-						stage->array[car.current_x][car.current_y - 1] == 9 ||
-						stage->array[car.current_x][car.current_y - 1] == 10 &&
-						car.next_y[car.road_count] != 0)
-					{
-						car.boom_flag = true;
-					}
-					else
-					{
-						car.ivy_flag = true;
-					}
-
+					GameOverBranch(stage->array[car.current_x][car.current_y - 1]);
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
@@ -740,23 +727,8 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.y -= car.speed.y;
 				if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 150.0f)
 				{
-					if (stage->array[car.current_x][car.current_y + 1] == 6 && car.next_y[car.road_count] != 6)
-					{
-						car.lake_flag = true;
-					}
-					else if (stage->array[car.current_x][car.current_y + 1] == 1 ||
-					 stage->array[car.current_x][car.current_y + 1] == 2 ||
-					 stage->array[car.current_x][car.current_y + 1] == 3 ||
-						 stage->array[car.current_x][car.current_y + 1] == 9 ||
-							 stage->array[car.current_x][car.current_y + 1] == 10 &&
-								 car.next_y[car.road_count] != 6)
-					{
-						car.boom_flag = true;
-					}
-					else
-					{
-						car.ivy_flag = true;
-					}
+					GameOverBranch(stage->array[car.current_x][car.current_y + 1]);
+					
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
@@ -765,27 +737,8 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.x -= car.speed.x;
 				if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 230.0f)
 				{
-					if (stage->array[car.current_x + 1][car.current_y] == 6 && car.next_x[car.road_count] != 11)
-					{
-						car.lake_flag = true;
-					}
-					else if (stage->array[car.current_x + 1][car.current_y] == 1 ||
-						stage->array[car.current_x + 1][car.current_y] == 2 ||
-						stage->array[car.current_x + 1][car.current_y] == 3 ||
-						stage->array[car.current_x + 1][car.current_y] == 9 ||
-						stage->array[car.current_x + 1][car.current_y] == 10 &&
-						car.next_x[car.road_count] != 11)
-					{
-						car.boom_flag = true;
-					}
-					else if (stage->array[car.current_x + 1][car.current_y] == 1 && car.next_x[car.road_count] != 11)
-					{
-						car.boom_flag = true;
-					}
-					else
-					{
-						car.ivy_flag = true;
-					}
+					GameOverBranch(stage->array[car.current_x + 1][car.current_y]);
+					
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
@@ -794,23 +747,8 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.x += car.speed.x;
 				if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 170.0f)
 				{
-					if (stage->array[car.current_x - 1][car.current_y] == 6 && car.next_x[car.road_count] != 0)
-					{
-						car.lake_flag = true;
-					}
-					else if (stage->array[car.current_x - 1][car.current_y] == 1 ||
-						stage->array[car.current_x - 1][car.current_y] == 2 ||
-						stage->array[car.current_x - 1][car.current_y] == 3 ||
-						stage->array[car.current_x - 1][car.current_y] == 9 ||
-						stage->array[car.current_x - 1][car.current_y] == 10 &&
-						car.next_x[car.road_count] != 0)
-					{
-						car.boom_flag = true;
-					}
-					else
-					{
-						car.ivy_flag = true;
-					}
+					GameOverBranch(stage->array[car.current_x - 1][car.current_y]);
+					
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
@@ -824,6 +762,35 @@ void CarDetectPosition(const CreateStage* stage)
 			car.direction = eStop;//ストップ
 			car.overcount.y = 0.0f;
 		}
+	}
+}
+
+//GameOverでどの演出にするかの分岐
+void GameOverBranch(int stg_arr) 
+{
+	switch (stg_arr)
+	{
+	case 6:
+		if (car.next_y[car.road_count] != 0)
+		{
+			car.lake_flag = true;
+		}
+		break;
+	case 1:case 2: case 3:
+	case 9: case 10:
+		if (car.next_y[car.road_count] != 0)
+		{
+			car.boom_flag = true;
+		}
+		break;
+	default:
+		car.ivy_flag = true;
+		break;
+	}
+
+	if (car.lake_flag != true && car.boom_flag != true)
+	{
+		car.ivy_flag = true;
 	}
 }
 
@@ -1430,8 +1397,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eTwo:
 		car.current_x = 1;//ステージ②の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.1f;
-		car.speed.y = 0.1f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 20.0f;
@@ -1457,8 +1424,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFive:
 		car.current_x = 1;//ステージ⑤の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.2f;
-		car.speed.y = 0.2f;
+		car.speed.x = 0.25f;
+		car.speed.y = 0.25f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 40.0f;

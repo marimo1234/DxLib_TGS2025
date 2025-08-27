@@ -527,11 +527,14 @@ void StarMove(void)
 	case 1: case 2:
 		ss_star.num = 2;
 		break;
-	case 3: case 4:
+	case 3:
 		ss_star.num = 3;
 		break;
-	case 5:
+	case 4:
 		ss_star.num = 4;
+		break;
+	case 5:
+		ss_star.num = 5;
 		break;
 	}
 }
