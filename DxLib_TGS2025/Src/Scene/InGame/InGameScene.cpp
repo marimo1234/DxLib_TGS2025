@@ -1403,7 +1403,15 @@ void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wo
 		}
 		else
 		{
-			ingame.mitibiki_flag = false;
+			if (ingame.itemcoment_switch == true)
+			{
+				ingame.mitibiki_flag = false;
+			}
+			else
+			{
+				ingame.mitibiki_flag = true;
+			}
+			
 		}
 
 
