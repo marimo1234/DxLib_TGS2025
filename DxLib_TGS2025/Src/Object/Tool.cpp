@@ -606,7 +606,7 @@ void const Road_Add_Num(const Rock* rock, const Car* car)
 		{
 			tool.road_num++;
 			tool.rock_sub_flag = true;
-			Play_Sound_Tool2(tool_se.make_road, 100);
+			Play_Sound_Tool(tool_se.make_road, 100);
 
 			for (int i = 0; i < 6; i++)
 			{
@@ -667,7 +667,7 @@ void const WoodRoad_Add_Num(const Wood* wood, const Car* car)
 
 			tool.wood_road_num++;
 			tool.wood_sub_flag = true;
-			Play_Sound_Tool2(tool_se.make_woodroad, 100); // 木の道を作ったときの音
+			Play_Sound_Tool(tool_se.make_woodroad, 100); // 木の道を作ったときの音
 
 			for (int i = 0; i < 6; i++)
 			{
