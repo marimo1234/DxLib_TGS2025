@@ -192,7 +192,7 @@ void GoalFlagAnim(const Car*car)
 	{
 		goal.flag_cnt++;
 
-		if (goal.flag_cnt > 20)
+		if (goal.flag_cnt > 10)
 		{
 			goal.flag_idx++;
 			goal.flag_cnt = 0;
