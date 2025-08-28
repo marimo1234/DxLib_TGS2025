@@ -36,6 +36,8 @@ void CarLakeDraw(int carx, int cary,const InGame*ingame);
 void CarBoomAnimation(void);
 void CarBoomDraw(int carx, int cary);
 
+void CarMoleDraw(float carx, float cary);
+
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
@@ -82,6 +84,8 @@ void CarInit(void)
 	car.boom_flag = false;//爆発のアニメーションフラグ
 	car.boom_count = 0;//爆発のアニメーションカウント
 	car.boom_num = 0;//爆発のアニメーションナンバー
+
+	car.mole_flag = false;
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -220,6 +224,12 @@ void CarResourceInit(void)
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
 
+	LoadDivGraph("Resource/images/mole1.png", 4, 4, 1, 100, 100, car.mole_1);
+	LoadDivGraph("Resource/images/mole2.png", 4, 4, 1, 100, 100, car.mole_2);
+	LoadDivGraph("Resource/images/mole3.png", 4, 4, 1, 100, 100, car.mole_3);
+	LoadDivGraph("Resource/images/mole4.png", 4, 4, 1, 100, 100, car.mole_4);
+	LoadDivGraph("Resource/images/mole5.png", 4, 4, 1, 100, 100, car.mole_5);
+
 	// 排気ガスの画像
 	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
 	LoadDivGraph("Resource/images/car_SmokeAnim_R.png", 4, 4, 1, 75, 75, car.smo_img_R);   // 右
@@ -306,6 +316,7 @@ void CarDraw(void)
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
+	/*CarMoleDraw(car.position.x, car.position.y);*/
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
@@ -392,6 +403,8 @@ void CarReset(void)
 	car.boom_flag = false;//爆発するアニメーションフラグ
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
+
+	car.mole_flag = false;
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -776,11 +789,17 @@ void GameOverBranch(int stg_arr)
 			car.lake_flag = true;
 		}
 		break;
-	case 1:case 2: case 3:
+	case 1:case 2:
 	case 9: case 10:
 		if (car.next_y[car.road_count] != 0)
 		{
 			car.boom_flag = true;
+		}
+		break;
+	case 3:
+		if (car.next_y[car.road_count] != 0)
+		{
+			car.mole_flag = true;
 		}
 		break;
 	default:
@@ -788,7 +807,7 @@ void GameOverBranch(int stg_arr)
 		break;
 	}
 
-	if (car.lake_flag != true && car.boom_flag != true)
+	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true)
 	{
 		car.ivy_flag = true;
 	}
@@ -1156,6 +1175,33 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				// Play_Sound_Car(car.boom_se, 150);
 			 //}
 		 //}
+	 }
+ }
+
+ void CarMoleAnimation(void)
+ {
+
+ }
+
+ void CarMoleDraw(float carx, float cary)
+ {
+	 if (car.mole_flag == true)
+	 {
+		 switch (car.direction)
+		 {
+		 case eRight:
+			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 break;
+		 case eUp:
+			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 break;
+		 }
 	 }
  }
 

@@ -56,6 +56,14 @@ struct Car
     int lake_se;
     int lake_mul;
 
+    //Mole
+    bool mole_flag;
+    int mole_1[4];
+    int mole_2[4];
+    int mole_3[4];
+    int mole_4[4];
+    int mole_5[4];
+
     //Smoke
     int smo_img_R[5];
     int smo_img_L[5];
