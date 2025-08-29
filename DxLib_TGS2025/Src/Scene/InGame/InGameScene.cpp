@@ -865,7 +865,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 		{
 			if (ingame.woodrodamakeswitch == true)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
 			}
 			else if (ingame.madewoodswitch == false)
 			{
@@ -887,7 +887,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log1, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log1, TRUE);
 					}
 					break;
 				case 3:
@@ -905,7 +905,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log2, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log2, TRUE);
 					}
 					break;
 				case 4:
@@ -923,7 +923,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log3, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log3, TRUE);
 					}
 					break;
 				case 5:
@@ -941,7 +941,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log4, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log4, TRUE);
 					}
 					break;
 				case 6:
@@ -959,7 +959,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log5, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log5, TRUE);
 					}
 					break;
 				case 7:
@@ -977,7 +977,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
 					}
 					break;
 				case 8:
@@ -995,7 +995,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 				    if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log7, TRUE);
 					}
 					break;
 				case 9:
@@ -1014,7 +1014,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log8, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log8, TRUE);
 					}
 					break;
 				case 10:
@@ -1033,7 +1033,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log9, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log9, TRUE);
 					}
 					break;
 				case 11:
@@ -1052,7 +1052,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log10, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log10, TRUE);
 					}
 					break;
 				case 12:
@@ -1071,7 +1071,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log11, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log11, TRUE);
 					}
 					break;
 				case 13:
@@ -1090,7 +1090,7 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 					}
 					if (ingame.warntutorial_flag_public == false)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log12, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_log12, TRUE);
 					}
 					break;
 				default:
@@ -1100,11 +1100,11 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 		}
 		if (ingame.mitibiki_flag == true && ingame.tutorial_count == 80 && ingame.tutorial_log_num==2 && ingame.warntutorial_flag_public == false)
 		{
-			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_selectA, TRUE);
+			DrawRotaGraphF(975.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_selectA, TRUE);
 		}
 		else if(ingame.warntutorial_flag_public == false &&ingame.mitibiki_flag == true && ingame.tutorial_count == 80)
 		{
-			DrawRotaGraphF(875.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
+			DrawRotaGraphF(975.0f, 160.0f, 0.75, 0.0, ingame.tutoriallog_select, TRUE);
 		}
 		TutorialCursor();
 		if ((ingame.tutorial_log_num == 6 || ingame.menuanimationflag == true)&& ingame.itemcoment_switch == true)
@@ -1113,19 +1113,19 @@ void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car)
 			
 			 if(ingame.tutorial_achievements==2)
 			{
-				DrawRotaGraphF(855.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment4, TRUE);
+				DrawRotaGraphF(995.0f, 235.0f, 1.0, 0.0, ingame.itembarcoment4, TRUE);
 			}
 			 else if (ingame.tutorial_log_num == 6)
 			{
-				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
+				DrawRotaGraphF(995.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment1, TRUE);
 			}
 			else if (ingame.itembarcomentswitch == false)
 			{
-				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment2, TRUE);
+				DrawRotaGraphF(995.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment2, TRUE);
 			}
 			else if (ingame.itembarcomentswitch == true)
 			{
-				DrawRotaGraphF(875.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment3, TRUE);
+				DrawRotaGraphF(995.0f, 225.0f, 1.0, 0.0, ingame.itembarcoment3, TRUE);
 			}
 		}
 		if (ingame.tutorial_log_num == 5 || ingame.tutorial_log_num == 7 || ingame.tutorial_log_num == 8 || ingame.tutorial_log_num == 9 || ingame.tutorial_log_num == 10)
@@ -1428,19 +1428,19 @@ void TutorialCursor(void)
 	{
 		if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_LEFT) == ePadInputState::eHold)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_left, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_left, TRUE);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_RIGHT) == ePadInputState::eHold)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_right, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_right, TRUE);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_UP) == ePadInputState::eHold)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_up, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_up, TRUE);
 		}
 		else if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::eHold)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_down, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.tutorial_controol_down, TRUE);
 		}
 	}
 }
@@ -1485,7 +1485,7 @@ void ItemTutorial(void)
 		}
 		else if (ingame.itemtutorial_num > 45)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial4, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial4, TRUE);
 		}
 		else if (ingame.itembarwoodroadcount > 70 && ingame.woodtutorial == true)
 		{
@@ -1494,7 +1494,7 @@ void ItemTutorial(void)
 		}
 		else if (ingame.itemtutorial_num > 30 || ingame.itembarwoodroadcount > 30)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial3, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial3, TRUE);
 		}
 		else if (ingame.itembaraxcount > 44 && ingame.tutorial_log_num == 9 && ingame.woodtutorial == false)
 		{
@@ -1503,11 +1503,11 @@ void ItemTutorial(void)
 		}
 		else if (ingame.itemtutorial_num > 15 || ingame.itembaraxcount > 15 || ingame.itembarwoodroadcount > 15)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial2, TRUE);
 		}
 		else if (ingame.itemtutorial_num > 0 || ingame.itembaraxcount > 0 || ingame.itembarwoodroadcount > 0)
 		{
-			DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial1, TRUE);
+			DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.itemtutorial1, TRUE);
 		}
 	}
 }
@@ -1530,31 +1530,31 @@ void BlinkingAnimation(void)
 			}
 			else if (ingame.brakestoneanimetioncount > 195)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion7, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion7, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 165)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion6, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion6, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 135)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion5, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion5, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 105)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion4, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion4, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 85)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion3, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion3, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 55)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion2, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion2, TRUE);
 			}
 			else if (ingame.brakestoneanimetioncount > 25)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion1, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakestoneanimetion1, TRUE);
 			}
 		}
 		else if (ingame.tutorial_log_num == 8)
@@ -1570,11 +1570,11 @@ void BlinkingAnimation(void)
 			}
 			else if (ingame.putrodacount > 70)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.putroda2, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.putroda2, TRUE);
 			}
 			else if (ingame.putrodacount > 35)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.putroda1, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.putroda1, TRUE);
 			}
 		}
 		else if (ingame.tutorial_log_num == 9)
@@ -1596,27 +1596,27 @@ void BlinkingAnimation(void)
 					}
 					else if (ingame.brakewoodcount > 165)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood6, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood6, TRUE);
 					}
 					else if (ingame.brakewoodcount > 135)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood5, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood5, TRUE);
 					}
 					else if (ingame.brakewoodcount > 105)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood4, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood4, TRUE);
 					}
 					else if (ingame.brakewoodcount > 85)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood3, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood3, TRUE);
 					}
 					else if (ingame.brakewoodcount > 55)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood2, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood2, TRUE);
 					}
 					else if (ingame.brakewoodcount > 25)
 					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.brakewood1, TRUE);
+						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood1, TRUE);
 					}
 				}
 				/*else if (ingame.woodrodamakeswitch == true && ingame.tutorial_log_num == 9)
@@ -1650,7 +1650,7 @@ void BlinkingAnimation(void)
 			}
 			else if (ingame.putbridgecount > 35)
 			{
-				DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.putbridge1, TRUE);
+				DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.putbridge1, TRUE);
 			}
 		}
 	}
@@ -1658,7 +1658,7 @@ void BlinkingAnimation(void)
 void WarnTutorial(const Car*car) 
 {
 	
-	DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.warntutorial, TRUE);
+	DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.warntutorial, TRUE);
 	ingame.mitibiki_flag = true;
 	ingame.itemcoment_switch = false;
 }
