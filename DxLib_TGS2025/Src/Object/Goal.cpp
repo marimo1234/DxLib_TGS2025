@@ -56,10 +56,11 @@ void GoalResourceInit(void)
 	//画像の読み込み
 	goal.whiteback_image = LoadGraph("Resource/images/white_back.png");
 	goal.blackback_image = LoadGraph("Resource/images/black_back.png");
-	goal.flag_image[0] = LoadGraph("Resource/images/goal_image1.png");
-	goal.flag_image[1] = LoadGraph("Resource/images/goal_image2.png");
-	goal.flag_image[2] = LoadGraph("Resource/images/goal_image3.png");
-	goal.flag_image[3] = LoadGraph("Resource/images/goal_image4.png");
+	goal.flag_image[0] = LoadGraph("Resource/images/goal_image2-1.png");
+	goal.flag_image[1] = LoadGraph("Resource/images/goal_image2-2.png");
+	goal.flag_image[2] = LoadGraph("Resource/images/goal_image2-3.png");
+	goal.flag_image[3] = LoadGraph("Resource/images/goal_image2-4.png");
+	
 	goal.print_image = LoadGraph("Resource/images/GOAL.png");
 
 	goal.gameover_image = LoadGraph("Resource/images/GAMEOVER.png");
