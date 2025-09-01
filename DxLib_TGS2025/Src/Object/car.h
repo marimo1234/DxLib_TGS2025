@@ -57,13 +57,13 @@ struct Car
     int lake_mul;
 
     //Mole
-    bool mole_flag;
-    int mole_1[4];
-    int mole_2[4];
-    int mole_3[4];
-    int mole_4[4];
-    int mole_5[4];
-    int mole_count;
+    bool mole_flag;     // モグラのアニメーションフラグ
+    int mole_1[5];      // モグラの画像
+    int mole_2[5];
+    int mole_3[5];
+    int mole_4[5];
+    int mole_count;     // モグラのアニメーションカウント
+    int mole_num;       // モグラのアニメーションナンバー
 
     //Smoke
     int smo_img_R[5];

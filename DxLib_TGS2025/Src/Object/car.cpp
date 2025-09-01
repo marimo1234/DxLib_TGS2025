@@ -41,6 +41,8 @@ void CarMoleDraw(float carx, float cary);
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
+void CarMoleAnimation(void);
+
 void CarJetAnimation(void);
 void CarJetDraw(float x, float y, int direction);
 
@@ -85,8 +87,9 @@ void CarInit(void)
 	car.boom_count = 0;//爆発のアニメーションカウント
 	car.boom_num = 0;//爆発のアニメーションナンバー
 
-	car.mole_flag = false;
-	car.mole_count = 0;
+	car.mole_flag = false;// モグラのアニメーションフラグ
+	car.mole_count = 0;// モグラのアニメーションカウント
+	car.mole_num = 0;// モグラのアニメーションナンバー
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -226,11 +229,10 @@ void CarResourceInit(void)
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
 
 	// モグラのゲームオーバーアニメーション画像
-	LoadDivGraph("Resource/images/mole1.png", 4, 4, 1, 100, 100, car.mole_1);
-	LoadDivGraph("Resource/images/mole2.png", 4, 4, 1, 100, 100, car.mole_2);
-	LoadDivGraph("Resource/images/mole3.png", 4, 4, 1, 100, 100, car.mole_3);
-	LoadDivGraph("Resource/images/mole4.png", 4, 4, 1, 100, 100, car.mole_4);
-	LoadDivGraph("Resource/images/mole5.png", 4, 4, 1, 100, 100, car.mole_5);
+	LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
+	LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);
+	LoadDivGraph("Resource/images/GOmole3.png", 5, 5, 1, 100, 100, car.mole_3);
+	LoadDivGraph("Resource/images/GOmole4.png", 5, 5, 1, 100, 100, car.mole_4);
 
 	// 排気ガスの画像
 	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
@@ -283,6 +285,7 @@ void CarManagerUpdate(void)
 		CarSmokeAnimation();
 		CarJetAnimation();
 		CarJetAnimation2();
+		CarMoleAnimation();
 	}
 	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
@@ -326,6 +329,7 @@ void CarDraw(void)
 	DrawFormatString(100, 200, GetColor(255, 255, 255), "%s", car.mole_flag ? "true" : "false");
 	DrawFormatString(100, 300, GetColor(255, 255, 255), "x=%f", car.position.x);
 	DrawFormatString(100, 320, GetColor(255, 255, 255), "y=%f", car.position.y);
+	DrawFormatString(100, 340, GetColor(255, 255, 255), "old.direction=%d", car.old_direction);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -409,8 +413,9 @@ void CarReset(void)
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
 
-	car.mole_flag = false;// モグラが潜るアニメーションフラグ
-	car.mole_count = 0;// モグラが潜るアニメーションカウント
+	car.mole_flag = false;
+	car.mole_count = 0;
+	car.mole_num = 0;
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -1184,14 +1189,26 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
  }
 
+ // モグラ演出のアニメーション
  void CarMoleAnimation(void)
  {
 	 if (car.mole_flag == true)
 	 {
 		 car.mole_count++;
+		 if (car.mole_count > 29 && car.mole_count % 5 == 0&&car.mole_num<4)
+		 {
+			 car.mole_num++;
+		 }
+		 if (car.start == false)
+		 {
+			 car.mole_flag = false;
+			 car.mole_count = 0;
+			 car.mole_num = 0;
+		 }
 	 }
  }
 
+ // モグラ演出の描画
  void CarMoleDraw(float carx, float cary)
  {
 	 if (car.mole_flag == true)
@@ -1199,16 +1216,20 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eRight:
-			 DrawRotaGraphF(carx+50.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+50.0f, cary, 1.0, 0.0, car.mole_3[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
-		 case eLeft:
-			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+		 case eLeft:			 
+			 DrawRotaGraphF(carx-50.0f, cary, 1.0, 0.0, car.mole_4[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
-		 case eUp:
-			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+		 case eUp:			
+			 DrawRotaGraphF(carx, cary - 50.0f, 1.0, 0.0, car.mole_1[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
-		 case eDown:
-			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+		 case eDown:			
+			 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.mole_2[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 }
 	 }
