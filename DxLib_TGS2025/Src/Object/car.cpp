@@ -86,6 +86,7 @@ void CarInit(void)
 	car.boom_num = 0;//爆発のアニメーションナンバー
 
 	car.mole_flag = false;
+	car.mole_count = 0;
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -224,6 +225,7 @@ void CarResourceInit(void)
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
 
+	// モグラのゲームオーバーアニメーション画像
 	LoadDivGraph("Resource/images/mole1.png", 4, 4, 1, 100, 100, car.mole_1);
 	LoadDivGraph("Resource/images/mole2.png", 4, 4, 1, 100, 100, car.mole_2);
 	LoadDivGraph("Resource/images/mole3.png", 4, 4, 1, 100, 100, car.mole_3);
@@ -316,11 +318,12 @@ void CarDraw(void)
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
-	/*CarMoleDraw(car.position.x, car.position.y);*/
+	CarMoleDraw(car.position.x, car.position.y);
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
 	DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "%s", car.mole_flag ? "true" : "false");
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -404,7 +407,8 @@ void CarReset(void)
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
 
-	car.mole_flag = false;
+	car.mole_flag = false;// モグラが潜るアニメーションフラグ
+	car.mole_count = 0;// モグラが潜るアニメーションカウント
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -1180,26 +1184,29 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 
  void CarMoleAnimation(void)
  {
-
+	 if (car.mole_flag == true)
+	 {
+		 car.mole_count++;
+	 }
  }
 
  void CarMoleDraw(float carx, float cary)
  {
 	 if (car.mole_flag == true)
 	 {
-		 switch (car.direction)
+		 switch (car.old_direction)
 		 {
 		 case eRight:
-			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eUp:
-			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx+80, cary, 1.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 }
 	 }

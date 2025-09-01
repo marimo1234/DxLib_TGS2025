@@ -63,6 +63,7 @@ struct Car
     int mole_3[4];
     int mole_4[4];
     int mole_5[4];
+    int mole_count;
 
     //Smoke
     int smo_img_R[5];
