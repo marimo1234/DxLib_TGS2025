@@ -294,7 +294,7 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false)
+	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false&&car.mole_flag==false)
 	{
 		CarSmokeDraw(car.position.x, car.position.y);
 		if (car.direction == eUp)
@@ -323,7 +323,9 @@ void CarDraw(void)
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
 	DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);
-	DrawFormatString(100, 100, GetColor(255, 255, 255), "%s", car.mole_flag ? "true" : "false");
+	DrawFormatString(100, 200, GetColor(255, 255, 255), "%s", car.mole_flag ? "true" : "false");
+	DrawFormatString(100, 300, GetColor(255, 255, 255), "x=%f", car.position.x);
+	DrawFormatString(100, 320, GetColor(255, 255, 255), "y=%f", car.position.y);
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
@@ -1197,16 +1199,16 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eRight:
-			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+50.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eUp:
-			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx+80.0f, cary, 2.0, 0.0, car.mole_1[0], TRUE);
+			 DrawRotaGraphF(carx+80.0f, cary, 1.0, 0.0, car.mole_1[0], TRUE);
 			 break;
 		 }
 	 }
