@@ -11,6 +11,8 @@
 #include <math.h>
 #define MAP_TROUT_LENGTH (80)
 #define SNOW_BALL_MAX  (6)
+#define SNOW_VEC_X  (0.1)
+#define SNOW_VEC_Y  (0.1)
 
 CreateStage stage;
 SnowBall snow;
@@ -285,34 +287,33 @@ void SnowBallMove(void)
 {
 	snow.cnt++;
 
-
 	if (snow.cnt > 90)
 	{
-		//eRight(2)だから+2　eRight または　eLeft が入る
+		//ランダムで方向が変わるようにする
 		for (int i = 0; i < SNOW_BALL_MAX; i++)
 		{
 			snow.dir[i] = GetRand(1) + 2;
 		}
 		snow.cnt = 0;
 	}
-
-
+	
 	for (int i = 0; i < SNOW_BALL_MAX; i++)
 	{
 		//方向
 		if (snow.dir[i] == eRight)
 		{
-			snow.vec_x[i] = 0.1f;
+			snow.vec_x[i] = SNOW_VEC_X;
 		}
 		else if (snow.dir[i] == eLeft)
 		{
-			snow.vec_x[i] = -0.1f;
+			snow.vec_x[i] = -SNOW_VEC_X;
 		}
 
-		snow.vec_y[i] = 0.1f;
+		snow.vec_y[i] = SNOW_VEC_Y;
 		snow.add_x[i] += snow.vec_x[i];
 		snow.add_y[i] += snow.vec_y[i];
 
+		//枠外に行ったら初期値に戻す
 		if (snow.add_y[i] > 70.0f)
 		{
 			snow.add_x[i] = i * 10.0f + 10.0f;
