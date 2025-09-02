@@ -19,10 +19,15 @@ struct InGame
 	bool start;
 	int stage_num;
 	bool next_stage_flag;
+
+	// マニュアル
 	bool manual_open;
 	int manual_image;
+
 	int space;
 	int back;
+
+	//　メニュー
 	bool menu_flag;
 	int menu_num;
 	int menu_image;
@@ -32,14 +37,17 @@ struct InGame
 	float menu_cursor_y;
 	float char_extrate[7];
 
+	//ゴールメニュー
 	bool goalmenu_flag;
 	int goalmenu_num;
 	int goalmenu_image;
 	float goalmenu_cursor_x;
 	float goalmenu_cursor_y;
 
+	
 	bool goalselect_flag;
 
+	//メニューマニュアル
 	bool menu_manual_flag;
 	int  menu_manual_image;
 
@@ -47,12 +55,18 @@ struct InGame
 
 	bool gameover_se_flag;
 
+	//スタートカウントダウン
 	int cnt;
 	int num_img[6];
 	int num_idx;
+	int num_tt; //透過率 transmittance
 	int start_img;
 	int start_cnt;
+	int start_tt;//透過率 transmittance
+	
 
+
+	//チュートリアル
 	int tutorial_log;
 	int tutorial_log_num;
 	int mitibikikun;
