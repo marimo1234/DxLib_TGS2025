@@ -20,6 +20,12 @@
 #define COUNT_MAX		(180)  //カウントダウンの秒数
 #define START_COUNT_MAX		(80)  //カウントダウンの秒数
 
+#define NUM_TT_ADD	(40)  //フェードインの透過率上昇
+#define NUM_TT_SUB	(15)  //フェードアウトの透過率減少
+#define NUM_TT_MAX	(256)  //透過率の最大
+#define NUM_TT_MIN	(0)  //透過率の最小
+
+
 //確認用変数　後に消します
 int atr;
 int btr;
@@ -84,8 +90,12 @@ void InGameSceneInit(void)
 
 	ingame.num_idx = COUNT_NUM_INDEX;   //カウントダウンインデックス
 	ingame.cnt = 0;   //カウントダウン用変数
+	ingame.num_tt = 0; // カウントダウンの透過率
 	ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
+	ingame.start_tt = 0;// STSRTの透過率
 	sound.stop_p = 0;
+	
+	
 
 	ingame.mitibiki_flag = false;
 	ingame.tutorial_achievements = 1;
@@ -298,7 +308,19 @@ eSceneType InGameSceneUpdate()
 	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX)
 	{
 		ingame.start_cnt++;
+		// インゲームを40で割った商
+		int tt_quotient = ingame.start_cnt / 40;
+
+		if (tt_quotient % 2 == 0 && ingame.start_tt < NUM_TT_MAX)
+		{
+			ingame.start_tt += NUM_TT_ADD;
+		}
+		else if (tt_quotient % 2 == 1 && ingame.start_tt > NUM_TT_MIN)
+		{
+			ingame.start_tt += -NUM_TT_SUB;
+		}
 	}
+
 	//メニューセレクトの分岐
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 	if (ingame.mitibiki_flag == false)
@@ -448,7 +470,10 @@ void InGameSceneDraw(void)
 	// カウントダウン描画
 	if (ingame.start == false && ingame.menu_flag == false && ingame.stage_num != eOne)
 	{
-		DrawRotaGraphF(640.0f, 100.0f, 0.5, 0.0, ingame.num_img[ingame.num_idx], TRUE);
+		//画像の透過率
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, ingame.num_tt);
+		DrawRotaGraphF(640.0f, 330.0f, 0.7, 0.0, ingame.num_img[ingame.num_idx], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 		if (CheckSoundMem(sound.count) == 0)
 		{
 			SetCurrentPositionSoundMem(sound.stop_p, sound.count);
@@ -456,8 +481,10 @@ void InGameSceneDraw(void)
 			ChangeVolumeSoundMem(150, sound.count);
 		}
 	}
+
 	//カウントダウン後のスタートテキストの描画
 	StartTextDraw();
+
 	//Startボタンが押されたときにだすセレクト画面
 	MenuDraw();
 
@@ -471,7 +498,7 @@ void InGameSceneDraw(void)
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
 
-	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.start_cnt);*/
+	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.num_tt);*/
 }
 
 const InGame* GetInGame(void)
@@ -505,22 +532,6 @@ void GameStart(void)
 			InGameStartCount();
 			InGameCountAnim();
 		}
-		////Yを押したら操作説明が出る
-		//if (ingame.manual_open == false && ingame.start == false && ingame.menu_flag == false)
-		//{
-		//	if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::eRelease)
-		//	{
-		//		ingame.manual_open = true;
-		//	}
-		//}
-		////Bボタンで操作説明画面から戻る
-		//else if (ingame.manual_open == true)
-		//{
-		//	if (pad_input->GetButtonInputState(XINPUT_BUTTON_B) == ePadInputState::eRelease)
-		//	{
-		//		ingame.manual_open = false;
-		//	}
-		//}
 	}
 }
 
@@ -541,11 +552,24 @@ void InGameStartCount(void)
 	}
 }
 
+//　カウントダウンアニメーション
 void InGameCountAnim(void)
 {
 	if (ingame.cnt != 0 && ingame.cnt % 60 == 0)
 	{
 		ingame.num_idx--;
+	}
+
+	// インゲームを30で割った商
+	int tt_quotient = ingame.cnt / 30;
+
+	if (tt_quotient % 2 == 0 && ingame.num_tt < NUM_TT_MAX)
+	{
+		ingame.num_tt += NUM_TT_ADD;
+	}
+	else if (tt_quotient % 2 == 1 && ingame.num_tt > NUM_TT_MIN)
+	{
+		ingame.num_tt += -NUM_TT_SUB;
 	}
 }
 //ステージの番号を取得
@@ -558,7 +582,9 @@ void StartTextDraw(void)
 {
 	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX && ingame.stage_num != eOne)
 	{
-		DrawRotaGraphF(640.0f, 100.0f, 1.0, 0.0, ingame.start_img, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, ingame.start_tt);
+		DrawRotaGraphF(640.0f, 330.0f, 1.6, 0.0, ingame.start_img, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
 //インゲームsound初期化
