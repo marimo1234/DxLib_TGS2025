@@ -167,7 +167,7 @@ void GoalDraw(void)
 	}
 	GameOverDraw(GetGameOver());
 
-	DrawFormatString(100, 100, GetColor(255, 255, 0), "%d\n%d", goal.flag_cnt, goal.flag_idx);
+	//DrawFormatString(100, 100, GetColor(255, 255, 0), "%d\n%d", goal.flag_cnt, goal.flag_idx);
 }
 	
 
