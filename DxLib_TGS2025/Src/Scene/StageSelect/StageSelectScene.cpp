@@ -441,34 +441,35 @@ void NumTroutDraw(void)
 
 	//スピードスターの描画
 	DrawStar();
-
+	ChangeFont("游ゴシック");                     //種類をMS明朝に変更
+	ChangeFontType(DX_FONTTYPE_ANTIALIASING);     //アンチエイリアスフォントに変更
 	//ステージの概要コメント
 	switch (ss_num.stg_num)
 	{
 	case 0:
 
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "チュートリアルステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "まずはこのステージで基本を身につけよう！ ");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "チュートリアルステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "まずはこのステージで基本を身につけよう！ ");
 		break;
 	case 1:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "初心者向けステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "基本を覚えたらこのステージで腕試し！");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "初心者向けステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "基本を覚えたらこのステージで腕試し！");
 		break;
 	case 2:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "資材管理がカギとなるステージ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "岩が少ないから、資材の使い方に工夫が必要だよ！ ");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "資材管理がカギとなるステージ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "岩が少ないから、資材の使い方に工夫が必要だよ！ ");
 		break;
 	case 3:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水と陸が入り混じるステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "道の切り替えを見極めて、落ち着いてつなげよう！ ");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水と陸が入り混じるステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "道の切り替えを見極めて、落ち着いてつなげよう！ ");
 		break;
 	case 4:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水辺を舞台にした高速ステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "油断すると一瞬でミスにつながるよ！ ");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水辺を舞台にした高速ステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "油断すると一瞬でミスにつながるよ！ ");
 		break;
 	case 5:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "最難関ステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "資材の数、スピード、配置　すべてが最高難易度DA☆！ ");
+		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "最難関ステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "資材の数、スピード、配置　すべてが最高難易度DA☆ ");
 		break;
 	}
 	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
