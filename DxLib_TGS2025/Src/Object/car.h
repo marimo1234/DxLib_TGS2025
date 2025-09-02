@@ -62,8 +62,15 @@ struct Car
     int mole_2[5];
     int mole_3[5];
     int mole_4[5];
+    int mole_carR[5];   // 落ちていく車
+    int mole_carL[5];
+    int mole_carU[5];
+    int mole_carD[5];
     int mole_count;     // モグラのアニメーションカウント
     int mole_num;       // モグラのアニメーションナンバー
+    int mole_car_num;   // 車の画像番号
+    float car_angle;    // 車の角度
+    float add_carp;     // 車の位置調整
 
     //Smoke
     int smo_img_R[5];
