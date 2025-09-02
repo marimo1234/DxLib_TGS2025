@@ -352,9 +352,9 @@ void Delete_Mole(const Car* car,const Tool* tool)
 			}
 			break;
 		case eDown:
-			if (stage.array[tool->base_x + 1][tool->base_y + 1] == 3)
+			if (stage.array[tool->base_x][tool->base_y + 1] == 3)
 			{
-				stage.array[tool->base_x + 1][tool->base_y + 1] = 0;
+				stage.array[tool->base_x][tool->base_y + 1] = 0;
 			}
 			break;
 		}
