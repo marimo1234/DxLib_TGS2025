@@ -1267,9 +1267,18 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx, cary - car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carU[car.mole_car_num], TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.mole_2[car.mole_num], TRUE);
-			 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
+			 if (car.mole_num < 4)
+			 {
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
+				 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.mole_2[car.mole_num], TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.mole_2[car.mole_num], TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
+			 }
 			 break;
 		 }
 	 }
