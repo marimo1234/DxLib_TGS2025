@@ -448,27 +448,27 @@ void NumTroutDraw(void)
 	case 0:
 
 		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "チュートリアルステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "はじめてはこのステージからやろう！ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "まずはこのステージで基本を身につけよう！ ");
 		break;
 	case 1:
 		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "初心者向けステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "チュートリアルステージの次はこのステージをやろう！ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "基本を覚えたらこのステージで腕試し！");
 		break;
 	case 2:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "資材集めのステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車に追いつかれないように気を付けて資材を集めよう！ ");
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "資材管理がカギとなるステージ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "岩が少ないから、資材の使い方に工夫が必要だよ！ ");
 		break;
 	case 3:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水陸交互のステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "作る道の切り替えが重要！混乱しないで道を繋げよう！ ");
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水と陸が入り混じるステージ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "道の切り替えを見極めて、落ち着いてつなげよう！ ");
 		break;
 	case 4:
-		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水辺のステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車が早くなってるからミスをしないよう気を付けよう！ ");
+		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "水辺を舞台にした高速ステージ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "油断すると一瞬でミスにつながるよ！ ");
 		break;
 	case 5:
 		DrawExtendFormatString(325, 540, 1.4, 1.5, GetColor(0, 0, 0), "最難関ステージ ");
-		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "車が最速で走るから、道繋ぎと資材集めを交互にやろう！ ");
+		DrawExtendFormatString(325, 575, 1.4, 1.5, GetColor(0, 0, 0), "資材の数、スピード、配置　すべてが最高難易度DA☆！ ");
 		break;
 	}
 	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
