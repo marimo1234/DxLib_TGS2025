@@ -332,11 +332,7 @@ void CarDraw(void)
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
-	DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);
-	DrawFormatString(100, 200, GetColor(255, 255, 255), "%s", car.start ? "true" : "false");
-	DrawFormatString(100, 300, GetColor(255, 255, 255), "x=%f", car.position.x);
-	DrawFormatString(100, 320, GetColor(255, 255, 255), "y=%f", car.position.y);
-	DrawFormatString(100, 340, GetColor(255, 255, 255), "car.mole_count=%d", car.mole_count);
+	/*DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);*/
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
