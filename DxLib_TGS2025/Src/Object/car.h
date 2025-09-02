@@ -58,10 +58,15 @@ struct Car
 
     //Mole
     bool mole_flag;     // モグラのアニメーションフラグ
+    bool woodmole_flag;
     int mole_1[5];      // モグラの画像
     int mole_2[5];
     int mole_3[5];
     int mole_4[5];
+    int woodmole_1[5];  // 木のモグラの画像
+    int woodmole_2[5];
+    int woodmole_3[5];
+    int woodmole_4[5];
     int mole_carR[5];   // 落ちていく車
     int mole_carL[5];
     int mole_carU[5];

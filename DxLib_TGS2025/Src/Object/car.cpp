@@ -36,12 +36,14 @@ void CarLakeDraw(int carx, int cary,const InGame*ingame);
 void CarBoomAnimation(void);
 void CarBoomDraw(int carx, int cary);
 
+void CarMoleAnimation(void);
 void CarMoleDraw(float carx, float cary);
+void CarWoodMoleDraw(float carx, float cary);
 
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
 
-void CarMoleAnimation(void);
+
 
 void CarJetAnimation(void);
 void CarJetDraw(float x, float y, int direction);
@@ -88,6 +90,7 @@ void CarInit(void)
 	car.boom_num = 0;//爆発のアニメーションナンバー
 
 	car.mole_flag = false;// モグラのアニメーションフラグ
+	car.woodmole_flag = false;
 	car.mole_count = 0;// モグラのアニメーションカウント
 	car.mole_num = 0;// モグラのアニメーションナンバー
 	car.mole_car_num = 0;
@@ -236,6 +239,10 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);
 	LoadDivGraph("Resource/images/GOmole3.png", 5, 5, 1, 100, 100, car.mole_3);
 	LoadDivGraph("Resource/images/GOmole4.png", 5, 5, 1, 100, 100, car.mole_4);
+	LoadDivGraph("Resource/images/GOwoodmole1.png", 5, 5, 1, 100, 100, car.woodmole_1);
+	LoadDivGraph("Resource/images/GOwoodmole2.png", 5, 5, 1, 100, 100, car.woodmole_2);
+	LoadDivGraph("Resource/images/GOwoodmole3.png", 5, 5, 1, 100, 100, car.woodmole_3);
+	LoadDivGraph("Resource/images/GOwoodmole4.png", 5, 5, 1, 100, 100, car.woodmole_4);
 	LoadDivGraph("Resource/images/GOmole_carR.png", 5, 5, 1, 200, 200, car.mole_carR);
 	LoadDivGraph("Resource/images/GOmole_carL.png", 5, 5, 1, 200, 200, car.mole_carL);
 	LoadDivGraph("Resource/images/GOmole_carU.png", 5, 5, 1, 200, 200, car.mole_carU);
@@ -304,7 +311,7 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false&&car.mole_flag==false)
+	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false&&car.mole_flag==false&&car.woodmole_flag==false)
 	{
 		CarSmokeDraw(car.position.x, car.position.y);
 		if (car.direction == eUp)
@@ -329,6 +336,7 @@ void CarDraw(void)
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
 	CarMoleDraw(car.position.x, car.position.y);
+	CarWoodMoleDraw(car.position.x, car.position.y);
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
@@ -417,6 +425,7 @@ void CarReset(void)
 	car.boom_num = 0;//爆発するアニメーションナンバー
 
 	car.mole_flag = false;
+	car.woodmole_flag = false;
 	car.mole_count = 0;
 	car.mole_num = 0;
 	car.add_carp = 0.0f;
@@ -807,7 +816,7 @@ void GameOverBranch(int stg_arr)
 		}
 		break;
 	case 1:case 2:
-	case 9: case 10:
+	case 9: 
 		if (car.next_y[car.road_count] != 0)
 		{
 			car.boom_flag = true;
@@ -819,12 +828,18 @@ void GameOverBranch(int stg_arr)
 			car.mole_flag = true;
 		}
 		break;
+	case 10:
+		if (car.next_y[car.road_count] != 0)
+		{
+			car.woodmole_flag = true;
+		}
+		break;
 	default:
 		car.ivy_flag = true;
 		break;
 	}
 
-	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true)
+	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true&&car.woodmole_flag!=true)
 	{
 		car.ivy_flag = true;
 	}
@@ -1198,7 +1213,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  // モグラ演出のアニメーション
  void CarMoleAnimation(void)
  {
-	 if (car.mole_flag == true)
+	 if (car.mole_flag == true||car.woodmole_flag==true)
 	 {
 		 car.mole_count++;
 		 // モグラが潜る画像の切り替え
@@ -1232,14 +1247,6 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 else
 		 {
 			 car.car_angle = 0.0f;
-		 }
-
-
-		 if (car.start == false)
-		 {
-			 car.mole_flag = false;
-			 car.mole_count = 0;
-			 car.mole_num = 0;
 		 }
 	 }
  }
@@ -1276,6 +1283,45 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 else
 			 {
 				 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.mole_2[car.mole_num], TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
+			 }
+			 break;
+		 }
+	 }
+ }
+
+ void CarWoodMoleDraw(float carx, float cary)
+ {
+	 if (car.woodmole_flag == true)
+	 {
+		 switch (car.old_direction)
+		 {
+		 case eRight:
+			 DrawRotaGraphF(carx + 50.0f, cary, 1.0, 0.0, car.woodmole_3[car.mole_num], TRUE);											// モグラ
+			 DrawRotaGraphF(carx + car.add_carp * 0.8f, cary, 1.0, 0.0, gameover.circle, TRUE);										// ライト
+			 DrawRotaGraphF(carx + car.add_carp * 0.8f, cary, 0.4, (double)car.car_angle, car.mole_carR[car.mole_car_num], TRUE);	// 車
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx - 50.0f, cary, 1.0, 0.0, car.woodmole_4[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx - car.add_carp * 0.8f, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx - car.add_carp * 0.8f, cary, 0.4, (double)car.car_angle, car.mole_carL[car.mole_car_num], TRUE);
+			 break;
+		 case eUp:
+			 DrawRotaGraphF(carx, cary - 50.0f, 1.0, 0.0, car.woodmole_1[car.mole_num], TRUE);
+			 DrawRotaGraphF(carx, cary - car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary - car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carU[car.mole_car_num], TRUE);
+			 break;
+		 case eDown:
+			 if (car.mole_num < 4)
+			 {
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
+				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
+				 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.woodmole_2[car.mole_num], TRUE);
+			 }
+			 else
+			 {
+				 DrawRotaGraphF(carx, cary + 50.0f, 1.0, 0.0, car.woodmole_2[car.mole_num], TRUE);
 				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 1.0, 0.0, gameover.circle, TRUE);
 				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
 			 }

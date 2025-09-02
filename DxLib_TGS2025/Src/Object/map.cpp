@@ -26,6 +26,7 @@ int ikl;
 void Stage_Start(const InGame* ingame);
 void StageLoad();
 void Delete_Mole(const Car* car,const Tool* tool);
+void Delete_WoodMole(const Car* car, const Tool* tool);
 void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y);
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
@@ -85,6 +86,7 @@ void MapUpdate(void)
 
 		// ゲームオーバー時にモグラの演出ならモグラを消す
 		Delete_Mole(GetCar(),Get_Tool());
+		Delete_WoodMole(GetCar(),Get_Tool());
 
 		for (int j = 0; j < 7; j++)
 		{
@@ -361,6 +363,41 @@ void Delete_Mole(const Car* car,const Tool* tool)
 	}
 }
 
+// ゲームオーバーの時に木のモグラの描画を消す
+void Delete_WoodMole(const Car* car, const Tool* tool)
+{
+	if (car->woodmole_flag == true)
+	{
+		switch (car->old_direction)
+		{
+		case eRight:
+			if (stage.array[tool->base_x + 1][tool->base_y] == 10)
+			{
+				stage.array[tool->base_x + 1][tool->base_y] = 0;
+			}
+			break;
+		case eLeft:
+			if (stage.array[tool->base_x - 1][tool->base_y] == 10)
+			{
+				stage.array[tool->base_x - 1][tool->base_y] = 0;
+			}
+			break;
+		case eUp:
+			if (stage.array[tool->base_x][tool->base_y - 1] == 10)
+			{
+				stage.array[tool->base_x][tool->base_y - 1] = 0;
+			}
+			break;
+		case eDown:
+			if (stage.array[tool->base_x][tool->base_y + 1] == 10)
+			{
+				stage.array[tool->base_x][tool->base_y + 1] = 0;
+			}
+			break;
+		}
+	}
+}
+
 //カーソルの位置と対応している配列の中身を道に変更
 void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 {
@@ -369,7 +406,6 @@ void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 		stage.array[x][y] = 4;
 	}
 }
-
 
 //カーソルの位置と対応している配列の中身を丸太の道に変更
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor,int x,int y)
@@ -380,8 +416,6 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 		stage.array[x][y] = 5;
 	}
 }
-
-
 
 //岩を消すフラグがtrueなら消す
 void Delete_WoodRock(const Wood* wood,const Rock* rock)
@@ -434,6 +468,7 @@ void MolePutRock(const Mole* mole, int x, int y)
 	}
 
 }
+
 
 void MolePutWood(const Mole* mole,int x, int y)
 {
