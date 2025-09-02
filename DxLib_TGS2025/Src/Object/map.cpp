@@ -25,6 +25,7 @@ int ikl;
 
 void Stage_Start(const InGame* ingame);
 void StageLoad();
+void Delete_Mole(const Car* car,const Tool* tool);
 void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y);
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
 void Delete_WoodRock(const Wood* wood, const Rock* rock);
@@ -81,6 +82,9 @@ void MapUpdate(void)
 
 		//採取した後に描画を消す
 		Delete_WoodRock(GetWood(), GetRock());
+
+		// ゲームオーバー時にモグラの演出ならモグラを消す
+		Delete_Mole(GetCar(),Get_Tool());
 
 		for (int j = 0; j < 7; j++)
 		{
@@ -322,7 +326,40 @@ void SnowBallMove(void)
 	}
 }
 
-
+// ゲームオーバーの時にモグラの描画を消す
+void Delete_Mole(const Car* car,const Tool* tool)
+{
+	if (car->mole_flag == true)
+	{
+		switch (car->old_direction)
+		{
+		case eRight:
+			if (stage.array[tool->base_x + 1][tool->base_y] == 3)
+			{
+				stage.array[tool->base_x + 1][tool->base_y] = 0;
+			}
+			break;
+		case eLeft:
+			if (stage.array[tool->base_x - 1][tool->base_y] == 3)
+			{
+				stage.array[tool->base_x - 1][tool->base_y] = 0;
+			}
+			break;
+		case eUp:
+			if (stage.array[tool->base_x][tool->base_y - 1] == 3)
+			{
+				stage.array[tool->base_x][tool->base_y - 1] = 0;
+			}
+			break;
+		case eDown:
+			if (stage.array[tool->base_x + 1][tool->base_y + 1] == 3)
+			{
+				stage.array[tool->base_x + 1][tool->base_y + 1] = 0;
+			}
+			break;
+		}
+	}
+}
 
 //カーソルの位置と対応している配列の中身を道に変更
 void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y)
