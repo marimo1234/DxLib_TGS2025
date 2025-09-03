@@ -141,6 +141,12 @@ void StageSelectResourceInit(void)
 		stg_sel.car_up_img[1] = LoadGraph("Resource/images/car2_up2.png");
 		stg_sel.car_down_img[0] = LoadGraph("Resource/images/car2_down.png");
 		stg_sel.car_down_img[1] = LoadGraph("Resource/images/car2_down2.png");
+		stg_sel.stageselectcoment[0]= LoadGraph("Resource/images/StageSelectComent1.png");
+		stg_sel.stageselectcoment[1] = LoadGraph("Resource/images/StageSelectComent2.png");
+		stg_sel.stageselectcoment[2] = LoadGraph("Resource/images/StageSelectComent3.png");
+		stg_sel.stageselectcoment[3] = LoadGraph("Resource/images/StageSelectComent4.png");
+		stg_sel.stageselectcoment[4] = LoadGraph("Resource/images/StageSelectComent5.png");
+		stg_sel.stageselectcoment[5] = LoadGraph("Resource/images/StageSelectComent6.png");
 		break;
 	case 6:
 		//画像の取得

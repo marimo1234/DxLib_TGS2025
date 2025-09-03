@@ -32,6 +32,8 @@ struct StageSelect
 	Vector2D position;
 	int cursor_se;
 	int button_se;
+
+	int stageselectcoment[6];
 	
 };
 
