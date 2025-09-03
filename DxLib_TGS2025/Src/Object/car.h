@@ -76,6 +76,8 @@ struct Car
     int mole_car_num;   // 車の画像番号
     float car_angle;    // 車の角度
     float add_carp;     // 車の位置調整
+    int surprised_se;   // モグラがびっくりする音
+    int drop_se;        // 車が落ちる音
 
     //Smoke
     int smo_img_R[5];

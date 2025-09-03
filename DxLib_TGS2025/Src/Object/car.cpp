@@ -247,6 +247,8 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/GOmole_carL.png", 5, 5, 1, 200, 200, car.mole_carL);
 	LoadDivGraph("Resource/images/GOmole_carU.png", 5, 5, 1, 200, 200, car.mole_carU);
 	LoadDivGraph("Resource/images/GOmole_carD.png", 5, 5, 1, 200, 200, car.mole_carD);
+	car.surprised_se = LoadSoundMem("Resource/Sounds/surprised.mp3");
+	car.drop_se = LoadSoundMem("Resource/Sounds/drop.mp3");
 
 	// 排気ガスの画像
 	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
@@ -1217,15 +1219,15 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 {
 		 car.mole_count++;
 		 // モグラが潜る画像の切り替え
-		 if (car.mole_count > 9 && car.mole_count % 5 == 0 && car.mole_num < 4)
+		 if (car.mole_count > 20 && car.mole_count % 5 == 0 && car.mole_num < 4)
 		 {
 			 car.mole_num++;
 		 }
 
 		 // 車
-		 if (car.mole_count < 60)
+		 if (car.mole_count>20&&car.mole_count < 80)
 		 {
-			 car.add_carp = (float)car.mole_count;		// 車を少し移動
+			 car.add_carp = (float)car.mole_count-20.0f;		// 車を少し移動
 		 }
 		 else if (car.mole_count > 100 && car.mole_count % 2 == 0 && car.mole_car_num < 4)
 		 {
@@ -1288,9 +1290,22 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 }
 			 break;
 		 }
+
+		 // びっくり音
+		 if (car.mole_count == 1)
+		 {
+			 Play_Sound_Car(car.surprised_se, 100);
+		 }
+
+		 if (car.mole_count == 100)
+		 {
+			 Play_Sound_Car(car.drop_se, 100);
+		 }
+
 	 }
  }
 
+ // 木のモグラの演出の描画
  void CarWoodMoleDraw(float carx, float cary)
  {
 	 if (car.woodmole_flag == true)
@@ -1326,6 +1341,17 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 DrawRotaGraphF(carx, cary + car.add_carp * 0.8f, 0.4, (double)car.car_angle, car.mole_carD[car.mole_car_num], TRUE);
 			 }
 			 break;
+		 }
+
+		 // びっくり音
+		 if (car.mole_count == 1)
+		 {
+			 Play_Sound_Car(car.surprised_se,100);
+		 }
+
+		 if (car.mole_count == 100)
+		 {
+			 Play_Sound_Car(car.drop_se, 100);
 		 }
 	 }
  }
