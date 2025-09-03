@@ -24,6 +24,8 @@ struct Title
 	int cursor_se;
 	int button_se;
 
+	float er[3]; // 拡大率　extrate
+
 
 };
 void TitleSceneInit(void);

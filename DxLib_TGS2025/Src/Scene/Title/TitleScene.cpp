@@ -13,6 +13,8 @@ static Fade fade;
 static bool is_fading = false;
 
 void Play_Title_SE(int sound, int volume);
+void ChangeCharExtrate_T(void);
+
 
 Title title;
 
@@ -80,14 +82,20 @@ void TitleResourceInit(void)
 void TitleSceneInit(void)
 {
 	title.cursor_x = 370.0f;
-	title.cursor_y = 450.0f+title.char_num * 90.0f;
+	title.cursor_y = 455.0f + title.char_num * 90.0f;
 	title.mole_num = 0;
 	title.mole_count = 0;
 	title.mole_move = 0;
 	title.mole_active = GetRand(2) + 1;
 	title.name_count = 0;
 	title.name_num = 0;
-	
+
+	title.er[0] = 0.7f;
+	for (int i = 1; i < 3; i++)
+	{
+		title.er[i] = 0.6f;
+	}
+
 	Play_Title_BGM();
 	fade.Initialize(true);
 	is_fading = true;
@@ -108,6 +116,7 @@ eSceneType TitleSceneUpdate(void)
 
 	TitleCursorUpdate();
 	TitleNameAnimation();
+	ChangeCharExtrate_T();
 	title.mole_count++;
 
 	
@@ -167,18 +176,23 @@ eSceneType TitleSceneUpdate(void)
 //タイトルシーン描画
 void TitleSceneDraw(void)
 {
+	//　タイトル背景画像
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
+	//　タイトル画像
 	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image[title.name_num], TRUE);
+	//　Aボタンの画像
 	DrawRotaGraphF(900.0f, 680.0f, 1.0, 0.0, title.control_image, TRUE);
 
-	//モグラの描画
+	//　モグラの描画
 	TitleMoleDraw();
 
+	// タイトルのバーの画像
 	for (int i = 0; i < 3; i++)
 	{
-		DrawRotaGraphF(640.0f, 450.0f+90.0f*i, 0.6, 0.0, title.char_image[i], TRUE);
+		DrawRotaGraphF(640.0f, 450.0f + 90.0f * i, title.er[i], 0.0, title.char_image[i], TRUE);
 	}
 
+	// 矢印の画像
 	DrawRotaGraphF(title.cursor_x, title.cursor_y , 1.0, 0.0, title.cursor_image, TRUE);
 
 	//DrawFormatString(120, 120, GetColor(255, 255, 255), "%d", title.mole_count);
@@ -207,7 +221,7 @@ void TitleCursorUpdate(void)
 			title.char_num =2 ;
 		}
 
-		title.cursor_y = 450.0f + title.char_num * 90.0f;
+		title.cursor_y = 455.0f + title.char_num * 90.0f;
 	}
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_DPAD_DOWN) == ePadInputState::ePress)
 	{
@@ -215,7 +229,7 @@ void TitleCursorUpdate(void)
 		title.char_num++;
 		title.char_num = title.char_num % 3;
 
-		title.cursor_y = 450.0f + title.char_num * 90.0f;
+		title.cursor_y = 455.0f + title.char_num * 90.0f;
 	}
 }
 
@@ -239,6 +253,7 @@ void Stop_BGM(void)
 	StopSoundMem(title.bgm);
 }
 
+//　タイトルのモグラ描画
 void TitleMoleDraw(void)
 {
 	DrawRotaGraphF(420.0f, 380.0f, 0.5, 0.0, title.mole_image[0], TRUE);
@@ -260,6 +275,7 @@ void TitleMoleDraw(void)
 	
 }
 
+//　タイトルアニメーション
 void TitleNameAnimation(void)
 {
 	title.name_count++;
@@ -272,4 +288,15 @@ void TitleNameAnimation(void)
 		title.name_count = 0;
 		title.name_num = 0;
 	}
+}
+
+//メニュー画面の文字の拡大率処理
+void ChangeCharExtrate_T(void)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		title.er[i] = 0.6f;
+	}
+	title.er[title.char_num] = 0.7f;
+	
 }
