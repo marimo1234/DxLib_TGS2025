@@ -12,7 +12,7 @@ int WakeUp(void)
 	//Log.txtの生成をしない
 	SetOutApplicationLogValidFlag(TRUE);
 	//ウィンドウモードで起動
-	ChangeWindowMode(TRUE);
+	ChangeWindowMode(FALSE);
 	//ウィンドウサイズを決める
 	SetGraphMode(D_WINDOW_SIZE_X, D_WINDOW_SIZE_Y, D_COLOR_BIT);
 	//ウィンドウがアクティブでなくても動く
