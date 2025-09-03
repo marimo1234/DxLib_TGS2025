@@ -472,6 +472,8 @@ void NumTroutDraw(void)
 		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "資材の数、スピード、配置　すべてが最高難易度DA☆ ");
 		break;
 	}
+	ChangeFont("ＭＳ ゴシック");                     //種類をMS明朝に変更
+	ChangeFontType(DX_FONTTYPE_NORMAL);     //アンチエイリアスフォントに変更
 	//DrawFormatString(100, 50, GetColor(255, 255, 255), "%d %d \n %f %f", ss_num.d_flag, ss_num.u_flag,ss_num.x,ss_num.y);
 }
 
