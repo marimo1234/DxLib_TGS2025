@@ -1240,14 +1240,14 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  {
 	 if (car.snow_flag == true)
 	 {
-		 car.boom_count++;
+		 car.snow_count++;
 		 if (car.snow_count > 30 && car.snow_count % 10 == 0 && car.snow_num < 5)
 		 {
 			 car.snow_num++;
 		 }
 		 if (car.snow_num == 6)
 		 {
-			 car.snow_num = 4;
+			 car.snow_num = 5;
 		 }
 		 if (car.start == false)
 		 {
