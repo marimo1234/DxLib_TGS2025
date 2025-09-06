@@ -315,6 +315,7 @@ void CarManagerUpdate(void)
 		CarIvyAnimation();
 		CarLakeAnimation();
 		CarBoomAnimation();
+		CarSnowAnimation();
 		CarSmokeAnimation();
 		CarJetAnimation();
 		CarJetAnimation2();
@@ -1241,13 +1242,9 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.snow_flag == true)
 	 {
 		 car.snow_count++;
-		 if (car.snow_count > 30 && car.snow_count % 10 == 0 && car.snow_num < 5)
+		 if (car.snow_count > 30 && car.snow_count % 13 == 0 && car.snow_num < 4)
 		 {
 			 car.snow_num++;
-		 }
-		 if (car.snow_num == 6)
-		 {
-			 car.snow_num = 5;
 		 }
 		 if (car.start == false)
 		 {
@@ -1694,8 +1691,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFive:
 		car.current_x = 1;//ステージ⑤の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.4f;
-		car.speed.y = 0.4f;
+		car.speed.x = 0.25f;
+		car.speed.y = 0.25f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 50.0f;
