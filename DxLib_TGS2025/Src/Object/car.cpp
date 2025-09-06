@@ -31,10 +31,15 @@ void GameOverBranch(int stg_arr);
 
 void CarIvyAnimation(void);
 void CarIvyDraw(int carx, int cary);
+
 void CarLakeAnimation(void);
 void CarLakeDraw(int carx, int cary,const InGame*ingame);
+
 void CarBoomAnimation(void);
 void CarBoomDraw(int carx, int cary);
+
+void CarSnowAnimation(void);
+void CarSnowDraw(int carx, int cary);
 
 void CarMoleAnimation(void);
 void CarMoleDraw(float carx, float cary);
@@ -42,8 +47,6 @@ void CarWoodMoleDraw(float carx, float cary);
 
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
-
-
 
 void CarJetAnimation(void);
 void CarJetDraw(float x, float y, int direction);
@@ -202,6 +205,7 @@ void CarResourceInit(void)
 	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
 	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
+	// 爆発のアニメーション
 	car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom_base.png");
 	car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom0.png");
 	car.boom_right_animtion[2] = LoadGraph("Resource/images/car2_right_boom1.png");
@@ -233,6 +237,19 @@ void CarResourceInit(void)
 	car.boom_down_animtion[4] = LoadGraph("Resource/images/car2_fire_down0.png");
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
+
+	// 雪山のゲームオーバーアニメーション画像
+	car.snow_right_anim[0] = LoadGraph("Resource/images/car_snow_right_base.png");
+	car.snow_right_anim[1] = LoadGraph("Resource/images/car_snow_right_0.png");
+	car.snow_right_anim[2] = LoadGraph("Resource/images/car_snow_right_1.png");
+	car.snow_right_anim[3] = LoadGraph("Resource/images/car_snow_right_2.png");
+	car.snow_right_anim[4] = LoadGraph("Resource/images/car_snow_right_3.png");
+
+	car.snow_left_anim[0] = LoadGraph("Resource/images/car_snow_left_base.png");
+	car.snow_left_anim[1] = LoadGraph("Resource/images/car_snow_left_0.png");
+	car.snow_left_anim[2] = LoadGraph("Resource/images/car_snow_left_1.png");
+	car.snow_left_anim[3] = LoadGraph("Resource/images/car_snow_left_2.png");
+	car.snow_left_anim[4] = LoadGraph("Resource/images/car_snow_left_3.png");
 
 	// モグラのゲームオーバーアニメーション画像
 	LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
@@ -337,6 +354,7 @@ void CarDraw(void)
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
 	CarBoomDraw(car.position.x, car.position.y);
+	CarSnowDraw(car.position.x, car.position.y);
 	CarMoleDraw(car.position.x, car.position.y);
 	CarWoodMoleDraw(car.position.x, car.position.y);
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
@@ -818,10 +836,15 @@ void GameOverBranch(int stg_arr)
 		}
 		break;
 	case 1:case 2:
-	case 9: 
 		if (car.next_y[car.road_count] != 0)
 		{
 			car.boom_flag = true;
+		}
+		break;
+	case 9:
+		if (car.next_y[car.road_count] != 0)
+		{
+			car.snow_flag = true;
 		}
 		break;
 	case 3:
@@ -841,7 +864,7 @@ void GameOverBranch(int stg_arr)
 		break;
 	}
 
-	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true&&car.woodmole_flag!=true)
+	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true&&car.woodmole_flag!=true&&car.snow_flag!=true)
 	{
 		car.ivy_flag = true;
 	}
@@ -1209,6 +1232,56 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				// Play_Sound_Car(car.boom_se, 150);
 			 //}
 		 //}
+	 }
+ }
+
+ // 雪に埋まるアニメーション
+ void CarSnowAnimation(void)
+ {
+	 if (car.snow_flag == true)
+	 {
+		 car.boom_count++;
+		 if (car.snow_count > 30 && car.snow_count % 10 == 0 && car.snow_num < 5)
+		 {
+			 car.snow_num++;
+		 }
+		 if (car.snow_num == 6)
+		 {
+			 car.snow_num = 4;
+		 }
+		 if (car.start == false)
+		 {
+			 car.snow_flag = false;
+			 car.snow_count = 0;
+			 car.snow_num = 0;
+		 }
+	 }
+ }
+
+ // 雪に埋まる時の描画
+ void CarSnowDraw(int carx, int cary)
+ {
+	 if (car.snow_flag == true)
+	 {
+		 switch (car.old_direction)
+		 {
+		 case eRight:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_right_anim[car.snow_num], TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_left_anim[car.snow_num], TRUE);
+			 break;
+		 case eUp:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_up_anim[car.snow_num], TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_down_anim[car.snow_num], TRUE);
+			 break;
+		 }
 	 }
  }
 
@@ -1621,8 +1694,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eFive:
 		car.current_x = 1;//ステージ⑤の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.25f;
-		car.speed.y = 0.25f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 50.0f;
