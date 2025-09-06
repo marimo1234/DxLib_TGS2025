@@ -864,7 +864,7 @@ void GameOverBranch(int stg_arr)
 		break;
 	}
 
-	if (car.lake_flag != true && car.boom_flag != true&&car.mole_flag!=true&&car.woodmole_flag!=true&&car.snow_flag!=true)
+	if (car.lake_flag != true && car.boom_flag != true && car.mole_flag != true && car.woodmole_flag != true && car.snow_flag != true)
 	{
 		car.ivy_flag = true;
 	}

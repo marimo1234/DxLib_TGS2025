@@ -80,10 +80,10 @@ struct Car
     int drop_se;        // 車が落ちる音
 
     //Snow
-    int snow_right_anim[4];
-    int snow_left_anim[4];
-    int snow_up_anim[4];
-    int snow_down_anim[4];
+    int snow_right_anim[5];
+    int snow_left_anim[5];
+    int snow_up_anim[5];
+    int snow_down_anim[5];
     bool snow_flag;
     int snow_count;
     int snow_num;
