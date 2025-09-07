@@ -251,6 +251,12 @@ void CarResourceInit(void)
 	car.snow_left_anim[3] = LoadGraph("Resource/images/car_snow_left_2.png");
 	car.snow_left_anim[4] = LoadGraph("Resource/images/car_snow_left_3.png");
 
+	car.snow_up_anim[0] = LoadGraph("Resource/images/car2_snow_up_base.png");
+	car.snow_up_anim[1] = LoadGraph("Resource/images/car2_snow_up0.png");
+	car.snow_up_anim[2] = LoadGraph("Resource/images/car2_snow_up1.png");
+	car.snow_up_anim[3] = LoadGraph("Resource/images/car2_snow_up2.png");
+	car.snow_up_anim[4] = LoadGraph("Resource/images/car2_snow_up3.png");
+
 	// モグラのゲームオーバーアニメーション画像
 	LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
 	LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);
@@ -1242,7 +1248,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.snow_flag == true)
 	 {
 		 car.snow_count++;
-		 if (car.snow_count > 30 && car.snow_count % 13 == 0 && car.snow_num < 4)
+		 if (car.snow_count > 30 && car.snow_count % 12 == 0 && car.snow_num < 4)
 		 {
 			 car.snow_num++;
 		 }
