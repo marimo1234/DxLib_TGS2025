@@ -257,6 +257,12 @@ void CarResourceInit(void)
 	car.snow_up_anim[3] = LoadGraph("Resource/images/car2_snow_up2.png");
 	car.snow_up_anim[4] = LoadGraph("Resource/images/car2_snow_up3.png");
 
+	car.snow_down_anim[0] = LoadGraph("Resource/images/car2_snow_down_base.png");
+	car.snow_down_anim[1] = LoadGraph("Resource/images/car2_snow_down0.png");
+	car.snow_down_anim[2] = LoadGraph("Resource/images/car2_snow_down1.png");
+	car.snow_down_anim[3] = LoadGraph("Resource/images/car2_snow_down2.png");
+	car.snow_down_anim[4] = LoadGraph("Resource/images/car2_snow_down3.png");
+
 	// モグラのゲームオーバーアニメーション画像
 	LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
 	LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);
@@ -337,7 +343,7 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag==false&&car.mole_flag==false&&car.woodmole_flag==false)
+	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag == false && car.mole_flag == false && car.woodmole_flag == false && car.snow_flag == false)
 	{
 		CarSmokeDraw(car.position.x, car.position.y);
 		if (car.direction == eUp)
@@ -450,6 +456,10 @@ void CarReset(void)
 	car.boom_flag = false;//爆発するアニメーションフラグ
 	car.boom_count = 0;//爆発するアニメーションカウント
 	car.boom_num = 0;//爆発するアニメーションナンバー
+
+	car.snow_flag = false;//雪に埋まるアニメーションフラグ
+	car.snow_count = 0;//雪に埋まるアニメーションカウント
+	car.snow_num = 0;//雪に埋まるアニメーションナンバー
 
 	car.mole_flag = false;
 	car.woodmole_flag = false;
@@ -1270,19 +1280,19 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 {
 		 case eRight:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_right_anim[car.snow_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.118, 0.0, car.snow_right_anim[car.snow_num], TRUE);
 			 break;
 		 case eLeft:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_left_anim[car.snow_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.117, 0.0, car.snow_left_anim[car.snow_num], TRUE);
 			 break;
 		 case eUp:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_up_anim[car.snow_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.125, 0.0, car.snow_up_anim[car.snow_num], TRUE);
 			 break;
 		 case eDown:
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
-			 DrawRotaGraphF(carx, cary, 0.1, 0.0, car.snow_down_anim[car.snow_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 0.118, 0.0, car.snow_down_anim[car.snow_num], TRUE);
 			 break;
 		 }
 	 }
