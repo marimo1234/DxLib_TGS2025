@@ -104,6 +104,8 @@ void TitleSceneInit(void)
 //タイトルシーンの更新
 eSceneType TitleSceneUpdate(void)
 {
+	//選択バーの拡大率（フェードより前に置かないとフェード終わるまで処理が更新されない）
+	ChangeCharExtrate_T();
 	if (is_fading)
 	{
 		fade.Update();
@@ -116,7 +118,7 @@ eSceneType TitleSceneUpdate(void)
 
 	TitleCursorUpdate();
 	TitleNameAnimation();
-	ChangeCharExtrate_T();
+	
 	title.mole_count++;
 
 	
