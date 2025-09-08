@@ -146,7 +146,7 @@ void StageSelectResourceInit(void)
 		stg_sel.stageselectcoment[2] = LoadGraph("Resource/images/StageSelectComent3.png");
 		stg_sel.stageselectcoment[3] = LoadGraph("Resource/images/StageSelectComent4.png");
 		stg_sel.stageselectcoment[4] = LoadGraph("Resource/images/StageSelectComent5.png");
-		stg_sel.stageselectcoment[5] = LoadGraph("Resource/images/StageSelectComent6.png");
+		stg_sel.stageselectcoment[5] = LoadGraph("Resource/images/StageSelectComent7.png");
 		break;
 	case 6:
 		//画像の取得
