@@ -453,29 +453,34 @@ void NumTroutDraw(void)
 	switch (ss_num.stg_num)
 	{
 	case 0:
-
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "チュートリアルステージ ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "まずはこのステージで基本を身につけよう！ ");
+		DrawRotaGraph(630, 548, 0.7, 0.0, stg_sel.stageselectcoment[0], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "チュートリアルステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "まずはこのステージで基本を身につけよう！ ");*/
 		break;
 	case 1:
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "初心者向けステージ ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "基本を覚えたらこのステージで腕試し！");
+		DrawRotaGraph(630, 550, 0.7, 0.0, stg_sel.stageselectcoment[1], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "初心者向けステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "基本を覚えたらこのステージで腕試し！");*/
 		break;
 	case 2:
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "資材管理がカギとなるステージ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "岩が少ないから 資材の使い方に工夫が必要だよ！ ");
+		DrawRotaGraph(630, 550, 0.7, 0.0, stg_sel.stageselectcoment[2], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "資材管理がカギとなるステージ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "岩が少ないから 資材の使い方に工夫が必要だよ！ ");*/
 		break;
 	case 3:
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水と陸が入り混じるステージ ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "道の切り替えを見極めて 落ち着いてつなげよう！ ");
+		DrawRotaGraph(630, 550, 0.7, 0.0, stg_sel.stageselectcoment[3], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水と陸が入り混じるステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "道の切り替えを見極めて 落ち着いてつなげよう！ ");*/
 		break;
 	case 4:
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水辺を舞台にした高速ステージ ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "油断すると一瞬でミスにつながるよ！ ");
+		DrawRotaGraph(630, 550, 0.7, 0.0, stg_sel.stageselectcoment[4], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "水辺を舞台にした高速ステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "油断すると一瞬でミスにつながるよ！ ");*/
 		break;
 	case 5:
-		DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "最難関ステージ ");
-		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "資材の数・スピード・配置 すべてが最高難易度DA☆ ");
+		DrawRotaGraph(663, 549, 0.7, 0.0, stg_sel.stageselectcoment[5], TRUE);
+		/*DrawExtendFormatString(310, 540, 1.0, 1.2, GetColor(0, 0, 0), "最難関ステージ ");
+		DrawExtendFormatString(310, 575, 1.0, 1.2, GetColor(0, 0, 0), "資材の数・スピード・配置 すべてが最高難易度DA☆ ");*/
 		break;
 	}
 	ChangeFont("ＭＳ ゴシック");                     //種類をMS明朝に変更
