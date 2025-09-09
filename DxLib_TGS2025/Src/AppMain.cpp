@@ -33,11 +33,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	loadbar[0]= LoadGraph("Resource/images/LoadBar.png");
 	loadbar[1]= LoadGraph("Resource/images/LoadBlackBar.png");
 	loadbar[2]= LoadGraph("Resource/images/LoadEmptyBar.png");
-	car_image= LoadGraph("Resource/images/car2_right.png");
+	car_image = LoadGraph("Resource/images/car2_right.png");
 	
 
 	int fps = 0;
 	int i = 0;
+	int mole_idx = 0;
+
+	// パッド入力制御のインスタンスを取得
+	PadInputManager* pad_input = PadInputManager::GetInstance();
+
+	int frameCount = 0;
+	int fpsTimer = GetNowCount();
+	int currentFPS = 0;
+	const int FRAME_TIME = 1000 / 60;
+	int startTime, deltaTime;
 
 	while (!IsSceneManagerInitialized())
 	{
@@ -58,28 +68,18 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		{
 			DrawRotaGraph(1000 + j * 50, 260, 1.0, 0.0, mole_image, TRUE);
 		}
+
 		if (fps < 9)
 		{
 			i++;
 		}
 		// ここで1つずつ初期化を進める（リソース系含む）
 		SceneManagerInitialize();
-		//
-		// 
-		// String(100, 100, GetColor(255, 255, 255), "%d", fps);
+
+		/*DrawFormatString(100, 100, GetColor(255, 255, 255), "%d", fps);*/
 		ScreenFlip();
+
 	}
-
-	
-
-	// パッド入力制御のインスタンスを取得
-	PadInputManager* pad_input = PadInputManager::GetInstance();
-
-	int frameCount = 0;
-	int fpsTimer = GetNowCount();
-	int currentFPS = 0;
-	const int FRAME_TIME = 1000 / 60;
-	int startTime, deltaTime;
 
 	//メインループ
 	//ウィンドウが閉じられたorシーンマネージャー側で終了状態でループが終わる
