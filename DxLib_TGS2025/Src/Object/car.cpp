@@ -158,12 +158,6 @@ void CarResourceInit(void)
 	car_anim[eDown].img[0] = LoadGraph("Resource/images/car2_down.png");
 	car_anim[eDown].img[1] = LoadGraph("Resource/images/car2_down2.png");
 
-	/*car.ivy_eff_img[1] = LoadGraph("Resource/images/put_rock_0.png");
-	car.ivy_eff_img[2] = LoadGraph("Resource/images/put_rock_1.png");
-	car.ivy_eff_img[3] = LoadGraph("Resource/images/put_rock_2.png");
-	car.ivy_eff_img[4] = LoadGraph("Resource/images/put_rock_3.png");
-	car.ivy_eff_img[5] = LoadGraph("Resource/images/put_rock_4.png");
-	car.ivy_eff_img[6] = LoadGraph("Resource/images/put_rock_5.png");*/
 	LoadDivGraph("Resource/images/put_rock_Anim.png", 5, 5, 1, 80, 80, car.ivy_eff_img);
 
 	// GameOverの食虫植物の画像

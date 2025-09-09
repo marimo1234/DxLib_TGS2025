@@ -42,7 +42,7 @@ void TitleResourceInit(void)
 
 		break;
 	case 7:
-		title.name_image[0] = LoadGraph("Resource/Images/Title_Text_Anim0.png");	//タイトル画像
+		title.name_image[0] = LoadGraph("Resource/Images/Title_Text_Anim0-0.png");	//タイトル画像
 		title.name_image[1] = LoadGraph("Resource/Images/Title_Text_Anim1.png");	
 		title.name_image[2] = LoadGraph("Resource/Images/Title_Text_Anim2.png");	
 		title.name_image[3] = LoadGraph("Resource/Images/Title_Text_Anim3.png");	
@@ -181,7 +181,7 @@ void TitleSceneDraw(void)
 	//　タイトル背景画像
 	DrawRotaGraphF(640.0f, 360.0f, 1.0, 0.0, title.image, TRUE);
 	//　タイトル画像
-	DrawRotaGraphF(650.0f, 180.0f, 0.55, 0.0, title.name_image[title.name_num], TRUE);
+	DrawRotaGraphF(650.0f, 180.0f, 1.10, 0.0, title.name_image[title.name_num], TRUE);
 	//　Aボタンの画像
 	DrawRotaGraphF(900.0f, 680.0f, 1.0, 0.0, title.control_image, TRUE);
 
@@ -281,7 +281,7 @@ void TitleMoleDraw(void)
 void TitleNameAnimation(void)
 {
 	title.name_count++;
-	if (title.name_count % 8 == 0&&title.name_num<26)
+	if (title.name_count % 8 == 0&&title.name_num<0)
 	{
 		title.name_num++;
 	}
