@@ -131,7 +131,7 @@ void StageSelectResourceInit(void)
 {
 	switch (stageselect_init_step)
 	{
-	case 2:
+	case 10:
 		stg_sel.b_back = LoadGraph("Resource/images/Bback3.png");
 		//カーソルとボタンのSE
 		stg_sel.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
@@ -148,7 +148,7 @@ void StageSelectResourceInit(void)
 		stg_sel.stageselectcoment[4] = LoadGraph("Resource/images/StageSelectComent5.png");
 		stg_sel.stageselectcoment[5] = LoadGraph("Resource/images/StageSelectComent7.png");
 		break;
-	case 6:
+	case 30:
 		//画像の取得
 	//背景
 		stg_sel.background_image = LoadGraph("Resource/images/StageSelect3.png");

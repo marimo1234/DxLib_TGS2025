@@ -4,6 +4,8 @@
 #include "Utility/PadInputManager.h"
 #include "Scene/SceneManager.h"
 
+// ロードバーのオフセット
+#define T_BAR_OFF  (10)
 
 //メイン関数
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
@@ -54,22 +56,24 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		fps++;
 		ClearDrawScreen();
 
+		// 760（バーの長さ） / i を毎フレーム足してバーに見せてる
+
 		// Loadingの描画
 		DrawRotaGraph(650, 260, 1.0, 0.0, load_image, TRUE);
 		//バーの描画
 		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[0], TRUE);
-		DrawRotaGraph(640 + i * 95, 500, 1.0, 0.0, loadbar[1], TRUE);
+		DrawRotaGraph(640 + i * T_BAR_OFF, 500, 1.0, 0.0, loadbar[1], TRUE);
 		DrawRotaGraph(640, 500, 1.0, 0.0, loadbar[2], TRUE);
 		//車の描画
-		DrawRotaGraph(260 + i * 95, 500, 0.1, 0.0, car_image, TRUE);
+		DrawRotaGraph(260 + i * T_BAR_OFF, 500, 0.1, 0.0, car_image, TRUE);
 
 		//モグラの描画
 		for (int j = 0; j < 3; j++)
 		{
 			DrawRotaGraph(1000 + j * 50, 260, 1.0, 0.0, mole_image, TRUE);
 		}
-
-		if (fps < 9)
+	
+		if (fps < 76)
 		{
 			i++;
 		}

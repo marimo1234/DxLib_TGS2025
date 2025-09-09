@@ -168,6 +168,136 @@ void CarResourceInit(void)
 
 	car.ivy_se = LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
 
+	/*car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
+	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
+	car.lake_right_anim[2] = LoadGraph("Resource/images/car_inR_lake2.png");
+	car.lake_right_anim[3] = LoadGraph("Resource/images/car_inR_lake3.png");
+	car.lake_right_anim[4] = LoadGraph("Resource/images/car_inR_lake4.png");
+	car.lake_right_anim[5] = LoadGraph("Resource/images/car_inR_lake5.png");
+	car.lake_right_anim[6] = LoadGraph("Resource/images/car_inR_lake6.png");
+
+	car.lake_left_anim[0] = LoadGraph("Resource/images/car_inL_lake0.png");
+	car.lake_left_anim[1] = LoadGraph("Resource/images/car_inL_lake1.png");
+	car.lake_left_anim[2] = LoadGraph("Resource/images/car_inL_lake2.png");
+	car.lake_left_anim[3] = LoadGraph("Resource/images/car_inL_lake3.png");
+	car.lake_left_anim[4] = LoadGraph("Resource/images/car_inL_lake4.png");
+	car.lake_left_anim[5] = LoadGraph("Resource/images/car_inL_lake5.png");
+	car.lake_left_anim[6] = LoadGraph("Resource/images/car_inL_lake6.png");
+
+	car.lake_up_anim[0] = LoadGraph("Resource/images/car_inU_lake0.png");
+	car.lake_up_anim[1] = LoadGraph("Resource/images/car_inU_lake1.png");
+	car.lake_up_anim[2] = LoadGraph("Resource/images/car_inU_lake2.png");
+	car.lake_up_anim[3] = LoadGraph("Resource/images/car_inU_lake3.png");
+	car.lake_up_anim[4] = LoadGraph("Resource/images/car_inU_lake4.png");
+	car.lake_up_anim[5] = LoadGraph("Resource/images/car_inU_lake5.png");
+	car.lake_up_anim[6] = LoadGraph("Resource/images/car_inU_lake6.png");
+
+	car.lake_down_anim[0] = LoadGraph("Resource/images/car_inD_lake0.png");
+	car.lake_down_anim[1] = LoadGraph("Resource/images/car_inD_lake1.png");
+	car.lake_down_anim[2] = LoadGraph("Resource/images/car_inD_lake2.png");
+	car.lake_down_anim[3] = LoadGraph("Resource/images/car_inD_lake3.png");
+	car.lake_down_anim[4] = LoadGraph("Resource/images/car_inD_lake4.png");
+	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
+	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");*/
+
+	//// 爆発のアニメーション
+	//car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom_base.png");
+	//car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom0.png");
+	//car.boom_right_animtion[2] = LoadGraph("Resource/images/car2_right_boom1.png");
+	//car.boom_right_animtion[3] = LoadGraph("Resource/images/car2_right_boom2.png");
+	//car.boom_right_animtion[4] = LoadGraph("Resource/images/fire_car_right_0.png");
+	//car.boom_right_animtion[5] = LoadGraph("Resource/images/fire_car_right_1.png");
+	//car.boom_right_animtion[6] = LoadGraph("Resource/images/fire_car_right_2.png");
+
+	//car.boom_left_animtion[0] = LoadGraph("Resource/images/car2_left_boom_base.png");
+	//car.boom_left_animtion[1] = LoadGraph("Resource/images/car2_left_boom0.png");
+	//car.boom_left_animtion[2] = LoadGraph("Resource/images/car2_left_boom1.png");
+	//car.boom_left_animtion[3] = LoadGraph("Resource/images/car2_left_boom2.png");
+	//car.boom_left_animtion[4] = LoadGraph("Resource/images/fire_car2_left0.png");
+	//car.boom_left_animtion[5] = LoadGraph("Resource/images/fire_car2_left1.png");
+	//car.boom_left_animtion[6] = LoadGraph("Resource/images/fire_car2_left2.png");
+
+	//car.boom_up_animtion[0] = LoadGraph("Resource/images/car2_up_base.png");
+	//car.boom_up_animtion[1] = LoadGraph("Resource/images/car2_boom_up0.png");
+	//car.boom_up_animtion[2] = LoadGraph("Resource/images/car2_boom_up1.png");
+	//car.boom_up_animtion[3] = LoadGraph("Resource/images/car2_boom_up2.png");
+	//car.boom_up_animtion[4] = LoadGraph("Resource/images/car2_fire_up0.png");
+	//car.boom_up_animtion[5] = LoadGraph("Resource/images/car2_fire_up1.png");
+	//car.boom_up_animtion[6] = LoadGraph("Resource/images/car2_fire_up2.png");
+
+	//car.boom_down_animtion[0] = LoadGraph("Resource/images/car2_boom_down_base.png");
+	//car.boom_down_animtion[1] = LoadGraph("Resource/images/car2_boom_down0.png");
+	//car.boom_down_animtion[2] = LoadGraph("Resource/images/car2_boom_down1.png");
+	//car.boom_down_animtion[3] = LoadGraph("Resource/images/car2_boom_down2.png");
+	//car.boom_down_animtion[4] = LoadGraph("Resource/images/car2_fire_down0.png");
+	//car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
+	//car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
+
+	//// 雪山のゲームオーバーアニメーション画像
+	//car.snow_right_anim[0] = LoadGraph("Resource/images/car_snow_right_base.png");
+	//car.snow_right_anim[1] = LoadGraph("Resource/images/car_snow_right_0.png");
+	//car.snow_right_anim[2] = LoadGraph("Resource/images/car_snow_right_1.png");
+	//car.snow_right_anim[3] = LoadGraph("Resource/images/car_snow_right_2.png");
+	//car.snow_right_anim[4] = LoadGraph("Resource/images/car_snow_right_3.png");
+
+	//car.snow_left_anim[0] = LoadGraph("Resource/images/car_snow_left_base.png");
+	//car.snow_left_anim[1] = LoadGraph("Resource/images/car_snow_left_0.png");
+	//car.snow_left_anim[2] = LoadGraph("Resource/images/car_snow_left_1.png");
+	//car.snow_left_anim[3] = LoadGraph("Resource/images/car_snow_left_2.png");
+	//car.snow_left_anim[4] = LoadGraph("Resource/images/car_snow_left_3.png");
+
+	//car.snow_up_anim[0] = LoadGraph("Resource/images/car2_snow_up_base.png");
+	//car.snow_up_anim[1] = LoadGraph("Resource/images/car2_snow_up0.png");
+	//car.snow_up_anim[2] = LoadGraph("Resource/images/car2_snow_up1.png");
+	//car.snow_up_anim[3] = LoadGraph("Resource/images/car2_snow_up2.png");
+	//car.snow_up_anim[4] = LoadGraph("Resource/images/car2_snow_up3.png");
+
+	//car.snow_down_anim[0] = LoadGraph("Resource/images/car2_snow_down_base.png");
+	//car.snow_down_anim[1] = LoadGraph("Resource/images/car2_snow_down0.png");
+	//car.snow_down_anim[2] = LoadGraph("Resource/images/car2_snow_down1.png");
+	//car.snow_down_anim[3] = LoadGraph("Resource/images/car2_snow_down2.png");
+	//car.snow_down_anim[4] = LoadGraph("Resource/images/car2_snow_down3.png");
+
+	//// モグラのゲームオーバーアニメーション画像
+	//LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
+	//LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);
+	//LoadDivGraph("Resource/images/GOmole3.png", 5, 5, 1, 100, 100, car.mole_3);
+	//LoadDivGraph("Resource/images/GOmole4.png", 5, 5, 1, 100, 100, car.mole_4);
+	//LoadDivGraph("Resource/images/GOwoodmole1.png", 5, 5, 1, 100, 100, car.woodmole_1);
+	//LoadDivGraph("Resource/images/GOwoodmole2.png", 5, 5, 1, 100, 100, car.woodmole_2);
+	//LoadDivGraph("Resource/images/GOwoodmole3.png", 5, 5, 1, 100, 100, car.woodmole_3);
+	//LoadDivGraph("Resource/images/GOwoodmole4.png", 5, 5, 1, 100, 100, car.woodmole_4);
+	//LoadDivGraph("Resource/images/GOmole_carR.png", 5, 5, 1, 200, 200, car.mole_carR);
+	//LoadDivGraph("Resource/images/GOmole_carL.png", 5, 5, 1, 200, 200, car.mole_carL);
+	//LoadDivGraph("Resource/images/GOmole_carU.png", 5, 5, 1, 200, 200, car.mole_carU);
+	//LoadDivGraph("Resource/images/GOmole_carD.png", 5, 5, 1, 200, 200, car.mole_carD);
+	//car.surprised_se = LoadSoundMem("Resource/Sounds/surprised.mp3");
+	//car.drop_se = LoadSoundMem("Resource/Sounds/drop.mp3");
+
+	//// 排気ガスの画像
+	//LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
+	//LoadDivGraph("Resource/images/car_SmokeAnim_R.png", 4, 4, 1, 75, 75, car.smo_img_R);   // 右
+	//LoadDivGraph("Resource/images/car_SmokeAnim_U.png", 4, 4, 1, 75, 75, car.smo_img_U);   // 上
+	//LoadDivGraph("Resource/images/car_SmokeAnim_D.png", 4, 4, 1, 75, 75, car.smo_img_D);   // 下
+
+	//car.warn_image[0] = LoadGraph("Resource/images/Warn_image2.png");
+	//car.warn_image[1] = LoadGraph("Resource/images/Warn_image.png");
+	//car.warn_se[0] = LoadSoundMem("Resource/Sounds/Warn3_se.mp3");
+	//car.warn_se[1] = LoadSoundMem("Resource/Sounds/Warn3_se4.mp3");
+	//car.lake_se = LoadSoundMem("Resource/Sounds/water1.mp3");
+
+	//LoadDivGraph("Resource/images/all_jet.png", 9, 9, 1, 200, 200, car.jet_image);
+	//car.jet_image2[0] = LoadGraph("Resource/images/speed_up1.png");
+	//car.jet_image2[1] = LoadGraph("Resource/images/speed_up2.png");
+	//car.jet_se = LoadSoundMem("Resource/Sounds/jet.mp3");
+	//ChangeVolumeSoundMem(100, car.jet_se);
+
+	//gameover.circle = LoadGraph("Resource/images/car_circle_black.png");
+	//groundreef_botom = LoadGraph("Resource/images/MapOriginal10_botom.png");
+}
+
+void CarResourceInit2(void)
+{
 	car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
 	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
 	car.lake_right_anim[2] = LoadGraph("Resource/images/car_inR_lake2.png");
@@ -200,6 +330,10 @@ void CarResourceInit(void)
 	car.lake_down_anim[5] = LoadGraph("Resource/images/car_inD_lake5.png");
 	car.lake_down_anim[6] = LoadGraph("Resource/images/car_inD_lake6.png");
 
+}
+
+void CarResourceInit3(void)
+{
 	// 爆発のアニメーション
 	car.boom_right_animtion[0] = LoadGraph("Resource/images/car2_right_boom_base.png");
 	car.boom_right_animtion[1] = LoadGraph("Resource/images/car2_right_boom0.png");
@@ -232,7 +366,9 @@ void CarResourceInit(void)
 	car.boom_down_animtion[4] = LoadGraph("Resource/images/car2_fire_down0.png");
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
-
+}
+void CarResourceInit4(void)
+{
 	// 雪山のゲームオーバーアニメーション画像
 	car.snow_right_anim[0] = LoadGraph("Resource/images/car_snow_right_base.png");
 	car.snow_right_anim[1] = LoadGraph("Resource/images/car_snow_right_0.png");
@@ -257,7 +393,10 @@ void CarResourceInit(void)
 	car.snow_down_anim[2] = LoadGraph("Resource/images/car2_snow_down1.png");
 	car.snow_down_anim[3] = LoadGraph("Resource/images/car2_snow_down2.png");
 	car.snow_down_anim[4] = LoadGraph("Resource/images/car2_snow_down3.png");
+}
 
+void CarResourceInit5(void)
+{
 	// モグラのゲームオーバーアニメーション画像
 	LoadDivGraph("Resource/images/GOmole1.png", 5, 5, 1, 100, 100, car.mole_1);
 	LoadDivGraph("Resource/images/GOmole2.png", 5, 5, 1, 100, 100, car.mole_2);

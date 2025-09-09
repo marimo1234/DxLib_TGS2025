@@ -156,6 +156,7 @@ void InGameResourceInit(void)
 		ingame.menu_char_image[4] = LoadGraph("Resource/images/title.png");
 		ingame.menu_char_image[5] = LoadGraph("Resource/images/next_stage.png");
 		ingame.menu_char_image[6] = LoadGraph("Resource/images/stage_select.png");
+	case 5:
 		//数字の画像
 		LoadDivGraph("Resource/images/StageSelect_Num.png", 6, 6, 1, 220, 270, ingame.num_img);
 		//カウントダウンの後のスタートの文字画像
@@ -179,6 +180,7 @@ void InGameResourceInit(void)
 		ingame.itemtutorial2 = LoadGraph("Resource/images/itemtutorial2.png");
 		ingame.itemtutorial3 = LoadGraph("Resource/images/itemtutorial3.png");
 		ingame.itemtutorial4 = LoadGraph("Resource/images/itemtutorial4.png");
+	case 10:
 		//チュートリアル中のAぼたんの点滅
 		ingame.brakestoneanimetion1 = LoadGraph("Resource/images/log5-2.png");
 		ingame.brakestoneanimetion2 = LoadGraph("Resource/images/log5-3.png");
@@ -201,6 +203,7 @@ void InGameResourceInit(void)
 		ingame.brakewood6 = LoadGraph("Resource/images/log9-6.png");
 		//チュートリアル中の橋の置き方
 		ingame.putbridge1 = LoadGraph("Resource/images/log10-1.png");
+	case 15:
 		//チュートリアル中の橋の作り方
 		ingame.woodrodamake1 = LoadGraph("Resource/images/log10.5.png");
 		ingame.woodrodamake2 = LoadGraph("Resource/images/log10.9.png");
@@ -218,6 +221,7 @@ void InGameResourceInit(void)
 		ingame.tutorial_log11 = LoadGraph("Resource/tutorial/log12.png");
 		ingame.tutorial_log12 = LoadGraph("Resource/tutorial/log13.png");
 		ingame.warntutorial= LoadGraph("Resource/images/log20.png");
+	case 20:
 		//チュートリアル中のアイテム欄のコメント
 		ingame.itembarcoment1 = LoadGraph("Resource/images/itemtutorialcoment1.png");
 		ingame.itembarcoment2 = LoadGraph("Resource/images/itemtutorialcoment2.png");
@@ -226,25 +230,37 @@ void InGameResourceInit(void)
 		//BGMの初期化
 		PlayBgm();
 		break;
-	case 1:
+	case 25:
 		MapResourceInit();
 		break;
-	case 2:
+	case 30:
 		ObstacleManagerResourceInit();
 		break;
-	case 3:
+	case 35:
 		WoodRockResourceInit();
 		break;
-	case 4:
+	case 40:
 		ToolResourceInit();
 		break;
-	case 5:
+	case 45:
 		CarResourceInit();
 		break;
-	case 6:
+	case 50:
+		CarResourceInit2();
+		break;
+	case 55:
+		CarResourceInit3();
+		break;
+	case 60:
+		CarResourceInit4();
+		break;
+	case 65:
+		CarResourceInit5();
+		break;
+	case 70:
 		CursorResourceInit();
 		break;
-	case 7:
+	case 75:
 		GoalResourceInit();
 		break;
 	case 120:

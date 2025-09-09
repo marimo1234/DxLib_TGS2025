@@ -165,3 +165,7 @@ void CarReset(void);
 void CarWarnSE(void);
 void CarWarnDraw(void);
 void CarResourceInit(void);
+void CarResourceInit2(void);
+void CarResourceInit3(void);
+void CarResourceInit4(void);
+void CarResourceInit5(void);

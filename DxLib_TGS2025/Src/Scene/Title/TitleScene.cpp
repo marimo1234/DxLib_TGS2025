@@ -23,13 +23,13 @@ void TitleResourceInit(void)
 {
 	switch (title_init_step)
 	{
-	case 2:
+	case 10:
 		title.char_num = 0;
 		title.bgm = LoadSoundMem("Resource/Sounds/title&stageselect_bgm.mp3");
 		title.cursor_se = LoadSoundMem("Resource/Sounds/stage_select_cursor.mp3");
 		title.button_se = LoadSoundMem("Resource/Sounds/stageselect_button.mp3");
 		break;
-	case 5:
+	case 25:
 		title.image = LoadGraph("Resource/Images/title_image.png");	//タイトル画像
 		title.cursor_image = LoadGraph("Resource/Images/menu_cursor.png");	//タイトル画像
 		title.char_image[0] = LoadGraph("Resource/Images/Start.png");	//タイトルの選択文字
@@ -37,11 +37,11 @@ void TitleResourceInit(void)
 		title.char_image[2] = LoadGraph("Resource/Images/End.png");	//タイトルの選択文字
 		title.control_image = LoadGraph("Resource/Images/control_img.png");
 		break;
-	case 6:
+	case 30:
 		LoadDivGraph("Resource/images/title_mole_anim.png", 8, 8, 1, 80, 80, title.mole_image);
 
 		break;
-	case 7:
+	case 35:
 		title.name_image[0] = LoadGraph("Resource/Images/Title_Text_Anim0.png");	//タイトル画像
 		title.name_image[1] = LoadGraph("Resource/Images/Title_Text_Anim1.png");	
 		title.name_image[2] = LoadGraph("Resource/Images/Title_Text_Anim2.png");	
@@ -56,7 +56,7 @@ void TitleResourceInit(void)
 		title.name_image[11] = LoadGraph("Resource/Images/Title_Text_Anim11.png");	
 		title.name_image[12] = LoadGraph("Resource/Images/Title_Text_Anim12.png");	
 		break;
-	case 8:
+	case 40:
 		title.name_image[13] = LoadGraph("Resource/Images/Title_Text_Anim13.png");	
 		title.name_image[14] = LoadGraph("Resource/Images/Title_Text_Anim14.png");	
 		title.name_image[15] = LoadGraph("Resource/Images/Title_Text_Anim15.png");	
