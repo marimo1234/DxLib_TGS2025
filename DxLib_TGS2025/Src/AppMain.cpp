@@ -68,13 +68,15 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 		DrawRotaGraph(260 + i * T_BAR_OFF, 500, 0.1, 0.0, car_image, TRUE);
 
 		//モグラの描画
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < mole_idx+1; j++)
 		{
 			DrawRotaGraph(1000 + j * 50, 260, 1.0, 0.0, mole_image, TRUE);
 		}
 	
+		/*mole_idx = fps / 25 % 3;*/
 		if (fps < 76)
 		{
+			mole_idx = fps / 26 % 3;
 			i++;
 		}
 		// ここで1つずつ初期化を進める（リソース系含む）
