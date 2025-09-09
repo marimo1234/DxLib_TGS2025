@@ -68,7 +68,6 @@ void CursorResourceInit(void)
 	cursor.cursor_anim[0] = LoadGraph("Resource/Images/cursor_anim01.png");
 	cursor.cursor_anim[1] = LoadGraph("Resource/Images/cursor_anim02.png");
 	
-	
 	cursor_image1 = LoadGraph("Resource/Images/pickaxe.png");
 	cursor_ax = LoadGraph("Resource/Images/ax2.0.png");
 	cursor_drill = LoadGraph("Resource/Images/Drill.png");

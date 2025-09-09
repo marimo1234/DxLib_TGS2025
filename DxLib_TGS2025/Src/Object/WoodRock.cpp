@@ -76,37 +76,20 @@ void WoodRockInit(void)
 void WoodRockResourceInit(void)
 {
 	//画像の読み込み
-	wood.image[0] = LoadGraph("Resource/images/Wood0.png");
-	wood.image[1] = LoadGraph("Resource/images/Wood1.png");
-	wood.image[2] = LoadGraph("Resource/images/Wood2.png");
-	wood.image[3] = LoadGraph("Resource/images/Wood3.png");
-
-	rock.image[0] = LoadGraph("Resource/images/Rock0.png");
-	rock.image[1] = LoadGraph("Resource/images/Rock1.png");
-	rock.image[2] = LoadGraph("Resource/images/Rock2.png");
-	rock.image[3] = LoadGraph("Resource/images/Rock3.png");
-
+ 
+	//木画像
+	LoadDivGraph("Resource/images/Wood_Anim.png", 4, 4, 1, 80, 80, wood.image);
+	//岩画像
+	LoadDivGraph("Resource/images/Rock_Anim.png", 4, 4, 1, 80, 80, rock.image);
 	//木のエフェクト
 	LoadDivGraph("Resource/images/Reef_EffectAnim.png", 5, 5, 1, 80, 80, wood.effect_image);
 	//岩のエフェクト
 	LoadDivGraph("Resource/images/Rock_FragmentAnim.png", 5, 5, 1, 80, 80, rock.effect_image);   
 
+	//モグラが岩・木を置くエフェクト
+	LoadDivGraph("Resource/images/put_rock_Anim.png", 5, 5, 1, 80, 80, wood.put_effect_image);
+	LoadDivGraph("Resource/images/put_rock_Anim.png", 5, 5, 1, 80, 80, rock.put_effect_image);
 
-	wood.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
-	wood.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
-	wood.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
-	wood.put_effect_image[3] = LoadGraph("Resource/images/put_rock_3.png");
-	wood.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
-	wood.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
-	
-	rock.put_effect_image[0] = LoadGraph("Resource/images/put_rock_0.png");
-	rock.put_effect_image[1] = LoadGraph("Resource/images/put_rock_1.png");
-	rock.put_effect_image[2] = LoadGraph("Resource/images/put_rock_2.png");
-	rock.put_effect_image[3] = LoadGraph("Resource/images/put_rock_3.png");
-	rock.put_effect_image[4] = LoadGraph("Resource/images/put_rock_4.png");
-	rock.put_effect_image[5] = LoadGraph("Resource/images/put_rock_5.png");
-
-	
 	//サウンド読み込み
 	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
 	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
