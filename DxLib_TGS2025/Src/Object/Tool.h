@@ -106,7 +106,7 @@ struct Tool_Img
 	int possible_wood_roadV;	//設置可能位置の木の道の画像ハンドル(縦
 	
 	int put_road[3];
-	int put_woodroad[3];
+	int put_woodroad;
 
 	int make_animation[7];
 	int make_animation2[7];

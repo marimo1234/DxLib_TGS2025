@@ -139,7 +139,6 @@ void ToolResourceInit(void)
 	tool_img.lb[0] = LoadGraph("Resource/images/LB.png");
 	tool_img.lb[1] = LoadGraph("Resource/images/LB_right.png");
 
-
 	//ピッケル
 	tool_img.pickaxe = LoadGraph("Resource/images/pickaxe.png");
 	//木の道
@@ -171,12 +170,9 @@ void ToolResourceInit(void)
 	tool_img.possible_wood_roadB = LoadGraph("Resource/images/Possible_wood_roadB.png");
 	tool_img.possible_wood_roadV = LoadGraph("Resource/images/Possible_wood_roadV.png");
 	//道を置いた時のアニメーション
-	tool_img.put_road[0] = LoadGraph("Resource/images/dust1.png");
-	tool_img.put_road[1] = LoadGraph("Resource/images/dust2.png");
-	tool_img.put_road[2] = LoadGraph("Resource/images/dust3.png");
+	LoadDivGraph("Resource/images/dust.png", 3, 3, 1, 160, 160, tool_img.put_road);
 	//木の道を置いた時のアニメーション
-	tool_img.put_woodroad[0] = LoadGraph("Resource/images/put1.png");
-	tool_img.put_woodroad[1] = LoadGraph("Resource/images/put2.png");
+	tool_img.put_woodroad = LoadGraph("Resource/images/put1.png");
 	//道が増えた時のアニメーション
 	LoadDivGraph("Resource/images/make_effect.png", 7, 7, 1, 60, 60, tool_img.make_animation);
 	LoadDivGraph("Resource/images/make_effect2.png", 7, 7, 1, 60, 60, tool_img.make_animation2);
@@ -1716,11 +1712,11 @@ void Put_WoodRoad_Animation(int x, int y)
 	tool.put_woodroad_fps++;
 	if (tool.put_woodroad_fps < 6)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.put_woodroad[0], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 0.8, 0.0, tool_img.put_woodroad, TRUE);
 	}
 	else if (tool.put_woodroad_fps < 12)
 	{
-		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, tool_img.put_woodroad[1], TRUE);
+		DrawRotaGraph(x * 80 + 200, y * 80 + 120, 1.2, 0.0, tool_img.put_woodroad, TRUE);
 	}
 	else
 	{
