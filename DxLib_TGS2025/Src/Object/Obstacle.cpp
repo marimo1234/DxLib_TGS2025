@@ -128,7 +128,7 @@ void LakeAnimation(void)
 {
 	lake.cnt++;
 
-	if (lake.cnt != 0 && lake.cnt % 30 == 0)
+	if (lake.cnt != 0 && lake.cnt % 60 == 0)
 	{
 		lake.idx++;
 	}
