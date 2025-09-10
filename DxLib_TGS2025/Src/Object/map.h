@@ -29,8 +29,8 @@ struct CreateStage
 	int road_y[84];
 	int wood_road_x[84];
 	int wood_road_y[84];
-	/*int lake_x[84];
-	int lake_y[84];*/
+	int lake_x;
+	/*int lake_y[84];*/
 	int goal_x[5];
 	int goal_y[5];
 	int woodmole_x[84];
@@ -45,7 +45,8 @@ struct CreateStage
 	int wood_count_flag;
 	int woodmole_count;
 	
-	
+	int lake_side_img;
+	int offsetX;
 
 	bool mitibiki_flag;
 	
@@ -68,6 +69,8 @@ void MapDraw(void);
 void MapResourceInit(void);
 //void StageLoad(void);
 void SnowBallMove(void);
+void LakeMove(void);
+
 
 void MapValueInit(void);
 void MapReset(void);

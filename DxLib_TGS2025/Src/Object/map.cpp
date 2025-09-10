@@ -70,6 +70,8 @@ void MapResourceInit(void)
 	stage.mountain_image = LoadGraph("Resource/images/mountain.png");
 	//　スノーボールの画像
 	snow.img = LoadGraph("Resource/images/snowball.png");
+	// 湖のサイドの緑
+	stage.lake_side_img =LoadGraph("Resource/images/lake_side.png");
 }
 //更新
 void MapUpdate(void)
@@ -80,7 +82,8 @@ void MapUpdate(void)
 
 	if (stage.start == true && stage.menu_flag == false&& stage.mitibiki_flag==false)
 	{
-
+		// 横スクロール
+		//stage.offsetX = (stage.offsetX - 2) % 80; // スピードを変えるなら+2を調整
 		//採取した後に描画を消す
 		Delete_WoodRock(GetWood(), GetRock());
 
@@ -120,7 +123,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal(), MAP_TROUT_LENGTH);
 
-	/*DrawFormatString(200, 200, GetColor(255, 255, 255), "%f",  snow.vec_x);*/
+	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.offsetX);
 
 	/*for (int i = 0; i < 10; i++)
 	{
@@ -222,6 +225,8 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 		{
 			switch (stage.array[x][y])
 			{
+			
+				break;
 			case 1://木
 				DrawRotaGraphF(length * x + 200 + wood->add_anim_x[x][y], length * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				break;
@@ -239,6 +244,10 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 				break;
 			case 6://湖
 				DrawRotaGraphF(length * x + 200, length * y + 120, 1.0, 0.0, lake->image[lake->idx], TRUE);
+
+				// 画像を横方向にループ描画
+				/*DrawRectGraph(length * x + 160, length * y + 80,stage.offsetX, 0, 80 ,80, lake->image[0], TRUE);
+				DrawRectGraph(length * x + 160, length * y + 80, 0, 0, -stage.offsetX+5, 80, lake->image[0], TRUE);*/
 				break;
 			case 7://ゴール
 				DrawRotaGraphF(length * x + 200, length * y + 120, 0.1, 0.0, goal->flag_image[goal->flag_idx], TRUE);
@@ -251,13 +260,12 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 
 				for (int i = 0; i < SNOW_BALL_MAX; i++)
 				{
-					if (snow.add_y[i] < 70.0f && snow.add_y[i]>10.0f&&
+					if (snow.add_y[i] < 70.0f && snow.add_y[i]>10.0f &&
 						snow.add_x[i] < 75.0f && snow.add_x[i]>5.0f)
 					{
 						DrawRotaGraphF(length * x + 160 + snow.add_x[i], length * y + 85 + snow.add_y[i], 0.05, 0.0, snow.img, TRUE);
 					}
 				}
-
 				break;
 			case 10://ウッドモグラ
 				DrawRotaGraphF(length * x + 200, length * y + 125, 1.0, 0.0, mole->wood_anim[x][y], TRUE);
@@ -514,9 +522,10 @@ void MapValueInit(void)
 	stage.rock_count = 0;	//岩
 	stage.rock_count_flag = 0;
 	stage.mole_count = 0;	//モグラ
+	stage.lake_x = 0; //湖のX座標
+	stage.offsetX = 0;
 	int g = 0;		//道
 	int h = 0;		//丸太の道
-	//int k = 0;      //湖の画像
 	int l = 0;      //ゴールの画像  
 	int m = 0;      //動けないマスの画像
 	stage.woodmole_count = 0;    //ウッドモグラ
