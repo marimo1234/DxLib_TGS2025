@@ -123,7 +123,7 @@ void MapDraw(void)
 	//マップ作成
 	MapCreate(GetWood(), GetRock(), GetMole(), Get_Tool(), GetLake(), GetGoal(), MAP_TROUT_LENGTH);
 
-	DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.offsetX);
+	/*DrawFormatString(200, 200, GetColor(255, 255, 255), "%d", stage.offsetX);*/
 
 	/*for (int i = 0; i < 10; i++)
 	{
