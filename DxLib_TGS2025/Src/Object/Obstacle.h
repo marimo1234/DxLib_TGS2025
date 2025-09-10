@@ -61,7 +61,9 @@ struct Mole
 
 struct Lake
 {
-	int image;
+	int image[4];
+	int idx;
+	int cnt;
 };
 
 void ObstacleManagerInit(void);
@@ -76,3 +78,5 @@ const Lake* GetLake(void);
 void MoleReset(void);
 void MoleRockFlagReset(void);
 void MoleWoodFlagReset(void);
+
+void LakeAnimation(void);

@@ -69,7 +69,10 @@ void ObstacleManagerResourceInit(void)
 
 	mole.warn_image = LoadGraph("Resource/images/mole_warn_color.png");
 
-	lake.image = LoadGraph("Resource/images/lake.png");
+	lake.image[0] = LoadGraph("Resource/images/lake.png");
+	lake.image[1] = LoadGraph("Resource/images/lake2.png");
+	lake.image[2] = LoadGraph("Resource/images/lake3.png");
+	lake.image[3] = LoadGraph("Resource/images/lake4.png");
 }
 //障害物の更新
 void ObstacleManagerUpdate(void)
@@ -79,6 +82,8 @@ void ObstacleManagerUpdate(void)
 	
 	if (mole.start == true && mole.menu_flag == false && mole.operable_flag == true)
 	{
+		//湖アニメーション
+		LakeAnimation();
 		//岩を置くフラグ
 		MoleRockFlagReset();    
 		//木を置くフラグ
@@ -116,6 +121,23 @@ const Mole* GetMole(void)
 const Lake* GetLake(void)
 {
 	return&lake;
+}
+
+//湖のアニメーション
+void LakeAnimation(void)
+{
+	lake.cnt++;
+
+	if (lake.cnt != 0 && lake.cnt % 30 == 0)
+	{
+		lake.idx++;
+	}
+
+	if (lake.idx > 3)
+	{
+		lake.idx = 0;
+		lake.cnt = 0;
+	}
 }
 
 //障害物のスポーンが有効か
@@ -452,3 +474,5 @@ void GetMoleStageNum(const InGame* ingame)
 		break;
 	}
 }
+
+
