@@ -167,6 +167,8 @@ void CarResourceInit(void)
 	LoadDivGraph("Resource/images/PlantAnim_D.png", 19, 4, 5, 400, 400, car.ivy_anim_down);    // 下
 
 	car.ivy_se = LoadSoundMem("Resource/Sounds/ivy_se.mp3");                                    // 音
+	car.ivy_se2 = LoadSoundMem("Resource/Sounds/ivy_se2.mp3");
+	car.ivy_se3 = LoadSoundMem("Resource/Sounds/ivy_se3.mp3");
 
 	/*car.lake_right_anim[0] = LoadGraph("Resource/images/car_inR_lake0.png");
 	car.lake_right_anim[1] = LoadGraph("Resource/images/car_inR_lake1.png");
@@ -1247,9 +1249,13 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 }
 		 /* DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 		  DrawRotaGraphF(carx - 14, cary - 44, 0.4, 0.0, car.ivy_animation[car.ivy_num], TRUE);*/
-		 if (car.ivy_count < 60)
+		 if (car.ivy_count == 20)
 		 {
-			 Play_Sound_Car(car.ivy_se, 150);
+			 Play_Sound_Car(car.ivy_se2, 150);
+		 }
+		 if (car.ivy_count == 60)
+		 {
+			 Play_Sound_Car(car.ivy_se3, 100);
 		 }
 	 }
 	 else if (car.ivy_flag == false)

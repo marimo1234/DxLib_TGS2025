@@ -32,6 +32,8 @@ struct Car
     int ivy_count;
     int ivy_num;
     int ivy_se;
+    int ivy_se2;
+    int ivy_se3;
     int ivy_eff_img[7];
     int ivy_eff_idx;
     
