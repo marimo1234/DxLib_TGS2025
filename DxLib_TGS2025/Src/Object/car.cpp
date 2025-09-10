@@ -368,6 +368,8 @@ void CarResourceInit3(void)
 	car.boom_down_animtion[4] = LoadGraph("Resource/images/car2_fire_down0.png");
 	car.boom_down_animtion[5] = LoadGraph("Resource/images/car2_fire_down1.png");
 	car.boom_down_animtion[6] = LoadGraph("Resource/images/car2_fire_down2.png");
+	car.boom_se = LoadSoundMem("Resource/Sounds/boom_car.mp3");
+	car.fire_se = LoadSoundMem("Resource/Sounds/fire_car.mp3");
 }
 void CarResourceInit4(void)
 {
@@ -395,6 +397,7 @@ void CarResourceInit4(void)
 	car.snow_down_anim[2] = LoadGraph("Resource/images/car2_snow_down1.png");
 	car.snow_down_anim[3] = LoadGraph("Resource/images/car2_snow_down2.png");
 	car.snow_down_anim[4] = LoadGraph("Resource/images/car2_snow_down3.png");
+	car.snow_se = LoadSoundMem("Resource/Sounds/Snow__over.mp3");
 }
 
 void CarResourceInit5(void)
@@ -1402,13 +1405,14 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx, cary, 0.12, 0.0, car.boom_down_animtion[car.boom_num], TRUE);
 			 break;
 		 }
-		 //if (car.boom_count > 30)
-		 //{
-			 //if (car.boom_count < 60)
-			 //{
-				// Play_Sound_Car(car.boom_se, 150);
-			 //}
-		 //}
+		 if (car.boom_count > 0 && car.boom_count < 60)
+		 {
+			 Play_Sound_Car(car.boom_se, 200);
+		 }
+	 }
+	 else if (car.snow_flag == false)
+	 {
+		 StopSoundMem(car.boom_se);
 	 }
  }
 
@@ -1418,7 +1422,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 if (car.snow_flag == true)
 	 {
 		 car.snow_count++;
-		 if (car.snow_count > 30 && car.snow_count % 12 == 0 && car.snow_num < 4)
+		 if (car.snow_count > 30 && car.snow_count % 20 == 0 && car.snow_num < 4)
 		 {
 			 car.snow_num++;
 		 }
@@ -1455,6 +1459,14 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx, cary, 0.118, 0.0, car.snow_down_anim[car.snow_num], TRUE);
 			 break;
 		 }
+		 if (car.snow_count > 0 && car.snow_count < 60)
+		 {
+			 Play_Sound_Car(car.snow_se, 200);
+		 }
+	 }
+	 else if (car.snow_flag == false)
+	 {
+		 StopSoundMem(car.snow_se);
 	 }
  }
 

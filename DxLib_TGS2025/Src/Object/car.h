@@ -46,6 +46,7 @@ struct Car
     int boom_count;
     int boom_num;
     int boom_se;
+    int fire_se;
 
     //Lake
     int lake_right_anim[10];
