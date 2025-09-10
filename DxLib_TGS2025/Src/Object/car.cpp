@@ -514,7 +514,7 @@ void CarDraw(void)
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
-	/*DrawFormatString(200, 350, GetColor(255, 255, 255), "%d %d",car.boom_count,car.boom_flag);*/
+	DrawFormatString(200, 350, GetColor(0, 255, 255), "%d %d %d %d %d %d", car.ivy_flag ,car.lake_flag, car.boom_flag, car.mole_flag, car.woodmole_flag, car.snow_flag);
 }
 
 
@@ -921,6 +921,7 @@ void CarDetectPosition(const CreateStage* stage)
 	//次の進行位置がなければストップ
 	else
 	{
+		// Goalじゃなければ
 		if (car.goal_flag == false)
 		{
 			//car.direction = eStop;//ストップ
@@ -930,7 +931,17 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.y += car.speed.y;
 				if (car.position.y < (car.current_y * CAR_TROUT_LNEGTH) + 90.0f)
 				{
-					GameOverBranch(stage->array[car.current_x][car.current_y - 1]);
+					// 現在地より上がマス外なら
+					if (car.current_y - 1 < 0)
+					{
+						car.ivy_flag = true;
+					}
+					// マス外じゃなければ
+					else
+					{
+						GameOverBranch(stage->array[car.current_x][car.current_y - 1]);
+					}
+
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
@@ -939,8 +950,16 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.y -= car.speed.y;
 				if (car.position.y > (car.current_y * CAR_TROUT_LNEGTH) + 150.0f)
 				{
-					GameOverBranch(stage->array[car.current_x][car.current_y + 1]);
-					
+					// 現在地の下がマス外なら
+					if (car.current_y + 1 > 6)
+					{
+						car.ivy_flag = true;
+					}
+					// マス外じゃなければ
+					else
+					{
+						GameOverBranch(stage->array[car.current_x][car.current_y + 1]);
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.y = 0.0f;
 				}
@@ -949,8 +968,16 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.x -= car.speed.x;
 				if (car.position.x > (car.current_x * CAR_TROUT_LNEGTH) + 230.0f)
 				{
-					GameOverBranch(stage->array[car.current_x + 1][car.current_y]);
-					
+					// 現在地の右がマス外なら
+					if (car.current_x + 1 > 11)
+					{
+						car.ivy_flag = true;
+					}
+					// マス外じゃなければ
+					else
+					{
+						GameOverBranch(stage->array[car.current_x + 1][car.current_y]);
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
@@ -959,8 +986,16 @@ void CarDetectPosition(const CreateStage* stage)
 				car.overcount.x += car.speed.x;
 				if (car.position.x < (car.current_x * CAR_TROUT_LNEGTH) + 170.0f)
 				{
-					GameOverBranch(stage->array[car.current_x - 1][car.current_y]);
-					
+					// 現在地の左がマス外なら
+					if (car.current_x - 1 < 0)
+					{
+						car.ivy_flag = true;
+					}
+					// マス外じゃなければ
+					else
+					{
+						GameOverBranch(stage->array[car.current_x - 1][car.current_y]);
+					}
 					car.direction = eStop;//ストップ
 					car.overcount.x = 0.0f;
 				}
@@ -983,34 +1018,19 @@ void GameOverBranch(int stg_arr)
 	switch (stg_arr)
 	{
 	case 6:
-		if (car.next_y[car.road_count] != 0)
-		{
-			car.lake_flag = true;
-		}
+		car.lake_flag = true;
 		break;
 	case 1:case 2:
-		if (car.next_y[car.road_count] != 0)
-		{
-			car.boom_flag = true;
-		}
+		car.boom_flag = true;
 		break;
 	case 9:
-		if (car.next_y[car.road_count] != 0)
-		{
-			car.snow_flag = true;
-		}
+		car.snow_flag = true;
 		break;
 	case 3:
-		if (car.next_y[car.road_count] != 0)
-		{
-			car.mole_flag = true;
-		}
+		car.mole_flag = true;
 		break;
 	case 10:
-		if (car.next_y[car.road_count] != 0)
-		{
-			car.woodmole_flag = true;
-		}
+		car.woodmole_flag = true;
 		break;
 	default:
 		car.ivy_flag = true;
