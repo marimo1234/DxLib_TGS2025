@@ -140,6 +140,8 @@ struct Car
     bool mitibiki_flag;
 
     bool warntutorial_car_flag;
+
+    bool woodrock_flag;
 };
 
 struct GameOver

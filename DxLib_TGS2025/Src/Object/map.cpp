@@ -225,8 +225,6 @@ void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool*
 		{
 			switch (stage.array[x][y])
 			{
-			
-				break;
 			case 1://木
 				DrawRotaGraphF(length * x + 200 + wood->add_anim_x[x][y], length * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
 				break;

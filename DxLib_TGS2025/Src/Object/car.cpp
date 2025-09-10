@@ -5,6 +5,7 @@
 #include"../Object/map.h"
 #include"../Object/tool.h"
 #include"../Object/Goal.h"
+#include"../Object/WoodRock.h"
 #include "../Utility/PadInputManager.h"
 
 //1マスの大きさ
@@ -25,6 +26,7 @@ void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage, const InGame* ingame);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
+void GetMapData_Car(const CreateStage* stage, const Wood* wood, const Rock* rock, int length);
 
 //GameOverでどの演出にするかの分岐
 void GameOverBranch(int stg_arr);
@@ -112,6 +114,8 @@ void CarInit(void)
 	gameover.image_flag = false;//GameOverをだすか
 	gameover.image_count = 0;//GameOverの画像を出す時間のカウント
 	gameover.flag = false;//GameOver後にリセットさせるフラグ
+
+	car.woodrock_flag = false;
 
 
 	//画像の読み込み
@@ -502,6 +506,10 @@ void CarDraw(void)
 	/*CarWarnDraw();*///インゲームに移動
 	CarWarnSE();
 
+	if (car.woodrock_flag == true)
+	{
+		GetMapData_Car(GetStage(), GetWood(), GetRock(), CAR_TROUT_LNEGTH);
+	}
 	//ツタの描画
 	CarIvyDraw(car.position.x, car.position.y);
 	CarLakeDraw(car.position.x, car.position.y, GetInGame());
@@ -509,6 +517,8 @@ void CarDraw(void)
 	CarSnowDraw(car.position.x, car.position.y);
 	CarMoleDraw(car.position.x, car.position.y);
 	CarWoodMoleDraw(car.position.x, car.position.y);
+
+
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
 
 	/*DrawFormatString(930, 300, GetColor(255, 255, 255), "%d,%d,%d   %d", car.start,car.menu_flag,car.mitibiki_flag,car.goal_count);*/
@@ -517,7 +527,7 @@ void CarDraw(void)
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
 	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
-	DrawFormatString(200, 350, GetColor(0, 255, 255), "%d %d %d %d %d %d", car.ivy_flag ,car.lake_flag, car.boom_flag, car.mole_flag, car.woodmole_flag, car.snow_flag);
+	DrawFormatString(200, 350, GetColor(0, 255, 255), "%d %d %d %d %d %d", car.ivy_flag, car.lake_flag, car.boom_flag, car.mole_flag, car.woodmole_flag, car.snow_flag);
 }
 
 
@@ -607,6 +617,8 @@ void CarReset(void)
 	car.add_carp = 0.0f;
 	car.mole_car_num = 0;
 	car.car_angle = 0.0f;
+
+	car.woodrock_flag = false;
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -924,6 +936,10 @@ void CarDetectPosition(const CreateStage* stage)
 	//次の進行位置がなければストップ
 	else
 	{
+		if (car.direction!=eUp)
+		{
+			car.woodrock_flag = true;
+		}
 		// Goalじゃなければ
 		if (car.goal_flag == false)
 		{
@@ -1389,20 +1405,23 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 		 switch (car.old_direction)
 		 {
 		 case eRight:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx, cary, 0.111, 0.0, car.boom_right_animtion[car.boom_num], TRUE);
+			 GetMapData_Car(GetStage(), GetWood(), GetRock(), CAR_TROUT_LNEGTH);// 木と岩のレイヤ―が上になるように
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 case eLeft:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx, cary, 0.113, 0.0, car.boom_left_animtion[car.boom_num], TRUE);
+			 GetMapData_Car(GetStage(), GetWood(), GetRock(), CAR_TROUT_LNEGTH);// 木と岩のレイヤ―が上になるように
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 case eUp:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx, cary, 0.128, 0.0, car.boom_up_animtion[car.boom_num], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 case eDown:
-			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 DrawRotaGraphF(carx, cary, 0.12, 0.0, car.boom_down_animtion[car.boom_num], TRUE);
+			 GetMapData_Car(GetStage(), GetWood(), GetRock(), CAR_TROUT_LNEGTH);// 木と岩のレイヤ―が上になるように
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 }
 		 if (car.boom_count > 0 && car.boom_count < 60)
@@ -1830,6 +1849,26 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 				 add = 155;
 			 }
 			 ChangeVolumeSoundMem(100+add, car.jet_se);
+		 }
+	 }
+ }
+
+ // WoodRockを取得
+ void GetMapData_Car(const CreateStage*stage, const Wood*wood,const Rock*rock,int length)
+ {
+	 for (int y = 0; y < 7; y++)
+	 {
+		 for (int x = 0; x < 12; x++)
+		 {
+			 switch (stage->array[x][y])
+			 {
+			 case 1://木
+				 DrawRotaGraphF(length * x + 200 + wood->add_anim_x[x][y], length * y + 120, 1.0, 0.0, wood->animation[x][y], TRUE);
+				 break;
+			 case 2://石
+				 DrawRotaGraphF(length * x + 200 + rock->add_anim_x[x][y], length * y + 120, 1.0, 0.0, rock->animation[x][y], TRUE);
+				 break;
+			 }
 		 }
 	 }
  }
