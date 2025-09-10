@@ -9,6 +9,7 @@
 #include "../../Object/map.h"
 #include "../../Object/Tool.h"
 #include "../../Object/Goal.h"
+#include"../../../Effect/Fade.h"
 #include "DxLib.h"
 
 #include <math.h>
@@ -38,6 +39,10 @@ void PlayBgm(void);
 
 InGame ingame;
 InGame_Sound sound;
+static Fade fade;
+static bool is_fading = false;
+
+
 
 void NextStageFlag(const Goal* goal);
 void NextSelectFlag(const Goal* goal);
@@ -129,6 +134,9 @@ void InGameSceneInit(void)
 	CursorInit();
 	//ゴールの読み込み
 	GoalInit();
+
+	fade.Initialize(true);
+	is_fading = true;
 
 }
 
@@ -296,6 +304,7 @@ eSceneType InGameSceneUpdate()
 	CarManagerUpdate();
 	//カーソルの更新
 	CursorUpdate();
+
 	//ゲームスタート
 	GameStart();
 	//ゴールの更新
@@ -319,6 +328,26 @@ eSceneType InGameSceneUpdate()
 	TutorialCursor();
 
 	TutorialReset();
+
+	if (is_fading)
+	{
+		fade.Update();
+		if (fade.GetEndFlag())
+		{
+			is_fading = false;
+		}
+		return eInGame;
+	}
+
+	//カウントダウンの後に始まる
+	if (ingame.stage_num != eOne)
+	{
+		if (ingame.start == false && ingame.menu_flag == false)
+		{
+			InGameStartCount();
+			InGameCountAnim();
+		}
+	}
 
 	//カウントダウンの後のスタートを描画する秒数
 	if (ingame.start == true && ingame.start_cnt < START_COUNT_MAX)
@@ -364,6 +393,12 @@ eSceneType InGameSceneUpdate()
 			ingame.tutorial_log_num = 2;
 			sound.stop_p = 0;		// カウントダウンのサウンドのストップ位置リセット
 			Stop_InGameBgm();
+
+			// カウントダウンの透過度初期化
+			ingame.num_tt = 0;
+			//Fade初期化
+			fade.Initialize(true);
+			is_fading = true;
 		}
 		if (ingame.menu_num == 2 &&
 			pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
@@ -409,13 +444,19 @@ eSceneType InGameSceneUpdate()
 		ingame.goalmenu_flag = false;
 		ingame.goalmenu_num = 0;
 		Stop_InGameBgm();
+
+		// カウントダウンの透過度初期化
+		ingame.num_tt = 0;
+		//Fade初期化
+		fade.Initialize(true);
+		is_fading = true;
 	}
 	if (ingame.goalmenu_num == 1 && ingame.goalmenu_flag == true &&
 		pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
 		Play_Sound_Ingame(sound.decision, 100);
 		Stop_InGameBgm();
-		return eStageSelect;	//タイトルに戻る
+		return eStageSelect;	//ステージセレクトに戻る
 		ingame.menu_flag = false;
 		ingame.goalmenu_num = 0;
 	}
@@ -507,7 +548,7 @@ void InGameSceneDraw(void)
 	//goalしたときに出すセレクト画面
 	GoalSelectMenuDraw();
 
-
+	fade.Draw();
 
 	/////////////////////
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
@@ -542,12 +583,7 @@ void GameStart(void)
 	}
 	else
 	{
-		//カウントダウンの後に始まる
-		if (ingame.start == false && ingame.menu_flag == false)
-		{
-			InGameStartCount();
-			InGameCountAnim();
-		}
+
 	}
 }
 
@@ -577,7 +613,7 @@ void InGameCountAnim(void)
 	}
 
 	// インゲームを30で割った商
-	int tt_quotient = ingame.cnt / 30;
+	int tt_quotient = ingame.cnt/ 30;
 
 	if (tt_quotient % 2 == 0 && ingame.num_tt < NUM_TT_MAX)
 	{
