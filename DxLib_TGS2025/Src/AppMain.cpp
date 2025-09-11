@@ -92,7 +92,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 	while (ProcessMessage() != -1 && IsFinish() != TRUE)
 	{
 		// フレーム開始時刻を記録
-		startTime = GetNowCount();
+		startTime = GetNowCount();  // フレーム開始時刻を取得
 
 		//入力の更新
 		InputManagerUpdate();
@@ -122,10 +122,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int)
 			break;
 		}
 
-		deltaTime = GetNowCount() - startTime;
+		deltaTime = GetNowCount() - startTime;  // フレームにかかった処理時間
 		if (deltaTime < FRAME_TIME)
 		{
-			WaitTimer(FRAME_TIME - deltaTime);
+			WaitTimer(FRAME_TIME - deltaTime);  // 残り時間分だけ待機
 		}
 	}
 
