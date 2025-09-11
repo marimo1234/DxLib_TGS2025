@@ -101,6 +101,15 @@ struct Car
     int smo_idx;
     
 
+    //Road・WoodRoad
+    int road_img_R[10];
+    int road_img_L[10];
+    int road_img_U[10];
+    int road_img_D[10];
+    bool road_flag;
+    int road_animcnt;
+    int road_idx;
+
     int cutin_image[3];
 
     //CarMove

@@ -43,12 +43,17 @@ void CarBoomDraw(int carx, int cary);
 void CarSnowAnimation(void);
 void CarSnowDraw(int carx, int cary);
 
+void CarRoadAnimation(void);
+void CarRoadDraw(int carx, int cary);
+
+
 void CarMoleAnimation(void);
 void CarMoleDraw(float carx, float cary);
 void CarWoodMoleDraw(float carx, float cary);
 
 void CarSmokeAnimation(void);
 void CarSmokeDraw(int carx, int cary);
+
 
 void CarJetAnimation(void);
 void CarJetDraw(float x, float y, int direction);
@@ -101,6 +106,11 @@ void CarInit(void)
 	car.mole_car_num = 0;
 	car.add_carp = 0.0f;
 	car.car_angle = 0.0f;
+
+	car.road_flag = false;// 道の上でGameOverだった時のアニメーションフラグ
+	car.road_animcnt = 0;;// 道の上でGameOverだった時のアニメーションカウント
+	car.road_idx = 0;;// 道の上でGameOverだった時のアニメーションインデックス
+	
 
 	car.goal_count = 0;		// ゴールに道をつないだら増えるカウント
 	car.jet_angle = 0.0f;	// ジェット画像の角度
@@ -422,6 +432,12 @@ void CarResourceInit5(void)
 	car.surprised_se = LoadSoundMem("Resource/Sounds/surprised.mp3");
 	car.drop_se = LoadSoundMem("Resource/Sounds/drop.mp3");
 
+	// GameOver道演出
+	LoadDivGraph("Resource/images/car_road_animR.png", 4, 4, 1, 200, 200, car.road_img_R);
+	LoadDivGraph("Resource/images/car_road_animL.png", 4, 4, 1, 200, 200, car.road_img_L);
+	LoadDivGraph("Resource/images/car_road_animU.png", 4, 4, 1, 200, 200, car.road_img_U);
+	LoadDivGraph("Resource/images/car_road_animD.png", 4, 4, 1, 200, 200, car.road_img_D);
+
 	// 排気ガスの画像
 	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
 	LoadDivGraph("Resource/images/car_SmokeAnim_R.png", 4, 4, 1, 75, 75, car.smo_img_R);   // 右
@@ -474,7 +490,8 @@ void CarManagerUpdate(void)
 		CarSmokeAnimation();
 		CarJetAnimation();
 		CarJetAnimation2();
-		CarMoleAnimation();
+		CarMoleAnimation(); 
+		CarRoadAnimation();
 	}
 	else if (car.start == false && car.menu_flag == false && car.mitibiki_flag == false)
 	{
@@ -486,7 +503,8 @@ void CarManagerUpdate(void)
 void CarDraw(void)
 {
 	//車の描画
-	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag == false && car.mole_flag == false && car.woodmole_flag == false && car.snow_flag == false)
+	if (car.lake_flag == false && car.ivy_flag == false && car.boom_flag == false && 
+		car.mole_flag == false && car.woodmole_flag == false && car.snow_flag == false&& car.road_flag == false)
 	{
 		CarSmokeDraw(car.position.x, car.position.y);
 		if (car.direction == eUp)
@@ -517,6 +535,7 @@ void CarDraw(void)
 	CarSnowDraw(car.position.x, car.position.y);
 	CarMoleDraw(car.position.x, car.position.y);
 	CarWoodMoleDraw(car.position.x, car.position.y);
+	CarRoadDraw(car.position.x, car.position.y);
 
 
 	/*CarSmokeDraw(car.position.x, car.position.y);*/
@@ -525,7 +544,7 @@ void CarDraw(void)
 	/*DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);*/
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	/*DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.lake_flag, car.lake_num,car.lake_count);*/
+	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.road_flag, car.road_idx,car.road_animcnt);
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	//DrawFormatString(200, 350, GetColor(0, 255, 255), "%d %d %d %d %d %d", car.ivy_flag, car.lake_flag, car.boom_flag, car.mole_flag, car.woodmole_flag, car.snow_flag);
 }
@@ -609,6 +628,10 @@ void CarReset(void)
 	car.snow_flag = false;//雪に埋まるアニメーションフラグ
 	car.snow_count = 0;//雪に埋まるアニメーションカウント
 	car.snow_num = 0;//雪に埋まるアニメーションナンバー
+
+	car.road_flag = false;// 道の上でGameOverだった時のアニメーションフラグ
+	car.road_animcnt = 0;;// 道の上でGameOverだった時のアニメーションカウント
+	car.road_idx = 0;;// 道の上でGameOverだった時のアニメーションインデックス
 
 	car.mole_flag = false;
 	car.woodmole_flag = false;
@@ -1048,6 +1071,9 @@ void GameOverBranch(int stg_arr)
 	case 3:
 		car.mole_flag = true;
 		break;
+	case 4:case 5:
+		car.road_flag = true;
+		break;
 	case 10:
 		car.woodmole_flag = true;
 		break;
@@ -1056,7 +1082,8 @@ void GameOverBranch(int stg_arr)
 		break;
 	}
 
-	if (car.lake_flag != true && car.boom_flag != true && car.mole_flag != true && car.woodmole_flag != true && car.snow_flag != true)
+	if (car.lake_flag != true && car.boom_flag != true && car.mole_flag != true &&
+		car.woodmole_flag != true && car.snow_flag != true && car.road_flag != true)
 	{
 		car.ivy_flag = true;
 	}
@@ -1489,6 +1516,68 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 	 }
  }
 
+ void CarRoadAnimation(void)
+ {
+	 if (car.road_flag == true)
+	 {
+		 car.road_animcnt++;
+		 if (car.road_animcnt > 30 && car.road_animcnt < 80)
+		 {
+			 car.road_idx = 1;
+		 }
+		 else if (car.road_animcnt > 80 && car.road_animcnt % 20 == 0 && car.road_idx < 4)
+		 {
+			 car.road_idx++;
+		 }
+
+		 if (car.road_idx == 4)
+		 {
+			 car.road_idx = 2;
+		 }
+		 if (car.start == false)
+		 {
+			 car.road_flag = false;
+			 car.road_animcnt = 0;
+			 car.road_idx = 0;
+		 }
+	 }
+ }
+
+ void CarRoadDraw(int carx, int cary)
+ {
+	 if(car.road_flag == true)
+	 {
+		 switch (car.old_direction)
+		 {
+		 case eRight:
+			 DrawRotaGraphF(carx, cary, 0.4, 0.0, car.road_img_R[car.road_idx], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 break;
+		 case eLeft:
+			 DrawRotaGraphF(carx, cary, 0.4, 0.0, car.road_img_L[car.road_idx], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 break;
+		 case eUp:
+			 DrawRotaGraphF(carx + 4, cary - 10, 0.4, 0.0, car.road_img_U[car.road_idx], TRUE);
+			 DrawRotaGraphF(carx + 4, cary - 10, 1.1, 0.0, gameover.circle, TRUE);
+			 break;
+		 case eDown:
+			 DrawRotaGraphF(carx, cary, 0.4, 0.0, car.road_img_D[car.road_idx], TRUE);
+			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
+			 break;
+		 }
+		/* if (car.snow_count > 0 && car.snow_count < 60)
+		 {
+			 Play_Sound_Car(car.snow_se, 200);
+		 }*/
+	 }
+	 /*else if (car.snow_flag == false)
+	 {
+		 StopSoundMem(car.snow_se);
+	 }*/
+ }
+
+
  // モグラ演出のアニメーション
  void CarMoleAnimation(void)
  {
@@ -1891,8 +1980,8 @@ void GetCarStageNum(const InGame* ingame)
 	case eTwo:
 		car.current_x = 1;//ステージ②の初期位置
 		car.current_y = 3;
-		car.speed.x = 0.1f;
-		car.speed.y = 0.1f;
+		car.speed.x = 0.4f;
+		car.speed.y = 0.4f;
 		car.next_x[0] = 3;
 		car.next_y[0] = 3;
 		car.warn_range = 20.0f;
