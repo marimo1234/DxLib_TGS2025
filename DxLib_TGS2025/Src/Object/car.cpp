@@ -438,6 +438,8 @@ void CarResourceInit5(void)
 	LoadDivGraph("Resource/images/car_road_animU.png", 4, 4, 1, 200, 200, car.road_img_U);
 	LoadDivGraph("Resource/images/car_road_animD.png", 4, 4, 1, 200, 200, car.road_img_D);
 
+	car.road_se = LoadSoundMem("Resource/Sounds/sweat3.mp3");
+
 	// 排気ガスの画像
 	LoadDivGraph("Resource/images/car_SmokeAnim_L.png", 4, 4, 1, 75, 75, car.smo_img_L);   // 左
 	LoadDivGraph("Resource/images/car_SmokeAnim_R.png", 4, 4, 1, 75, 75, car.smo_img_R);   // 右
@@ -1566,15 +1568,19 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
 			 DrawRotaGraphF(carx, cary, 1.0, 0.0, gameover.circle, TRUE);
 			 break;
 		 }
-		/* if (car.snow_count > 0 && car.snow_count < 60)
+
+		 // びっくり音
+		 if (car.road_animcnt == 30)
 		 {
-			 Play_Sound_Car(car.snow_se, 200);
-		 }*/
+			 Play_Sound_Car(car.surprised_se, 100);
+		 }
+
+		 if (car.road_animcnt > 80 && car.road_animcnt < 260 && car.road_animcnt % 20 == 0)
+		 {
+			 Play_Sound_Car(car.road_se, 100);
+		 }
 	 }
-	 /*else if (car.snow_flag == false)
-	 {
-		 StopSoundMem(car.snow_se);
-	 }*/
+	
  }
 
 

@@ -109,6 +109,7 @@ struct Car
     bool road_flag;
     int road_animcnt;
     int road_idx;
+    int road_se;
 
     int cutin_image[3];
 
