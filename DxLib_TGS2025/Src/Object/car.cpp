@@ -546,7 +546,7 @@ void CarDraw(void)
 	/*DrawFormatString(930, 100, GetColor(255, 0, 255), "%d\n%d", car.next_y[car.road_count], car.current_y);*/
 	//DrawFormatString(300, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.road_count], car.next_y[car.road_count], car.road_count);
 	//DrawFormatString(350, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.next_x[car.next_count], car.next_y[car.next_count], car.next_count);
-	DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.road_flag, car.road_idx,car.road_animcnt);
+	//DrawFormatString(400, 350, GetColor(255, 255, 255), "%d\n%d\n%d", car.road_flag, car.road_idx,car.road_animcnt);
 	//DrawFormatString(450, 350, GetColor(255, 255, 255), "%f\n%f\n%f\n%f\n", car.position.x, car.position.y,car.overcount.x,car.overcount.y);
 	//DrawFormatString(200, 350, GetColor(0, 255, 255), "%d %d %d %d %d %d", car.ivy_flag, car.lake_flag, car.boom_flag, car.mole_flag, car.woodmole_flag, car.snow_flag);
 }
