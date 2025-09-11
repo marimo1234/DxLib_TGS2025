@@ -443,6 +443,7 @@ eSceneType InGameSceneUpdate()
 		ingame.menu_flag = false;
 		ingame.goalmenu_flag = false;
 		ingame.goalmenu_num = 0;
+		sound.stop_p = 0;		//カウントダウンの音の再生位置リセット
 		Stop_InGameBgm();
 
 		// カウントダウンの透過度初期化
@@ -531,7 +532,7 @@ void InGameSceneDraw(void)
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, ingame.num_tt);
 		DrawRotaGraphF(640.0f, 330.0f, 0.7, 0.0, ingame.num_img[ingame.num_idx], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		if (CheckSoundMem(sound.count) == 0)
+		if (CheckSoundMem(sound.count) == 0&&ingame.cnt>5)
 		{
 			SetCurrentPositionSoundMem(sound.stop_p, sound.count);
 			PlaySoundMem(sound.count, DX_PLAYTYPE_BACK, FALSE);
@@ -554,8 +555,6 @@ void InGameSceneDraw(void)
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d", iii, ingame.menu_flag, ingame.itembarwoodroadcount );
 	//DrawFormatString(150, 150, GetColor(255, 255, 255), "%d %d %d %d ", ingame.tutorial_log_num, ingame.tutorial_achievements, ingame.makerodacount, ingame.tutorial_count);
 	////////////////////
-
-	/*DrawFormatString(150, 150, GetColor(255, 255, 255), "%d", ingame.num_tt);*/
 }
 
 const InGame* GetInGame(void)
@@ -726,6 +725,7 @@ void GameOverReset(const GameOver* gameover, const Car* car)
 		ingame.cnt = 0;        //カウントダウンリセット
 		ingame.start_cnt = 0;// カウントダウン後のスタートを描画する秒数
 		ingame.start = false;
+		sound.stop_p = 0;		//カウントダウの音の再生位置を0にする
 	}
 	if (car->direction == eStop)
 	{
@@ -813,9 +813,9 @@ void InGameMenuUpdate(const Goal* goal, const GameOver* gameover,const Car*car)
 	if (goal->print_flag == false && gameover->image_flag == false && ingame.manual_open == false && ingame.mitibiki_flag == false
 		&& car->direction != eStop && car->goal_flag == false && pad_input->GetButtonInputState(XINPUT_BUTTON_START) == ePadInputState::ePress)
 	{
-		Play_Sound_Ingame2(sound.select_move, 100);
 		sound.stop_p = GetCurrentPositionSoundMem(sound.count);
 		StopSoundMem(sound.count);
+		Play_Sound_Ingame2(sound.select_move, 100);
 		ingame.menu_flag = true;
 	}
 
