@@ -34,6 +34,9 @@ WoodRock_SE woodrock_se;
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
 
+void WoodRockHitCheck(WoodRock* wr, const Tool* tool, const Cursor* cursor, const CreateStage* stage,
+	                  enum WoodRockType type, int tool_state, int arr_num);
+
 void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,  const Car* car);
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
@@ -109,9 +112,12 @@ void WoodRockUpdate(void)
 		WoodRockHitState(&wood, wood.count_x, wood.count_y);
 		WoodRockHitState(&rock, rock.count_x, rock.count_y);
 
-		//ツールとカーソルとのHitチェック
-		WoodHitCheck(Get_Tool(), GetCursor1(), GetStage());
-		RockHitCheck(Get_Tool(), GetCursor1(), GetStage());
+		// ツールとカーソルとの当たり判定チェック
+		WoodRockHitCheck(&wood, Get_Tool(), GetCursor1(), GetStage(),
+			TYPE_WOOD, eAx, 1);
+
+		WoodRockHitCheck(&rock, Get_Tool(), GetCursor1(), GetStage(),
+			TYPE_ROCK, ePickaxe, 2);
 
 		//道路を作ったらアイテム化した数が減る
 		WoodRockSub(Get_Tool());
@@ -175,6 +181,33 @@ void WoodRockDraw(void)
 
 }
 
+// ヒット状態
+void WoodRockHitState(WoodRock* wr, int x, int y)
+{
+	switch (wr->hit_count[x][y])
+	{
+	case eHit0:// Hit数0
+		wr->animation[x][y] = wr->image[0];
+		WoodRockHit(wr, x, y, 1, eHit1);
+		break;
+
+	case eHit1:// Hit数1
+		WoodRockHit(wr, x, y, 2, eHit2);
+		break;
+
+	case eHit2:// Hit数2
+		WoodRockHit(wr, x, y, 3, eHit3);
+		break;
+
+	case eHit3:// Hit数3
+		WoodRockHit3(wr, x, y);
+		break;
+
+	default:
+		break;
+	}
+}
+
 //　ヒット処理（0～2Hit）
 void WoodRockHit(WoodRock* wr, int x, int y, int imgidx, int next_state)
 {
@@ -203,33 +236,6 @@ void WoodRockHit3(WoodRock* wr, int x, int y)
 	wr->add_y[x][y] = fabs((7.0f - (float)y) * 0.8f);
 	wr->move_flag[x][y] = true;//ムーブフラグをtrueにする
 	wr->hit_count[x][y] = eHitEnd;//0に戻す
-}
-
-// ヒット状態
-void WoodRockHitState(WoodRock* wr, int x, int y)
-{
-	switch (wr->hit_count[x][y])
-	{
-	case eHit0:// Hit数0
-		wr->animation[x][y] = wr->image[0];
-		WoodRockHit(wr, x, y, 1, eHit1);
-		break;
-
-	case eHit1:// Hit数1
-		WoodRockHit(wr, x, y, 2, eHit2);
-		break;
-
-	case eHit2:// Hit数2
-		WoodRockHit(wr, x, y, 3, eHit3);
-		break;
-
-	case eHit3:// Hit数3
-		WoodRockHit3(wr, x, y);
-		break;
-
-	default:
-		break;
-	}
 }
 
 //木の情報を取得
@@ -294,93 +300,54 @@ void WoodRockAdd(const Tool* tool)
 	}
 }
 
-//木の当たり判定
-void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
+// 当たり判定
+void WoodRockHitCheck(WoodRock* wr,const Tool* tool, const Cursor* cursor, const CreateStage* stage,
+	enum WoodRockType type, int tool_state, int arr_num)
 {
+	// タイプが木か岩か判断
+	const int* wrx = (type == TYPE_WOOD) ? stage->wood_x : stage->rock_x;
+	const int* wry = (type == TYPE_WOOD) ? stage->wood_y : stage->rock_y;
+
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
 	//Aボタンが押されたなら
 	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
 	{
-		//ツールがオノになっていたら
-		if (tool->item_number == eAx)
+		//ツールが適したものになっていたら
+		if (tool->item_number == tool_state)
 		{
-			//カーソルの配列番号が木だったら
-			if (stage->array[cursor->array_x][cursor->array_y] == 1 &&
-				wood.fps[wood.count_x][wood.count_y] == 0)
+			/*カーソルの配列番号が岩・木だったら*/
+			if (stage->array[cursor->array_x][cursor->array_y] == arr_num &&
+				wr->fps[wr->count_x][wr->count_y] == 0)
 			{
 
 				for (int i = 0; i < WOODROCK_MAX; i++)
 				{
-					//カーソルと木の配列番号が一致したら
-					if (cursor->array_x == stage->wood_x[i] && cursor->array_y == stage->wood_y[i])
+					//カーソルと岩・木の配列番号が一致したら
+					if (cursor->array_x == wrx[i] && cursor->array_y == wry[i])
 					{
 						//変更する配列番号を記憶
-						wood.count_x = stage->wood_x[i];
-						wood.count_y = stage->wood_y[i];
-					}
-
-						//Hitフラグをtrueにする
-						wood.hit_flag[wood.count_x][wood.count_y] = true;
-
-						//hit時の斧が木を叩くSEを追加
-						Play_Sound_WoodRock(wood.break_se, 150);
-				}
-			}
-			//空振りの音を入れる
-			else if (stage->array[cursor->array_x][cursor->array_y] != 1)
-			{
-				Play_Sound_WoodRock(woodrock_se.swing, 120);
-			}
-		}
-	}
-}
-
-//岩の当たり判定
-void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage)
-{
-	PadInputManager* pad_input = PadInputManager::GetInstance();
-
-	//Aボタンが押されたなら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
-	{
-		//ツールがつるはしになっていたら
-		if (tool->item_number == ePickaxe)
-		{
-			/*カーソルの配列番号が岩だったら*/
-			if (stage->array[cursor->array_x][cursor->array_y] == 2 &&
-				rock.fps[rock.count_x][rock.count_y] == 0)
-			{
-
-				for (int i = 0; i < WOODROCK_MAX; i++)
-				{
-					//カーソルと石の配列番号が一致したら
-					if (cursor->array_x == stage->rock_x[i] && cursor->array_y == stage->rock_y[i])
-					{
-						//変更する配列番号を記憶
-						rock.count_x = stage->rock_x[i];
-						rock.count_y = stage->rock_y[i];
+						wr->count_x = wrx[i];
+						wr->count_y = wry[i];
 					}
 
 					//Hitフラグをtrueにする
-					rock.hit_flag[rock.count_x][rock.count_y] = true;
+					wr->hit_flag[wr->count_x][wr->count_y] = true;
 
-					//hit時のツルハシが岩を叩くSEを追加
-					Play_Sound_WoodRock(rock.break_se, 120);
+					//hit時のツールが岩・木を叩くSEを追加
+					Play_Sound_WoodRock(wr->break_se, 120);
 
 				}
 
 			}
 			//空振りの音を入れる
-			else if (stage->array[cursor->array_x][cursor->array_y] != 2)
+			else if (stage->array[cursor->array_x][cursor->array_y] != arr_num)
 			{
 				Play_Sound_WoodRock(woodrock_se.swing, 120);
 			}
 		}
 	}
 }
-
-//アイテム化したアイテムをカウントする位置
 
 //リセット
 void WoodRockReset(void)

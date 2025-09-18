@@ -52,17 +52,17 @@ struct WoodRock_SE
 	int swing;
 };
 
+enum WoodRockType { TYPE_WOOD, TYPE_ROCK };
+
 void WoodRockInit(void);
 void WoodRockUpdate(void);
 void WoodRockDraw(void);
 void WoodRockResourceInit(void);
 
-void WoodHitState(int x,int y);//木のヒット状態
-void RockHitState(int x, int y);//岩のヒット状態
-
-// ヒット処理
-void WoodHit(int x, int y, int imgidx, int state);
-void RockHit(int x, int y, int imgidx, int state);
+// ヒット状態
+void WoodRockHitState(WoodRock* wr, int x, int y);
+void WoodRockHit(WoodRock* wr, int x, int y, int imgidx, int next_state);
+void WoodRockHit3(WoodRock* wr, int x, int y);
 
 const WoodRock* GetWood(void);
 const WoodRock* GetRock(void);
@@ -79,9 +79,10 @@ void WoodRockEffectDraw(void);
 void SwayWoodAnim(int x, int y);
 void SwayRockAnim(int x, int y);
 
-void WoodRockHitState(WoodRock* wr, int x, int y);
-void WoodRockHit(WoodRock* wr, int x, int y, int imgidx, int next_state);
-void WoodRockHit3(WoodRock* wr, int x, int y);
+
+
+
+
 
 
 
