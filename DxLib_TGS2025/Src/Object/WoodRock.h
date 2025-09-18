@@ -52,7 +52,11 @@ struct WoodRock_SE
 	int swing;
 };
 
-enum WoodRockType { TYPE_WOOD, TYPE_ROCK };
+enum WoodRockType 
+{
+	TYPE_WOOD, 
+	TYPE_ROCK 
+};
 
 void WoodRockInit(void);
 void WoodRockUpdate(void);

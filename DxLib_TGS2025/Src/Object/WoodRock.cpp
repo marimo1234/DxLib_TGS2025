@@ -31,9 +31,6 @@ WoodRock wood;
 WoodRock rock;
 WoodRock_SE woodrock_se;
 
-void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
-void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
-
 void WoodRockHitCheck(WoodRock* wr, const Tool* tool, const Cursor* cursor, const CreateStage* stage,
 	                  enum WoodRockType type, int tool_state, int arr_num);
 
@@ -301,7 +298,7 @@ void WoodRockAdd(const Tool* tool)
 }
 
 // 当たり判定
-void WoodRockHitCheck(WoodRock* wr,const Tool* tool, const Cursor* cursor, const CreateStage* stage,
+void WoodRockHitCheck(WoodRock* wr, const Tool* tool, const Cursor* cursor, const CreateStage* stage,
 	enum WoodRockType type, int tool_state, int arr_num)
 {
 	// タイプが木か岩か判断
@@ -310,42 +307,41 @@ void WoodRockHitCheck(WoodRock* wr,const Tool* tool, const Cursor* cursor, const
 
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
-	//Aボタンが押されたなら
-	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress)
+	//Aボタンが押されたなら かつ　ツールが適したものになっていたら
+	if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress
+		&& tool->item_number == tool_state)
 	{
-		//ツールが適したものになっていたら
-		if (tool->item_number == tool_state)
+
+		/*カーソルの配列番号が岩・木だったら*/
+		if (stage->array[cursor->array_x][cursor->array_y] == arr_num &&
+			wr->fps[wr->count_x][wr->count_y] == 0)
 		{
-			/*カーソルの配列番号が岩・木だったら*/
-			if (stage->array[cursor->array_x][cursor->array_y] == arr_num &&
-				wr->fps[wr->count_x][wr->count_y] == 0)
+
+			for (int i = 0; i < WOODROCK_MAX; i++)
 			{
-
-				for (int i = 0; i < WOODROCK_MAX; i++)
+				//カーソルと岩・木の配列番号が一致したら
+				if (cursor->array_x == wrx[i] && cursor->array_y == wry[i])
 				{
-					//カーソルと岩・木の配列番号が一致したら
-					if (cursor->array_x == wrx[i] && cursor->array_y == wry[i])
-					{
-						//変更する配列番号を記憶
-						wr->count_x = wrx[i];
-						wr->count_y = wry[i];
-					}
-
-					//Hitフラグをtrueにする
-					wr->hit_flag[wr->count_x][wr->count_y] = true;
-
-					//hit時のツールが岩・木を叩くSEを追加
-					Play_Sound_WoodRock(wr->break_se, 120);
-
+					//変更する配列番号を記憶
+					wr->count_x = wrx[i];
+					wr->count_y = wry[i];
 				}
 
+				//Hitフラグをtrueにする
+				wr->hit_flag[wr->count_x][wr->count_y] = true;
+
+				//hit時のツールが岩・木を叩くSEを追加
+				Play_Sound_WoodRock(wr->break_se, 120);
+
 			}
-			//空振りの音を入れる
-			else if (stage->array[cursor->array_x][cursor->array_y] != arr_num)
-			{
-				Play_Sound_WoodRock(woodrock_se.swing, 120);
-			}
+
 		}
+		//空振りの音を入れる
+		else if (stage->array[cursor->array_x][cursor->array_y] != arr_num)
+		{
+			Play_Sound_WoodRock(woodrock_se.swing, 120);
+		}
+
 	}
 }
 
