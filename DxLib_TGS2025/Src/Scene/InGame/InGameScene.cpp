@@ -52,7 +52,7 @@ void InGameMenuUpdate(const Goal* goal, const GameOver* gameover, const Car* car
 void Play_Sound_Ingame(int sound, int volume);
 void Play_Sound_Ingame2(int sound, int volume);
 void TutorialUpdate(void);
-void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool, const CreateStage* stage);
+void TutorialAchievements(const Cursor* cursor, const WoodRock* rock, const WoodRock* wood, const Tool* tool, const CreateStage* stage);
 void TutorialDraw(const Goal* goal, const GameOver* gameover, const Car* car);
 void TutorialCursor(void);
 void ItemTutorial(void);
@@ -1282,7 +1282,7 @@ void TutorialUpdate(void)
 	}
 }
 //チュートリアルの説明順番設定
-void TutorialAchievements(const Cursor* cursor, const Rock* rock, const Wood* wood, const Tool* tool,
+void TutorialAchievements(const Cursor* cursor, const WoodRock* rock, const WoodRock* wood, const Tool* tool,
 	const CreateStage* stage)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();

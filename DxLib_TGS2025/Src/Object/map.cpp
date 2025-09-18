@@ -29,8 +29,8 @@ void Delete_Mole(const Car* car,const Tool* tool);
 void Delete_WoodMole(const Car* car, const Tool* tool);
 void Put_Road(const Tool* tool, const Cursor* cursor,int x,int y);
 void Put_Wood_Road(const Tool* tool, const Cursor* cursor, int x, int y);
-void Delete_WoodRock(const Wood* wood, const Rock* rock);
-void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
+void Delete_WoodRock(const WoodRock* wood, const WoodRock* rock);
+void MapCreate(const WoodRock* wood, const WoodRock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal,int length);
 void MolePutRock(const Mole* mole, int x, int y);
 void MolePutWood(const Mole* mole, int x, int y);
@@ -216,7 +216,7 @@ void StageLoad(void)
 }
 
 //マップ作成
-void MapCreate(const Wood* wood, const Rock* rock, const Mole* mole, const Tool* tool,
+void MapCreate(const WoodRock* wood, const WoodRock* rock, const Mole* mole, const Tool* tool,
 	const Lake* lake, const Goal* goal, int length)
 {
 	for (int y = 0; y < 7; y++)
@@ -424,7 +424,7 @@ void Put_Wood_Road(const Tool* tool, const Cursor* cursor,int x,int y)
 }
 
 //岩を消すフラグがtrueなら消す
-void Delete_WoodRock(const Wood* wood,const Rock* rock)
+void Delete_WoodRock(const WoodRock* wood,const WoodRock* rock)
 {
 	if (rock->delete_flag[rock->count_x][rock->count_y] == true)
 	{

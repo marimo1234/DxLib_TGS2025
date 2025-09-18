@@ -27,8 +27,8 @@ bool woodrock_start;//処理スタートするフラグ
 bool woodrock_menu_flag;//メニューが開かれたときのフラグ
 bool woodrock_operable_flag;//Goal、GameOverが開かれたときのフラグ
 
-Wood wood;
-Rock rock;
+WoodRock wood;
+WoodRock rock;
 WoodRock_SE woodrock_se;
 
 void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* stage);
@@ -91,11 +91,10 @@ void WoodRockResourceInit(void)
 	LoadDivGraph("Resource/images/put_rock_Anim.png", 5, 5, 1, 80, 80, rock.put_effect_image);
 
 	//サウンド読み込み
-	wood.break_wood = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
-	rock.break_rock = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
+	wood.break_se = LoadSoundMem("Resource/Sounds/break_wood7.mp3");
+	rock.break_se = LoadSoundMem("Resource/Sounds/break_rock2.mp3");
 	woodrock_se.swing = LoadSoundMem("Resource/Sounds/swing.mp3");
 
-	rock.itemnum_bg_image = LoadGraph("Resource/images/ItemNum_bg_image.png");
 }
 //更新
 void WoodRockUpdate(void)
@@ -282,15 +281,17 @@ void RockHit(int x,int y, int imgidx, int next_state)
 
 
 //木の情報を取得
-const Wood* GetWood(void)
+const WoodRock* GetWood(void)
 {
 	return &wood;
 }
 //岩の情報を取得
-const Rock* GetRock(void)
+const WoodRock* GetRock(void)
 {
 	return &rock;
 }
+
+
 
 //処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover ,const Car*car)
@@ -373,7 +374,7 @@ void WoodHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 						wood.hit_flag[wood.count_x][wood.count_y] = true;
 
 						//hit時の斧が木を叩くSEを追加
-						Play_Sound_WoodRock(wood.break_wood, 150);
+						Play_Sound_WoodRock(wood.break_se, 150);
 				}
 			}
 			//空振りの音を入れる
@@ -415,7 +416,7 @@ void RockHitCheck(const Tool* tool, const Cursor* cursor, const CreateStage* sta
 					rock.hit_flag[rock.count_x][rock.count_y] = true;
 
 					//hit時のツルハシが岩を叩くSEを追加
-					Play_Sound_WoodRock(rock.break_rock, 120);
+					Play_Sound_WoodRock(rock.break_se, 120);
 
 				}
 

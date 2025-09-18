@@ -28,8 +28,8 @@ Tool_Img tool_img;
 Tool_SE tool_se;
 
 void Tool_Start(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
-void const Road_Add_Num(const Rock* rock,const Car*car);
-void const WoodRoad_Add_Num(const Wood* wood,const Car*car);
+void const Road_Add_Num(const WoodRock* rock,const Car*car);
+void const WoodRoad_Add_Num(const WoodRock* wood,const Car*car);
 void Put_Road(const Cursor*cursor,const CreateStage* stage,const Mole*mole, const Car* car);
 void Put_Wood_Road(const Cursor* cursor, const CreateStage* stage,const Car *car);
 void Put_Road_Process(bool* flag, int* sub_num, int array[][7],int array_x, int array_y, int base_x, int base_y,int sound,int val);
@@ -590,7 +590,7 @@ const Tool_Img* Get_Tool_Img(void)
 }
 
 //道の数を増やす
-void const Road_Add_Num(const Rock* rock, const Car* car)
+void const Road_Add_Num(const WoodRock* rock, const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 
@@ -649,7 +649,7 @@ void Road_Add_Animation(const Car*car)
 }
 
 //木の道の数を増やす
-void const WoodRoad_Add_Num(const Wood* wood, const Car* car)
+void const WoodRoad_Add_Num(const WoodRock* wood, const Car* car)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
 

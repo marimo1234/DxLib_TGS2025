@@ -26,7 +26,7 @@ void Play_Sound_Car_Loop(int sound, int volume);
 void CarMovePosition(const CreateStage*stage, const InGame* ingame);
 void GetCarStageNum(const InGame*ingame);
 void CarWarnUpdate(const Goal* goal, const GameOver* gameover,const InGame* ingame);
-void GetMapData_Car(const CreateStage* stage, const Wood* wood, const Rock* rock, int length);
+void GetMapData_Car(const CreateStage* stage, const WoodRock* wood, const WoodRock* rock, int length);
 
 //GameOverでどの演出にするかの分岐
 void GameOverBranch(int stg_arr);
@@ -1949,7 +1949,7 @@ void CarWarnUpdate(const Goal*goal,const GameOver*gameover,const InGame*ingame)
  }
 
  // WoodRockを取得
- void GetMapData_Car(const CreateStage*stage, const Wood*wood,const Rock*rock,int length)
+ void GetMapData_Car(const CreateStage*stage, const WoodRock*wood,const WoodRock*rock,int length)
  {
 	 for (int y = 0; y < 7; y++)
 	 {

@@ -31,7 +31,7 @@ static bool is_animating_Hammer = false;    // ハンマーのアニメーショ
 void CursorStart(const InGame* ingame, const Goal* goal, const GameOver* gameover, const Car* car);
 void GetCarInitPosition(const Car* car);
 void GetCursorStageNum(const InGame* ingame);
-void CursolButtonMovement(const Tool* tool, const InGame* ingame, const Wood* wood, const Rock* rock);       // 十字キーの移動
+void CursolButtonMovement(const Tool* tool, const InGame* ingame, const WoodRock* wood, const WoodRock* rock);       // 十字キーの移動
 void CursorRange_eOne(const InGame* ingame);
 void Img_Num_Change(const CreateStage* stage,int map);
 
@@ -291,7 +291,7 @@ const Cursor* GetCursor1(void)
 	return &cursor;
 }
 
-void CursolButtonMovement(const Tool* tool,const InGame*ingame,const Wood*wood,const Rock*rock)
+void CursolButtonMovement(const Tool* tool,const InGame*ingame,const WoodRock*wood,const WoodRock*rock)
 {
 	//ステージ1のカーソルの範囲設定
 	CursorRange_eOne(GetInGame());

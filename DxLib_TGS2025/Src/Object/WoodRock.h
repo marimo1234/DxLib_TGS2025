@@ -14,7 +14,75 @@ enum eWoodRockState // Hit数の列挙
 	eHitEnd
 };
 
-struct Wood
+//struct Wood
+//{
+//	float position_x[12][7];
+//	float position_y[12][7];
+//	int item_num;
+//	int image[4];
+//	int animation[12][7];
+//	int hit_count[12][7];
+//	bool hit_flag[12][7];
+//	int count_x;
+//	int count_y;
+//	bool delete_flag[12][7];
+//
+//	
+//
+//	bool move_flag[12][7];
+//	int move_count[12][7];
+//	float add_y[12][7];
+//
+//	int fps[12][7];
+//
+//	int effect_image[6];
+//	bool effect_flag;
+//	int effect_num;
+//	int effect_count;
+//	int break_se;
+//	int add_anim_x[12][7];
+//	int sway_anim[12][7];
+//
+//	int put_effect_image[7];
+//	bool put_effect_flag[12][7];
+//	int put_effect_num[12][7];
+//	int put_effect_count[12][7];
+//};
+//
+//struct Rock
+//{
+//	float position_x[12][7];
+//	float position_y[12][7];
+//	int item_num;
+//	int image[4];
+//	int animation[12][7];
+//	int hit_count[12][7];
+//	bool hit_flag[12][7];
+//	int count_x;
+//	int count_y;
+//	bool delete_flag[12][7];
+//
+//	bool move_flag[12][7];
+//	int move_count[12][7];
+//	float add_y[12][7];
+//
+//	int fps[12][7];
+//
+//	int effect_image[6];
+//	bool effect_flag;
+//	int effect_num;
+//	int effect_count;
+//	int break_se;
+//	int add_anim_x[12][7];
+//	int sway_anim[12][7];
+//
+//	int put_effect_image[7];
+//	bool put_effect_flag[12][7];
+//	int put_effect_num[12][7];
+//	int put_effect_count[12][7];
+//};
+
+struct WoodRock
 {
 	float position_x[12][7];
 	float position_y[12][7];
@@ -27,8 +95,6 @@ struct Wood
 	int count_y;
 	bool delete_flag[12][7];
 
-	
-
 	bool move_flag[12][7];
 	int move_count[12][7];
 	float add_y[12][7];
@@ -39,7 +105,7 @@ struct Wood
 	bool effect_flag;
 	int effect_num;
 	int effect_count;
-	int break_wood;
+	int break_se;
 	int add_anim_x[12][7];
 	int sway_anim[12][7];
 
@@ -48,41 +114,6 @@ struct Wood
 	int put_effect_num[12][7];
 	int put_effect_count[12][7];
 };
-
-struct Rock
-{
-	float position_x[12][7];
-	float position_y[12][7];
-	int item_num;
-	int image[4];
-	int itemnum_bg_image;
-	int animation[12][7];
-	int hit_count[12][7];
-	bool hit_flag[12][7];
-	int count_x;
-	int count_y;
-	bool delete_flag[12][7];
-
-	bool move_flag[12][7];
-	int move_count[12][7];
-	float add_y[12][7];
-
-	int fps[12][7];
-
-	int effect_image[6];
-	bool effect_flag;
-	int effect_num;
-	int effect_count;
-	int break_rock;
-	int add_anim_x[12][7];
-	int sway_anim[12][7];
-
-	int put_effect_image[7];
-	bool put_effect_flag[12][7];
-	int put_effect_num[12][7];
-	int put_effect_count[12][7];
-};
-
 
 struct WoodRock_SE
 {
@@ -101,8 +132,8 @@ void RockHitState(int x, int y);//岩のヒット状態
 void WoodHit(int x, int y, int imgidx, int state);
 void RockHit(int x, int y, int imgidx, int state);
 
-const Wood* GetWood(void);
-const Rock* GetRock(void);
+const WoodRock* GetWood(void);
+const WoodRock* GetRock(void);
 
 void WoodRockReset(void);
 void WoodMove(int x, int y);
