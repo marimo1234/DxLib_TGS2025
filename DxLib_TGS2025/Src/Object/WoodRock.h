@@ -83,6 +83,7 @@ struct Rock
 	int put_effect_count[12][7];
 };
 
+
 struct WoodRock_SE
 {
 	int swing;
@@ -93,8 +94,12 @@ void WoodRockUpdate(void);
 void WoodRockDraw(void);
 void WoodRockResourceInit(void);
 
-void WoodAnimation(int x,int y);//木のアニメーション
-void RockAnimation(int x, int y);//岩のアニメーション
+void WoodHitState(int x,int y);//木のヒット状態
+void RockHitState(int x, int y);//岩のヒット状態
+
+// ヒット処理
+void WoodHit(int x, int y, int imgidx, int state);
+void RockHit(int x, int y, int imgidx, int state);
 
 const Wood* GetWood(void);
 const Rock* GetRock(void);

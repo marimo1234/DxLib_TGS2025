@@ -107,8 +107,8 @@ void WoodRockUpdate(void)
 	if (woodrock_start == true && woodrock_menu_flag == false && woodrock_operable_flag == true)
 	{
 		//木,岩のアニメーション
-		WoodAnimation(wood.count_x, wood.count_y);
-		RockAnimation(rock.count_x, rock.count_y);
+		WoodHitState(wood.count_x, wood.count_y);
+		RockHitState(rock.count_x, rock.count_y);
 
 		//ツールとカーソルとのHitチェック
 		WoodHitCheck(Get_Tool(), GetCursor1(), GetStage());
@@ -177,65 +177,21 @@ void WoodRockDraw(void)
 }
 
 //木のアニメーション
-void WoodAnimation(int x, int y)
+void WoodHitState(int x, int y)
 {
 	switch (wood.hit_count[x][y])
 	{
 	case eHit0:// Hit数0
 		wood.animation[x][y] = wood.image[0];
-		//ヒットフラグがtrueなら
-		if (wood.hit_flag[x][y] == true)
-		{
-			wood.animation[x][y] = wood.image[1];//画像を変える
-			wood.effect_flag = true;
-			wood.fps[x][y]++;
-			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-				wood.hit_count[x][y] = eHit1;
-				wood.effect_flag = false;
-				wood.hit_flag[x][y] = false;//hitフラグをfalseにする
-				wood.fps[x][y] = 0;
-			}
-
-		}
+		WoodHit(x, y, 1, eHit1);
 		break;
 
 	case eHit1:// Hit数1
-		//ヒットフラグがtrueなら
-		if (wood.hit_flag[x][y] == true)
-		{
-			wood.animation[x][y] = wood.image[2];//画像を変える
-			wood.effect_flag = true;
-			wood.fps[x][y]++;
-			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-				wood.hit_count[x][y] = eHit2;
-				wood.effect_flag = false;
-				wood.hit_flag[x][y] = false;//hitフラグをfalseにする
-				wood.fps[x][y] = 0;
-			}
-		}
-
+		WoodHit(x, y, 2, eHit2);
 		break;
 
 	case eHit2:// Hit数2
-		//ヒットフラグがtrueなら
-		if (wood.hit_flag[x][y] == true)
-		{
-			wood.animation[x][y] = wood.image[3];//画像を変える
-			wood.fps[x][y]++;
-			wood.effect_flag = true;
-			
-			if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-				wood.hit_count[x][y] = eHit3;
-				wood.effect_flag = false;
-				wood.hit_flag[x][y] = false;   //hitフラグをfalseにする
-				wood.fps[x][y] = 0;
-				
-			}
-			
-		}
+		WoodHit(x, y, 3, eHit3);
 		break;
 
 	case eHit3:// Hit数3
@@ -254,63 +210,22 @@ void WoodAnimation(int x, int y)
 	}
 }
 //岩のアニメーション
-void RockAnimation(int x, int y)
+void RockHitState(int x, int y)
 {
 
 	switch (rock.hit_count[x][y])
 	{
 	case eHit0:// Hit数0
 		rock.animation[x][y] = rock.image[0];
-		//ヒットフラグがtrueなら
-		if (rock.hit_flag[x][y] == true)
-		{
-			rock.animation[x][y] = rock.image[1];//画像を変える
-			rock.effect_flag = true;
-			rock.fps[x][y]++;
-			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-
-				rock.hit_count[x][y] = eHit1;
-				rock.effect_flag = false;
-				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
-				rock.fps[x][y] = 0;
-			}
-		}
+		RockHit(x, y, 1, eHit1);
 		break;
 
 	case eHit1:// Hit数1
-		//ヒットフラグがtrueなら
-		if (rock.hit_flag[x][y] == true)
-		{
-			rock.animation[x][y] = rock.image[2];//画像を変える
-			rock.effect_flag = true;
-			rock.fps[x][y]++;
-			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-				rock.hit_count[x][y] = eHit2;
-				rock.effect_flag = false;
-				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
-				rock.fps[x][y] = 0;
-			}
-		}
-
+		RockHit(x, y, 2, eHit2);
 		break;
 
 	case eHit2:// Hit数2
-		//ヒットフラグがtrueなら
-		if (rock.hit_flag[x][y] == true)
-		{
-			rock.animation[x][y] = rock.image[3];//画像を変える
-			rock.fps[x][y]++;
-			rock.effect_flag = true;
-			if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-			{
-				rock.hit_count[x][y] = eHit3;
-				rock.effect_flag = false;
-				rock.hit_flag[x][y] = false;//hitフラグをfalseにする
-				rock.fps[x][y] = 0;
-			}
-		}
+		RockHit(x, y, 3, eHit3);
 		break;
 
 	case eHit3:// Hit数3
@@ -327,6 +242,45 @@ void RockAnimation(int x, int y)
 		break;
 	}
 }
+// ヒット処理（Wood0～2）
+void WoodHit(int x, int y, int imgidx, int next_state)
+{
+	//ヒットフラグがtrueなら
+	if (wood.hit_flag[x][y] == true)
+	{
+		wood.animation[x][y] = wood.image[imgidx];//画像を変える
+		wood.effect_flag = true;
+		wood.fps[x][y]++;
+		if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
+		{
+			wood.hit_count[x][y] = next_state;
+			wood.effect_flag = false;
+			wood.hit_flag[x][y] = false;//hitフラグをfalseにする
+			wood.fps[x][y] = 0;
+		}
+	}
+}
+
+//　ヒット処理（Rock0～2）
+void RockHit(int x,int y, int imgidx, int next_state)
+{
+	//ヒットフラグがtrueなら
+	if (rock.hit_flag[x][y] == true)
+	{
+		rock.animation[x][y] = rock.image[imgidx];//画像を変える
+		rock.fps[x][y]++;
+		rock.effect_flag = true;
+		if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
+		{
+			rock.hit_count[x][y] = next_state;
+			rock.effect_flag = false;
+			rock.hit_flag[x][y] = false;//hitフラグをfalseにする
+			rock.fps[x][y] = 0;
+		}
+	}
+}
+
+
 //木の情報を取得
 const Wood* GetWood(void)
 {
