@@ -79,6 +79,11 @@ void WoodRockEffectDraw(void);
 void SwayWoodAnim(int x, int y);
 void SwayRockAnim(int x, int y);
 
+void WoodRockHitState(WoodRock* wr, int x, int y);
+void WoodRockHit(WoodRock* wr, int x, int y, int imgidx, int next_state);
+void WoodRockHit3(WoodRock* wr, int x, int y);
+
+
 
 
 

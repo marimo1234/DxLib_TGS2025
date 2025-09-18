@@ -105,9 +105,9 @@ void WoodRockUpdate(void)
 	//スタートがtrueになったなら
 	if (woodrock_start == true && woodrock_menu_flag == false && woodrock_operable_flag == true)
 	{
-		//木,岩のアニメーション
-		WoodHitState(wood.count_x, wood.count_y);
-		RockHitState(rock.count_x, rock.count_y);
+		// ヒット状態
+		WoodRockHitState(&wood, wood.count_x, wood.count_y);
+		WoodRockHitState(&rock, rock.count_x, rock.count_y);
 
 		//ツールとカーソルとのHitチェック
 		WoodHitCheck(Get_Tool(), GetCursor1(), GetStage());
@@ -175,110 +175,62 @@ void WoodRockDraw(void)
 
 }
 
-//木のアニメーション
-void WoodHitState(int x, int y)
+//　ヒット処理（0～2Hit）
+void WoodRockHit(WoodRock* wr, int x, int y, int imgidx, int next_state)
 {
-	switch (wood.hit_count[x][y])
+	//ヒットフラグがtrueなら
+	if (wr->hit_flag[x][y] == true)
+	{
+		wr->animation[x][y] = wr->image[imgidx];//画像を変える
+		wr->fps[x][y]++;
+		wr->effect_flag = true;
+		if (wr->fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
+		{
+			wr->hit_count[x][y] = next_state;
+			wr->effect_flag = false;
+			wr->hit_flag[x][y] = false;//hitフラグをfalseにする
+			wr->fps[x][y] = 0;
+		}
+	}
+}
+
+//　ヒット処理（3Hit）
+void WoodRockHit3(WoodRock* wr, int x, int y)
+{
+	wr->delete_flag[x][y] = true; //削除フラグをtrueにする
+	wr->position_x[x][y] = (float)wr->count_x * 80.0f + 200.0f; //現在のx座標を格納
+	wr->position_y[x][y] = (float)wr->count_y * 80.0f + 120.0f; //現在のy座標を格納
+	wr->add_y[x][y] = fabs((7.0f - (float)y) * 0.8f);
+	wr->move_flag[x][y] = true;//ムーブフラグをtrueにする
+	wr->hit_count[x][y] = eHitEnd;//0に戻す
+}
+
+// ヒット状態
+void WoodRockHitState(WoodRock* wr, int x, int y)
+{
+	switch (wr->hit_count[x][y])
 	{
 	case eHit0:// Hit数0
-		wood.animation[x][y] = wood.image[0];
-		WoodHit(x, y, 1, eHit1);
+		wr->animation[x][y] = wr->image[0];
+		WoodRockHit(wr, x, y, 1, eHit1);
 		break;
 
 	case eHit1:// Hit数1
-		WoodHit(x, y, 2, eHit2);
+		WoodRockHit(wr, x, y, 2, eHit2);
 		break;
 
 	case eHit2:// Hit数2
-		WoodHit(x, y, 3, eHit3);
+		WoodRockHit(wr, x, y, 3, eHit3);
 		break;
 
 	case eHit3:// Hit数3
-		
-		wood.delete_flag[x][y] = true;//削除フラグをtrueにする
-		wood.position_x[x][y] = (float)wood.count_x * 80.0f + 200.0f;//現在のx座標を格納
-		wood.position_y[x][y] = (float)wood.count_y * 80.0f + 120.0f;//現在のy座標を格納
-		wood.add_y[x][y] = fabs((7.0f - (float)y) * 0.8f);
-		wood.move_flag[x][y] = true;//ムーブフラグをtrueにする
-		wood.hit_count[x][y] = eHitEnd;
-
+		WoodRockHit3(wr, x, y);
 		break;
 
 	default:
 		break;
 	}
 }
-//岩のアニメーション
-void RockHitState(int x, int y)
-{
-
-	switch (rock.hit_count[x][y])
-	{
-	case eHit0:// Hit数0
-		rock.animation[x][y] = rock.image[0];
-		RockHit(x, y, 1, eHit1);
-		break;
-
-	case eHit1:// Hit数1
-		RockHit(x, y, 2, eHit2);
-		break;
-
-	case eHit2:// Hit数2
-		RockHit(x, y, 3, eHit3);
-		break;
-
-	case eHit3:// Hit数3
-		rock.delete_flag[x][y] = true; //削除フラグをtrueにする
-		rock.position_x[x][y] = (float)rock.count_x * 80.0f + 200.0f; //現在のx座標を格納
-		rock.position_y[x][y] = (float)rock.count_y * 80.0f + 120.0f; //現在のy座標を格納
-		rock.add_y[x][y] = fabs((7.0f - (float)y )* 0.8f);
-		rock.move_flag[x][y] = true;//ムーブフラグをtrueにする
-		rock.hit_count[x][y] = eHitEnd;//0に戻す
-		
-		break;
-		
-	default:
-		break;
-	}
-}
-// ヒット処理（Wood0～2）
-void WoodHit(int x, int y, int imgidx, int next_state)
-{
-	//ヒットフラグがtrueなら
-	if (wood.hit_flag[x][y] == true)
-	{
-		wood.animation[x][y] = wood.image[imgidx];//画像を変える
-		wood.effect_flag = true;
-		wood.fps[x][y]++;
-		if (wood.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-		{
-			wood.hit_count[x][y] = next_state;
-			wood.effect_flag = false;
-			wood.hit_flag[x][y] = false;//hitフラグをfalseにする
-			wood.fps[x][y] = 0;
-		}
-	}
-}
-
-//　ヒット処理（Rock0～2）
-void RockHit(int x,int y, int imgidx, int next_state)
-{
-	//ヒットフラグがtrueなら
-	if (rock.hit_flag[x][y] == true)
-	{
-		rock.animation[x][y] = rock.image[imgidx];//画像を変える
-		rock.fps[x][y]++;
-		rock.effect_flag = true;
-		if (rock.fps[x][y] > HIT_COOLTIME)//クールタイムを超えたら次のヒットに移行
-		{
-			rock.hit_count[x][y] = next_state;
-			rock.effect_flag = false;
-			rock.hit_flag[x][y] = false;//hitフラグをfalseにする
-			rock.fps[x][y] = 0;
-		}
-	}
-}
-
 
 //木の情報を取得
 const WoodRock* GetWood(void)
@@ -290,8 +242,6 @@ const WoodRock* GetRock(void)
 {
 	return &rock;
 }
-
-
 
 //処理をスタートするフラグ
 void WoodRockStart(const InGame* ingame, const Goal*goal,const GameOver*gameover ,const Car*car)
