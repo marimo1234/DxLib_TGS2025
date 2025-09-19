@@ -37,7 +37,7 @@ void WoodRockHitCheck(WoodRock* wr, const Tool* tool, const Cursor* cursor, cons
 void WoodRockStart(const InGame* ingame, const Goal* goal, const GameOver* gameover,  const Car* car);
 void WoodRockSub(const Tool* tool);
 void WoodRockAdd(const Tool* tool);
-void WoodRockHitInit(const CreateStage* stage);
+void WoodRockHitInit(WoodRock* wr, const CreateStage* stage);
 void GetMoleRockPosition(const Mole* mole, int x, int y);
 void GetMoleWoodPosition(const Mole* mole, int x, int y);
 void Play_Sound_WoodRock(int sound, int volume);
@@ -49,7 +49,8 @@ void WoodRockInit(void)
 	woodrock_start = false;
 	woodrock_menu_flag = false;
 	//ヒットフラグ、ヒット数、アニメーション、削除フラグの初期化
-	WoodRockHitInit(GetStage());
+	WoodRockHitInit(&wood,GetStage());
+	WoodRockHitInit(&rock,GetStage());
 
 	//配列番号の初期化
 	wood.count_x = 0;
@@ -112,7 +113,6 @@ void WoodRockUpdate(void)
 		// ツールとカーソルとの当たり判定チェック
 		WoodRockHitCheck(&wood, Get_Tool(), GetCursor1(), GetStage(),
 			TYPE_WOOD, eAx, 1);
-
 		WoodRockHitCheck(&rock, Get_Tool(), GetCursor1(), GetStage(),
 			TYPE_ROCK, ePickaxe, 2);
 
@@ -129,12 +129,12 @@ void WoodRockUpdate(void)
 				if (wood.move_flag[i][j] == true)
 				{
 					//アイテム表示位置まで放物線を描く
-					WoodMove(i, j);
+					WoodRockMove(&wood, i, j, TYPE_WOOD);
 				}
 				if (rock.move_flag[i][j] == true)
 				{
 					//アイテム表示位置まで放物線を描く
-					RockMove(i, j);
+					WoodRockMove(&rock, i, j, TYPE_ROCK);
 
 				}
 				//モグラが岩を置く場所を取得
@@ -312,7 +312,7 @@ void WoodRockHitCheck(WoodRock* wr, const Tool* tool, const Cursor* cursor, cons
 		&& tool->item_number == tool_state)
 	{
 
-		/*カーソルの配列番号が岩・木だったら*/
+		//カーソルの配列番号が岩・木だったら かつ クールタイム中じゃなければ
 		if (stage->array[cursor->array_x][cursor->array_y] == arr_num &&
 			wr->fps[wr->count_x][wr->count_y] == 0)
 		{
@@ -362,19 +362,21 @@ void WoodRockReset(void)
 	rock.effect_flag = false;
 
 	//初期化
-	WoodRockHitInit(GetStage());
+	WoodRockHitInit(&wood,GetStage());
+	WoodRockHitInit(&rock,GetStage());
 
 }
 
-//アイテム化した時の木の挙動
-void WoodMove(int x, int y)
+//アイテム化した時の挙動
+void WoodRockMove(WoodRock* wr, int x, int y, enum WoodRockType type)
 {
 	//二次関数のグラフの公式”y=a(x-p)^2+q"
-	wood.move_count[x][y]++;
-	float mx = WOOD_ITEM_X; //Xの目的地
-	float my = WOOD_ITEM_Y; // Yの最大値
-	float bx = wood.position_x[x][y];//ポジションの格納
-	float by = wood.position_y[x][y];
+	wr->move_count[x][y]++;
+
+	float mx = (type == TYPE_WOOD) ? WOOD_ITEM_X : ROCK_ITEM_X;
+	float my = (type == TYPE_WOOD) ? WOOD_ITEM_Y : ROCK_ITEM_Y;
+	float bx = wr->position_x[x][y];//ポジションの格納
+	float by = wr->position_y[x][y];
 
 	//二次関数（アイテムカウントしている位置を頂点と考える）
 	float bp = pow(by - my, 2);
@@ -390,73 +392,26 @@ void WoodMove(int x, int y)
 	float fx = fabsf(x2 - x1);
 
 	//20フレーム経ったら移動開始する
-	if (wood.move_count[x][y] > 20)
-	{
-		//切った木のX座標が左か右か
-		if (ba > 0)
-		{
-			wood.position_x[x][y] += wood.add_y[x][y]*1.5 * -fx;
-		}
-		else if (ba < 0)
-		{
-			wood.position_x[x][y] += wood.add_y[x][y]*1.5 * fx;
-		}
-
-		wood.position_y[x][y] += wood.add_y[x][y]*1.5;
-	}
-	//Yの最小値を上回ったら終了
-	if (wood.position_y[x][y] > my)
-	{
-		wood.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
-		wood.move_count[x][y] = 0;
-		wood.move_flag[x][y] = false;
-	}
-
-}
-//アイテム化した時の岩の挙動
-void RockMove(int x, int y)
-{
-	//二次関数のグラフの公式”y=a(x-p)^2+q"
-	rock.move_count[x][y]++;
-	float mx = ROCK_ITEM_X; //Xの目的地
-	float my = ROCK_ITEM_Y; // Yの最大値
-	float bx = rock.position_x[x][y];//ポジションの格納
-	float by = rock.position_y[x][y];
-
-	//二次関数（アイテムカウントしている位置を頂点と考える）
-	float bp = pow(by - my, 2);
-	float ba = (bx - mx) / bp;
-	float x1 = ba * bp + mx;
-
-	//二次関数（y+1の座標を求める）
-	float by2 = by + 1.0f;
-	float bp2 = pow(by2 - my, 2);
-	float x2 = ba * bp2 + mx;
-
-	//xが1増加した時のyの増加量を求める
-	float fx = fabsf(x2 - x1);
-
-	//20フレーム経ったら移動開始する
-	if (rock.move_count[x][y] > 20)
+	if (wr->move_count[x][y] > 20)
 	{
 		//掘った岩のX座標が左か右か
 		if (ba > 0)
 		{
-			rock.position_x[x][y] += rock.add_y[x][y] * 1.5 * -fx;
+			wr->position_x[x][y] += wr->add_y[x][y] * 1.5 * -fx;
 		}
 		else if (ba < 0)
 		{
-			rock.position_x[x][y] += rock.add_y[x][y] * 1.5 * fx;
+			wr->position_x[x][y] += wr->add_y[x][y] * 1.5 * fx;
 		}
 
-		rock.position_y[x][y] += rock.add_y[x][y] * 1.5;
+		wr->position_y[x][y] += wr->add_y[x][y] * 1.5;
 	}
 	//Yの最小値を上回ったら終了
-	if (rock.position_y[x][y] > my)
+	if (wr->position_y[x][y] > my)
 	{
-		rock.item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
-		rock.move_count[x][y] = 0;
-		rock.move_flag[x][y] = false;
+		wr->item_num++; //HIT数が3になった時、アイテム化した物の数を+1する
+		wr->move_count[x][y] = 0;
+		wr->move_flag[x][y] = false;
 	}
 }
 
@@ -473,44 +428,28 @@ void WR_Delete_Flag(void)
 	}
 }
 //Hitカウントの初期化
-void WoodRockHitInit(const CreateStage* stage)
+void WoodRockHitInit(WoodRock* wr , const CreateStage* stage)
 {
 	for (int j = 0; j < WOODROCK_Y_MAX; j++)
 	{
 		for (int i = 0; i < WOODROCK_X_MAX; i++)
 		{
-
 			//ヒット変数の初期化
-			wood.hit_flag[i][j] = false;
-			wood.animation[i][j] = wood.image[0];
-			wood.delete_flag[i][j] = false;
-			wood.fps[i][j] = 0;
-
-			rock.hit_flag[i][j] = false;
-			rock.animation[i][j] = rock.image[0];
-			rock.delete_flag[i][j] = false;
-			rock.fps[i][j] = 0;
+			wr->hit_flag[i][j] = false;
+			wr->animation[i][j] = wr->image[0];
+			wr->delete_flag[i][j] = false;
+			wr->fps[i][j] = 0;
 
 			//ムーブ変数の初期化
-			wood.move_flag[i][j] = false;
-			wood.move_count[i][j] = 0;
-			wood.position_x[i][j] = 0.0f;
-			wood.position_y[i][j] = 0.0f;
-			wood.add_y[i][j] = 0.0f;
+			wr->move_flag[i][j] = false;
+			wr->move_count[i][j] = 0;
+			wr->position_x[i][j] = 0.0f;
+			wr->position_y[i][j] = 0.0f;
+			wr->add_y[i][j] = 0.0f;
 
-			rock.move_flag[i][j] = false;
-			rock.move_count[i][j] = 0;
-			rock.position_x[i][j] = 0.0f;
-			rock.position_y[i][j] = 0.0f;
-			rock.add_y[i][j] = 0.0f;
-
-			//木の揺れるアニメーション変数の初期化
-			wood.add_anim_x[i][j] = 0;
-			wood.sway_anim[i][j] = 0;
-
-			//岩の揺れるアニメーション変数の初期化
-			rock.sway_anim[i][j] = 0;
-			rock.add_anim_x[i][j] = 0;
+			//揺れるアニメーション変数の初期化
+			wr->add_anim_x[i][j] = 0;
+			wr->sway_anim[i][j] = 0;
 
 			//Hit数の初期化
 			if (stage->array[i][j] == 1)
@@ -526,11 +465,9 @@ void WoodRockHitInit(const CreateStage* stage)
 				wood.hit_count[i][j] = eHitEnd;
 				rock.hit_count[i][j] = eHitEnd;
 			}
-			//モグラが岩を置くエフェクトの変数初期化
-			wood.put_effect_num[i][j] = -1;
-			wood.put_effect_count[i][j] = 0;
-			rock.put_effect_num[i][j] = -1;
-			rock.put_effect_count[i][j] = 0;
+			//モグラが岩・木を置くエフェクトの変数初期化
+			wr->put_effect_num[i][j] = -1;
+			wr->put_effect_count[i][j] = 0;
 			
 
 		}

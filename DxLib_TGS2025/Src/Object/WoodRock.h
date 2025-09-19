@@ -72,8 +72,7 @@ const WoodRock* GetWood(void);
 const WoodRock* GetRock(void);
 
 void WoodRockReset(void);
-void WoodMove(int x, int y);
-void RockMove(int x, int y);
+void WoodRockMove(WoodRock* wr, int x, int y, enum WoodRockType type);
 void WR_Delete_Flag(void);
 void WoodEffect(int x, int y);
 void RockEffect(int x, int y);
