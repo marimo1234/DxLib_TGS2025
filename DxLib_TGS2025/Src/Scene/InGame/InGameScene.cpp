@@ -512,8 +512,6 @@ void InGameSceneDraw(void)
 	///////////////////
 
 	//atrがgoal.flagを受け取っているかの確認、btrがステージ遷移できるかどうかの確認
-	//後々消します
-	/*DrawFormatString(300, 300, GetColor(255, 255, 255), "%d %d", atr,btr);*/
 	if (ingame.start == false && ingame.manual_open == true ||
 		ingame.menu_flag == true && ingame.manual_open == true)
 	{
@@ -702,7 +700,6 @@ void NextStageFlag(const Goal* goal)
 		ingame.next_stage_flag = true;
 		atr++;
 		ingame.start = false;
-		/*Stop_InGameBgm();*/
 	}
 
 
@@ -1225,10 +1222,6 @@ void TutorialUpdate(void)
 		TutorialAchievements(GetCursor1(), GetRock(), GetWood(), Get_Tool(), GetStage());
 
 
-		/*char tutorial_load[256];
-		snprintf(tutorial_load, sizeof(tutorial_load), "Resource/tutorial/log%d.png", ingame.tutorial_log_num);
-		tutorial_log = LoadGraph(tutorial_load);*/
-
 		//リセットする
 		if (ingame.start == false)
 		{
@@ -1266,11 +1259,6 @@ void TutorialUpdate(void)
 		}
 
 
-		/*if (pad_input->GetButtonInputState(XINPUT_BUTTON_Y) == ePadInputState::ePress &&
-			ingame.mitibiki_flag == false)
-		{
-			ingame.mitibiki_flag = true;
-		}*/
 		if (ingame.tutorial_log_num == 4)
 		{
 			if (pad_input->GetButtonInputState(XINPUT_BUTTON_A) == ePadInputState::ePress &&
@@ -1318,12 +1306,7 @@ void TutorialAchievements(const Cursor* cursor, const WoodRock* rock, const Wood
 			break;
 		}
 		ingame.woodtutorial == false;
-		/*if (ingame.tutorial_log_num < 5)
-		{
-			ingame.mitibiki_flag = true;
-		}*/
-		//else
-		//{
+		
 			if (rock->item_num > 0)
 			{
 				ingame.tutorial_log_num=6;
@@ -1335,14 +1318,11 @@ void TutorialAchievements(const Cursor* cursor, const WoodRock* rock, const Wood
 			else if (tool->item_number != ePickaxe&&ingame.tutorial_log_num<6)
 			{
 				ingame.tutorial_log_num = 6;
-				/*ingame.tutorial_achievements += 1;*/
 			}
 			else if (tool->item_number == ePickaxe && ingame.tutorial_log_num ==6)
 			{
 				ingame.tutorial_log_num = 5;
-				/*ingame.tutorial_achievements += 1;*/
 			}
-		//}
 		break;
 	case 3:
 		if (stage->array[6][4] == 5)
@@ -1499,6 +1479,7 @@ void TutorialAchievements(const Cursor* cursor, const WoodRock* rock, const Wood
 		break;
 	}
 }
+//カーソルのチュートリアルアニメーション
 void TutorialCursor(void)
 {
 	PadInputManager* pad_input = PadInputManager::GetInstance();
@@ -1522,6 +1503,7 @@ void TutorialCursor(void)
 		}
 	}
 }
+//アイテムのチュートリアルアニメーション
 void ItemTutorial(void)
 {
 	if (ingame.warntutorial_flag_public == false)
@@ -1589,6 +1571,7 @@ void ItemTutorial(void)
 		}
 	}
 }
+//木、岩の説明アニメーション
 void BlinkingAnimation(void)
 {
 	if (ingame.warntutorial_flag_public == false)
@@ -1697,22 +1680,6 @@ void BlinkingAnimation(void)
 						DrawRotaGraphF(975.0f, 235.0f, 1.0, 0.0, ingame.brakewood1, TRUE);
 					}
 				}
-				/*else if (ingame.woodrodamakeswitch == true && ingame.tutorial_log_num == 9)
-				{
-					if (ingame.brakewoodcount > 105)
-					{
-						ingame.brakewoodcount = 0;
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
-					}
-					else if (ingame.brakewoodcount > 70)
-					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake2, TRUE);
-					}
-					else if (ingame.brakewoodcount > 35)
-					{
-						DrawRotaGraphF(875.0f, 235.0f, 1.0, 0.0, ingame.woodrodamake1, TRUE);
-					}
-				}*/
 			}
 		}
 		else if (ingame.tutorial_log_num == 10)
@@ -1733,6 +1700,7 @@ void BlinkingAnimation(void)
 		}
 	}
 }
+//警告チュートリアル
 void WarnTutorial(const Car*car) 
 {
 	
@@ -1740,6 +1708,7 @@ void WarnTutorial(const Car*car)
 	ingame.mitibiki_flag = true;
 	ingame.itemcoment_switch = false;
 }
+//チュートリアル使用の変数リセット
 void TutorialReset(void)
 {
 	if (ingame.start == false)
